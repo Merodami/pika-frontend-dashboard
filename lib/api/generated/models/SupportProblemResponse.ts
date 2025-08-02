@@ -1,0 +1,44 @@
+/* generated using openapi-typescript-codegen -- do not edit */
+/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+/**
+ * Support problem
+ */
+export type SupportProblemResponse = {
+    /**
+     * Universally Unique Identifier
+     */
+    id: string;
+    ticketNumber?: string;
+    userId: string;
+    title: string;
+    description: string;
+    /**
+     * Support ticket status
+     */
+    status: 'open' | 'assigned' | 'in_progress' | 'waiting_customer' | 'waiting_internal' | 'resolved' | 'closed';
+    /**
+     * Support ticket priority level
+     */
+    priority: 'low' | 'medium' | 'high' | 'urgent' | 'critical';
+    /**
+     * Support ticket category/type
+     */
+    type: 'billing' | 'technical' | 'account' | 'general' | 'bug_report' | 'feature_request';
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    resolvedAt?: string;
+    assignedTo?: string;
+    files?: Array<string>;
+    /**
+     * When the record was created
+     */
+    createdAt: string;
+    /**
+     * When the record was last updated
+     */
+    updatedAt: string;
+};
+

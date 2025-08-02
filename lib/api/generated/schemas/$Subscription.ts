@@ -1,0 +1,102 @@
+/* generated using openapi-typescript-codegen -- do not edit */
+/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+export const $Subscription = {
+    description: `Subscription details`,
+    properties: {
+        id: {
+            type: 'string',
+            description: `Universally Unique Identifier`,
+            isRequired: true,
+            format: 'uuid',
+        },
+        userId: {
+            type: 'string',
+            isRequired: true,
+            format: 'uuid',
+        },
+        planId: {
+            type: 'string',
+            description: `Universally Unique Identifier`,
+            format: 'uuid',
+        },
+        planType: {
+            type: 'string',
+            description: `Plan type (for backward compatibility)`,
+            isRequired: true,
+        },
+        status: {
+            type: 'Enum',
+            isRequired: true,
+        },
+        billingInterval: {
+            type: 'string',
+            description: `Billing interval (for backward compatibility)`,
+            isRequired: true,
+        },
+        currentPeriodStart: {
+            type: 'string',
+            description: `Current billing period start date`,
+            format: 'date-time',
+        },
+        currentPeriodEnd: {
+            type: 'string',
+            description: `Current billing period end date`,
+            format: 'date-time',
+        },
+        trialEnd: {
+            type: 'string',
+            description: `Trial end date`,
+            format: 'date-time',
+        },
+        cancelAtPeriodEnd: {
+            type: 'boolean',
+            description: `Whether to cancel at period end`,
+        },
+        stripeCustomerId: {
+            type: 'string',
+            description: `Stripe customer ID`,
+        },
+        stripeSubscriptionId: {
+            type: 'string',
+            description: `Stripe subscription ID`,
+        },
+        stripePriceId: {
+            type: 'string',
+            description: `Stripe price ID`,
+        },
+        startDate: {
+            type: 'string',
+            description: `Subscription start date`,
+            format: 'date-time',
+        },
+        endDate: {
+            type: 'string',
+            description: `Subscription end date`,
+            format: 'date-time',
+        },
+        lastProcessedAt: {
+            type: 'string',
+            description: `Last credit processing date`,
+            format: 'date-time',
+        },
+        cancelledAt: {
+            type: 'string',
+            description: `Cancellation date`,
+            format: 'date-time',
+        },
+        createdAt: {
+            type: 'string',
+            description: `When the record was created`,
+            isRequired: true,
+            format: 'date-time',
+        },
+        updatedAt: {
+            type: 'string',
+            description: `When the record was last updated`,
+            isRequired: true,
+            format: 'date-time',
+        },
+    },
+} as const;
