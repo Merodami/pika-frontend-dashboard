@@ -1,4 +1,4 @@
-import { UserRole } from '@merodami/pika-types'
+import { UserRole } from '@Merodami/pika-types'
 import { redirect } from 'next/navigation'
 
 import { requireAuth } from '@/app/_services/authService'

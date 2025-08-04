@@ -7,8 +7,8 @@
  * - Following backend import patterns
  */
 
-// Import from @merodami/pika-api using the same pattern as backend services
-import { authFrontend, authPublic, shared } from '@merodami/pika-api'
+// Import from @Merodami/pika-api using the same pattern as backend services
+import { authFrontend, authPublic, shared } from '@Merodami/pika-api'
 
 // Import SDK types for API responses
 import type {

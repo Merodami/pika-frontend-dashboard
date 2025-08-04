@@ -1,4 +1,4 @@
-import { SupportedLanguage, type LanguageCode } from '@merodami/pika-types'
+import { SupportedLanguage, type LanguageCode } from '@Merodami/pika-types'
 
 export const locales = Object.values(SupportedLanguage)
 export type Locale = LanguageCode
