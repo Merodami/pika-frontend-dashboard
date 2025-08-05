@@ -38,6 +38,7 @@
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
     "test:e2e": "playwright test",
+    "generate:api": "openapi-ts",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -73,6 +74,8 @@
     "zustand": "^5.0.7"
   },
   "devDependencies": {
+    "@hey-api/client-axios": "^0.9.1",
+    "@hey-api/openapi-ts": "^0.80.2",
     "@next/bundle-analyzer": "^15.4.5",
     "@playwright/test": "^1.42.0",
     "@types/form-data": "^2.5.2",
