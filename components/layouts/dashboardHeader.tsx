@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server'
 
-import type { User as UserType } from '@/app/_services/authService'
+import type { User as UserType } from '@/app/services/authService'
 import { NotificationDropdown } from '@/components/features/notificationDropdown'
 import { UserMenu } from '@/components/features/userMenu'
 import { LanguageSwitcher } from '@/components/ui/languageSwitcher'

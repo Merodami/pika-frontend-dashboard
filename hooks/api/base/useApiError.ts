@@ -1,7 +1,7 @@
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
-import type { ApiError } from '@/lib/api/generated/core/ApiError'
+import { ApiError } from '@/lib/api/generated'
 import { useAuthStore } from '@/store/authStore'
 
 /**
@@ -12,18 +12,41 @@ export function useApiError() {
   const router = useRouter()
   const logout = useAuthStore((state) => state.logout)
 
-  return (error: ApiError | any) => {
-    // SDK ApiError has: status, statusText, body
-    const status = error?.status
-    const body = error?.body
+  return (error: unknown) => {
+    // Handle ApiError instances from generated SDK
+    if (error instanceof ApiError) {
+      const status = error.status
+      const body = error.body as {
+        message?: string
+        details?: Array<{ field: string; message: string }>
+      }
 
-    // Our backend returns errors in this format:
-    // { statusCode: number, error: string, message: string, details?: Array }
-    const errorMessage = body?.message || error?.message || 'An error occurred'
-    const details = body?.details
+      // Our backend returns errors in this format:
+      // { statusCode: number, error: string, message: string, details?: Array }
+      const errorMessage = body?.message || error.message || 'An error occurred'
+      const details = body?.details
 
+      handleSpecificError(status, errorMessage, details)
+      return
+    }
+
+    // Handle standard Error instances
+    if (error instanceof Error) {
+      toast.error(error.message || 'An error occurred')
+      return
+    }
+
+    // Handle unknown error types
+    toast.error('An unexpected error occurred')
+  }
+
+  function handleSpecificError(
+    status: number,
+    errorMessage: string,
+    details?: Array<{ field: string; message: string }>
+  ) {
     // Check if the error message contains specific error codes from backend
-    const hasErrorCode = (code: string) => errorMessage?.includes?.(code)
+    const hasErrorCode = (code: string) => errorMessage.includes(code)
 
     // Handle specific backend error codes
     if (
@@ -113,10 +136,8 @@ export function useApiError() {
     if (process.env.NODE_ENV === 'development') {
       console.error('API Error:', {
         status,
-        statusText: error?.statusText,
-        body,
-        url: error?.url,
         message: errorMessage,
+        details,
       })
     }
   }

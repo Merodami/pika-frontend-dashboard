@@ -1,10 +1,10 @@
 'use server'
 
-import { authPublic } from '@Merodami/pika-api'
+import { authPublic } from '@merodami/pika-api'
 import { redirect } from 'next/navigation'
 import type { z } from 'zod'
 
-import { clearTokens, setTokens } from '@/app/_services/authService'
+import { clearTokens, setTokens } from '@/app/services/authService'
 import { AuthenticationService } from '@/lib/api/generated'
 
 // Server action for login

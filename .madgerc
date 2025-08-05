@@ -1,0 +1,24 @@
+{
+  "detectiveOptions": {
+    "ts": {
+      "skipTypeImports": true
+    },
+    "tsx": {
+      "skipTypeImports": true
+    }
+  },
+  "fileExtensions": ["ts", "tsx"],
+  "excludeRegExp": [
+    "node_modules",
+    ".next",
+    "dist",
+    "coverage",
+    "public",
+    "generated",
+    "lib/api/generated",
+    "reports",
+    ".*\\.test\\.*",
+    ".*\\.spec\\.*"
+  ],
+  "tsConfig": "./tsconfig.json"
+}

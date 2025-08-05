@@ -1,7 +1,7 @@
 // Icons are imported in the client component
 import { getTranslations } from 'next-intl/server'
 
-import type { User } from '@/app/_services/authService'
+import type { User } from '@/app/services/authService'
 import type { Locale } from '@/i18n/config'
 
 import { AdminSidebarClient } from './adminSidebarClient'

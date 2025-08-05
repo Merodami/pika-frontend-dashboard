@@ -1,7 +1,7 @@
-import { UserRole } from '@Merodami/pika-types'
+import { UserRole } from '@merodami/pika-types'
 import { redirect } from 'next/navigation'
 
-import { getCurrentUser } from '@/app/_services/authService'
+import { getCurrentUser } from '@/app/services/authService'
 
 // Force dynamic rendering since we use cookies for authentication
 export const dynamic = 'force-dynamic'

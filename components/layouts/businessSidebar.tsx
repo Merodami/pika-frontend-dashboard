@@ -10,7 +10,7 @@ import {
 } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 
-import type { User } from '@/app/_services/authService'
+import type { User } from '@/app/services/authService'
 import type { Locale } from '@/i18n/config'
 
 import { BusinessSidebarClient } from './businessSidebarClient'

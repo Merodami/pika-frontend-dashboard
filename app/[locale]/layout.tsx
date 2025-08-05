@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 
-import { locales } from '@/i18n/config'
+import { locales, isValidLocale, type Locale } from '@/i18n/config'
 
 interface LocaleLayoutProps {
   children: React.ReactNode
@@ -18,7 +18,7 @@ export default async function LocaleLayout({
   console.log('LocaleLayout: locale:', locale)
 
   // Validate locale
-  if (!locales.includes(locale as (typeof locales)[number])) {
+  if (!isValidLocale(locale)) {
     console.log('LocaleLayout: Invalid locale:', locale)
     notFound()
   }
@@ -37,5 +37,5 @@ export default async function LocaleLayout({
 
 // Generate static params for all locales
 export async function generateStaticParams() {
-  return locales.map((locale) => ({ locale }))
+  return locales.map((locale: Locale) => ({ locale }))
 }

@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 
-import type { User as UserType } from '@/app/_services/authService'
+import type { User as UserType } from '@/app/services/authService'
 
 interface UserMenuProps {
   user: UserType

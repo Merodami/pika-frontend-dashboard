@@ -1,8 +1,8 @@
-import { UserRole } from '@Merodami/pika-types'
+import { UserRole } from '@merodami/pika-types'
 import { getTranslations } from 'next-intl/server'
 import { Suspense } from 'react'
 
-import { requireAuth } from '@/app/_services/authService'
+import { requireAuth } from '@/app/services/authService'
 import { AdminSidebar } from '@/components/layouts/adminSidebar'
 import { BusinessSidebar } from '@/components/layouts/businessSidebar'
 import { DashboardHeader } from '@/components/layouts/dashboardHeader'

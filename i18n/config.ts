@@ -1,11 +1,21 @@
-import { SupportedLanguage, type LanguageCode } from '@Merodami/pika-types'
+import { SupportedLanguage, type LanguageCode } from '@merodami/pika-types'
+import { includes } from 'lodash-es'
 
 export const locales = Object.values(SupportedLanguage)
 export type Locale = LanguageCode
 
 export const defaultLocale: Locale = SupportedLanguage.SPANISH
 
-export const localeConfig = {
+export const localeConfig: Record<
+  Locale,
+  {
+    name: string
+    flag: string
+    currency: string
+    dateFormat: string
+    direction: 'ltr' | 'rtl'
+  }
+> = {
   es: {
     name: 'Español',
     flag: '🇪🇸',
@@ -27,7 +37,7 @@ export const localeConfig = {
     dateFormat: 'dd/MM/yyyy',
     direction: 'ltr' as const,
   },
-} as const
+}
 
 export function getLocaleConfig(locale: Locale) {
   return localeConfig[locale]
@@ -35,5 +45,5 @@ export function getLocaleConfig(locale: Locale) {
 
 // Check if a string is a valid locale
 export function isValidLocale(locale: string): locale is Locale {
-  return locales.includes(locale as Locale)
+  return includes(locales, locale)
 }

@@ -1,8 +1,9 @@
-import { type UserRoleType } from '@Merodami/pika-types'
+import { type UserRoleType } from '@merodami/pika-types'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
 import { api } from '@/lib/api/client'
+import type { UserProfileResponse } from '@/lib/api/generated'
 
 // Simple storage helpers (since we removed lib/auth/tokens.ts)
 function getStoredUser(): User | null {
@@ -46,18 +47,19 @@ interface AuthState {
 }
 
 // Convert UserProfile to User interface
-function mapUserDtoToUser(dto: any): User {
+function mapUserProfileToUser(profile: UserProfileResponse): User {
   return {
-    id: dto.id,
-    email: dto.email,
+    id: profile.id,
+    email: profile.email,
     name:
-      dto.first_name && dto.last_name
-        ? `${dto.first_name} ${dto.last_name}`
-        : dto.email,
-    role: dto.role as UserRoleType,
-    businessId: dto.business_id || undefined,
-    createdAt: dto.created_at,
-    updatedAt: dto.updated_at,
+      profile.displayName ||
+      (profile.firstName && profile.lastName
+        ? `${profile.firstName} ${profile.lastName}`
+        : profile.email),
+    role: profile.role as UserRoleType,
+    businessId: undefined, // TODO: Get from business endpoint if needed
+    createdAt: profile.createdAt,
+    updatedAt: profile.updatedAt,
   }
 }
 
@@ -85,7 +87,7 @@ export const useAuthStore = create<AuthState>()(
 
           // Get user profile after login
           const userResponse = await api.users.getUserProfile()
-          const user = mapUserDtoToUser(userResponse)
+          const user = mapUserProfileToUser(userResponse)
 
           setStoredUser(user)
 
@@ -94,9 +96,14 @@ export const useAuthStore = create<AuthState>()(
             isAuthenticated: true,
             isLoading: false,
           })
-        } catch (error: any) {
+        } catch (error: unknown) {
+          const errorMessage =
+            error && typeof error === 'object' && 'message' in error
+              ? String((error as { message: unknown }).message)
+              : 'Login failed'
+
           set({
-            error: error?.body?.message || error?.message || 'Login failed',
+            error: errorMessage,
             isLoading: false,
             isAuthenticated: false,
             user: null,
@@ -134,10 +141,14 @@ export const useAuthStore = create<AuthState>()(
 
           // Return the response so caller knows what happened
           return response
-        } catch (error: any) {
+        } catch (error: unknown) {
+          const errorMessage =
+            error && typeof error === 'object' && 'message' in error
+              ? String((error as { message: unknown }).message)
+              : 'Registration failed'
+
           set({
-            error:
-              error?.body?.message || error?.message || 'Registration failed',
+            error: errorMessage,
             isLoading: false,
           })
           throw error
@@ -175,7 +186,7 @@ export const useAuthStore = create<AuthState>()(
         try {
           // Verify token is still valid by fetching user profile
           const userResponse = await api.users.getUserProfile()
-          const user = mapUserDtoToUser(userResponse)
+          const user = mapUserProfileToUser(userResponse)
 
           setStoredUser(user)
           set({ user, isAuthenticated: true })

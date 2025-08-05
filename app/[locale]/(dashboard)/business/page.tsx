@@ -1,10 +1,11 @@
 import { getTranslations } from 'next-intl/server'
 import { Suspense } from 'react'
 
-import { requireBusiness } from '@/app/_services/authService'
+import { requireBusiness } from '@/app/services/authService'
 import { BusinessDashboardMetrics } from '@/components/features/businessDashboardMetrics'
 import { RecentCustomers } from '@/components/features/recentCustomers'
 import { VoucherPerformance } from '@/components/features/voucherPerformance'
+import { DashboardPageLayout } from '@/components/layouts/dashboardPageLayout'
 import { LoadingSkeleton } from '@/components/ui/loadingSkeleton'
 import type { Locale } from '@/i18n/config'
 
@@ -25,19 +26,13 @@ export default async function BusinessDashboardPage({
   const t = await getTranslations({ locale })
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900">
-          {t('dashboard.welcome', { name: user.firstName })}
-        </h1>
-        <p className="text-gray-600 mt-1">{t('dashboard.business.subtitle')}</p>
-      </div>
-
-      {/* Business Metrics */}
-      <Suspense fallback={<LoadingSkeleton />}>
+    <DashboardPageLayout
+      title={t('dashboard.welcome', { name: user.firstName })}
+      subtitle={t('dashboard.business.subtitle')}
+      metricsSection={
         <BusinessDashboardMetrics businessId={businessId} locale={locale} />
-      </Suspense>
-
+      }
+    >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Voucher Performance */}
         <Suspense fallback={<LoadingSkeleton />}>
@@ -49,6 +44,6 @@ export default async function BusinessDashboardPage({
           <RecentCustomers />
         </Suspense>
       </div>
-    </div>
+    </DashboardPageLayout>
   )
 }

@@ -279,30 +279,106 @@ yarn dev
 
 ## Development
 
-### Code Style
+### Code Quality & Scripts
 
-The project enforces consistent code style through:
+The project enforces high code quality standards through comprehensive tooling:
 
-- **ESLint**: Configured with Next.js best practices
-- **Prettier**: Automatic code formatting
-- **TypeScript**: Strict mode enabled
+#### Quick Commands
 
 ```bash
-# Run linting
-yarn lint
+# Run all checks (typecheck + format + lint)
+npm run check
 
-# Fix linting issues
-yarn lint:fix
+# Fix all auto-fixable issues
+npm run check:fix
 
-# Format code
-yarn format:fix
+# Run before committing (includes build)
+npm run pre-commit
 
-# Type checking
-yarn typecheck
-
-# Run all validations
-yarn validate
+# Basic validation
+npm run validate
 ```
+
+#### Code Style & Linting
+
+```bash
+# ESLint - check for code issues
+npm run lint
+
+# ESLint - auto-fix issues
+npm run lint:fix
+
+# Prettier - check formatting
+npm run format
+
+# Prettier - auto-format code
+npm run format:fix
+
+# TypeScript - type checking
+npm run typecheck
+```
+
+#### Advanced Quality Analysis
+
+```bash
+# Run all quality checks
+npm run quality:all
+
+# Type coverage analysis
+npm run quality:type-coverage
+
+# Find circular dependencies
+npm run quality:circular
+
+# Find duplicate code
+npm run quality:duplicates
+
+# Find unused code/dependencies
+npm run quality:unused
+
+# Analyze bundle size
+npm run quality:bundle
+
+# Interactive bundle analysis
+npm run analyze
+```
+
+#### Testing
+
+```bash
+# Run tests with Vitest
+npm test
+
+# Run tests with coverage
+npm run test:coverage
+
+# Open Vitest UI
+npm run test:ui
+
+# Run E2E tests with Playwright
+npm run test:e2e
+```
+
+#### Development
+
+```bash
+# Start dev server with Turbopack
+npm run dev
+
+# Build for production
+npm run build
+
+# Start production server
+npm start
+```
+
+### Code Standards
+
+- **TypeScript**: Strict mode enabled, 100% type safety
+- **ESLint**: Next.js best practices + security + code quality plugins
+- **Prettier**: Consistent formatting across the codebase
+- **Husky**: Pre-commit hooks for automatic quality checks
+- **Bundle Size**: Optimized with tree-shaking and code splitting
 
 ### Component Development Guidelines
 

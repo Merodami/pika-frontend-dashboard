@@ -1,11 +1,16 @@
 import 'server-only'
 
-import { UserRole, type UserRoleType } from '@Merodami/pika-types'
-import { cookies } from 'next/headers'
+import { UserRole, type UserRoleType } from '@merodami/pika-types'
 import { cache } from 'react'
 
 import { UsersService } from '@/lib/api/generated'
 import { configureApiClient } from '@/lib/api/serverClient'
+import {
+  clearTokens,
+  getAccessToken,
+  getRefreshToken,
+  setTokens,
+} from './tokenService'
 
 export interface User {
   id: string
@@ -17,9 +22,8 @@ export interface User {
   updatedAt: string
 }
 
-// Constants
-const ACCESS_TOKEN_COOKIE = 'pika-access-token'
-const REFRESH_TOKEN_COOKIE = 'pika-refresh-token'
+// Re-export token functions for backward compatibility
+export { clearTokens, getAccessToken, getRefreshToken, setTokens }
 
 // Cache the current user for the duration of the request
 export const getCurrentUser = cache(async (): Promise<User | null> => {
@@ -43,49 +47,9 @@ export const getCurrentUser = cache(async (): Promise<User | null> => {
       updatedAt: response.updatedAt,
     }
   } catch (error) {
-    console.error('Failed to get current user:', error)
-
     return null
   }
 })
-
-export async function getAccessToken(): Promise<string | null> {
-  const cookieStore = await cookies()
-
-  return cookieStore.get(ACCESS_TOKEN_COOKIE)?.value ?? null
-}
-
-export async function getRefreshToken(): Promise<string | null> {
-  const cookieStore = await cookies()
-
-  return cookieStore.get(REFRESH_TOKEN_COOKIE)?.value ?? null
-}
-
-export async function setTokens(accessToken: string, refreshToken: string) {
-  const cookieStore = await cookies()
-
-  // Set secure, httpOnly cookies
-  cookieStore.set(ACCESS_TOKEN_COOKIE, accessToken, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
-    maxAge: 60 * 60 * 24, // 24 hours
-  })
-
-  cookieStore.set(REFRESH_TOKEN_COOKIE, refreshToken, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
-    maxAge: 60 * 60 * 24 * 30, // 30 days
-  })
-}
-
-export async function clearTokens() {
-  const cookieStore = await cookies()
-
-  cookieStore.delete(ACCESS_TOKEN_COOKIE)
-  cookieStore.delete(REFRESH_TOKEN_COOKIE)
-}
 
 // Protect server actions and pages
 export async function requireAuth() {

@@ -8,13 +8,14 @@ import {
   UserOutlined,
 } from '@ant-design/icons'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Alert, Button, Checkbox, Form, Input } from 'antd'
+import { Button, Checkbox, Form, Input } from 'antd'
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { z } from 'zod'
 
 import { register as registerAction } from '@/app/actions/auth'
+import { AuthFormWrapper } from '@/components/auth/authFormWrapper'
 import {
   RegisterFormSchema,
   transformRegisterToAPI,
@@ -75,186 +76,173 @@ export function RegisterForm() {
   }
 
   return (
-    <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-      {error && (
-        <Alert
-          message={error}
-          type="error"
-          showIcon
-          closable
-          onClose={() => setError(null)}
-          className="mb-4"
-        />
-      )}
-
-      <Form
-        layout="vertical"
-        onFinish={handleSubmit(onSubmit)}
-        autoComplete="off"
-      >
-        <div className="grid grid-cols-2 gap-4">
-          <Form.Item
-            label={t('firstName')}
-            validateStatus={errors.firstName ? 'error' : ''}
-            help={errors.firstName?.message}
-          >
-            <Controller
-              name="firstName"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  prefix={<UserOutlined />}
-                  placeholder={t('firstName')}
-                  size="large"
-                  autoComplete="given-name"
-                />
-              )}
-            />
-          </Form.Item>
-
-          <Form.Item
-            label={t('lastName')}
-            validateStatus={errors.lastName ? 'error' : ''}
-            help={errors.lastName?.message}
-          >
-            <Controller
-              name="lastName"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  prefix={<UserOutlined />}
-                  placeholder={t('lastName')}
-                  size="large"
-                  autoComplete="family-name"
-                />
-              )}
-            />
-          </Form.Item>
-        </div>
-
+    <AuthFormWrapper
+      error={error}
+      onError={setError}
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <div className="grid grid-cols-2 gap-4">
         <Form.Item
-          label={t('email')}
-          validateStatus={errors.email ? 'error' : ''}
-          help={errors.email?.message}
+          label={t('firstName')}
+          validateStatus={errors.firstName ? 'error' : ''}
+          help={errors.firstName?.message}
         >
           <Controller
-            name="email"
+            name="firstName"
             control={control}
             render={({ field }) => (
               <Input
                 {...field}
-                prefix={<MailOutlined />}
-                placeholder={t('email')}
+                prefix={<UserOutlined />}
+                placeholder={t('firstName')}
                 size="large"
-                autoComplete="email"
+                autoComplete="given-name"
               />
             )}
           />
         </Form.Item>
 
         <Form.Item
-          label={t('password')}
-          validateStatus={errors.password ? 'error' : ''}
-          help={errors.password?.message}
+          label={t('lastName')}
+          validateStatus={errors.lastName ? 'error' : ''}
+          help={errors.lastName?.message}
         >
           <Controller
-            name="password"
+            name="lastName"
             control={control}
             render={({ field }) => (
-              <Input.Password
+              <Input
                 {...field}
-                prefix={<LockOutlined />}
-                placeholder={t('password')}
+                prefix={<UserOutlined />}
+                placeholder={t('lastName')}
                 size="large"
-                autoComplete="new-password"
-                iconRender={(visible) =>
-                  visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                }
+                autoComplete="family-name"
               />
             )}
           />
         </Form.Item>
+      </div>
 
-        <Form.Item
-          label={t('confirmPassword')}
-          validateStatus={errors.confirmPassword ? 'error' : ''}
-          help={errors.confirmPassword?.message}
+      <Form.Item
+        label={t('email')}
+        validateStatus={errors.email ? 'error' : ''}
+        help={errors.email?.message}
+      >
+        <Controller
+          name="email"
+          control={control}
+          render={({ field }) => (
+            <Input
+              {...field}
+              prefix={<MailOutlined />}
+              placeholder={t('email')}
+              size="large"
+              autoComplete="email"
+            />
+          )}
+        />
+      </Form.Item>
+
+      <Form.Item
+        label={t('password')}
+        validateStatus={errors.password ? 'error' : ''}
+        help={errors.password?.message}
+      >
+        <Controller
+          name="password"
+          control={control}
+          render={({ field }) => (
+            <Input.Password
+              {...field}
+              prefix={<LockOutlined />}
+              placeholder={t('password')}
+              size="large"
+              autoComplete="new-password"
+              iconRender={(visible) =>
+                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+              }
+            />
+          )}
+        />
+      </Form.Item>
+
+      <Form.Item
+        label={t('confirmPassword')}
+        validateStatus={errors.confirmPassword ? 'error' : ''}
+        help={errors.confirmPassword?.message}
+      >
+        <Controller
+          name="confirmPassword"
+          control={control}
+          render={({ field }) => (
+            <Input.Password
+              {...field}
+              prefix={<LockOutlined />}
+              placeholder={t('confirmPassword')}
+              size="large"
+              autoComplete="new-password"
+              iconRender={(visible) =>
+                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+              }
+            />
+          )}
+        />
+      </Form.Item>
+
+      <Form.Item
+        validateStatus={errors.acceptTerms ? 'error' : ''}
+        help={errors.acceptTerms?.message}
+      >
+        <Controller
+          name="acceptTerms"
+          control={control}
+          render={({ field: { value, onChange } }) => (
+            <Checkbox
+              checked={value}
+              onChange={(e) => onChange(e.target.checked)}
+            >
+              {t('acceptTerms')}
+            </Checkbox>
+          )}
+        />
+      </Form.Item>
+
+      <Form.Item>
+        <Controller
+          name="marketingConsent"
+          control={control}
+          render={({ field: { value, onChange } }) => (
+            <Checkbox
+              checked={value}
+              onChange={(e) => onChange(e.target.checked)}
+            >
+              {t('marketingConsent')}
+            </Checkbox>
+          )}
+        />
+      </Form.Item>
+
+      <Form.Item>
+        <Button
+          type="primary"
+          htmlType="submit"
+          size="large"
+          loading={isLoading}
+          className="w-full"
         >
-          <Controller
-            name="confirmPassword"
-            control={control}
-            render={({ field }) => (
-              <Input.Password
-                {...field}
-                prefix={<LockOutlined />}
-                placeholder={t('confirmPassword')}
-                size="large"
-                autoComplete="new-password"
-                iconRender={(visible) =>
-                  visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                }
-              />
-            )}
-          />
-        </Form.Item>
+          {t('button')}
+        </Button>
+      </Form.Item>
 
-        <Form.Item
-          validateStatus={errors.acceptTerms ? 'error' : ''}
-          help={errors.acceptTerms?.message}
+      <div className="text-center">
+        <span className="text-gray-600">{t('haveAccount')} </span>
+        <LocalizedLink
+          href="/login"
+          className="font-medium text-blue-600 hover:text-blue-500"
         >
-          <Controller
-            name="acceptTerms"
-            control={control}
-            render={({ field: { value, onChange } }) => (
-              <Checkbox
-                checked={value}
-                onChange={(e) => onChange(e.target.checked)}
-              >
-                {t('acceptTerms')}
-              </Checkbox>
-            )}
-          />
-        </Form.Item>
-
-        <Form.Item>
-          <Controller
-            name="marketingConsent"
-            control={control}
-            render={({ field: { value, onChange } }) => (
-              <Checkbox
-                checked={value}
-                onChange={(e) => onChange(e.target.checked)}
-              >
-                {t('marketingConsent')}
-              </Checkbox>
-            )}
-          />
-        </Form.Item>
-
-        <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            size="large"
-            loading={isLoading}
-            className="w-full"
-          >
-            {t('button')}
-          </Button>
-        </Form.Item>
-
-        <div className="text-center">
-          <span className="text-gray-600">{t('haveAccount')} </span>
-          <LocalizedLink
-            href="/login"
-            className="font-medium text-blue-600 hover:text-blue-500"
-          >
-            {t('signIn')}
-          </LocalizedLink>
-        </div>
-      </Form>
-    </div>
+          {t('signIn')}
+        </LocalizedLink>
+      </div>
+    </AuthFormWrapper>
   )
 }

@@ -1,0 +1,25 @@
+{
+  "entry": ["app/**/*.{ts,tsx}"],
+  "project": ["**/*.{ts,tsx,js,jsx}"],
+  "ignore": [
+    "**/node_modules/**",
+    "**/.next/**",
+    "**/dist/**",
+    "**/coverage/**",
+    "**/*.test.*",
+    "**/*.spec.*",
+    "**/generated/**",
+    "**/lib/api/generated/**",
+    "**/reports/**"
+  ],
+  "ignoreDependencies": [
+    "lint-staged",
+    "@ant-design/icons",
+    "@testing-library/jest-dom",
+    "@testing-library/react",
+    "happy-dom",
+    "postcss",
+    "tailwindcss"
+  ],
+  "ignoreExportsUsedInFile": true
+}

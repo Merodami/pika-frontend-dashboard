@@ -14,6 +14,19 @@ import { queryKeys } from '@/lib/api/queryKeys'
 import { useApiMutation } from '../base/useApiMutation'
 import { useApiQuery } from '../base/useApiQuery'
 
+// Helper function to invalidate user queries
+function invalidateUserQueries(
+  queryClient: ReturnType<typeof useQueryClient>,
+  userId: string
+) {
+  queryClient.invalidateQueries({
+    queryKey: queryKeys.users.detail(userId),
+  })
+  queryClient.invalidateQueries({
+    queryKey: queryKeys.users.lists(),
+  })
+}
+
 /**
  * Clean filters by removing null/undefined/empty values
  */
@@ -123,14 +136,7 @@ export function useVerifyUser() {
         },
       }),
     successMessage: 'User verification status updated',
-    onSuccess: (_, { id }) => {
-      queryClient.invalidateQueries({
-        queryKey: queryKeys.users.detail(id),
-      })
-      queryClient.invalidateQueries({
-        queryKey: queryKeys.users.lists(),
-      })
-    },
+    onSuccess: (_, { id }) => invalidateUserQueries(queryClient, id),
   })
 }
 
@@ -153,14 +159,7 @@ export function useToggleUserBan() {
           })
         : adminAdapter.users.unban({ id }),
     successMessage: 'User ban status updated successfully',
-    onSuccess: (_, { id }) => {
-      queryClient.invalidateQueries({
-        queryKey: queryKeys.users.detail(id),
-      })
-      queryClient.invalidateQueries({
-        queryKey: queryKeys.users.lists(),
-      })
-    },
+    onSuccess: (_, { id }) => invalidateUserQueries(queryClient, id),
   })
 }
 

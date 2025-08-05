@@ -1,7 +1,8 @@
 import { cookies } from 'next/headers'
 import { getRequestConfig } from 'next-intl/server'
 
-import { defaultLocale, isValidLocale } from './config'
+import { defaultLocale, isValidLocale, type Locale } from './config'
+import type { Messages } from '../types/messages'
 
 export default getRequestConfig(async ({ requestLocale }) => {
   // Determine the locale
@@ -20,9 +21,13 @@ export default getRequestConfig(async ({ requestLocale }) => {
     }
   }
 
+  const { default: messages }: { default: Messages } = await import(
+    `../messages/${locale}.json`
+  )
+
   return {
-    locale,
-    messages: (await import(`../messages/${locale}.json`)).default,
+    locale: locale as Locale,
+    messages,
     // Optional: Configure time zone, formats, etc.
     timeZone: 'America/Asuncion', // Paraguay timezone
     now: new Date(),

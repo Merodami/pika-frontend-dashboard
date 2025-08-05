@@ -1,7 +1,7 @@
 import 'server-only'
 
 import { OpenAPI } from './generated'
-import { getAccessToken } from '@/app/_services/authService'
+import { getAccessToken } from '@/app/services/tokenService'
 
 /**
  * Configure the API client for server-side requests

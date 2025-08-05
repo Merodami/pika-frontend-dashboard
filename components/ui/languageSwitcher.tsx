@@ -17,10 +17,12 @@ export function LanguageSwitcher() {
 
   const handleLanguageChange = (newLocale: string) => {
     // Save any active form data before switching
-    const activeForm = document.querySelector('form[data-form-id]')
+    const activeForm = document.querySelector(
+      'form[data-form-id]'
+    ) as HTMLFormElement | null
     if (activeForm) {
       const formId = activeForm.getAttribute('data-form-id')
-      const formData = new FormData(activeForm as HTMLFormElement)
+      const formData = new FormData(activeForm)
       const data = Object.fromEntries(formData)
 
       // Save to Zustand store
@@ -38,7 +40,9 @@ export function LanguageSwitcher() {
       const newPath = pathname.replace(/^\/[^/]+/, `/${newLocale}`)
 
       // Save locale preference to Zustand (persisted to localStorage)
-      setLocale(newLocale as Locale)
+      if (locales.includes(newLocale as Locale)) {
+        setLocale(newLocale as Locale)
+      }
 
       // Navigate to new locale path
       router.push(newPath)

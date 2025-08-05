@@ -1,6 +1,7 @@
 import { mapValues, isFunction } from 'lodash-es'
 import { toast } from 'sonner'
 
+import { ApiError } from './generated/core/ApiError'
 import { OpenAPI } from './generated/core/OpenAPI'
 import { AuthenticationService } from './generated/services/AuthenticationService'
 import { BusinessManagementService } from './generated/services/BusinessManagementService'
@@ -32,41 +33,35 @@ OpenAPI.HEADERS = async () => ({
 // Token refresh is handled server-side in the API route handler
 // No client-side token management needed with BFF pattern
 
-// API error type
-interface ApiError {
-  status?: number
-  body?: {
-    message?: string
-  }
-  message?: string
-}
-
 // Handle API errors with toast notifications
 function handleApiError(error: unknown): never {
-  const apiError = error as ApiError
-  if (apiError?.status && apiError.status >= 400 && apiError.status < 500) {
-    const message =
-      apiError?.body?.message || apiError?.message || 'Request failed'
-
-    toast.error(message)
-  } else if (apiError?.status && apiError.status >= 500) {
-    toast.error('Server error. Please try again later.')
-  } else if (apiError?.message) {
-    toast.error(apiError.message)
+  if (error instanceof ApiError) {
+    if (error.status && error.status >= 400 && error.status < 500) {
+      const message =
+        (error.body as { message?: string })?.message ||
+        error.message ||
+        'Request failed'
+      toast.error(message)
+    } else if (error.status && error.status >= 500) {
+      toast.error('Server error. Please try again later.')
+    } else if (error.message) {
+      toast.error(error.message)
+    }
+  } else if (error instanceof Error) {
+    toast.error(error.message)
+  } else {
+    toast.error('An unexpected error occurred')
   }
   throw error
 }
 
 // Create wrapper for 401 handling
-function wrapWithAuth<T extends (...args: unknown[]) => Promise<unknown>>(
-  fn: T
-): T {
-  return (async (...args: unknown[]) => {
+function wrapWithAuth<T extends (...args: any[]) => Promise<any>>(fn: T): T {
+  return (async (...args: Parameters<T>): Promise<ReturnType<T>> => {
     try {
       return await fn(...args)
     } catch (error) {
-      const apiError = error as ApiError
-      if (apiError?.status === 401) {
+      if (error instanceof ApiError && error.status === 401) {
         // Token expired, redirect to login
         window.location.href = '/login'
         throw error
@@ -77,13 +72,12 @@ function wrapWithAuth<T extends (...args: unknown[]) => Promise<unknown>>(
 }
 
 // Wrap service methods with auth handling
-function wrapService<T>(service: T): T {
+function wrapService<T extends Record<string, any>>(service: T): T {
   // Use lodash mapValues to transform object properties
-  return mapValues(service as object, (value) => {
+  return mapValues(service, (value) => {
     if (isFunction(value)) {
       // Wrap functions with auth handling
-      // Type assertion needed because lodash isFunction doesn't narrow types
-      const fn = value as (...args: unknown[]) => Promise<unknown>
+      const fn = value as (...args: any[]) => Promise<any>
       return wrapWithAuth(fn.bind(service))
     }
     return value

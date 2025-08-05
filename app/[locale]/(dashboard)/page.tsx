@@ -1,7 +1,7 @@
-import { UserRole } from '@Merodami/pika-types'
+import { UserRole } from '@merodami/pika-types'
 import { redirect } from 'next/navigation'
 
-import { requireAuth } from '@/app/_services/authService'
+import { requireAuth } from '@/app/services/authService'
 import type { Locale } from '@/i18n/config'
 
 // Force dynamic rendering since we use cookies for authentication

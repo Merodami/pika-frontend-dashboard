@@ -20,7 +20,7 @@ interface AppState {
   setSidebarCollapsed: (collapsed: boolean) => void
   setTheme: (theme: 'light' | 'dark') => void
   setLocale: (locale: Locale) => void
-  saveFormDraft: (formId: string, data: any) => void
+  saveFormDraft: (formId: string, data: Record<string, any>) => void
   clearFormDraft: (formId: string) => void
   clearAllDrafts: () => void
   setLanguageSwitching: (value: boolean) => void
@@ -48,16 +48,16 @@ export const useAppStore = create<AppState>()(
 
       setLocale: (locale) => set({ locale }),
 
-      saveFormDraft: (formId, data) =>
+      saveFormDraft: (formId: string, data: Record<string, any>) =>
         set((state) => ({
           formDrafts: { ...state.formDrafts, [formId]: data },
         })),
 
-      clearFormDraft: (formId) =>
+      clearFormDraft: (formId: string) =>
         set((state) => {
-          const { [formId]: _, ...rest } = state.formDrafts
-
-          return { formDrafts: rest }
+          const newDrafts = { ...state.formDrafts }
+          delete newDrafts[formId]
+          return { formDrafts: newDrafts }
         }),
 
       clearAllDrafts: () => set({ formDrafts: {} }),
