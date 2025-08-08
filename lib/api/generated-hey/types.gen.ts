@@ -4602,6 +4602,6491 @@ export type WebhookErrorResponse = {
 };
 
 /**
+ * Field to sort users by (admin view)
+ */
+export type AdminUserSortBy = 'createdAt' | 'lastLoginAt' | 'email';
+
+/**
+ * Field to sort businesses by (admin view)
+ */
+export type AdminBusinessSortBy = 'businessName' | 'avgRating' | 'verified' | 'active' | 'createdAt' | 'updatedAt' | 'userId' | 'categoryId';
+
+/**
+ * Business information for admin management
+ */
+export type AdminBusinessResponse = {
+    /**
+     * Universally Unique Identifier
+     */
+    id: string;
+    /**
+     * User who owns this business
+     */
+    userId: string;
+    /**
+     * Translation key for business name
+     */
+    businessNameKey: string;
+    /**
+     * Translation key for business description
+     */
+    businessDescriptionKey?: string;
+    /**
+     * Category this business belongs to
+     */
+    categoryId: string;
+    /**
+     * Whether business is verified
+     */
+    verified?: boolean;
+    /**
+     * Whether business is active
+     */
+    active?: boolean;
+    /**
+     * Average rating of the business
+     */
+    avgRating?: number;
+    /**
+     * Soft deletion timestamp
+     */
+    deletedAt: string | null;
+    /**
+     * Business owner details when ?include=user
+     */
+    user?: {
+        id: string;
+        email: string;
+        firstName: string;
+        lastName: string;
+        phoneNumber?: string;
+        /**
+         * Date in YYYY-MM-DD format
+         */
+        dateOfBirth?: string;
+        avatarUrl?: string;
+        /**
+         * User account status
+         */
+        status: 'active' | 'suspended' | 'banned' | 'unconfirmed';
+        /**
+         * User role in the system
+         */
+        role: 'admin' | 'customer' | 'business';
+        emailVerified: boolean;
+        phoneVerified: boolean;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        lastLoginAt?: string;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    };
+    category?: CategoryResponse;
+    /**
+     * When the record was created
+     */
+    createdAt: string;
+    /**
+     * When the record was last updated
+     */
+    updatedAt: string;
+};
+
+/**
+ * Create a new business
+ */
+export type CreateBusinessRequest = {
+    /**
+     * User who will own this business
+     */
+    userId: string;
+    /**
+     * Business name
+     */
+    businessName: string;
+    /**
+     * Business description
+     */
+    businessDescription?: string;
+    /**
+     * Category this business belongs to
+     */
+    categoryId: string;
+    /**
+     * Whether business is verified
+     */
+    verified?: boolean;
+    /**
+     * Whether business is active
+     */
+    active?: boolean;
+};
+
+/**
+ * Update business information
+ */
+export type UpdateBusinessRequest = {
+    /**
+     * Business name
+     */
+    businessName?: string;
+    /**
+     * Business description
+     */
+    businessDescription?: string;
+    /**
+     * Category this business belongs to
+     */
+    categoryId?: string;
+    /**
+     * Whether business is verified
+     */
+    verified?: boolean;
+    /**
+     * Whether business is active
+     */
+    active?: boolean;
+};
+
+export type AdminBusinessQueryParams = {
+    /**
+     * Page number
+     */
+    page?: number;
+    /**
+     * Items per page
+     */
+    limit?: number;
+    sortBy?: 'businessName' | 'avgRating' | 'verified' | 'active' | 'createdAt' | 'updatedAt';
+    /**
+     * Sort order
+     */
+    sortOrder?: 'asc' | 'desc';
+    /**
+     * Search query
+     */
+    search?: string;
+    /**
+     * Filter by owner
+     */
+    userId?: string;
+    /**
+     * Filter by category
+     */
+    categoryId?: string;
+    /**
+     * Filter by status
+     */
+    status?: 'all' | 'active' | 'inactive' | 'verified' | 'unverified';
+    /**
+     * Filter by verification status
+     */
+    verified?: boolean;
+    /**
+     * Filter by active status
+     */
+    active?: boolean;
+    /**
+     * Minimum rating filter
+     */
+    minRating?: number;
+    /**
+     * Maximum rating filter
+     */
+    maxRating?: number;
+    /**
+     * Include soft deleted businesses
+     */
+    includeDeleted?: boolean;
+    /**
+     * Created date from
+     */
+    createdFrom?: string;
+    /**
+     * Created date to
+     */
+    createdTo?: string;
+    /**
+     * Updated date from
+     */
+    updatedFrom?: string;
+    /**
+     * Updated date to
+     */
+    updatedTo?: string;
+    /**
+     * Comma-separated relations: user,category
+     */
+    include?: string;
+};
+
+/**
+ * Paginated response
+ */
+export type AdminBusinessListResponse = {
+    /**
+     * Page items
+     */
+    data: Array<{
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        /**
+         * User who owns this business
+         */
+        userId: string;
+        /**
+         * Translation key for business name
+         */
+        businessNameKey: string;
+        /**
+         * Translation key for business description
+         */
+        businessDescriptionKey?: string;
+        /**
+         * Category this business belongs to
+         */
+        categoryId: string;
+        /**
+         * Whether business is verified
+         */
+        verified?: boolean;
+        /**
+         * Whether business is active
+         */
+        active?: boolean;
+        /**
+         * Average rating of the business
+         */
+        avgRating?: number;
+        /**
+         * Soft deletion timestamp
+         */
+        deletedAt: string | null;
+        /**
+         * Business owner details when ?include=user
+         */
+        user?: {
+            id: string;
+            email: string;
+            firstName: string;
+            lastName: string;
+            phoneNumber?: string;
+            /**
+             * Date in YYYY-MM-DD format
+             */
+            dateOfBirth?: string;
+            avatarUrl?: string;
+            /**
+             * User account status
+             */
+            status: 'active' | 'suspended' | 'banned' | 'unconfirmed';
+            /**
+             * User role in the system
+             */
+            role: 'admin' | 'customer' | 'business';
+            emailVerified: boolean;
+            phoneVerified: boolean;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            lastLoginAt?: string;
+            /**
+             * When the record was created
+             */
+            createdAt: string;
+            /**
+             * When the record was last updated
+             */
+            updatedAt: string;
+        };
+        category?: CategoryResponse;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    }>;
+    /**
+     * Pagination information
+     */
+    pagination: {
+        /**
+         * Current page number
+         */
+        page: number;
+        /**
+         * Items per page
+         */
+        limit: number;
+        /**
+         * Total number of items
+         */
+        total: number;
+        /**
+         * Total number of pages
+         */
+        totalPages: number;
+        /**
+         * Whether there is a next page
+         */
+        hasNext: boolean;
+        /**
+         * Whether there is a previous page
+         */
+        hasPrev: boolean;
+    };
+};
+
+/**
+ * Toggle business verification status
+ */
+export type ToggleBusinessVerificationRequest = {
+    /**
+     * New verification status
+     */
+    verified: boolean;
+};
+
+/**
+ * Toggle business activation status
+ */
+export type ToggleBusinessActivationRequest = {
+    /**
+     * New activation status
+     */
+    active: boolean;
+};
+
+/**
+ * Update multiple businesses at once
+ */
+export type BulkBusinessUpdateRequest = {
+    businessIds: Array<string>;
+    updates: {
+        active?: boolean;
+        verified?: boolean;
+        /**
+         * Universally Unique Identifier
+         */
+        categoryId?: string;
+    };
+};
+
+/**
+ * Bulk business operation result
+ */
+export type BulkBusinessOperationResponse = {
+    successful: number;
+    failed: number;
+    errors?: Array<{
+        /**
+         * Universally Unique Identifier
+         */
+        businessId: string;
+        error: string;
+    }>;
+};
+
+/**
+ * Delete multiple businesses
+ */
+export type BulkDeleteBusinessesRequest = {
+    businessIds: Array<string>;
+};
+
+/**
+ * Update business rating data
+ */
+export type UpdateBusinessRatingRequest = {
+    /**
+     * New rating value for the business
+     */
+    rating: number;
+};
+
+/**
+ * Update business verification status via PATCH
+ */
+export type PatchBusinessVerificationRequest = {
+    /**
+     * New verification status
+     */
+    verified: boolean;
+};
+
+/**
+ * Business information for admin management
+ */
+export type PatchBusinessVerificationResponse = {
+    /**
+     * Universally Unique Identifier
+     */
+    id: string;
+    /**
+     * User who owns this business
+     */
+    userId: string;
+    /**
+     * Translation key for business name
+     */
+    businessNameKey: string;
+    /**
+     * Translation key for business description
+     */
+    businessDescriptionKey?: string;
+    /**
+     * Category this business belongs to
+     */
+    categoryId: string;
+    /**
+     * Whether business is verified
+     */
+    verified?: boolean;
+    /**
+     * Whether business is active
+     */
+    active?: boolean;
+    /**
+     * Average rating of the business
+     */
+    avgRating?: number;
+    /**
+     * Soft deletion timestamp
+     */
+    deletedAt: string | null;
+    /**
+     * Business owner details when ?include=user
+     */
+    user?: {
+        id: string;
+        email: string;
+        firstName: string;
+        lastName: string;
+        phoneNumber?: string;
+        /**
+         * Date in YYYY-MM-DD format
+         */
+        dateOfBirth?: string;
+        avatarUrl?: string;
+        /**
+         * User account status
+         */
+        status: 'active' | 'suspended' | 'banned' | 'unconfirmed';
+        /**
+         * User role in the system
+         */
+        role: 'admin' | 'customer' | 'business';
+        emailVerified: boolean;
+        phoneVerified: boolean;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        lastLoginAt?: string;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    };
+    category?: CategoryResponse;
+    /**
+     * When the record was created
+     */
+    createdAt: string;
+    /**
+     * When the record was last updated
+     */
+    updatedAt: string;
+};
+
+/**
+ * Category information for admin management with hierarchical structure
+ */
+export type AdminCategoryResponse = {
+    /**
+     * Universally Unique Identifier
+     */
+    id: string;
+    /**
+     * Translation key for category name
+     */
+    nameKey: string;
+    /**
+     * Translation key for category description
+     */
+    descriptionKey?: string;
+    /**
+     * Category icon identifier
+     */
+    icon?: string;
+    /**
+     * Parent category ID for hierarchical structure
+     */
+    parentId?: string;
+    /**
+     * Whether category is active
+     */
+    isActive?: boolean;
+    /**
+     * Sort order for display
+     */
+    sortOrder?: number;
+    /**
+     * URL-friendly category identifier
+     */
+    slug: string;
+    /**
+     * Hierarchy level (1 for root categories)
+     */
+    level: number;
+    /**
+     * Materialized path for hierarchy navigation
+     */
+    path: string;
+    /**
+     * User who created the category
+     */
+    createdBy: string;
+    /**
+     * User who last updated the category
+     */
+    updatedBy?: string;
+    /**
+     * Child categories for hierarchical display
+     */
+    children?: Array<AdminCategoryResponse>;
+    /**
+     * When the record was created
+     */
+    createdAt: string;
+    /**
+     * When the record was last updated
+     */
+    updatedAt: string;
+};
+
+/**
+ * Create a new category
+ */
+export type CreateCategoryRequest = {
+    /**
+     * Translation key for category name
+     */
+    nameKey: string;
+    /**
+     * Translation key for category description
+     */
+    descriptionKey?: string;
+    /**
+     * Category icon identifier
+     */
+    icon?: string;
+    /**
+     * Parent category ID
+     */
+    parentId?: string;
+    /**
+     * Whether category is active
+     */
+    isActive?: boolean;
+    /**
+     * Sort order for display
+     */
+    sortOrder?: number;
+};
+
+/**
+ * Update category information
+ */
+export type UpdateCategoryRequest = {
+    /**
+     * Translation key for category name
+     */
+    nameKey?: string;
+    /**
+     * Translation key for category description
+     */
+    descriptionKey?: string;
+    /**
+     * Category icon identifier
+     */
+    icon?: string;
+    /**
+     * Parent category ID
+     */
+    parentId?: string;
+    /**
+     * Whether category is active
+     */
+    isActive?: boolean;
+    /**
+     * Sort order for display
+     */
+    sortOrder?: number;
+};
+
+export type AdminCategoryQueryParams = {
+    /**
+     * Page number
+     */
+    page?: number;
+    /**
+     * Items per page
+     */
+    limit?: number;
+    /**
+     * Field to sort categories by
+     */
+    sortBy?: 'name' | 'sortOrder' | 'createdAt' | 'updatedAt';
+    /**
+     * Sort order
+     */
+    sortOrder?: 'asc' | 'desc';
+    /**
+     * Search query
+     */
+    search?: string;
+    /**
+     * Filter by parent category
+     */
+    parentId?: string;
+    /**
+     * Filter by active status
+     */
+    isActive?: boolean;
+    /**
+     * Filter by creator
+     */
+    createdBy?: string;
+    /**
+     * Comma-separated relations: parent,children
+     */
+    include?: string;
+};
+
+/**
+ * Paginated response
+ */
+export type AdminCategoryListResponse = {
+    /**
+     * Page items
+     */
+    data: Array<AdminCategoryResponse>;
+    /**
+     * Pagination information
+     */
+    pagination: {
+        /**
+         * Current page number
+         */
+        page: number;
+        /**
+         * Items per page
+         */
+        limit: number;
+        /**
+         * Total number of items
+         */
+        total: number;
+        /**
+         * Total number of pages
+         */
+        totalPages: number;
+        /**
+         * Whether there is a next page
+         */
+        hasNext: boolean;
+        /**
+         * Whether there is a previous page
+         */
+        hasPrev: boolean;
+    };
+};
+
+/**
+ * Hierarchical category tree structure for admin
+ */
+export type AdminCategoryTreeResponse = {
+    categories: Array<AdminCategoryResponse>;
+    totalCount: number;
+};
+
+/**
+ * Move category to different parent or change sort order
+ */
+export type MoveCategoryRequest = {
+    /**
+     * New parent category ID (null for root level)
+     */
+    parentId?: string;
+    /**
+     * New sort order within parent
+     */
+    sortOrder?: number;
+};
+
+/**
+ * Update category sort order
+ */
+export type UpdateCategorySortOrderRequest = {
+    /**
+     * New sort order value
+     */
+    sortOrder: number;
+};
+
+/**
+ * Toggle category activation status
+ */
+export type ToggleCategoryActivationRequest = {
+    /**
+     * New activation status
+     */
+    isActive: boolean;
+};
+
+/**
+ * Update multiple categories at once
+ */
+export type BulkCategoryUpdateRequest = {
+    categoryIds: Array<string>;
+    updates: {
+        isActive?: boolean;
+        /**
+         * Universally Unique Identifier
+         */
+        parentId?: string;
+    };
+};
+
+/**
+ * Bulk category operation result
+ */
+export type BulkCategoryOperationResponse = {
+    successful: number;
+    failed: number;
+    errors?: Array<{
+        /**
+         * Universally Unique Identifier
+         */
+        categoryId: string;
+        error: string;
+    }>;
+};
+
+/**
+ * Delete multiple categories
+ */
+export type BulkDeleteCategoriesRequest = {
+    categoryIds: Array<string>;
+};
+
+/**
+ * Admin file details with user information
+ */
+export type AdminFileDetailResponse = {
+    /**
+     * Universally Unique Identifier
+     */
+    id: string;
+    userId: string;
+    userName?: string;
+    userEmail?: string;
+    fileKey: string;
+    fileName: string;
+    fileSize: number;
+    mimeType: string;
+    /**
+     * File type category
+     */
+    fileType: 'image' | 'video' | 'document' | 'audio' | 'other';
+    /**
+     * File processing status
+     */
+    status: 'pending' | 'uploaded' | 'processing' | 'processed' | 'failed' | 'deleted';
+    /**
+     * Supported storage provider
+     */
+    provider: 'aws_s3' | 'local' | 'minio';
+    bucketName?: string;
+    region?: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    uploadedAt?: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    deletedAt?: string;
+    metadata?: {
+        [key: string]: string;
+    };
+    error?: string;
+    isPublic?: boolean;
+    downloadCount?: number;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    lastAccessedAt?: string;
+    /**
+     * When the record was created
+     */
+    createdAt: string;
+    /**
+     * When the record was last updated
+     */
+    updatedAt: string;
+};
+
+/**
+ * Admin file search parameters
+ */
+export type AdminFileQueryParams = {
+    /**
+     * Search in filename or file key
+     */
+    search?: string;
+    userId?: string;
+    /**
+     * File type category
+     */
+    fileType?: 'image' | 'video' | 'document' | 'audio' | 'other';
+    /**
+     * File processing status
+     */
+    status?: 'pending' | 'uploaded' | 'processing' | 'processed' | 'failed' | 'deleted';
+    /**
+     * Supported storage provider
+     */
+    provider?: 'aws_s3' | 'local' | 'minio';
+    mimeType?: string;
+    minSize?: number;
+    maxSize?: number;
+    isPublic?: boolean | null;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    fromDate?: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    toDate?: string;
+    page?: number;
+    limit?: number;
+    /**
+     * Field to sort files by
+     */
+    sortBy?: 'uploadedAt' | 'fileSize' | 'fileName' | 'createdAt' | 'updatedAt';
+    /**
+     * Sort order - ascending (asc) or descending (desc)
+     */
+    sortOrder?: 'asc' | 'desc';
+    /**
+     * Comma-separated relations: user
+     */
+    include?: string;
+};
+
+/**
+ * Paginated response
+ */
+export type AdminFileListResponse = {
+    /**
+     * Page items
+     */
+    data: Array<{
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        userId: string;
+        userName?: string;
+        userEmail?: string;
+        fileKey: string;
+        fileName: string;
+        fileSize: number;
+        mimeType: string;
+        /**
+         * File type category
+         */
+        fileType: 'image' | 'video' | 'document' | 'audio' | 'other';
+        /**
+         * File processing status
+         */
+        status: 'pending' | 'uploaded' | 'processing' | 'processed' | 'failed' | 'deleted';
+        /**
+         * Supported storage provider
+         */
+        provider: 'aws_s3' | 'local' | 'minio';
+        bucketName?: string;
+        region?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        uploadedAt?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        deletedAt?: string;
+        metadata?: {
+            [key: string]: string;
+        };
+        error?: string;
+        isPublic?: boolean;
+        downloadCount?: number;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        lastAccessedAt?: string;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    }>;
+    /**
+     * Pagination information
+     */
+    pagination: {
+        /**
+         * Current page number
+         */
+        page: number;
+        /**
+         * Items per page
+         */
+        limit: number;
+        /**
+         * Total number of items
+         */
+        total: number;
+        /**
+         * Total number of pages
+         */
+        totalPages: number;
+        /**
+         * Whether there is a next page
+         */
+        hasNext: boolean;
+        /**
+         * Whether there is a previous page
+         */
+        hasPrev: boolean;
+    };
+};
+
+/**
+ * Admin update file details
+ */
+export type AdminUpdateFileRequest = {
+    fileName?: string;
+    /**
+     * File processing status
+     */
+    status?: 'pending' | 'uploaded' | 'processing' | 'processed' | 'failed' | 'deleted';
+    isPublic?: boolean;
+    metadata?: {
+        [key: string]: string;
+    };
+};
+
+/**
+ * Bulk action on multiple files
+ */
+export type AdminBulkFileActionRequest = {
+    fileIds: Array<string>;
+    action: 'delete' | 'make_public' | 'make_private' | 'change_status';
+    /**
+     * File processing status
+     */
+    newStatus?: 'pending' | 'uploaded' | 'processing' | 'processed' | 'failed' | 'deleted';
+};
+
+/**
+ * Bulk file action results
+ */
+export type AdminBulkFileActionResponse = {
+    successful: Array<string>;
+    failed: Array<{
+        /**
+         * Universally Unique Identifier
+         */
+        fileId: string;
+        error: string;
+    }>;
+    totalProcessed: number;
+    totalSuccessful: number;
+    totalFailed: number;
+};
+
+/**
+ * Storage usage analytics
+ */
+export type StorageAnalyticsResponse = {
+    period: {
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        start: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        end: string;
+    };
+    totalFiles: number;
+    /**
+     * Total size in bytes
+     */
+    totalSize: number;
+    newFiles: number;
+    deletedFiles: number;
+    /**
+     * Average size in bytes
+     */
+    averageFileSize?: number;
+    filesByType: {
+        image?: number;
+        video?: number;
+        document?: number;
+        audio?: number;
+        other?: number;
+    };
+    filesByStatus: {
+        pending?: number;
+        uploaded?: number;
+        processing?: number;
+        processed?: number;
+        failed?: number;
+        deleted?: number;
+    };
+    filesByProvider: {
+        aws_s3?: number;
+        local?: number;
+        minio?: number;
+    };
+    storageByProvider: {
+        aws_s3?: number;
+        local?: number;
+        minio?: number;
+    };
+    topUsers: Array<{
+        userId: string;
+        userName: string;
+        fileCount: number;
+        totalSize: number;
+    }>;
+};
+
+/**
+ * Storage service configuration
+ */
+export type StorageConfigurationResponse = {
+    providers: Array<{
+        /**
+         * Supported storage provider
+         */
+        name: 'aws_s3' | 'local' | 'minio';
+        isActive: boolean;
+        isDefault: boolean;
+        config: {
+            bucket?: string;
+            region?: string;
+            endpoint?: string;
+            maxFileSize: number;
+            allowedMimeTypes: Array<string>;
+        };
+    }>;
+    globalSettings: {
+        maxFileSize: number;
+        maxFilesPerUser?: number;
+        defaultExpiration: number;
+        compressionEnabled: boolean;
+        virusScanEnabled: boolean;
+    };
+};
+
+/**
+ * Update storage configuration
+ */
+export type UpdateStorageConfigurationRequest = {
+    /**
+     * Supported storage provider
+     */
+    provider: 'aws_s3' | 'local' | 'minio';
+    config?: {
+        bucket?: string;
+        region?: string;
+        endpoint?: string;
+        maxFileSize?: number;
+        allowedMimeTypes?: Array<string>;
+    };
+    globalSettings?: {
+        maxFileSize?: number;
+        maxFilesPerUser?: number;
+        defaultExpiration?: number;
+        compressionEnabled?: boolean;
+        virusScanEnabled?: boolean;
+    };
+};
+
+/**
+ * Detailed voucher information for admin with industry-standard include relations
+ */
+export type AdminVoucherDetailResponse = {
+    /**
+     * Universally Unique Identifier
+     */
+    id: string;
+    /**
+     * Universally Unique Identifier
+     */
+    businessId: string;
+    /**
+     * Universally Unique Identifier
+     */
+    categoryId: string;
+    /**
+     * Current state of the voucher lifecycle
+     */
+    state: 'draft' | 'published' | 'claimed' | 'redeemed' | 'expired' | 'suspended';
+    /**
+     * Voucher title in requested language
+     */
+    title: string;
+    /**
+     * Voucher description in requested language
+     */
+    description: string;
+    /**
+     * Voucher terms and conditions in requested language
+     */
+    terms: string;
+    /**
+     * Type of discount the voucher provides
+     */
+    discountType: 'percentage' | 'fixed';
+    /**
+     * Decimal number with 2 decimal places
+     */
+    discountValue: number;
+    currency?: string;
+    /**
+     * Geographic location as GeoJSON Point
+     */
+    location: {
+        type: 'Point';
+        coordinates: [
+            number,
+            number
+        ];
+    } | null;
+    imageUrl: string | null;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    validFrom: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    expiresAt: string;
+    maxRedemptions: number | null;
+    maxRedemptionsPerUser?: number;
+    currentRedemptions?: number;
+    scanCount?: number;
+    claimCount?: number;
+    metadata: {
+        [key: string]: unknown;
+    } | null;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    deletedAt: string | null;
+    /**
+     * Complete business object when ?include=business
+     */
+    business?: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        name: string;
+    };
+    /**
+     * Complete category object when ?include=category
+     */
+    category?: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        name: string;
+    };
+    /**
+     * Voucher codes when ?include=codes
+     */
+    codes?: Array<{
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        code: string;
+        /**
+         * Type of voucher code
+         */
+        type: 'qr' | 'short' | 'static';
+        isActive: boolean;
+        metadata: {
+            [key: string]: unknown;
+        } | null;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        createdAt: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        updatedAt: string;
+    }>;
+    /**
+     * Redemption history when ?include=redemptions
+     */
+    redemptions?: Array<{
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        /**
+         * Universally Unique Identifier
+         */
+        userId: string;
+        codeUsed: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        redeemedAt: string;
+        metadata: {
+            [key: string]: unknown;
+        } | null;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        createdAt: string;
+    }>;
+    /**
+     * Scan analytics when ?include=scans
+     */
+    scans?: Array<{
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        /**
+         * Universally Unique Identifier
+         */
+        userId: string | null;
+        /**
+         * Type of voucher scan
+         */
+        scanType: 'customer' | 'business';
+        /**
+         * Source of the voucher scan
+         */
+        scanSource: 'camera' | 'gallery' | 'link' | 'share';
+        /**
+         * Geographic location as GeoJSON Point
+         */
+        location: {
+            type: 'Point';
+            coordinates: [
+                number,
+                number
+            ];
+        } | null;
+        deviceInfo: {
+            [key: string]: unknown;
+        };
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        scannedAt: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        createdAt: string;
+    }>;
+    /**
+     * Customer wallet entries when ?include=customerVouchers
+     */
+    customerVouchers?: Array<{
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        /**
+         * Universally Unique Identifier
+         */
+        customerId: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        claimedAt: string;
+        /**
+         * Status of voucher from customer perspective
+         */
+        status: 'claimed' | 'redeemed' | 'expired';
+        notificationPreferences: {
+            [key: string]: unknown;
+        } | null;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        redeemedAt: string | null;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        createdAt: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        updatedAt: string;
+    }>;
+    isActive: boolean;
+    isExpired: boolean;
+    redemptionRate: number;
+    daysUntilExpiry: number | null;
+    /**
+     * When the record was created
+     */
+    createdAt: string;
+    /**
+     * When the record was last updated
+     */
+    updatedAt: string;
+};
+
+/**
+ * Paginated response
+ */
+export type AdminVoucherListResponse = {
+    /**
+     * Page items
+     */
+    data: Array<{
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        /**
+         * Universally Unique Identifier
+         */
+        businessId: string;
+        /**
+         * Universally Unique Identifier
+         */
+        categoryId: string;
+        /**
+         * Current state of the voucher lifecycle
+         */
+        state: 'draft' | 'published' | 'claimed' | 'redeemed' | 'expired' | 'suspended';
+        /**
+         * Voucher title in requested language
+         */
+        title: string;
+        /**
+         * Voucher description in requested language
+         */
+        description: string;
+        /**
+         * Voucher terms and conditions in requested language
+         */
+        terms: string;
+        /**
+         * Type of discount the voucher provides
+         */
+        discountType: 'percentage' | 'fixed';
+        /**
+         * Decimal number with 2 decimal places
+         */
+        discountValue: number;
+        currency?: string;
+        /**
+         * Geographic location as GeoJSON Point
+         */
+        location: {
+            type: 'Point';
+            coordinates: [
+                number,
+                number
+            ];
+        } | null;
+        imageUrl: string | null;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        validFrom: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        expiresAt: string;
+        maxRedemptions: number | null;
+        maxRedemptionsPerUser?: number;
+        currentRedemptions?: number;
+        scanCount?: number;
+        claimCount?: number;
+        metadata: {
+            [key: string]: unknown;
+        } | null;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        deletedAt: string | null;
+        /**
+         * Complete business object when ?include=business
+         */
+        business?: {
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            name: string;
+        };
+        /**
+         * Complete category object when ?include=category
+         */
+        category?: {
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            name: string;
+        };
+        /**
+         * Voucher codes when ?include=codes
+         */
+        codes?: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            code: string;
+            /**
+             * Type of voucher code
+             */
+            type: 'qr' | 'short' | 'static';
+            isActive: boolean;
+            metadata: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            createdAt: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            updatedAt: string;
+        }>;
+        /**
+         * Redemption history when ?include=redemptions
+         */
+        redemptions?: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            /**
+             * Universally Unique Identifier
+             */
+            userId: string;
+            codeUsed: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            redeemedAt: string;
+            metadata: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            createdAt: string;
+        }>;
+        /**
+         * Scan analytics when ?include=scans
+         */
+        scans?: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            /**
+             * Universally Unique Identifier
+             */
+            userId: string | null;
+            /**
+             * Type of voucher scan
+             */
+            scanType: 'customer' | 'business';
+            /**
+             * Source of the voucher scan
+             */
+            scanSource: 'camera' | 'gallery' | 'link' | 'share';
+            /**
+             * Geographic location as GeoJSON Point
+             */
+            location: {
+                type: 'Point';
+                coordinates: [
+                    number,
+                    number
+                ];
+            } | null;
+            deviceInfo: {
+                [key: string]: unknown;
+            };
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            scannedAt: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            createdAt: string;
+        }>;
+        /**
+         * Customer wallet entries when ?include=customerVouchers
+         */
+        customerVouchers?: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            /**
+             * Universally Unique Identifier
+             */
+            customerId: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            claimedAt: string;
+            /**
+             * Status of voucher from customer perspective
+             */
+            status: 'claimed' | 'redeemed' | 'expired';
+            notificationPreferences: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            redeemedAt: string | null;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            createdAt: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            updatedAt: string;
+        }>;
+        isActive: boolean;
+        isExpired: boolean;
+        redemptionRate: number;
+        daysUntilExpiry: number | null;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    }>;
+    /**
+     * Pagination information
+     */
+    pagination: {
+        /**
+         * Current page number
+         */
+        page: number;
+        /**
+         * Items per page
+         */
+        limit: number;
+        /**
+         * Total number of items
+         */
+        total: number;
+        /**
+         * Total number of pages
+         */
+        totalPages: number;
+        /**
+         * Whether there is a next page
+         */
+        hasNext: boolean;
+        /**
+         * Whether there is a previous page
+         */
+        hasPrev: boolean;
+    };
+};
+
+/**
+ * Create new voucher with translations
+ */
+export type CreateVoucherRequest = {
+    /**
+     * Universally Unique Identifier
+     */
+    businessId: string;
+    /**
+     * Universally Unique Identifier
+     */
+    categoryId: string;
+    /**
+     * Title translations by language code
+     */
+    title: {
+        [key: string]: string;
+    };
+    /**
+     * Description translations by language code
+     */
+    description: {
+        [key: string]: string;
+    };
+    /**
+     * Terms and conditions translations by language code
+     */
+    termsAndConditions: {
+        [key: string]: string;
+    };
+    /**
+     * Type of discount the voucher provides
+     */
+    discountType: 'percentage' | 'fixed';
+    discountValue: number;
+    currency?: string;
+    /**
+     * Geographic location as GeoJSON Point
+     */
+    location?: {
+        type: 'Point';
+        coordinates: [
+            number,
+            number
+        ];
+    } | null;
+    imageUrl?: string | null;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    validFrom: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    expiresAt: string;
+    maxRedemptions?: number | null;
+    maxRedemptionsPerUser?: number;
+    metadata?: {
+        [key: string]: unknown;
+    } | null;
+};
+
+/**
+ * Update voucher information and translations
+ */
+export type UpdateVoucherRequest = {
+    /**
+     * Title translations by language code
+     */
+    title?: {
+        [key: string]: string;
+    };
+    /**
+     * Description translations by language code
+     */
+    description?: {
+        [key: string]: string;
+    };
+    /**
+     * Terms and conditions translations by language code
+     */
+    termsAndConditions?: {
+        [key: string]: string;
+    };
+    /**
+     * Type of discount the voucher provides
+     */
+    discountType?: 'percentage' | 'fixed';
+    discountValue?: number;
+    currency?: string;
+    /**
+     * Geographic location as GeoJSON Point
+     */
+    location?: {
+        type: 'Point';
+        coordinates: [
+            number,
+            number
+        ];
+    } | null;
+    imageUrl?: string | null;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    validFrom?: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    expiresAt?: string;
+    maxRedemptions?: number | null;
+    maxRedemptionsPerUser?: number;
+    metadata?: {
+        [key: string]: unknown;
+    } | null;
+};
+
+export type AdminVoucherQueryParams = {
+    /**
+     * Page number
+     */
+    page?: number;
+    /**
+     * Items per page
+     */
+    limit?: number;
+    /**
+     * Admin voucher sort fields
+     */
+    sortBy?: 'createdAt' | 'updatedAt' | 'state' | 'discountValue' | 'currentRedemptions' | 'expiresAt' | 'businessId';
+    /**
+     * Sort order
+     */
+    sortOrder?: 'asc' | 'desc';
+    /**
+     * Search query
+     */
+    search?: string;
+    /**
+     * Universally Unique Identifier
+     */
+    businessId?: string;
+    /**
+     * Universally Unique Identifier
+     */
+    categoryId?: string;
+    /**
+     * Current state of the voucher lifecycle
+     */
+    state?: 'draft' | 'published' | 'claimed' | 'redeemed' | 'expired' | 'suspended';
+    /**
+     * Type of discount the voucher provides
+     */
+    discountType?: 'percentage' | 'fixed';
+    minDiscount?: number;
+    maxDiscount?: number;
+    currency?: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    validFromStart?: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    validFromEnd?: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    expiresAtStart?: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    expiresAtEnd?: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    createdFromStart?: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    createdFromEnd?: string;
+    minRedemptions?: number;
+    maxRedemptions?: number;
+    minScans?: number;
+    maxScans?: number;
+    isDeleted?: boolean;
+    /**
+     * Comma-separated relations: business,category,codes,redemptions,scans,customerVouchers,analytics,fraudCases
+     */
+    include?: string;
+    /**
+     * Latitude for geospatial search
+     */
+    latitude?: number;
+    /**
+     * Longitude for geospatial search
+     */
+    longitude?: number;
+    /**
+     * Search radius in meters
+     */
+    radius?: number;
+    /**
+     * Filter by active status
+     */
+    isActive?: boolean;
+    /**
+     * Filter by expired status
+     */
+    isExpired?: boolean;
+    /**
+     * Filter vouchers with location
+     */
+    hasLocation?: boolean;
+    /**
+     * Filter vouchers with image
+     */
+    hasImage?: boolean;
+};
+
+/**
+ * Update multiple vouchers at once
+ */
+export type BulkVoucherUpdateRequest = {
+    voucherIds: Array<string>;
+    updates: {
+        /**
+         * Current state of the voucher lifecycle
+         */
+        state?: 'draft' | 'published' | 'claimed' | 'redeemed' | 'expired' | 'suspended';
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        expiresAt?: string;
+        maxRedemptions?: number | null;
+        maxRedemptionsPerUser?: number;
+    };
+    reason: string;
+};
+
+export type BulkVoucherOperationResponse = {
+    /**
+     * Number of successful operations
+     */
+    successful: number;
+    /**
+     * Number of failed operations
+     */
+    failed: number;
+    /**
+     * Details of failed operations
+     */
+    errors?: Array<{
+        /**
+         * Universally Unique Identifier
+         */
+        voucherId: string;
+        error: string;
+    }>;
+};
+
+/**
+ * Voucher analytics data
+ */
+export type VoucherAnalyticsResponse = {
+    /**
+     * Universally Unique Identifier
+     */
+    voucherId: string;
+    period: {
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        start: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        end: string;
+    };
+    totalScans: number;
+    totalClaims: number;
+    totalRedemptions: number;
+    uniqueUsers: number;
+    redemptionRate: number;
+    scansBySource: {
+        [key: string]: number;
+    };
+    scansByType: {
+        [key: string]: number;
+    };
+    dailyStats: Array<{
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        date: string;
+        scans: number;
+        claims: number;
+        redemptions: number;
+    }>;
+};
+
+/**
+ * Paginated response
+ */
+export type AdminTransactionListResponse = {
+    /**
+     * Page items
+     */
+    data: Array<{
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        type: 'payment' | 'refund' | 'transfer' | 'payout' | 'adjustment';
+        status: 'pending' | 'processing' | 'completed' | 'failed' | 'cancelled';
+        amount: number;
+        currency: string;
+        fee?: number;
+        tax?: number;
+        netAmount: number;
+        userId?: string;
+        userName?: string;
+        /**
+         * Universally Unique Identifier
+         */
+        businessId?: string;
+        businessName?: string;
+        paymentMethod: 'card' | 'bankTransfer' | 'wallet' | 'cash';
+        stripePaymentIntentId?: string;
+        stripeChargeId?: string;
+        stripeRefundId?: string;
+        /**
+         * Type of related entity
+         */
+        referenceType?: string;
+        /**
+         * ID of related entity
+         */
+        referenceId?: string;
+        description?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        processedAt?: string;
+        failureReason?: string;
+        failureCode?: string;
+        disputeStatus?: 'warning' | 'needsResponse' | 'underReview' | 'won' | 'lost';
+        disputeReason?: string;
+        refundReason?: string;
+        refundedAmount?: number;
+        metadata?: {
+            [key: string]: unknown;
+        };
+        ipAddress?: string;
+        userAgent?: string;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    }>;
+    /**
+     * Pagination information
+     */
+    pagination: {
+        /**
+         * Current page number
+         */
+        page: number;
+        /**
+         * Items per page
+         */
+        limit: number;
+        /**
+         * Total number of items
+         */
+        total: number;
+        /**
+         * Total number of pages
+         */
+        totalPages: number;
+        /**
+         * Whether there is a next page
+         */
+        hasNext: boolean;
+        /**
+         * Whether there is a previous page
+         */
+        hasPrev: boolean;
+    };
+};
+
+/**
+ * Detailed transaction information for admin
+ */
+export type AdminTransactionDetailResponse = {
+    /**
+     * Universally Unique Identifier
+     */
+    id: string;
+    type: 'payment' | 'refund' | 'transfer' | 'payout' | 'adjustment';
+    status: 'pending' | 'processing' | 'completed' | 'failed' | 'cancelled';
+    amount: number;
+    currency: string;
+    fee?: number;
+    tax?: number;
+    netAmount: number;
+    userId?: string;
+    userName?: string;
+    /**
+     * Universally Unique Identifier
+     */
+    businessId?: string;
+    businessName?: string;
+    paymentMethod: 'card' | 'bankTransfer' | 'wallet' | 'cash';
+    stripePaymentIntentId?: string;
+    stripeChargeId?: string;
+    stripeRefundId?: string;
+    /**
+     * Type of related entity
+     */
+    referenceType?: string;
+    /**
+     * ID of related entity
+     */
+    referenceId?: string;
+    description?: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    processedAt?: string;
+    failureReason?: string;
+    failureCode?: string;
+    disputeStatus?: 'warning' | 'needsResponse' | 'underReview' | 'won' | 'lost';
+    disputeReason?: string;
+    refundReason?: string;
+    refundedAmount?: number;
+    metadata?: {
+        [key: string]: unknown;
+    };
+    ipAddress?: string;
+    userAgent?: string;
+    /**
+     * When the record was created
+     */
+    createdAt: string;
+    /**
+     * When the record was last updated
+     */
+    updatedAt: string;
+};
+
+export type AdminTransactionQueryParams = {
+    /**
+     * Page number
+     */
+    page?: number;
+    /**
+     * Items per page
+     */
+    limit?: number;
+    /**
+     * Field to sort by
+     */
+    sortBy?: string;
+    /**
+     * Sort order
+     */
+    sortOrder?: 'asc' | 'desc';
+    /**
+     * Search query
+     */
+    search?: string;
+    /**
+     * Start date (ISO 8601)
+     */
+    fromDate?: string;
+    /**
+     * End date (ISO 8601)
+     */
+    toDate?: string;
+    type?: 'payment' | 'refund' | 'transfer' | 'payout' | 'adjustment';
+    status?: 'pending' | 'processing' | 'completed' | 'failed' | 'cancelled';
+    paymentMethod?: 'card' | 'bankTransfer' | 'wallet' | 'cash';
+    userId?: string;
+    /**
+     * Universally Unique Identifier
+     */
+    businessId?: string;
+    stripePaymentIntentId?: string;
+    minAmount?: number;
+    maxAmount?: number;
+    currency?: string;
+    hasDispute?: boolean;
+};
+
+/**
+ * Refund a transaction
+ */
+export type RefundTransactionRequest = {
+    /**
+     * Partial refund amount
+     */
+    amount?: number;
+    reason: 'duplicate' | 'fraudulent' | 'customerRequest' | 'other';
+    description: string;
+    notifyUser?: boolean;
+};
+
+/**
+ * Financial summary for a period
+ */
+export type PaymentStatsResponse = {
+    period: {
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        start: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        end: string;
+    };
+    totalRevenue: number;
+    totalRefunds: number;
+    totalFees: number;
+    netRevenue: number;
+    /**
+     * Revenue by transaction type (all keys optional)
+     */
+    revenueByType: {
+        payment?: number;
+        refund?: number;
+        transfer?: number;
+        payout?: number;
+        adjustment?: number;
+    };
+    /**
+     * Revenue by payment method (all keys optional)
+     */
+    revenueByPaymentMethod: {
+        card?: number;
+        bankTransfer?: number;
+        wallet?: number;
+        cash?: number;
+    };
+    transactionCount: number;
+    successfulCount: number;
+    failedCount: number;
+    disputeCount: number;
+    averageTransactionAmount: number;
+    topBusinesses?: Array<{
+        /**
+         * Universally Unique Identifier
+         */
+        businessId: string;
+        businessName: string;
+        revenue: number;
+        transactionCount: number;
+    }>;
+    topUsers?: Array<{
+        userId: string;
+        userName: string;
+        spent: number;
+        transactionCount: number;
+    }>;
+};
+
+/**
+ * Paginated response
+ */
+export type PayoutListResponse = {
+    /**
+     * Page items
+     */
+    data: Array<{
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        /**
+         * Universally Unique Identifier
+         */
+        businessId: string;
+        amount: number;
+        currency: string;
+        status: 'scheduled' | 'processing' | 'completed' | 'failed';
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        scheduledFor: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        processedAt?: string;
+        bankAccountId?: string;
+        stripeTransferId?: string;
+        failureReason?: string;
+    }>;
+    /**
+     * Pagination information
+     */
+    pagination: {
+        /**
+         * Current page number
+         */
+        page: number;
+        /**
+         * Items per page
+         */
+        limit: number;
+        /**
+         * Total number of items
+         */
+        total: number;
+        /**
+         * Total number of pages
+         */
+        totalPages: number;
+        /**
+         * Whether there is a next page
+         */
+        hasNext: boolean;
+        /**
+         * Whether there is a previous page
+         */
+        hasPrev: boolean;
+    };
+};
+
+/**
+ * Process pending payouts
+ */
+export type CreatePayoutRequest = {
+    payoutIds: Array<string>;
+    action: 'approve' | 'reject' | 'delay';
+    reason?: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    delayUntil?: string;
+};
+
+export type PayoutIdParam = {
+    /**
+     * Universally Unique Identifier
+     */
+    id: string;
+};
+
+export type FinancialReportRequest = {
+    reportType: 'revenue' | 'transactions' | 'payouts' | 'disputes' | 'summary';
+    period: '7d' | '30d' | '90d' | '1y' | 'custom';
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    startDate?: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    endDate?: string;
+    groupBy?: 'day' | 'week' | 'month';
+    includeDetails?: boolean;
+    format?: 'json' | 'csv' | 'pdf';
+};
+
+/**
+ * Financial report data
+ */
+export type FinancialReportResponse = {
+    reportType: 'revenue' | 'transactions' | 'payouts' | 'disputes' | 'summary';
+    period: {
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        start: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        end: string;
+    };
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    generatedAt: string;
+    /**
+     * Financial summary for a period
+     */
+    summary: {
+        period: {
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            start: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            end: string;
+        };
+        totalRevenue: number;
+        totalRefunds: number;
+        totalFees: number;
+        netRevenue: number;
+        /**
+         * Revenue by transaction type (all keys optional)
+         */
+        revenueByType: {
+            payment?: number;
+            refund?: number;
+            transfer?: number;
+            payout?: number;
+            adjustment?: number;
+        };
+        /**
+         * Revenue by payment method (all keys optional)
+         */
+        revenueByPaymentMethod: {
+            card?: number;
+            bankTransfer?: number;
+            wallet?: number;
+            cash?: number;
+        };
+        transactionCount: number;
+        successfulCount: number;
+        failedCount: number;
+        disputeCount: number;
+        averageTransactionAmount: number;
+        topBusinesses?: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            businessId: string;
+            businessName: string;
+            revenue: number;
+            transactionCount: number;
+        }>;
+        topUsers?: Array<{
+            userId: string;
+            userName: string;
+            spent: number;
+            transactionCount: number;
+        }>;
+    };
+    timeSeries?: Array<{
+        date: string;
+        revenue: number;
+        transactions: number;
+        refunds: number;
+        disputes: number;
+    }>;
+    downloadUrl?: string;
+};
+
+/**
+ * Create a new promo code
+ */
+export type CreatePromoCodeRequest = {
+    code: string;
+    type: 'percentage' | 'fixedAmount';
+    value: number;
+    description?: string;
+    maxUses?: number;
+    maxUsesPerUser?: number;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    validFrom: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    validUntil?: string;
+    minPurchaseAmount?: number;
+    applicableToBusinesses?: Array<string>;
+    applicableToUserTiers?: Array<string>;
+    firstTimeOnly?: boolean;
+    adminNotes?: string;
+};
+
+/**
+ * Update promo code
+ */
+export type UpdatePromoCodeRequest = {
+    description?: string;
+    maxUses?: number;
+    maxUsesPerUser?: number;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    validFrom?: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    validUntil?: string;
+    minPurchaseAmount?: number;
+    applicableToBusinesses?: Array<string>;
+    applicableToUserTiers?: Array<string>;
+    firstTimeOnly?: boolean;
+    isActive?: boolean;
+    adminNotes?: string;
+};
+
+/**
+ * Detailed promo code information for admin
+ */
+export type AdminPromoCodeDetail = {
+    /**
+     * Universally Unique Identifier
+     */
+    id: string;
+    code: string;
+    type: 'percentage' | 'fixedAmount';
+    value: number;
+    description?: string;
+    maxUses?: number;
+    usedCount?: number;
+    maxUsesPerUser?: number;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    validFrom: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    validUntil?: string;
+    minPurchaseAmount?: number;
+    applicableToBusinesses?: Array<string>;
+    applicableToUserTiers?: Array<string>;
+    firstTimeOnly?: boolean;
+    isActive?: boolean;
+    totalDiscountGiven?: number;
+    createdBy: string;
+    adminNotes?: string;
+    /**
+     * When the record was created
+     */
+    createdAt: string;
+    /**
+     * When the record was last updated
+     */
+    updatedAt: string;
+};
+
+export type PromoCodeSearchParams = {
+    /**
+     * Page number
+     */
+    page?: number;
+    /**
+     * Items per page
+     */
+    limit?: number;
+    /**
+     * Field to sort by
+     */
+    sortBy?: string;
+    /**
+     * Sort order
+     */
+    sortOrder?: 'asc' | 'desc';
+    /**
+     * Search query
+     */
+    search?: string;
+    type?: 'percentage' | 'fixedAmount';
+    isActive?: boolean;
+    status?: 'active' | 'expired' | 'depleted' | 'disabled';
+    createdBy?: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    createdFrom?: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    createdTo?: string;
+};
+
+/**
+ * Paginated response
+ */
+export type PromoCodeListResponse = {
+    /**
+     * Page items
+     */
+    data: Array<{
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        code: string;
+        type: 'percentage' | 'fixedAmount';
+        value: number;
+        description?: string;
+        maxUses?: number;
+        usedCount?: number;
+        maxUsesPerUser?: number;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        validFrom: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        validUntil?: string;
+        minPurchaseAmount?: number;
+        applicableToBusinesses?: Array<string>;
+        applicableToUserTiers?: Array<string>;
+        firstTimeOnly?: boolean;
+        isActive?: boolean;
+        totalDiscountGiven?: number;
+        createdBy: string;
+        adminNotes?: string;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    }>;
+    /**
+     * Pagination information
+     */
+    pagination: {
+        /**
+         * Current page number
+         */
+        page: number;
+        /**
+         * Items per page
+         */
+        limit: number;
+        /**
+         * Total number of items
+         */
+        total: number;
+        /**
+         * Total number of pages
+         */
+        totalPages: number;
+        /**
+         * Whether there is a next page
+         */
+        hasNext: boolean;
+        /**
+         * Whether there is a previous page
+         */
+        hasPrev: boolean;
+    };
+};
+
+/**
+ * Detailed subscription plan for admin
+ */
+export type AdminSubscriptionPlanDetail = {
+    /**
+     * Universally Unique Identifier
+     */
+    id: string;
+    name: string;
+    description: string;
+    price: number;
+    currency?: 'usd' | 'eur' | 'gbp';
+    billingInterval: 'day' | 'week' | 'month' | 'year';
+    trialPeriodDays?: number;
+    maxUsagePerMonth?: number;
+    isActive?: boolean;
+    isPublic?: boolean;
+    stripePriceId?: string;
+    stripeProductId?: string;
+    activeSubscriptions?: number;
+    totalSubscriptions?: number;
+    monthlyRevenue?: number;
+    createdBy: string;
+    adminNotes?: string;
+    /**
+     * When the record was created
+     */
+    createdAt: string;
+    /**
+     * When the record was last updated
+     */
+    updatedAt: string;
+};
+
+export type SubscriptionPlanSearchParams = {
+    /**
+     * Page number
+     */
+    page?: number;
+    /**
+     * Items per page
+     */
+    limit?: number;
+    /**
+     * Field to sort by
+     */
+    sortBy?: string;
+    /**
+     * Sort order
+     */
+    sortOrder?: 'asc' | 'desc';
+    /**
+     * Search query
+     */
+    search?: string;
+    billingInterval?: 'day' | 'week' | 'month' | 'year';
+    isActive?: boolean;
+    isPublic?: boolean;
+    minPrice?: number;
+    maxPrice?: number;
+    createdBy?: string;
+};
+
+/**
+ * Paginated response
+ */
+export type AdminTicketListResponse = {
+    /**
+     * Page items
+     */
+    data: Array<{
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        ticketNumber?: string;
+        userId: string;
+        userName: string;
+        userEmail: string;
+        title: string;
+        description: string;
+        /**
+         * Support ticket category/type
+         */
+        type: 'billing' | 'technical' | 'account' | 'general' | 'bug_report' | 'feature_request';
+        /**
+         * Support ticket status
+         */
+        status: 'open' | 'assigned' | 'in_progress' | 'waiting_customer' | 'waiting_internal' | 'resolved' | 'closed';
+        /**
+         * Support ticket priority level
+         */
+        priority: 'low' | 'medium' | 'high' | 'urgent' | 'critical';
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        resolvedAt?: string;
+        assignedTo?: string;
+        assignedToName?: string;
+        files?: Array<string>;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    }>;
+    /**
+     * Pagination information
+     */
+    pagination: {
+        /**
+         * Current page number
+         */
+        page: number;
+        /**
+         * Items per page
+         */
+        limit: number;
+        /**
+         * Total number of items
+         */
+        total: number;
+        /**
+         * Total number of pages
+         */
+        totalPages: number;
+        /**
+         * Whether there is a next page
+         */
+        hasNext: boolean;
+        /**
+         * Whether there is a previous page
+         */
+        hasPrev: boolean;
+    };
+};
+
+/**
+ * Support ticket for admin
+ */
+export type AdminTicketDetailResponse = {
+    /**
+     * Universally Unique Identifier
+     */
+    id: string;
+    ticketNumber?: string;
+    userId: string;
+    userName: string;
+    userEmail: string;
+    title: string;
+    description: string;
+    /**
+     * Support ticket category/type
+     */
+    type: 'billing' | 'technical' | 'account' | 'general' | 'bug_report' | 'feature_request';
+    /**
+     * Support ticket status
+     */
+    status: 'open' | 'assigned' | 'in_progress' | 'waiting_customer' | 'waiting_internal' | 'resolved' | 'closed';
+    /**
+     * Support ticket priority level
+     */
+    priority: 'low' | 'medium' | 'high' | 'urgent' | 'critical';
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    resolvedAt?: string;
+    assignedTo?: string;
+    assignedToName?: string;
+    files?: Array<string>;
+    /**
+     * When the record was created
+     */
+    createdAt: string;
+    /**
+     * When the record was last updated
+     */
+    updatedAt: string;
+};
+
+export type AdminTicketQueryParams = {
+    /**
+     * Search in title, description
+     */
+    search?: string;
+    ticketNumber?: string;
+    userId?: string;
+    assignedTo?: string;
+    /**
+     * Support ticket status
+     */
+    status?: 'open' | 'assigned' | 'in_progress' | 'waiting_customer' | 'waiting_internal' | 'resolved' | 'closed';
+    /**
+     * Support ticket priority level
+     */
+    priority?: 'low' | 'medium' | 'high' | 'urgent' | 'critical';
+    /**
+     * Support ticket category/type
+     */
+    type?: 'billing' | 'technical' | 'account' | 'general' | 'bug_report' | 'feature_request';
+    page?: number;
+    limit?: number;
+    /**
+     * Field to sort admin tickets by
+     */
+    sortBy?: 'createdAt' | 'updatedAt' | 'resolvedAt' | 'priority' | 'status';
+    /**
+     * Sort order - ascending (asc) or descending (desc)
+     */
+    sortOrder?: 'asc' | 'desc';
+    /**
+     * Comma-separated relations: user,assignedUser
+     */
+    include?: string;
+};
+
+/**
+ * Assign ticket to agent
+ */
+export type AssignTicketRequest = {
+    assigneeId: string;
+    note?: string;
+    /**
+     * Support ticket priority level
+     */
+    priority?: 'low' | 'medium' | 'high' | 'urgent' | 'critical';
+};
+
+/**
+ * Update ticket status
+ */
+export type UpdateTicketStatusRequest = {
+    /**
+     * Support ticket status
+     */
+    status: 'open' | 'assigned' | 'in_progress' | 'waiting_customer' | 'waiting_internal' | 'resolved' | 'closed';
+    note?: string;
+    notifyUser?: boolean;
+};
+
+/**
+ * Support ticket metrics
+ */
+export type TicketStatsResponse = {
+    period: {
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        start: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        end: string;
+    };
+    totalTickets: number;
+    newTickets: number;
+    resolvedTickets: number;
+    /**
+     * Average time to first response in minutes
+     */
+    averageFirstResponseTime: number;
+    /**
+     * Average resolution time in hours
+     */
+    averageResolutionTime: number;
+    ticketsByStatus: {
+        open?: number;
+        assigned?: number;
+        in_progress?: number;
+        waiting_customer?: number;
+        waiting_internal?: number;
+        resolved?: number;
+        closed?: number;
+    };
+    ticketsByPriority: {
+        low?: number;
+        medium?: number;
+        high?: number;
+        urgent?: number;
+        critical?: number;
+    };
+    ticketsByType: {
+        billing?: number;
+        technical?: number;
+        account?: number;
+        general?: number;
+        bug_report?: number;
+        feature_request?: number;
+    };
+    agentStats?: Array<{
+        agentId: string;
+        agentName: string;
+        ticketsHandled: number;
+        averageResponseTime: number;
+        averageResolutionTime: number;
+        satisfactionScore?: number;
+    }>;
+    averageSatisfaction?: number;
+    satisfactionResponseRate?: number;
+};
+
+/**
+ * Individual agent performance metrics
+ */
+export type AgentPerformanceResponse = {
+    agentId: string;
+    agentName: string;
+    period: {
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        start: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        end: string;
+    };
+    ticketsHandled: number;
+    ticketsResolved: number;
+    /**
+     * In minutes
+     */
+    averageResponseTime: number;
+    /**
+     * In hours
+     */
+    averageResolutionTime: number;
+    satisfactionScore?: number;
+    firstContactResolutionRate: number;
+};
+
+export type TicketIdParam = {
+    /**
+     * Universally Unique Identifier
+     */
+    id: string;
+};
+
+/**
+ * Admin update support problem
+ */
+export type AdminUpdateProblemRequest = {
+    title?: string;
+    description?: string;
+    /**
+     * Support ticket priority level
+     */
+    priority?: 'low' | 'medium' | 'high' | 'urgent' | 'critical';
+    /**
+     * Support ticket category/type
+     */
+    type?: 'billing' | 'technical' | 'account' | 'general' | 'bug_report' | 'feature_request';
+    /**
+     * Support ticket status
+     */
+    status?: 'open' | 'assigned' | 'in_progress' | 'waiting_customer' | 'waiting_internal' | 'resolved' | 'closed';
+    assignedTo?: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    resolvedAt?: string;
+    files?: Array<string>;
+};
+
+/**
+ * Detailed user information for admin
+ */
+export type AdminUserDetailResponse = {
+    id: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    phoneNumber?: string;
+    /**
+     * Date in YYYY-MM-DD format
+     */
+    dateOfBirth?: string;
+    avatarUrl?: string;
+    /**
+     * User account status
+     */
+    status: 'active' | 'suspended' | 'banned' | 'unconfirmed';
+    /**
+     * User role in the system
+     */
+    role: 'admin' | 'customer' | 'business';
+    emailVerified: boolean;
+    phoneVerified: boolean;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    lastLoginAt?: string;
+    /**
+     * When the record was created
+     */
+    createdAt: string;
+    /**
+     * When the record was last updated
+     */
+    updatedAt: string;
+};
+
+/**
+ * Paginated response
+ */
+export type AdminUserListResponse = {
+    /**
+     * Page items
+     */
+    data: Array<{
+        id: string;
+        email: string;
+        firstName: string;
+        lastName: string;
+        phoneNumber?: string;
+        /**
+         * Date in YYYY-MM-DD format
+         */
+        dateOfBirth?: string;
+        avatarUrl?: string;
+        /**
+         * User account status
+         */
+        status: 'active' | 'suspended' | 'banned' | 'unconfirmed';
+        /**
+         * User role in the system
+         */
+        role: 'admin' | 'customer' | 'business';
+        emailVerified: boolean;
+        phoneVerified: boolean;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        lastLoginAt?: string;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    }>;
+    /**
+     * Pagination information
+     */
+    pagination: {
+        /**
+         * Current page number
+         */
+        page: number;
+        /**
+         * Items per page
+         */
+        limit: number;
+        /**
+         * Total number of items
+         */
+        total: number;
+        /**
+         * Total number of pages
+         */
+        totalPages: number;
+        /**
+         * Whether there is a next page
+         */
+        hasNext: boolean;
+        /**
+         * Whether there is a previous page
+         */
+        hasPrev: boolean;
+    };
+};
+
+export type AdminUserQueryParams = {
+    /**
+     * Search in name, email, phone
+     */
+    search?: string;
+    email?: string;
+    /**
+     * User account status
+     */
+    status?: 'active' | 'suspended' | 'banned' | 'unconfirmed';
+    /**
+     * User role in the system
+     */
+    role?: 'admin' | 'customer' | 'business';
+    emailVerified?: boolean;
+    phoneVerified?: boolean;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    registeredFrom?: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    registeredTo?: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    lastLoginFrom?: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    lastLoginTo?: string;
+    minSpent?: number;
+    maxSpent?: number;
+    hasReports?: boolean;
+    page?: number;
+    limit?: number;
+    /**
+     * Field to sort users by (admin view)
+     */
+    sortBy?: 'createdAt' | 'lastLoginAt' | 'email';
+    sortOrder?: 'ASC' | 'DESC';
+};
+
+/**
+ * Create a new user (admin only)
+ */
+export type AdminCreateUserRequest = {
+    email: string;
+    firstName: string;
+    lastName: string;
+    phoneNumber: string;
+    /**
+     * Date in YYYY-MM-DD format
+     */
+    dateOfBirth?: string;
+    /**
+     * User role in the system
+     */
+    role?: 'admin' | 'customer' | 'business';
+    /**
+     * User account status
+     */
+    status?: 'active' | 'suspended' | 'banned' | 'unconfirmed';
+    appVersion?: string;
+    alias?: string;
+};
+
+/**
+ * Update user information (admin)
+ */
+export type AdminUpdateUserRequest = {
+    firstName?: string;
+    lastName?: string;
+    phoneNumber?: string;
+    /**
+     * Date in YYYY-MM-DD format
+     */
+    dateOfBirth?: string;
+    /**
+     * User role in the system
+     */
+    role?: 'admin' | 'customer' | 'business';
+    /**
+     * User account status
+     */
+    status?: 'active' | 'suspended' | 'banned' | 'unconfirmed';
+    appVersion?: string;
+    alias?: string;
+    activeMembership?: boolean;
+    description?: string;
+    specialties?: Array<string>;
+};
+
+/**
+ * Ban a user
+ */
+export type BanUserRequest = {
+    reason?: string;
+    /**
+     * Ban duration in days
+     */
+    duration?: number;
+    notifyUser?: boolean;
+};
+
+/**
+ * Unban a user
+ */
+export type UnbanUserRequest = {
+    reason?: string;
+    notifyUser?: boolean;
+};
+
+/**
+ * Upload avatar for a user (admin only)
+ */
+export type AdminUploadUserAvatarRequest = {
+    /**
+     * Avatar image file (multipart/form-data)
+     */
+    file?: unknown;
+};
+
+/**
+ * Avatar upload response
+ */
+export type AdminUploadUserAvatarResponse = {
+    /**
+     * URL of the uploaded avatar
+     */
+    avatarUrl: string;
+};
+
+/**
+ * Update current admin user profile
+ */
+export type UpdateAdminProfileRequest = {
+    firstName?: string;
+    lastName?: string;
+    phoneNumber?: string;
+    /**
+     * Date in YYYY-MM-DD format
+     */
+    dateOfBirth?: string;
+    avatarUrl?: string;
+};
+
+/**
+ * Paginated response
+ */
+export type UserActivityResponse = {
+    /**
+     * Page items
+     */
+    data: Array<{
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        userId: string;
+        action: string;
+        category: 'AUTH' | 'PROFILE' | 'PAYMENT' | 'OTHER';
+        details?: {
+            [key: string]: unknown;
+        };
+        ipAddress?: string;
+        userAgent?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp: string;
+    }>;
+    /**
+     * Pagination information
+     */
+    pagination: {
+        /**
+         * Current page number
+         */
+        page: number;
+        /**
+         * Items per page
+         */
+        limit: number;
+        /**
+         * Total number of items
+         */
+        total: number;
+        /**
+         * Total number of pages
+         */
+        totalPages: number;
+        /**
+         * Whether there is a next page
+         */
+        hasNext: boolean;
+        /**
+         * Whether there is a previous page
+         */
+        hasPrev: boolean;
+    };
+};
+
+/**
+ * User statistics for admin view
+ */
+export type UserStatsResponse = {
+    userId: string;
+    period: {
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        start: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        end: string;
+    };
+    totalBookings: number;
+    creditsBalance: number;
+    friendsCount: number;
+    followersCount: number;
+    reportsCount: number;
+    activityScore: number;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    lastActiveDate?: string;
+};
+
+/**
+ * Update multiple users at once
+ */
+export type BulkUserActionRequest = {
+    userIds: Array<string>;
+    updates: {
+        /**
+         * User account status
+         */
+        status?: 'active' | 'suspended' | 'banned' | 'unconfirmed';
+        /**
+         * User role in the system
+         */
+        role?: 'admin' | 'customer' | 'business';
+    };
+    reason: string;
+};
+
+/**
+ * User ID path parameter
+ */
+export type UserIdParam = {
+    id: string;
+};
+
+/**
+ * Update user account status
+ */
+export type UpdateUserStatusRequest = {
+    /**
+     * User account status
+     */
+    status: 'active' | 'suspended' | 'banned' | 'unconfirmed';
+    reason?: string;
+    /**
+     * Suspension duration in days
+     */
+    duration?: number;
+    notifyUser?: boolean;
+};
+
+/**
+ * Admin voucher book information with full management details
+ */
+export type AdminVoucherBookResponse = {
+    /**
+     * Universally Unique Identifier
+     */
+    id: string;
+    /**
+     * Voucher book title
+     */
+    title: string;
+    /**
+     * Book edition (e.g., "January 2024")
+     */
+    edition?: string;
+    /**
+     * Voucher book type
+     */
+    bookType: 'monthly' | 'special_edition' | 'regional' | 'seasonal' | 'promotional';
+    /**
+     * Month for monthly books (1-12)
+     */
+    month?: number;
+    /**
+     * Year of publication
+     */
+    year: number;
+    /**
+     * Voucher book status
+     */
+    status: 'draft' | 'ready_for_print' | 'published' | 'archived';
+    /**
+     * Total number of pages
+     */
+    totalPages: number;
+    /**
+     * When the book was published
+     */
+    publishedAt?: string;
+    /**
+     * URL of the cover image
+     */
+    coverImageUrl?: string;
+    /**
+     * URL of the back cover image
+     */
+    backImageUrl?: string;
+    /**
+     * URL of the generated PDF
+     */
+    pdfUrl?: string;
+    /**
+     * When the PDF was generated
+     */
+    pdfGeneratedAt?: string;
+    /**
+     * Additional book metadata
+     */
+    metadata?: {
+        [key: string]: unknown;
+    };
+    /**
+     * User who created the book
+     */
+    createdBy: string;
+    /**
+     * User who last updated the book
+     */
+    updatedBy?: string;
+    /**
+     * Actual number of pages with content
+     */
+    pageCount: number;
+    /**
+     * Total number of ad placements
+     */
+    totalPlacements: number;
+    /**
+     * Number of distribution records
+     */
+    distributionCount: number;
+    /**
+     * When the record was created
+     */
+    createdAt: string;
+    /**
+     * When the record was last updated
+     */
+    updatedAt: string;
+};
+
+/**
+ * Paginated response
+ */
+export type AdminVoucherBookListResponse = {
+    /**
+     * Page items
+     */
+    data: Array<{
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        /**
+         * Voucher book title
+         */
+        title: string;
+        /**
+         * Book edition (e.g., "January 2024")
+         */
+        edition?: string;
+        /**
+         * Voucher book type
+         */
+        bookType: 'monthly' | 'special_edition' | 'regional' | 'seasonal' | 'promotional';
+        /**
+         * Month for monthly books (1-12)
+         */
+        month?: number;
+        /**
+         * Year of publication
+         */
+        year: number;
+        /**
+         * Voucher book status
+         */
+        status: 'draft' | 'ready_for_print' | 'published' | 'archived';
+        /**
+         * Total number of pages
+         */
+        totalPages: number;
+        /**
+         * When the book was published
+         */
+        publishedAt?: string;
+        /**
+         * URL of the cover image
+         */
+        coverImageUrl?: string;
+        /**
+         * URL of the back cover image
+         */
+        backImageUrl?: string;
+        /**
+         * URL of the generated PDF
+         */
+        pdfUrl?: string;
+        /**
+         * When the PDF was generated
+         */
+        pdfGeneratedAt?: string;
+        /**
+         * Additional book metadata
+         */
+        metadata?: {
+            [key: string]: unknown;
+        };
+        /**
+         * User who created the book
+         */
+        createdBy: string;
+        /**
+         * User who last updated the book
+         */
+        updatedBy?: string;
+        /**
+         * Actual number of pages with content
+         */
+        pageCount: number;
+        /**
+         * Total number of ad placements
+         */
+        totalPlacements: number;
+        /**
+         * Number of distribution records
+         */
+        distributionCount: number;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    }>;
+    /**
+     * Pagination information
+     */
+    pagination: {
+        /**
+         * Current page number
+         */
+        page: number;
+        /**
+         * Items per page
+         */
+        limit: number;
+        /**
+         * Total number of items
+         */
+        total: number;
+        /**
+         * Total number of pages
+         */
+        totalPages: number;
+        /**
+         * Whether there is a next page
+         */
+        hasNext: boolean;
+        /**
+         * Whether there is a previous page
+         */
+        hasPrev: boolean;
+    };
+};
+
+/**
+ * Create a new voucher book
+ */
+export type CreateVoucherBookRequest = {
+    /**
+     * Voucher book title
+     */
+    title: string;
+    /**
+     * Book edition (e.g., "January 2024")
+     */
+    edition?: string;
+    /**
+     * Voucher book type
+     */
+    bookType: 'monthly' | 'special_edition' | 'regional' | 'seasonal' | 'promotional';
+    /**
+     * Month for monthly books (1-12)
+     */
+    month?: number;
+    /**
+     * Year of publication
+     */
+    year: number;
+    /**
+     * Total number of pages
+     */
+    totalPages?: number;
+    /**
+     * URL of the cover image
+     */
+    coverImageUrl?: string;
+    /**
+     * URL of the back cover image
+     */
+    backImageUrl?: string;
+    /**
+     * Additional book metadata
+     */
+    metadata?: {
+        [key: string]: unknown;
+    };
+};
+
+/**
+ * Update voucher book information
+ */
+export type UpdateVoucherBookRequest = {
+    /**
+     * Voucher book title
+     */
+    title?: string;
+    /**
+     * Book edition (e.g., "January 2024")
+     */
+    edition?: string;
+    /**
+     * Voucher book type
+     */
+    bookType?: 'monthly' | 'special_edition' | 'regional' | 'seasonal' | 'promotional';
+    /**
+     * Month for monthly books (1-12)
+     */
+    month?: number;
+    /**
+     * Year of publication
+     */
+    year?: number;
+    /**
+     * Total number of pages
+     */
+    totalPages?: number;
+    /**
+     * URL of the cover image
+     */
+    coverImageUrl?: string;
+    /**
+     * URL of the back cover image
+     */
+    backImageUrl?: string;
+    /**
+     * Additional book metadata
+     */
+    metadata?: {
+        [key: string]: unknown;
+    };
+};
+
+/**
+ * Publish a voucher book
+ */
+export type PublishVoucherBookRequest = {
+    /**
+     * Publication date (defaults to now)
+     */
+    publishedAt?: string;
+    /**
+     * Generate PDF during publication
+     */
+    generatePdf?: boolean;
+};
+
+/**
+ * Archive a voucher book
+ */
+export type ArchiveVoucherBookRequest = {
+    /**
+     * Reason for archiving
+     */
+    reason?: string;
+};
+
+/**
+ * Generate PDF for voucher book
+ */
+export type GeneratePdfRequest = {
+    /**
+     * Force regeneration even if PDF already exists
+     */
+    force?: boolean;
+    /**
+     * Generation priority
+     */
+    priority?: 'low' | 'normal' | 'high';
+};
+
+/**
+ * PDF generation job status
+ */
+export type GeneratePdfResponse = {
+    /**
+     * PDF generation job ID
+     */
+    jobId: string;
+    /**
+     * Generation status
+     */
+    status: 'queued' | 'processing' | 'completed' | 'failed';
+    /**
+     * Status message
+     */
+    message: string;
+    /**
+     * Estimated completion time
+     */
+    estimatedCompletion?: string;
+    /**
+     * PDF URL if already completed
+     */
+    pdfUrl?: string;
+};
+
+/**
+ * Bulk operation on multiple voucher books
+ */
+export type BulkVoucherBookOperationRequest = {
+    /**
+     * Voucher book IDs to operate on
+     */
+    bookIds: Array<string>;
+    /**
+     * Operation to perform
+     */
+    operation: 'publish' | 'archive' | 'generate_pdf' | 'delete';
+    /**
+     * Operation-specific options
+     */
+    options?: {
+        [key: string]: unknown;
+    };
+};
+
+/**
+ * Bulk operation results
+ */
+export type BulkVoucherBookOperationResponse = {
+    /**
+     * Number of successful operations
+     */
+    successful: number;
+    /**
+     * Number of failed operations
+     */
+    failed: number;
+    /**
+     * Detailed results for each book
+     */
+    results: Array<{
+        /**
+         * Voucher book ID
+         */
+        bookId: string;
+        /**
+         * Whether operation succeeded
+         */
+        success: boolean;
+        /**
+         * Error message if failed
+         */
+        error?: string;
+    }>;
+};
+
+export type AdminVoucherBookQueryParams = {
+    /**
+     * Page number
+     */
+    page?: number;
+    /**
+     * Items per page
+     */
+    limit?: number;
+    /**
+     * Field to sort voucher books by
+     */
+    sortBy?: 'createdAt' | 'updatedAt' | 'title' | 'year' | 'month' | 'status' | 'publishedAt';
+    /**
+     * Sort order
+     */
+    sortOrder?: 'asc' | 'desc';
+    /**
+     * Search query
+     */
+    search?: string;
+    /**
+     * Voucher book type
+     */
+    bookType?: 'monthly' | 'special_edition' | 'regional' | 'seasonal' | 'promotional';
+    /**
+     * Voucher book status
+     */
+    status?: 'draft' | 'ready_for_print' | 'published' | 'archived';
+    /**
+     * Filter by year
+     */
+    year?: number;
+    /**
+     * Filter by month
+     */
+    month?: number;
+    /**
+     * Filter by creator
+     */
+    createdBy?: string;
+    /**
+     * Filter by last updater
+     */
+    updatedBy?: string;
+    /**
+     * Filter books with/without content
+     */
+    hasContent?: boolean;
+    /**
+     * Filter books with/without generated PDF
+     */
+    hasPdf?: boolean;
+};
+
+export type UnifiedVerificationRequest = {
+    type: 'EMAIL' | 'PHONE' | 'ACCOUNT_CONFIRMATION';
+    token?: string;
+    code?: string;
+    userId?: string;
+    email?: string;
+    phoneNumber?: string;
+};
+
+export type UnifiedResendVerificationRequest = {
+    type: 'EMAIL' | 'PHONE';
+    userId?: string;
+    email?: string;
+    phoneNumber?: string;
+};
+
+export type UnifiedVerificationResponse = {
+    success: boolean;
+    message?: string;
+};
+
+/**
+ * User verification response
+ */
+export type VerifyUserResponse = {
+    success?: boolean;
+    message?: string;
+    /**
+     * Detailed user information for admin
+     */
+    user?: {
+        id: string;
+        email: string;
+        firstName: string;
+        lastName: string;
+        phoneNumber?: string;
+        /**
+         * Date in YYYY-MM-DD format
+         */
+        dateOfBirth?: string;
+        avatarUrl?: string;
+        /**
+         * User account status
+         */
+        status: 'active' | 'suspended' | 'banned' | 'unconfirmed';
+        /**
+         * User role in the system
+         */
+        role: 'admin' | 'customer' | 'business';
+        emailVerified: boolean;
+        phoneVerified: boolean;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        lastLoginAt?: string;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    };
+};
+
+/**
+ * Resend verification response
+ */
+export type ResendVerificationResponse = {
+    success?: boolean;
+    message?: string;
+};
+
+/**
+ * User verification status information
+ */
+export type UserVerificationStatusResponse = {
+    userId: string;
+    emailVerified: boolean;
+    phoneVerified: boolean;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    verificationDate?: string;
+};
+
+export type ServiceHealth = {
+    status: 'healthy' | 'degraded' | 'unhealthy';
+    /**
+     * Service URL
+     */
+    url: string;
+    /**
+     * Response time in milliseconds
+     */
+    responseTime: number;
+};
+
+/**
+ * Internal business data for services
+ */
+export type InternalBusinessData = {
+    /**
+     * Universally Unique Identifier
+     */
+    id: string;
+    userId: string;
+    businessNameKey: string;
+    businessDescriptionKey?: string;
+    /**
+     * Universally Unique Identifier
+     */
+    categoryId: string;
+    verified: boolean;
+    active: boolean;
+    avgRating: number;
+};
+
+export type InternalBusinessQueryParams = {
+    verified?: boolean;
+    active?: boolean;
+    /**
+     * Universally Unique Identifier
+     */
+    categoryId?: string;
+};
+
+/**
+ * Get multiple businesses by IDs
+ */
+export type BulkBusinessRequest = {
+    businessIds: Array<string>;
+    /**
+     * Comma-separated relations: user,category
+     */
+    include?: string;
+};
+
+/**
+ * Businesses data with not found IDs
+ */
+export type BulkBusinessResponse = {
+    businesses: Array<{
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        userId: string;
+        businessNameKey: string;
+        businessDescriptionKey?: string;
+        /**
+         * Universally Unique Identifier
+         */
+        categoryId: string;
+        verified: boolean;
+        active: boolean;
+        avgRating: number;
+    }>;
+    notFound?: Array<string>;
+};
+
+/**
+ * Validate businesses exist and optionally check if active/verified
+ */
+export type ValidateBusinessRequest = {
+    businessIds: Array<string>;
+    checkActive?: boolean;
+    checkVerified?: boolean;
+};
+
+/**
+ * Validation results for businesses
+ */
+export type ValidateBusinessResponse = {
+    valid: Array<string>;
+    invalid: Array<{
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        reason: string;
+    }>;
+};
+
+/**
+ * Get all businesses owned by a user
+ */
+export type GetBusinessesByUserRequest = {
+    userId: string;
+    includeInactive?: boolean;
+    includeUnverified?: boolean;
+};
+
+/**
+ * User businesses data
+ */
+export type GetBusinessesByUserResponse = {
+    businesses: Array<{
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        userId: string;
+        businessNameKey: string;
+        businessDescriptionKey?: string;
+        /**
+         * Universally Unique Identifier
+         */
+        categoryId: string;
+        verified: boolean;
+        active: boolean;
+        avgRating: number;
+    }>;
+    totalCount: number;
+};
+
+/**
+ * Query parameters for getting business details
+ */
+export type GetBusinessRequest = {
+    /**
+     * Comma-separated relations: user,category
+     */
+    include?: string;
+};
+
+/**
+ * Query parameters for getting businesses in a specific category
+ */
+export type GetBusinessesByCategoryRequest = {
+    /**
+     * Page number
+     */
+    page?: number;
+    /**
+     * Items per page
+     */
+    limit?: number;
+    /**
+     * Field to sort by
+     */
+    sortBy?: string;
+    /**
+     * Sort order
+     */
+    sortOrder?: 'asc' | 'desc';
+    /**
+     * Search query
+     */
+    search?: string;
+    onlyActive?: boolean;
+    onlyVerified?: boolean;
+    /**
+     * Comma-separated relations: user,category
+     */
+    include?: string;
+};
+
+/**
+ * Paginated response
+ */
+export type GetBusinessesByCategoryResponse = {
+    /**
+     * Page items
+     */
+    data: Array<{
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        userId: string;
+        businessNameKey: string;
+        businessDescriptionKey?: string;
+        /**
+         * Universally Unique Identifier
+         */
+        categoryId: string;
+        verified: boolean;
+        active: boolean;
+        avgRating: number;
+    }>;
+    /**
+     * Pagination information
+     */
+    pagination: {
+        /**
+         * Current page number
+         */
+        page: number;
+        /**
+         * Items per page
+         */
+        limit: number;
+        /**
+         * Total number of items
+         */
+        total: number;
+        /**
+         * Total number of pages
+         */
+        totalPages: number;
+        /**
+         * Whether there is a next page
+         */
+        hasNext: boolean;
+        /**
+         * Whether there is a previous page
+         */
+        hasPrev: boolean;
+    };
+};
+
+/**
+ * Check if business exists and is active
+ */
+export type CheckBusinessExistsRequest = {
+    /**
+     * Universally Unique Identifier
+     */
+    businessId: string;
+};
+
+/**
+ * Business existence check result
+ */
+export type CheckBusinessExistsResponse = {
+    exists: boolean;
+    isActive?: boolean;
+    isVerified?: boolean;
+    /**
+     * Internal business data for services
+     */
+    business?: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        userId: string;
+        businessNameKey: string;
+        businessDescriptionKey?: string;
+        /**
+         * Universally Unique Identifier
+         */
+        categoryId: string;
+        verified: boolean;
+        active: boolean;
+        avgRating: number;
+    };
+};
+
+/**
+ * Internal category data for services
+ */
+export type InternalCategoryData = {
+    /**
+     * Universally Unique Identifier
+     */
+    id: string;
+    nameKey: string;
+    descriptionKey?: string;
+    icon?: string;
+    /**
+     * Universally Unique Identifier
+     */
+    parentId?: string;
+    isActive: boolean;
+    sortOrder: number;
+};
+
+export type InternalCategoryQueryParams = {
+    isActive?: boolean;
+};
+
+/**
+ * Get multiple categories by IDs
+ */
+export type BulkCategoryRequest = {
+    categoryIds: Array<string>;
+};
+
+/**
+ * Paginated response
+ */
+export type BulkCategoryResponse = {
+    /**
+     * Page items
+     */
+    data: Array<{
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        nameKey: string;
+        descriptionKey?: string;
+        icon?: string;
+        /**
+         * Universally Unique Identifier
+         */
+        parentId?: string;
+        isActive: boolean;
+        sortOrder: number;
+    }>;
+    /**
+     * Pagination information
+     */
+    pagination: {
+        /**
+         * Current page number
+         */
+        page: number;
+        /**
+         * Items per page
+         */
+        limit: number;
+        /**
+         * Total number of items
+         */
+        total: number;
+        /**
+         * Total number of pages
+         */
+        totalPages: number;
+        /**
+         * Whether there is a next page
+         */
+        hasNext: boolean;
+        /**
+         * Whether there is a previous page
+         */
+        hasPrev: boolean;
+    };
+};
+
+/**
+ * Validate categories exist and optionally check if active
+ */
+export type ValidateCategoryRequest = {
+    categoryIds: Array<string>;
+    checkActive?: boolean;
+};
+
+/**
+ * Validation results for categories
+ */
+export type ValidateCategoryResponse = {
+    /**
+     * Whether all categories are valid
+     */
+    valid: boolean;
+    /**
+     * Individual validation results
+     */
+    results: Array<{
+        /**
+         * Universally Unique Identifier
+         */
+        categoryId: string;
+        exists: boolean;
+        isActive: boolean;
+        valid: boolean;
+    }>;
+};
+
+export type CategoryValidationResult = {
+    /**
+     * Universally Unique Identifier
+     */
+    categoryId: string;
+    exists: boolean;
+    isActive: boolean;
+    valid: boolean;
+};
+
+/**
+ * Category hierarchy for internal use
+ */
+export type InternalCategoryHierarchyResponse = {
+    data: Array<{
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        nameKey: string;
+        descriptionKey?: string;
+        icon?: string;
+        /**
+         * Universally Unique Identifier
+         */
+        parentId?: string;
+        isActive: boolean;
+        sortOrder: number;
+    }>;
+};
+
+/**
+ * Check if category exists and is active
+ */
+export type CheckCategoryExistsRequest = {
+    /**
+     * Universally Unique Identifier
+     */
+    categoryId: string;
+};
+
+/**
+ * Category existence check result
+ */
+export type CheckCategoryExistsResponse = {
+    exists: boolean;
+    isActive?: boolean;
+    /**
+     * Internal category data for services
+     */
+    category?: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        nameKey: string;
+        descriptionKey?: string;
+        icon?: string;
+        /**
+         * Universally Unique Identifier
+         */
+        parentId?: string;
+        isActive: boolean;
+        sortOrder: number;
+    };
+};
+
+/**
+ * Paginated response
+ */
+export type InternalCategoryListResponse = {
+    /**
+     * Page items
+     */
+    data: Array<{
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        nameKey: string;
+        descriptionKey?: string;
+        icon?: string;
+        /**
+         * Universally Unique Identifier
+         */
+        parentId?: string;
+        isActive: boolean;
+        sortOrder: number;
+    }>;
+    /**
+     * Pagination information
+     */
+    pagination: {
+        /**
+         * Current page number
+         */
+        page: number;
+        /**
+         * Items per page
+         */
+        limit: number;
+        /**
+         * Total number of items
+         */
+        total: number;
+        /**
+         * Total number of pages
+         */
+        totalPages: number;
+        /**
+         * Whether there is a next page
+         */
+        hasNext: boolean;
+        /**
+         * Whether there is a previous page
+         */
+        hasPrev: boolean;
+    };
+};
+
+/**
+ * Storage service health status
+ */
+export type StorageServiceHealthCheck = {
+    service: 'storage';
+    /**
+     * System health status
+     */
+    status: 'healthy' | 'degraded' | 'unhealthy';
+    timestamp: string;
+    providersStatus: {
+        /**
+         * System health status
+         */
+        aws_s3?: 'healthy' | 'degraded' | 'unhealthy';
+        /**
+         * System health status
+         */
+        local?: 'healthy' | 'degraded' | 'unhealthy';
+        /**
+         * System health status
+         */
+        minio?: 'healthy' | 'degraded' | 'unhealthy';
+    };
+    totalFiles: number;
+    /**
+     * Total storage in bytes
+     */
+    totalStorageUsed: number;
+    /**
+     * For local storage
+     */
+    diskSpaceRemaining?: number;
+};
+
+/**
+ * Internal file creation request
+ */
+export type InternalCreateFileRequest = {
+    userId: string;
+    fileKey: string;
+    fileName: string;
+    fileSize: number;
+    mimeType: string;
+    /**
+     * File type category
+     */
+    fileType: 'image' | 'video' | 'document' | 'audio' | 'other';
+    /**
+     * Supported storage provider
+     */
+    provider: 'aws_s3' | 'local' | 'minio';
+    bucketName?: string;
+    region?: string;
+    isPublic?: boolean;
+    metadata?: {
+        [key: string]: string;
+    };
+};
+
+/**
+ * Internal file response
+ */
+export type InternalFileResponse = {
+    /**
+     * Universally Unique Identifier
+     */
+    id: string;
+    userId: string;
+    fileKey: string;
+    fileName: string;
+    fileSize: number;
+    mimeType: string;
+    /**
+     * File type category
+     */
+    fileType: 'image' | 'video' | 'document' | 'audio' | 'other';
+    /**
+     * File processing status
+     */
+    status: 'pending' | 'uploaded' | 'processing' | 'processed' | 'failed' | 'deleted';
+    /**
+     * Supported storage provider
+     */
+    provider: 'aws_s3' | 'local' | 'minio';
+    bucketName?: string;
+    region?: string;
+    isPublic: boolean;
+    metadata?: {
+        [key: string]: string;
+    };
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    uploadedAt?: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    createdAt: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    updatedAt: string;
+};
+
+/**
+ * Internal bulk delete files request
+ */
+export type InternalBulkDeleteRequest = {
+    fileIds: Array<string>;
+    /**
+     * If provided, only delete files owned by this user
+     */
+    userId?: string;
+    reason?: string;
+};
+
+/**
+ * Internal bulk delete response
+ */
+export type InternalBulkDeleteResponse = {
+    deleted: Array<string>;
+    failed: Array<{
+        /**
+         * Universally Unique Identifier
+         */
+        fileId: string;
+        error: string;
+    }>;
+    totalDeleted: number;
+    totalFailed: number;
+};
+
+/**
+ * Get files for a specific user
+ */
+export type GetUserFilesRequest = {
+    userId: string;
+    /**
+     * File type category
+     */
+    fileType?: 'image' | 'video' | 'document' | 'audio' | 'other';
+    /**
+     * File processing status
+     */
+    status?: 'pending' | 'uploaded' | 'processing' | 'processed' | 'failed' | 'deleted';
+    limit?: number;
+    offset?: number;
+};
+
+/**
+ * User file summary for internal use
+ */
+export type UserFileSummaryResponse = {
+    userId: string;
+    totalFiles: number;
+    /**
+     * Total size in bytes
+     */
+    totalSize: number;
+    filesByType: {
+        image?: number;
+        video?: number;
+        document?: number;
+        audio?: number;
+        other?: number;
+    };
+    filesByStatus: {
+        pending?: number;
+        uploaded?: number;
+        processing?: number;
+        processed?: number;
+        failed?: number;
+        deleted?: number;
+    };
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    oldestFile?: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    newestFile?: string;
+};
+
+/**
+ * Check if user can upload file within quota
+ */
+export type CheckUserQuotaRequest = {
+    userId: string;
+    fileSize: number;
+    /**
+     * File type category
+     */
+    fileType?: 'image' | 'video' | 'document' | 'audio' | 'other';
+};
+
+/**
+ * User storage quota information
+ */
+export type UserQuotaResponse = {
+    userId: string;
+    canUpload: boolean;
+    quotaExceeded: boolean;
+    /**
+     * Current usage in bytes
+     */
+    currentUsage: number;
+    /**
+     * Quota limit in bytes
+     */
+    quotaLimit: number;
+    /**
+     * Remaining space in bytes
+     */
+    remainingSpace: number;
+    fileCountLimit?: number;
+    currentFileCount: number;
+};
+
+/**
+ * Migrate file between storage providers
+ */
+export type MigrateFileRequest = {
+    /**
+     * Universally Unique Identifier
+     */
+    fileId: string;
+    /**
+     * Supported storage provider
+     */
+    targetProvider: 'aws_s3' | 'local' | 'minio';
+    targetBucket?: string;
+    targetRegion?: string;
+    deleteOriginal?: boolean;
+};
+
+/**
+ * File migration result
+ */
+export type MigrateFileResponse = {
+    /**
+     * Universally Unique Identifier
+     */
+    fileId: string;
+    /**
+     * Supported storage provider
+     */
+    oldProvider: 'aws_s3' | 'local' | 'minio';
+    /**
+     * Supported storage provider
+     */
+    newProvider: 'aws_s3' | 'local' | 'minio';
+    oldFileKey: string;
+    newFileKey: string;
+    migrationStatus: 'success' | 'failed' | 'partial';
+    error?: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    migratedAt: string;
+};
+
+/**
+ * Cleanup orphaned files request
+ */
+export type CleanupOrphanedFilesRequest = {
+    /**
+     * Delete files older than this date
+     */
+    olderThan: string;
+    dryRun?: boolean;
+    /**
+     * Supported storage provider
+     */
+    provider?: 'aws_s3' | 'local' | 'minio';
+    batchSize?: number;
+};
+
+/**
+ * Cleanup orphaned files response
+ */
+export type CleanupOrphanedFilesResponse = {
+    filesFound: number;
+    filesDeleted: number;
+    /**
+     * Storage freed in bytes
+     */
+    storageFreed: number;
+    errors: Array<string>;
+    dryRun: boolean;
+};
+
+/**
+ * Batch fetch vouchers by IDs
+ */
+export type GetVouchersByIdsRequest = {
+    /**
+     * List of voucher IDs to fetch
+     */
+    voucherIds: Array<string>;
+    /**
+     * Comma-separated relations: business,category,codes
+     */
+    include?: string;
+};
+
+/**
+ * Batch fetch vouchers response with pagination metadata
+ */
+export type GetVouchersByIdsResponse = {
+    /**
+     * Page items
+     */
+    data: Array<{
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        /**
+         * Universally Unique Identifier
+         */
+        businessId: string;
+        /**
+         * Universally Unique Identifier
+         */
+        categoryId: string;
+        /**
+         * Current state of the voucher lifecycle
+         */
+        state: 'draft' | 'published' | 'claimed' | 'redeemed' | 'expired' | 'suspended';
+        /**
+         * Voucher title in requested language
+         */
+        title: string;
+        /**
+         * Voucher description in requested language
+         */
+        description: string;
+        /**
+         * Voucher terms and conditions in requested language
+         */
+        terms: string;
+        /**
+         * Type of discount the voucher provides
+         */
+        discountType: 'percentage' | 'fixed';
+        /**
+         * Decimal number with 2 decimal places
+         */
+        discountValue: number;
+        currency?: string;
+        /**
+         * Geographic location as GeoJSON Point
+         */
+        location: {
+            type: 'Point';
+            coordinates: [
+                number,
+                number
+            ];
+        } | null;
+        imageUrl: string | null;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        validFrom: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        expiresAt: string;
+        maxRedemptions: number | null;
+        maxRedemptionsPerUser?: number;
+        currentRedemptions?: number;
+        scanCount?: number;
+        claimCount?: number;
+        metadata: {
+            [key: string]: unknown;
+        } | null;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        deletedAt: string | null;
+        /**
+         * Complete business object when ?include=business
+         */
+        business?: {
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            name: string;
+        };
+        /**
+         * Complete category object when ?include=category
+         */
+        category?: {
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            name: string;
+        };
+        /**
+         * Voucher codes when ?include=codes
+         */
+        codes?: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            code: string;
+            /**
+             * Type of voucher code
+             */
+            type: 'qr' | 'short' | 'static';
+            isActive: boolean;
+            metadata: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            createdAt: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            updatedAt: string;
+        }>;
+        /**
+         * Redemption history when ?include=redemptions
+         */
+        redemptions?: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            /**
+             * Universally Unique Identifier
+             */
+            userId: string;
+            codeUsed: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            redeemedAt: string;
+            metadata: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            createdAt: string;
+        }>;
+        /**
+         * Scan analytics when ?include=scans
+         */
+        scans?: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            /**
+             * Universally Unique Identifier
+             */
+            userId: string | null;
+            /**
+             * Type of voucher scan
+             */
+            scanType: 'customer' | 'business';
+            /**
+             * Source of the voucher scan
+             */
+            scanSource: 'camera' | 'gallery' | 'link' | 'share';
+            /**
+             * Geographic location as GeoJSON Point
+             */
+            location: {
+                type: 'Point';
+                coordinates: [
+                    number,
+                    number
+                ];
+            } | null;
+            deviceInfo: {
+                [key: string]: unknown;
+            };
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            scannedAt: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            createdAt: string;
+        }>;
+        /**
+         * Customer wallet entries when ?include=customerVouchers
+         */
+        customerVouchers?: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            /**
+             * Universally Unique Identifier
+             */
+            customerId: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            claimedAt: string;
+            /**
+             * Status of voucher from customer perspective
+             */
+            status: 'claimed' | 'redeemed' | 'expired';
+            notificationPreferences: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            redeemedAt: string | null;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            createdAt: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            updatedAt: string;
+        }>;
+        isActive: boolean;
+        isExpired: boolean;
+        redemptionRate: number;
+        daysUntilExpiry: number | null;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    }>;
+    /**
+     * Pagination information
+     */
+    pagination: {
+        /**
+         * Current page number
+         */
+        page: number;
+        /**
+         * Items per page
+         */
+        limit: number;
+        /**
+         * Total number of items
+         */
+        total: number;
+        /**
+         * Total number of pages
+         */
+        totalPages: number;
+        /**
+         * Whether there is a next page
+         */
+        hasNext: boolean;
+        /**
+         * Whether there is a previous page
+         */
+        hasPrev: boolean;
+    };
+    /**
+     * IDs of vouchers that were not found
+     */
+    notFound: Array<string>;
+};
+
+/**
+ * Validate voucher availability and constraints
+ */
+export type ValidateVoucherRequest = {
+    /**
+     * Universally Unique Identifier
+     */
+    voucherId: string;
+    /**
+     * User ID for user-specific validation
+     */
+    userId?: string;
+    /**
+     * Check if redemption limit reached
+     */
+    checkRedemptionLimit?: boolean;
+    /**
+     * Check if voucher is expired
+     */
+    checkExpiry?: boolean;
+    /**
+     * Check if voucher is in valid state
+     */
+    checkState?: boolean;
+};
+
+/**
+ * Voucher validation result
+ */
+export type ValidateVoucherResponse = {
+    isValid: boolean;
+    /**
+     * Reason if validation failed
+     */
+    reason?: string;
+    /**
+     * Voucher details if valid
+     */
+    voucher?: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        /**
+         * Universally Unique Identifier
+         */
+        businessId: string;
+        /**
+         * Universally Unique Identifier
+         */
+        categoryId: string;
+        /**
+         * Current state of the voucher lifecycle
+         */
+        state: 'draft' | 'published' | 'claimed' | 'redeemed' | 'expired' | 'suspended';
+        /**
+         * Voucher title in requested language
+         */
+        title: string;
+        /**
+         * Voucher description in requested language
+         */
+        description: string;
+        /**
+         * Voucher terms and conditions in requested language
+         */
+        terms: string;
+        /**
+         * Type of discount the voucher provides
+         */
+        discountType: 'percentage' | 'fixed';
+        /**
+         * Decimal number with 2 decimal places
+         */
+        discountValue: number;
+        currency?: string;
+        /**
+         * Geographic location as GeoJSON Point
+         */
+        location: {
+            type: 'Point';
+            coordinates: [
+                number,
+                number
+            ];
+        } | null;
+        imageUrl: string | null;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        validFrom: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        expiresAt: string;
+        maxRedemptions: number | null;
+        maxRedemptionsPerUser?: number;
+        currentRedemptions?: number;
+        scanCount?: number;
+        claimCount?: number;
+        metadata: {
+            [key: string]: unknown;
+        } | null;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        deletedAt: string | null;
+        /**
+         * Complete business object when ?include=business
+         */
+        business?: {
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            name: string;
+        };
+        /**
+         * Complete category object when ?include=category
+         */
+        category?: {
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            name: string;
+        };
+        /**
+         * Voucher codes when ?include=codes
+         */
+        codes?: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            code: string;
+            /**
+             * Type of voucher code
+             */
+            type: 'qr' | 'short' | 'static';
+            isActive: boolean;
+            metadata: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            createdAt: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            updatedAt: string;
+        }>;
+        /**
+         * Redemption history when ?include=redemptions
+         */
+        redemptions?: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            /**
+             * Universally Unique Identifier
+             */
+            userId: string;
+            codeUsed: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            redeemedAt: string;
+            metadata: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            createdAt: string;
+        }>;
+        /**
+         * Scan analytics when ?include=scans
+         */
+        scans?: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            /**
+             * Universally Unique Identifier
+             */
+            userId: string | null;
+            /**
+             * Type of voucher scan
+             */
+            scanType: 'customer' | 'business';
+            /**
+             * Source of the voucher scan
+             */
+            scanSource: 'camera' | 'gallery' | 'link' | 'share';
+            /**
+             * Geographic location as GeoJSON Point
+             */
+            location: {
+                type: 'Point';
+                coordinates: [
+                    number,
+                    number
+                ];
+            } | null;
+            deviceInfo: {
+                [key: string]: unknown;
+            };
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            scannedAt: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            createdAt: string;
+        }>;
+        /**
+         * Customer wallet entries when ?include=customerVouchers
+         */
+        customerVouchers?: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            /**
+             * Universally Unique Identifier
+             */
+            customerId: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            claimedAt: string;
+            /**
+             * Status of voucher from customer perspective
+             */
+            status: 'claimed' | 'redeemed' | 'expired';
+            notificationPreferences: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            redeemedAt: string | null;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            createdAt: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            updatedAt: string;
+        }>;
+        isActive: boolean;
+        isExpired: boolean;
+        redemptionRate: number;
+        daysUntilExpiry: number | null;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    };
+};
+
+export type ServiceRegistryQuery = {
+    serviceName?: string;
+    serviceType?: 'API_GATEWAY' | 'MICROSERVICE' | 'DATABASE' | 'CACHE' | 'QUEUE' | 'STORAGE' | 'MONITORING';
+    environment?: 'DEVELOPMENT' | 'STAGING' | 'PRODUCTION' | 'TEST';
+    status?: 'STARTING' | 'HEALTHY' | 'DEGRADED' | 'UNHEALTHY' | 'STOPPED';
+    region?: string;
+    tags?: Array<string>;
+    healthyOnly?: boolean;
+    includeMetrics?: boolean;
+};
+
+/**
+ * List of registered services
+ */
+export type ServiceRegistryResponse = {
+    services: Array<{
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        serviceName: string;
+        serviceType: 'API_GATEWAY' | 'MICROSERVICE' | 'DATABASE' | 'CACHE' | 'QUEUE' | 'STORAGE' | 'MONITORING';
+        version: string;
+        instanceId: string;
+        endpoints: Array<{
+            protocol: 'http' | 'https' | 'tcp' | 'grpc';
+            host: string;
+            port: number;
+            path?: string;
+            healthCheckPath?: string;
+        }>;
+        environment: 'DEVELOPMENT' | 'STAGING' | 'PRODUCTION' | 'TEST';
+        region?: string;
+        availabilityZone?: string;
+        status: 'STARTING' | 'HEALTHY' | 'DEGRADED' | 'UNHEALTHY' | 'STOPPED';
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        lastHealthCheck?: string;
+        healthCheckUrl?: string;
+        metadata?: {
+            [key: string]: string;
+        };
+        tags?: Array<string>;
+        metrics?: {
+            cpuUsage?: number;
+            memoryUsage?: number;
+            diskUsage?: number;
+            requestCount?: number;
+            errorRate?: number;
+            responseTime?: number;
+        };
+        registeredBy?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        lastSeen: string;
+        ttl?: number;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    }>;
+    totalCount: number;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    lastUpdated: string;
+};
+
+/**
+ * Register a service instance
+ */
+export type RegisterServiceRequest = {
+    serviceName: string;
+    serviceType: 'API_GATEWAY' | 'MICROSERVICE' | 'DATABASE' | 'CACHE' | 'QUEUE' | 'STORAGE' | 'MONITORING';
+    version: string;
+    instanceId: string;
+    endpoints: Array<{
+        protocol: 'http' | 'https' | 'tcp' | 'grpc';
+        host: string;
+        port: number;
+        path?: string;
+        healthCheckPath?: string;
+    }>;
+    environment: 'DEVELOPMENT' | 'STAGING' | 'PRODUCTION' | 'TEST';
+    region?: string;
+    availabilityZone?: string;
+    healthCheckUrl?: string;
+    healthCheckInterval?: number;
+    metadata?: {
+        [key: string]: string;
+    };
+    tags?: Array<string>;
+    ttl?: number;
+    autoDeregister?: boolean;
+};
+
+/**
+ * Service registration confirmation
+ */
+export type RegisterServiceResponse = {
+    /**
+     * Universally Unique Identifier
+     */
+    instanceId: string;
+    serviceName: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    registeredAt: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    expiresAt: string;
+    healthCheckUrl?: string;
+};
+
+/**
+ * Available endpoints for a service
+ */
+export type ServiceEndpointsResponse = {
+    serviceName: string;
+    instances: Array<{
+        instanceId: string;
+        endpoints: Array<{
+            protocol: 'http' | 'https' | 'tcp' | 'grpc';
+            host: string;
+            port: number;
+            path?: string;
+            healthCheckPath?: string;
+        }>;
+        status: 'STARTING' | 'HEALTHY' | 'DEGRADED' | 'UNHEALTHY' | 'STOPPED';
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        lastSeen: string;
+        loadBalanceWeight?: number;
+    }>;
+    loadBalancingStrategy?: 'ROUND_ROBIN' | 'LEAST_CONNECTIONS' | 'WEIGHTED';
+};
+
+/**
+ * Deregister service instance
+ */
+export type DeregisterServiceRequest = {
+    reason?: 'SHUTDOWN' | 'MAINTENANCE' | 'ERROR' | 'SCALE_DOWN';
+    gracefulShutdown?: boolean;
+    drainConnections?: boolean;
+    drainTimeoutSeconds?: number;
+};
+
+/**
+ * Service deregistration confirmation
+ */
+export type DeregisterServiceResponse = {
+    /**
+     * Universally Unique Identifier
+     */
+    instanceId: string;
+    serviceName: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    deregisteredAt: string;
+    gracefulShutdown: boolean;
+    message?: string;
+};
+
+/**
+ * Service configuration data
+ */
+export type ServiceConfigResponse = {
+    serviceName: string;
+    environment: 'DEVELOPMENT' | 'STAGING' | 'PRODUCTION' | 'TEST';
+    configuration: {
+        [key: string]: unknown;
+    };
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    lastUpdated: string;
+    version: string;
+};
+
+/**
+ * Validate JWT token
+ */
+export type ValidateTokenRequest = {
+    token: string;
+    checkExpiry?: boolean;
+    requiredRoles?: Array<string>;
+};
+
+/**
+ * Token validation result
+ */
+export type TokenValidationResponse = {
+    valid: boolean;
+    userId?: string;
+    email?: string;
+    roles: Array<string>;
+    permissions: Array<string>;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    expiresAt?: string;
+    metadata?: {
+        [key: string]: unknown;
+    };
+};
+
+/**
+ * Get user by email
+ */
+export type GetUserByEmailRequest = {
+    email: string;
+};
+
+/**
+ * Initiate password reset
+ */
+export type InitiatePasswordResetRequest = {
+    email: string;
+    callbackUrl?: string;
+};
+
+/**
+ * Password reset initiated
+ */
+export type PasswordResetResponse = {
+    resetToken: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    expiresAt: string;
+    emailSent: boolean;
+};
+
+/**
+ * Confirm password reset
+ */
+export type ConfirmPasswordResetRequest = {
+    token: string;
+    newPassword: string;
+};
+
+/**
+ * Verify account with token
+ */
+export type VerifyAccountRequest = {
+    token: string;
+};
+
+/**
+ * Account verification result
+ */
+export type AccountVerificationResponse = {
+    verified: boolean;
+    userId?: string;
+    message?: string;
+};
+
+/**
+ * Create a service-to-service session
+ */
+export type CreateServiceSessionRequest = {
+    userId: string;
+    serviceName: string;
+    expiresIn?: number;
+    metadata?: {
+        [key: string]: unknown;
+    };
+};
+
+/**
+ * Service session details
+ */
+export type ServiceSessionResponse = {
+    /**
+     * Universally Unique Identifier
+     */
+    sessionId: string;
+    token: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    expiresAt: string;
+};
+
+/**
+ * Check if user has specified roles
+ */
+export type CheckUserRoleRequest = {
+    userId: string;
+    roles: Array<string>;
+    requireAll?: boolean;
+};
+
+/**
+ * Role check result
+ */
+export type RoleCheckResponse = {
+    hasRole: boolean;
+    userRoles: Array<string>;
+    missingRoles?: Array<string>;
+};
+
+/**
+ * Validate service API key
+ */
+export type ValidateServiceKeyRequest = {
+    apiKey: string;
+    serviceName: string;
+};
+
+/**
+ * Service key validation result
+ */
+export type ServiceKeyValidationResponse = {
+    valid: boolean;
+    serviceName?: string;
+    permissions?: Array<string>;
+    rateLimit?: {
+        limit: number;
+        remaining: number;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        resetAt: string;
+    };
+};
+
+/**
+ * Send system notification
+ */
+export type SendSystemNotificationRequest = {
+    userIds?: Array<string>;
+    /**
+     * Send to all users
+     */
+    broadcast?: boolean;
+    title: string;
+    message: string;
+    category: 'system' | 'security' | 'billing' | 'marketing';
+    priority?: 'low' | 'normal' | 'high' | 'urgent';
+    channels?: Array<'email' | 'inApp' | 'sms' | 'push'>;
+    templateId?: string;
+    templateVariables?: {
+        [key: string]: unknown;
+    };
+    actionUrl?: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    expiresAt?: string;
+    metadata?: {
+        [key: string]: unknown;
+    };
+};
+
+/**
+ * System notification result
+ */
+export type SendSystemNotificationResponse = {
+    /**
+     * Universally Unique Identifier
+     */
+    notificationId: string;
+    recipientCount: number;
+    channels: {
+        [key: string]: {
+            sent: number;
+            failed: number;
+        };
+    };
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    timestamp: string;
+};
+
+/**
+ * Send transactional email
+ */
+export type SendTransactionalEmailRequest = {
+    userId: string;
+    templateKey: 'welcome' | 'passwordReset' | 'emailVerification' | 'paymentSuccess' | 'paymentFailed' | 'subscriptionActivated' | 'subscriptionCancelled';
+    variables: {
+        [key: string]: unknown;
+    };
+    /**
+     * Override template subject
+     */
+    subject?: string;
+    replyTo?: string;
+    attachments?: Array<{
+        filename: string;
+        /**
+         * Base64 encoded
+         */
+        content: string;
+        contentType: string;
+    }>;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    sendAt?: string;
+    trackOpens?: boolean;
+    trackClicks?: boolean;
+};
+
+/**
+ * Transactional email result
+ */
+export type SendTransactionalEmailResponse = {
+    messageId: string;
+    status: 'queued' | 'sent' | 'delivered' | 'failed' | 'bounced' | 'complained' | 'rejected';
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    scheduledAt?: string;
+    errorMessage?: string;
+};
+
+/**
+ * Send SMS message
+ */
+export type SendSmsRequest = {
+    userId: string;
+    /**
+     * Override user phone
+     */
+    phoneNumber?: string;
+    message: string;
+    type: 'verification' | 'alert' | 'reminder' | 'marketing';
+    metadata?: {
+        [key: string]: unknown;
+    };
+};
+
+/**
+ * SMS send result
+ */
+export type SendSmsResponse = {
+    messageId: string;
+    status: 'SENT' | 'FAILED' | 'QUEUED';
+    errorMessage?: string;
+};
+
+/**
+ * Send push notification
+ */
+export type SendPushNotificationRequest = {
+    userIds: Array<string>;
+    title: string;
+    body: string;
+    badge?: number;
+    sound?: string;
+    data?: {
+        [key: string]: unknown;
+    };
+    subtitle?: string;
+    threadId?: string;
+    channelId?: string;
+    icon?: string;
+    color?: string;
+    priority?: 'low' | 'normal' | 'high' | 'urgent';
+    /**
+     * Time to live in seconds
+     */
+    ttl?: number;
+};
+
+/**
+ * Push notification result
+ */
+export type SendPushNotificationResponse = {
+    sent: number;
+    failed: number;
+    failures?: Array<{
+        userId: string;
+        reason: string;
+    }>;
+};
+
+/**
+ * Get user communication preferences
+ */
+export type GetUserCommunicationPreferencesRequest = {
+    userId: string;
+};
+
+/**
+ * User communication preferences
+ */
+export type UserCommunicationPreferencesResponse = {
+    userId: string;
+    email: {
+        enabled: boolean;
+        categories: {
+            [key: string]: boolean;
+        };
+    };
+    push: {
+        enabled: boolean;
+        categories: {
+            [key: string]: boolean;
+        };
+        tokens: Array<{
+            token: string;
+            platform: 'ios' | 'android' | 'web';
+            active: boolean;
+        }>;
+    };
+    sms: {
+        enabled: boolean;
+        categories: {
+            [key: string]: boolean;
+        };
+        phoneNumber?: string;
+    };
+    quietHours?: {
+        enabled: boolean;
+        start: string;
+        end: string;
+        timezone: string;
+    };
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    unsubscribedAt?: string;
+};
+
+/**
+ * Send email request
+ */
+export type SendEmailRequest = {
+    to: string;
+    /**
+     * Optional when using templateId
+     */
+    subject?: string;
+    templateId?: string;
+    templateParams?: {
+        [key: string]: unknown;
+    };
+    body?: string;
+    isHtml?: boolean;
+    replyTo?: string;
+    cc?: Array<string>;
+    bcc?: Array<string>;
+    /**
+     * User ID for tracking and logging
+     */
+    userId?: string | null;
+};
+
+/**
+ * Send email result with communication log details
+ */
+export type SendEmailResponse = {
+    id: string;
+    status: string;
+    type?: string;
+    recipient?: string;
+    userId?: string;
+    subject?: string;
+    templateId?: string;
+    createdAt?: string;
+    sentAt?: string;
+};
+
+/**
+ * Send bulk emails request
+ */
+export type BulkEmailRequest = {
+    templateId: string;
+    recipients: Array<{
+        to: string;
+        variables?: {
+            [key: string]: unknown;
+        };
+    }>;
+};
+
+/**
+ * Bulk email result
+ */
+export type BulkEmailResponse = {
+    sent: number;
+    failed: number;
+};
+
+/**
+ * Create notification result
+ */
+export type CreateNotificationResponse = {
+    id: string;
+    userId: string;
+    title: string;
+    description: string;
+    type: string;
+    isRead: boolean;
+    isGlobal?: boolean;
+    metadata?: {
+        [key: string]: unknown;
+    };
+    createdAt: string;
+    updatedAt?: string;
+};
+
+/**
+ * Batch update notification statuses
+ */
+export type BatchUpdateNotificationStatusRequest = {
+    updates: Array<{
+        messageId: string;
+        status: 'DELIVERED' | 'OPENED' | 'CLICKED' | 'BOUNCED' | 'FAILED';
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp: string;
+        metadata?: {
+            [key: string]: unknown;
+        };
+    }>;
+};
+
+/**
+ * Batch update result
+ */
+export type BatchUpdateResponse = {
+    processed: number;
+    failed: number;
+    errors?: Array<{
+        messageId: string;
+        error: string;
+    }>;
+};
+
+/**
+ * Internal user data for services
+ */
+export type InternalUserData = {
+    id: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    phoneNumber?: string;
+    isActive: boolean;
+    isVerified: boolean;
+    /**
+     * User role in the system
+     */
+    role: 'admin' | 'customer' | 'business';
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    createdAt: string;
+    canMakePayments?: boolean;
+    canBookSessions?: boolean;
+    hasValidSubscription?: boolean;
+    stripeCustomerId?: string;
+    language?: string;
+    timezone?: string;
+    notificationPreferences: {
+        email?: boolean;
+        push?: boolean;
+        sms?: boolean;
+    };
+};
+
+/**
+ * Verify user for internal services
+ */
+export type VerifyUserRequest = {
+    userId: string;
+    verificationType: 'EMAIL' | 'PHONE' | 'IDENTITY';
+};
+
+/**
+ * Get multiple users by ID
+ */
+export type GetUsersRequest = {
+    userIds: Array<string>;
+    /**
+     * Specific fields to return
+     */
+    fields?: Array<string>;
+};
+
+/**
+ * Multiple users data
+ */
+export type GetUsersResponse = {
+    users: Array<{
+        id: string;
+        email: string;
+        firstName: string;
+        lastName: string;
+        phoneNumber?: string;
+        isActive: boolean;
+        isVerified: boolean;
+        /**
+         * User role in the system
+         */
+        role: 'admin' | 'customer' | 'business';
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        createdAt: string;
+        canMakePayments?: boolean;
+        canBookSessions?: boolean;
+        hasValidSubscription?: boolean;
+        stripeCustomerId?: string;
+        language?: string;
+        timezone?: string;
+        notificationPreferences: {
+            email?: boolean;
+            push?: boolean;
+            sms?: boolean;
+        };
+    }>;
+    notFound?: Array<string>;
+};
+
+/**
+ * Check user permission
+ */
+export type CheckUserPermissionRequest = {
+    userId: string;
+    resource: string;
+    action: 'READ' | 'CREATE' | 'UPDATE' | 'DELETE';
+    resourceId?: string;
+};
+
+/**
+ * Permission check result
+ */
+export type CheckUserPermissionResponse = {
+    allowed: boolean;
+    reason?: string;
+};
+
+/**
+ * Get user subscription status
+ */
+export type GetUserSubscriptionStatusRequest = {
+    userId: string;
+};
+
+/**
+ * User subscription status
+ */
+export type UserSubscriptionStatusResponse = {
+    userId: string;
+    hasActiveSubscription: boolean;
+    subscriptionType?: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    expiresAt?: string;
+    creditsRemaining: number;
+    canBookSessions: boolean;
+};
+
+/**
+ * Get user auth data by email for authentication
+ */
+export type GetUserAuthDataByEmailRequest = {
+    email: string;
+};
+
+/**
+ * User data for authentication
+ */
+export type UserAuthData = {
+    id: string;
+    email: string;
+    password?: string;
+    firstName: string;
+    lastName: string;
+    phoneNumber?: string;
+    /**
+     * User role in the system
+     */
+    role: 'admin' | 'customer' | 'business';
+    /**
+     * User account status
+     */
+    status: 'active' | 'suspended' | 'banned' | 'unconfirmed';
+    emailVerified: boolean;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    createdAt: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    lastLoginAt?: string;
+};
+
+/**
+ * Create new user for registration with full profile data
+ */
+export type CreateUserRequest = {
+    email: string;
+    passwordHash: string;
+    firstName: string;
+    lastName: string;
+    phoneNumber?: string;
+    /**
+     * Date string in YYYY-MM-DD format
+     */
+    dateOfBirth?: string;
+    acceptTerms: boolean;
+    marketingConsent?: boolean;
+    /**
+     * User role in the system
+     */
+    role: 'admin' | 'customer' | 'business';
+    avatarUrl?: string;
+};
+
+/**
+ * Update user last login timestamp
+ */
+export type UpdateLastLoginRequest = {
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    loginTime?: string;
+};
+
+/**
+ * Create password reset token
+ */
+export type CreatePasswordResetTokenRequest = {
+    [key: string]: unknown;
+};
+
+/**
+ * Password reset token
+ */
+export type PasswordResetTokenResponse = {
+    token: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    expiresAt: string;
+};
+
+/**
+ * Validate password reset token
+ */
+export type ValidatePasswordResetTokenRequest = {
+    token: string;
+};
+
+/**
+ * Update user password
+ */
+export type UpdatePasswordRequest = {
+    userId: string;
+    passwordHash: string;
+};
+
+/**
+ * Create email verification token
+ */
+export type CreateEmailVerificationTokenRequest = {
+    [key: string]: unknown;
+};
+
+/**
+ * Email verification token
+ */
+export type EmailVerificationTokenResponse = {
+    token: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    expiresAt: string;
+};
+
+/**
+ * Validate email verification token
+ */
+export type ValidateEmailVerificationTokenRequest = {
+    token: string;
+};
+
+/**
+ * Check if email already exists
+ */
+export type CheckEmailExistsRequest = {
+    email: string;
+};
+
+/**
+ * Check if phone number already exists
+ */
+export type CheckPhoneExistsRequest = {
+    phoneNumber: string;
+};
+
+/**
+ * Resource exists response
+ */
+export type ExistsResponse = {
+    exists: boolean;
+};
+
+/**
+ * Email path parameter
+ */
+export type EmailParam = {
+    email: string;
+};
+
+/**
+ * Phone number path parameter
+ */
+export type PhoneParam = {
+    phone: string;
+};
+
+/**
+ * Internal subscription data
+ */
+export type InternalSubscriptionData = {
+    /**
+     * Universally Unique Identifier
+     */
+    id: string;
+    userId: string;
+    stripeSubscriptionId: string;
+    /**
+     * Universally Unique Identifier
+     */
+    planId: string;
+    planName: string;
+    status: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    currentPeriodStart?: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    currentPeriodEnd?: string;
+    cancelAtPeriodEnd: boolean;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    createdAt: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    updatedAt: string;
+};
+
+/**
+ * Check if user has subscription access
+ */
+export type CheckSubscriptionRequest = {
+    userId: string;
+    feature?: string;
+    requiredPlan?: string;
+};
+
+/**
+ * Subscription access check result
+ */
+export type SubscriptionCheckResponse = {
+    hasAccess: boolean;
+    subscription?: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        /**
+         * Universally Unique Identifier
+         */
+        planId: string;
+        planName: string;
+        status: string;
+        features: Array<string>;
+    };
+    reason?: string;
+};
+
+/**
+ * Process subscription usage
+ */
+export type ProcessSubscriptionUsageRequest = {
+    userId: string;
+    /**
+     * Universally Unique Identifier
+     */
+    subscriptionId: string;
+    /**
+     * Usage tracking type
+     */
+    usageType: 'featureAccess' | 'creditDeduction';
+    amount?: number;
+    metadata?: {
+        [key: string]: unknown;
+    };
+};
+
+/**
+ * Usage processing result
+ */
+export type UsageProcessingResponse = {
+    success: boolean;
+    usageRecorded: boolean;
+    message?: string;
+};
+
+/**
+ * Create subscription from Stripe
+ */
+export type CreateStripeSubscriptionRequest = {
+    userId: string;
+    stripeSubscriptionId: string;
+    /**
+     * Universally Unique Identifier
+     */
+    planId: string;
+    status: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    currentPeriodStart: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    currentPeriodEnd: string;
+    metadata?: {
+        [key: string]: unknown;
+    };
+};
+
+/**
+ * Update subscription from payment service
+ */
+export type UpdateStripeSubscriptionRequest = {
+    stripeSubscriptionId: string;
+    /**
+     * Subscription status
+     */
+    status: 'active' | 'canceled' | 'incomplete' | 'incompleteExpired' | 'pastDue' | 'trialing' | 'unpaid';
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    currentPeriodStart?: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    currentPeriodEnd?: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    canceledAt?: string;
+    cancelAtPeriodEnd?: boolean;
+    metadata?: {
+        [key: string]: unknown;
+    };
+};
+
+/**
+ * Cancel Stripe subscription
+ */
+export type CancelStripeSubscriptionRequest = {
+    stripeSubscriptionId: string;
+    cancelAtPeriodEnd?: boolean;
+    reason?: string;
+};
+
+/**
+ * Internal subscription data
+ */
+export type StripeSubscriptionResponse = {
+    /**
+     * Universally Unique Identifier
+     */
+    id: string;
+    userId: string;
+    stripeSubscriptionId: string;
+    /**
+     * Universally Unique Identifier
+     */
+    planId: string;
+    planName: string;
+    status: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    currentPeriodStart?: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    currentPeriodEnd?: string;
+    cancelAtPeriodEnd: boolean;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    createdAt: string;
+    /**
+     * ISO 8601 datetime with timezone
+     */
+    updatedAt: string;
+};
+
+/**
+ * Get user subscriptions
+ */
+export type GetUserSubscriptionsRequest = {
+    userId: string;
+    includeInactive?: boolean;
+};
+
+/**
+ * Paginated response
+ */
+export type UserSubscriptionsResponse = {
+    /**
+     * Page items
+     */
+    data: Array<{
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        userId: string;
+        /**
+         * Universally Unique Identifier
+         */
+        planId: string;
+        planName: string;
+        status: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        currentPeriodStart?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        currentPeriodEnd?: string;
+        cancelAtPeriodEnd: boolean;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        createdAt: string;
+    }>;
+    /**
+     * Pagination information
+     */
+    pagination: {
+        /**
+         * Current page number
+         */
+        page: number;
+        /**
+         * Items per page
+         */
+        limit: number;
+        /**
+         * Total number of items
+         */
+        total: number;
+        /**
+         * Total number of pages
+         */
+        totalPages: number;
+        /**
+         * Whether there is a next page
+         */
+        hasNext: boolean;
+        /**
+         * Whether there is a previous page
+         */
+        hasPrev: boolean;
+    };
+};
+
+/**
+ * Process subscription webhook event
+ */
+export type SubscriptionWebhookEvent = {
+    event: {
+        /**
+         * Subscription event type for webhooks and notifications
+         */
+        type: 'customer.subscription.created' | 'customer.subscription.updated' | 'customer.subscription.deleted' | 'customer.subscription.trial_will_end' | 'invoice.payment_failed' | 'invoice.payment_succeeded' | 'created' | 'cancelled' | 'paymentFailed' | 'creditsAllocated' | 'renewalReminder' | 'trialEnding';
+        data: {
+            object?: unknown;
+        };
+        created: number;
+    };
+    stripeSignature?: string;
+};
+
+/**
+ * Webhook processing result
+ */
+export type ProcessWebhookResponse = {
+    processed: boolean;
+    /**
+     * Universally Unique Identifier
+     */
+    subscriptionId?: string;
+    action?: string;
+};
+
+/**
  * Simple message response
  */
 export type MessageResponse = {
@@ -4752,11 +11237,11 @@ export type GetBusinessListResponses = {
 
 export type GetBusinessListResponse = GetBusinessListResponses[keyof GetBusinessListResponses];
 
-export type GetBusinessByIdData = {
+export type GetInternalBusinessByIdData = {
     body?: never;
     path: {
         /**
-         * Business ID
+         * Universally Unique Identifier
          */
         id: string;
     };
@@ -4769,73 +11254,31 @@ export type GetBusinessByIdData = {
     url: '/businesses/{id}';
 };
 
-export type GetBusinessByIdResponses = {
+export type GetInternalBusinessByIdResponses = {
     /**
-     * Business information for public view
+     * Internal business data for services
      */
     200: {
         /**
          * Universally Unique Identifier
          */
         id: string;
-        /**
-         * User who owns this business
-         */
         userId: string;
-        /**
-         * Translation key for business name
-         */
         businessNameKey: string;
-        /**
-         * Translation key for business description
-         */
         businessDescriptionKey?: string;
         /**
-         * Category this business belongs to
+         * Universally Unique Identifier
          */
         categoryId: string;
-        /**
-         * Whether business is verified
-         */
-        verified?: boolean;
-        /**
-         * Whether business is active
-         */
-        active?: boolean;
-        /**
-         * Average rating of the business
-         */
-        avgRating?: number;
-        /**
-         * Business owner profile when ?include=user
-         */
-        user?: {
-            id: string;
-            firstName: string;
-            lastName: string;
-            displayName?: string;
-            avatarUrl?: string;
-            bio?: string;
-            /**
-             * ISO 8601 datetime with timezone
-             */
-            createdAt: string;
-        };
-        category?: CategoryResponse;
-        /**
-         * When the record was created
-         */
-        createdAt: string;
-        /**
-         * When the record was last updated
-         */
-        updatedAt: string;
+        verified: boolean;
+        active: boolean;
+        avgRating: number;
     };
 };
 
-export type GetBusinessByIdResponse = GetBusinessByIdResponses[keyof GetBusinessByIdResponses];
+export type GetInternalBusinessByIdResponse = GetInternalBusinessByIdResponses[keyof GetInternalBusinessByIdResponses];
 
-export type GetBusinessesByCategoryData = {
+export type GetInternalBusinessesByCategoryData = {
     body?: never;
     path: {
         /**
@@ -4852,7 +11295,10 @@ export type GetBusinessesByCategoryData = {
          * Items per page
          */
         limit?: number;
-        sortBy?: 'businessName' | 'avgRating' | 'verified' | 'active' | 'createdAt' | 'updatedAt';
+        /**
+         * Field to sort by
+         */
+        sortBy?: string;
         /**
          * Sort order
          */
@@ -4861,99 +11307,73 @@ export type GetBusinessesByCategoryData = {
          * Search query
          */
         search?: string;
+        onlyActive?: boolean;
+        onlyVerified?: boolean;
         /**
-         * Filter by category
+         * Comma-separated relations: user,category
          */
-        categoryId?: string;
-        /**
-         * Filter by verification status
-         */
-        verified?: boolean;
-        /**
-         * Filter by active status
-         */
-        active?: boolean;
-        /**
-         * Minimum rating filter
-         */
-        minRating?: number;
+        include?: string;
     };
     url: '/categories/{categoryId}/businesses';
 };
 
-export type GetBusinessesByCategoryResponses = {
+export type GetInternalBusinessesByCategoryResponses = {
     /**
-     * Businesses grouped by category
+     * Paginated response
      */
     200: {
         /**
-         * Universally Unique Identifier
+         * Page items
          */
-        categoryId: string;
-        categoryName: string;
-        businesses: Array<{
+        data: Array<{
             /**
              * Universally Unique Identifier
              */
             id: string;
-            /**
-             * User who owns this business
-             */
             userId: string;
-            /**
-             * Translation key for business name
-             */
             businessNameKey: string;
-            /**
-             * Translation key for business description
-             */
             businessDescriptionKey?: string;
             /**
-             * Category this business belongs to
+             * Universally Unique Identifier
              */
             categoryId: string;
-            /**
-             * Whether business is verified
-             */
-            verified?: boolean;
-            /**
-             * Whether business is active
-             */
-            active?: boolean;
-            /**
-             * Average rating of the business
-             */
-            avgRating?: number;
-            /**
-             * Business owner profile when ?include=user
-             */
-            user?: {
-                id: string;
-                firstName: string;
-                lastName: string;
-                displayName?: string;
-                avatarUrl?: string;
-                bio?: string;
-                /**
-                 * ISO 8601 datetime with timezone
-                 */
-                createdAt: string;
-            };
-            category?: CategoryResponse;
-            /**
-             * When the record was created
-             */
-            createdAt: string;
-            /**
-             * When the record was last updated
-             */
-            updatedAt: string;
+            verified: boolean;
+            active: boolean;
+            avgRating: number;
         }>;
-        totalCount: number;
+        /**
+         * Pagination information
+         */
+        pagination: {
+            /**
+             * Current page number
+             */
+            page: number;
+            /**
+             * Items per page
+             */
+            limit: number;
+            /**
+             * Total number of items
+             */
+            total: number;
+            /**
+             * Total number of pages
+             */
+            totalPages: number;
+            /**
+             * Whether there is a next page
+             */
+            hasNext: boolean;
+            /**
+             * Whether there is a previous page
+             */
+            hasPrev: boolean;
+        };
     };
 };
 
-export type GetBusinessesByCategoryResponse = GetBusinessesByCategoryResponses[keyof GetBusinessesByCategoryResponses];
+export type GetInternalBusinessesByCategoryResponse = GetInternalBusinessesByCategoryResponses[keyof GetInternalBusinessesByCategoryResponses];
 
 export type DeleteMyBusinessData = {
     body?: never;
@@ -5222,47 +11642,16 @@ export type UpdateMyBusinessResponses = {
 
 export type UpdateMyBusinessResponse = UpdateMyBusinessResponses[keyof UpdateMyBusinessResponses];
 
-export type GetCategoryListData = {
+export type GetInternalCategoryListData = {
     body?: never;
     path?: never;
     query?: {
-        /**
-         * Page number
-         */
-        page?: number;
-        /**
-         * Items per page
-         */
-        limit?: number;
-        /**
-         * Field to sort categories by
-         */
-        sortBy?: 'name' | 'sortOrder' | 'createdAt' | 'updatedAt';
-        /**
-         * Sort order
-         */
-        sortOrder?: 'asc' | 'desc';
-        /**
-         * Search query
-         */
-        search?: string;
-        /**
-         * Filter by parent category
-         */
-        parentId?: string;
-        /**
-         * Filter by active status
-         */
         isActive?: boolean;
-        /**
-         * Comma-separated relations: parent,children
-         */
-        include?: string;
     };
     url: '/categories';
 };
 
-export type GetCategoryListResponses = {
+export type GetInternalCategoryListResponses = {
     /**
      * Paginated response
      */
@@ -5270,7 +11659,21 @@ export type GetCategoryListResponses = {
         /**
          * Page items
          */
-        data: Array<CategoryResponse & unknown>;
+        data: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            nameKey: string;
+            descriptionKey?: string;
+            icon?: string;
+            /**
+             * Universally Unique Identifier
+             */
+            parentId?: string;
+            isActive: boolean;
+            sortOrder: number;
+        }>;
         /**
          * Pagination information
          */
@@ -5303,9 +11706,79 @@ export type GetCategoryListResponses = {
     };
 };
 
-export type GetCategoryListResponse = GetCategoryListResponses[keyof GetCategoryListResponses];
+export type GetInternalCategoryListResponse = GetInternalCategoryListResponses[keyof GetInternalCategoryListResponses];
 
-export type GetCategoryByIdData = {
+export type CreateAdminCategoryData = {
+    /**
+     * Create a new category
+     */
+    body?: {
+        /**
+         * Translation key for category name
+         */
+        nameKey: string;
+        /**
+         * Translation key for category description
+         */
+        descriptionKey?: string;
+        /**
+         * Category icon identifier
+         */
+        icon?: string;
+        /**
+         * Parent category ID
+         */
+        parentId?: string;
+        /**
+         * Whether category is active
+         */
+        isActive?: boolean;
+        /**
+         * Sort order for display
+         */
+        sortOrder?: number;
+    };
+    path?: never;
+    query?: never;
+    url: '/categories';
+};
+
+export type CreateAdminCategoryErrors = {
+    /**
+     * Standard error response
+     */
+    400: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type CreateAdminCategoryError = CreateAdminCategoryErrors[keyof CreateAdminCategoryErrors];
+
+export type CreateAdminCategoryResponses = {
+    /**
+     * Category created successfully
+     */
+    201: AdminCategoryResponse;
+};
+
+export type CreateAdminCategoryResponse = CreateAdminCategoryResponses[keyof CreateAdminCategoryResponses];
+
+export type DeleteAdminCategoryData = {
     body?: never;
     path: {
         /**
@@ -5317,7 +11790,7 @@ export type GetCategoryByIdData = {
     url: '/categories/{id}';
 };
 
-export type GetCategoryByIdErrors = {
+export type DeleteAdminCategoryErrors = {
     /**
      * Standard error response
      */
@@ -5341,39 +11814,172 @@ export type GetCategoryByIdErrors = {
     };
 };
 
-export type GetCategoryByIdError = GetCategoryByIdErrors[keyof GetCategoryByIdErrors];
+export type DeleteAdminCategoryError = DeleteAdminCategoryErrors[keyof DeleteAdminCategoryErrors];
 
-export type GetCategoryByIdResponses = {
+export type DeleteAdminCategoryResponses = {
+    /**
+     * Category deleted successfully
+     */
+    204: void;
+};
+
+export type DeleteAdminCategoryResponse = DeleteAdminCategoryResponses[keyof DeleteAdminCategoryResponses];
+
+export type GetAdminCategoryByIdData = {
+    body?: never;
+    path: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/categories/{id}';
+};
+
+export type GetAdminCategoryByIdErrors = {
+    /**
+     * Standard error response
+     */
+    404: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type GetAdminCategoryByIdError = GetAdminCategoryByIdErrors[keyof GetAdminCategoryByIdErrors];
+
+export type GetAdminCategoryByIdResponses = {
     /**
      * Category details
      */
-    200: CategoryResponse & unknown;
+    200: AdminCategoryResponse;
 };
 
-export type GetCategoryByIdResponse = GetCategoryByIdResponses[keyof GetCategoryByIdResponses];
+export type GetAdminCategoryByIdResponse = GetAdminCategoryByIdResponses[keyof GetAdminCategoryByIdResponses];
 
-export type GetCategoryHierarchyData = {
+export type UpdateAdminCategoryData = {
+    /**
+     * Update category information
+     */
+    body?: {
+        /**
+         * Translation key for category name
+         */
+        nameKey?: string;
+        /**
+         * Translation key for category description
+         */
+        descriptionKey?: string;
+        /**
+         * Category icon identifier
+         */
+        icon?: string;
+        /**
+         * Parent category ID
+         */
+        parentId?: string;
+        /**
+         * Whether category is active
+         */
+        isActive?: boolean;
+        /**
+         * Sort order for display
+         */
+        sortOrder?: number;
+    };
+    path: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/categories/{id}';
+};
+
+export type UpdateAdminCategoryErrors = {
+    /**
+     * Standard error response
+     */
+    404: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type UpdateAdminCategoryError = UpdateAdminCategoryErrors[keyof UpdateAdminCategoryErrors];
+
+export type UpdateAdminCategoryResponses = {
+    /**
+     * Category updated successfully
+     */
+    200: AdminCategoryResponse;
+};
+
+export type UpdateAdminCategoryResponse = UpdateAdminCategoryResponses[keyof UpdateAdminCategoryResponses];
+
+export type GetInternalCategoryHierarchyData = {
     body?: never;
     path?: never;
     query?: {
-        /**
-         * Root category ID for partial hierarchy
-         */
-        rootId?: string;
+        isActive?: boolean;
     };
     url: '/categories/hierarchy';
 };
 
-export type GetCategoryHierarchyResponses = {
+export type GetInternalCategoryHierarchyResponses = {
     /**
-     * Hierarchical category tree structure
+     * Category hierarchy for internal use
      */
     200: {
-        data: Array<CategoryResponse & unknown>;
+        data: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            nameKey: string;
+            descriptionKey?: string;
+            icon?: string;
+            /**
+             * Universally Unique Identifier
+             */
+            parentId?: string;
+            isActive: boolean;
+            sortOrder: number;
+        }>;
     };
 };
 
-export type GetCategoryHierarchyResponse = GetCategoryHierarchyResponses[keyof GetCategoryHierarchyResponses];
+export type GetInternalCategoryHierarchyResponse = GetInternalCategoryHierarchyResponses[keyof GetInternalCategoryHierarchyResponses];
 
 export type GetCategoryPathData = {
     body?: never;
@@ -5806,7 +12412,7 @@ export type GetFileHistoryResponses = {
 
 export type GetFileHistoryResponse = GetFileHistoryResponses[keyof GetFileHistoryResponses];
 
-export type DeleteFileData = {
+export type DeleteAdminFileData = {
     body?: never;
     path: {
         /**
@@ -5818,7 +12424,7 @@ export type DeleteFileData = {
     url: '/storage/files/{fileId}';
 };
 
-export type DeleteFileErrors = {
+export type DeleteAdminFileErrors = {
     /**
      * Standard error response
      */
@@ -5842,18 +12448,217 @@ export type DeleteFileErrors = {
     };
 };
 
-export type DeleteFileError = DeleteFileErrors[keyof DeleteFileErrors];
+export type DeleteAdminFileError = DeleteAdminFileErrors[keyof DeleteAdminFileErrors];
 
-export type DeleteFileResponses = {
+export type DeleteAdminFileResponses = {
     /**
      * File deleted successfully
      */
     204: void;
 };
 
-export type DeleteFileResponse = DeleteFileResponses[keyof DeleteFileResponses];
+export type DeleteAdminFileResponse = DeleteAdminFileResponses[keyof DeleteAdminFileResponses];
 
-export type GetVoucherListData = {
+export type GetInternalFileByIdData = {
+    body?: never;
+    path: {
+        /**
+         * Universally Unique Identifier
+         */
+        fileId: string;
+    };
+    query?: never;
+    url: '/storage/files/{fileId}';
+};
+
+export type GetInternalFileByIdErrors = {
+    /**
+     * Standard error response
+     */
+    404: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type GetInternalFileByIdError = GetInternalFileByIdErrors[keyof GetInternalFileByIdErrors];
+
+export type GetInternalFileByIdResponses = {
+    /**
+     * Internal file response
+     */
+    200: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        userId: string;
+        fileKey: string;
+        fileName: string;
+        fileSize: number;
+        mimeType: string;
+        /**
+         * File type category
+         */
+        fileType: 'image' | 'video' | 'document' | 'audio' | 'other';
+        /**
+         * File processing status
+         */
+        status: 'pending' | 'uploaded' | 'processing' | 'processed' | 'failed' | 'deleted';
+        /**
+         * Supported storage provider
+         */
+        provider: 'aws_s3' | 'local' | 'minio';
+        bucketName?: string;
+        region?: string;
+        isPublic: boolean;
+        metadata?: {
+            [key: string]: string;
+        };
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        uploadedAt?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        createdAt: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        updatedAt: string;
+    };
+};
+
+export type GetInternalFileByIdResponse = GetInternalFileByIdResponses[keyof GetInternalFileByIdResponses];
+
+export type UpdateAdminFileData = {
+    /**
+     * Admin update file details
+     */
+    body?: {
+        fileName?: string;
+        /**
+         * File processing status
+         */
+        status?: 'pending' | 'uploaded' | 'processing' | 'processed' | 'failed' | 'deleted';
+        isPublic?: boolean;
+        metadata?: {
+            [key: string]: string;
+        };
+    };
+    path: {
+        /**
+         * Universally Unique Identifier
+         */
+        fileId: string;
+    };
+    query?: never;
+    url: '/storage/files/{fileId}';
+};
+
+export type UpdateAdminFileErrors = {
+    /**
+     * Standard error response
+     */
+    404: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type UpdateAdminFileError = UpdateAdminFileErrors[keyof UpdateAdminFileErrors];
+
+export type UpdateAdminFileResponses = {
+    /**
+     * Admin file details with user information
+     */
+    200: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        userId: string;
+        userName?: string;
+        userEmail?: string;
+        fileKey: string;
+        fileName: string;
+        fileSize: number;
+        mimeType: string;
+        /**
+         * File type category
+         */
+        fileType: 'image' | 'video' | 'document' | 'audio' | 'other';
+        /**
+         * File processing status
+         */
+        status: 'pending' | 'uploaded' | 'processing' | 'processed' | 'failed' | 'deleted';
+        /**
+         * Supported storage provider
+         */
+        provider: 'aws_s3' | 'local' | 'minio';
+        bucketName?: string;
+        region?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        uploadedAt?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        deletedAt?: string;
+        metadata?: {
+            [key: string]: string;
+        };
+        error?: string;
+        isPublic?: boolean;
+        downloadCount?: number;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        lastAccessedAt?: string;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    };
+};
+
+export type UpdateAdminFileResponse = UpdateAdminFileResponses[keyof UpdateAdminFileResponses];
+
+export type GetAdminVoucherListData = {
     body?: never;
     path?: never;
     query?: {
@@ -5866,9 +12671,9 @@ export type GetVoucherListData = {
          */
         limit?: number;
         /**
-         * Field to sort vouchers by
+         * Admin voucher sort fields
          */
-        sortBy?: 'createdAt' | 'updatedAt' | 'expiresAt' | 'discountValue' | 'title';
+        sortBy?: 'createdAt' | 'updatedAt' | 'state' | 'discountValue' | 'currentRedemptions' | 'expiresAt' | 'businessId';
         /**
          * Sort order
          */
@@ -5878,61 +12683,57 @@ export type GetVoucherListData = {
          */
         search?: string;
         /**
-         * Filter by business ID
+         * Universally Unique Identifier
          */
         businessId?: string;
         /**
-         * Filter by category ID
+         * Universally Unique Identifier
          */
         categoryId?: string;
         /**
-         * Filter by voucher state
+         * Current state of the voucher lifecycle
          */
         state?: 'draft' | 'published' | 'claimed' | 'redeemed' | 'expired' | 'suspended';
         /**
-         * Filter by discount type
+         * Type of discount the voucher provides
          */
         discountType?: 'percentage' | 'fixed';
-        /**
-         * Minimum discount value
-         */
         minDiscount?: number;
-        /**
-         * Maximum discount value
-         */
         maxDiscount?: number;
-        /**
-         * Minimum voucher value
-         */
-        minValue?: number;
-        /**
-         * Maximum voucher value
-         */
-        maxValue?: number;
-        /**
-         * Voucher type filter
-         */
-        type?: string;
-        /**
-         * Filter by currency
-         */
         currency?: string;
         /**
-         * Valid from date filter
+         * ISO 8601 datetime with timezone
          */
-        validFrom?: string;
+        validFromStart?: string;
         /**
-         * Valid until date filter
+         * ISO 8601 datetime with timezone
          */
-        validUntil?: string;
+        validFromEnd?: string;
         /**
-         * Comma-separated relations to include
+         * ISO 8601 datetime with timezone
+         */
+        expiresAtStart?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        expiresAtEnd?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        createdFromStart?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        createdFromEnd?: string;
+        minRedemptions?: number;
+        maxRedemptions?: number;
+        minScans?: number;
+        maxScans?: number;
+        isDeleted?: boolean;
+        /**
+         * Comma-separated relations: business,category,codes,redemptions,scans,customerVouchers,analytics,fraudCases
          */
         include?: string;
-        /**
-         * Filter vouchers with available uses
-         */
-        hasAvailableUses?: boolean;
         /**
          * Latitude for geospatial search
          */
@@ -5965,7 +12766,7 @@ export type GetVoucherListData = {
     url: '/vouchers';
 };
 
-export type GetVoucherListResponses = {
+export type GetAdminVoucherListResponses = {
     /**
      * Paginated response
      */
@@ -5991,36 +12792,80 @@ export type GetVoucherListResponses = {
              */
             state: 'draft' | 'published' | 'claimed' | 'redeemed' | 'expired' | 'suspended';
             /**
-             * Multilingual voucher title
+             * Voucher title in requested language
              */
-            title?: unknown;
+            title: string;
             /**
-             * Multilingual voucher description
+             * Voucher description in requested language
              */
-            description?: unknown;
+            description: string;
             /**
-             * Multilingual voucher terms
+             * Voucher terms and conditions in requested language
              */
-            terms?: unknown;
+            terms: string;
             /**
              * Type of discount the voucher provides
              */
             discountType: 'percentage' | 'fixed';
+            /**
+             * Decimal number with 2 decimal places
+             */
             discountValue: number;
             currency?: string;
             /**
-             * GeoJSON Point or Polygon
+             * Geographic location as GeoJSON Point
              */
-            location?: unknown;
-            imageUrl?: string | null;
+            location: {
+                type: 'Point';
+                coordinates: [
+                    number,
+                    number
+                ];
+            } | null;
+            imageUrl: string | null;
+            /**
+             * ISO 8601 datetime with timezone
+             */
             validFrom: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
             expiresAt: string;
-            maxRedemptions?: number | null;
+            maxRedemptions: number | null;
             maxRedemptionsPerUser?: number;
             currentRedemptions?: number;
-            metadata?: {
+            scanCount?: number;
+            claimCount?: number;
+            metadata: {
                 [key: string]: unknown;
             } | null;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            deletedAt: string | null;
+            /**
+             * Complete business object when ?include=business
+             */
+            business?: {
+                /**
+                 * Universally Unique Identifier
+                 */
+                id: string;
+                name: string;
+            };
+            /**
+             * Complete category object when ?include=category
+             */
+            category?: {
+                /**
+                 * Universally Unique Identifier
+                 */
+                id: string;
+                name: string;
+            };
+            /**
+             * Voucher codes when ?include=codes
+             */
             codes?: Array<{
                 /**
                  * Universally Unique Identifier
@@ -6032,10 +12877,125 @@ export type GetVoucherListResponses = {
                  */
                 type: 'qr' | 'short' | 'static';
                 isActive: boolean;
-                metadata?: {
+                metadata: {
+                    [key: string]: unknown;
+                } | null;
+                /**
+                 * ISO 8601 datetime with timezone
+                 */
+                createdAt: string;
+                /**
+                 * ISO 8601 datetime with timezone
+                 */
+                updatedAt: string;
+            }>;
+            /**
+             * Redemption history when ?include=redemptions
+             */
+            redemptions?: Array<{
+                /**
+                 * Universally Unique Identifier
+                 */
+                id: string;
+                /**
+                 * Universally Unique Identifier
+                 */
+                userId: string;
+                codeUsed: string;
+                /**
+                 * ISO 8601 datetime with timezone
+                 */
+                redeemedAt: string;
+                metadata: {
+                    [key: string]: unknown;
+                } | null;
+                /**
+                 * ISO 8601 datetime with timezone
+                 */
+                createdAt: string;
+            }>;
+            /**
+             * Scan analytics when ?include=scans
+             */
+            scans?: Array<{
+                /**
+                 * Universally Unique Identifier
+                 */
+                id: string;
+                /**
+                 * Universally Unique Identifier
+                 */
+                userId: string | null;
+                /**
+                 * Type of voucher scan
+                 */
+                scanType: 'customer' | 'business';
+                /**
+                 * Source of the voucher scan
+                 */
+                scanSource: 'camera' | 'gallery' | 'link' | 'share';
+                /**
+                 * Geographic location as GeoJSON Point
+                 */
+                location: {
+                    type: 'Point';
+                    coordinates: [
+                        number,
+                        number
+                    ];
+                } | null;
+                deviceInfo: {
                     [key: string]: unknown;
                 };
+                /**
+                 * ISO 8601 datetime with timezone
+                 */
+                scannedAt: string;
+                /**
+                 * ISO 8601 datetime with timezone
+                 */
+                createdAt: string;
             }>;
+            /**
+             * Customer wallet entries when ?include=customerVouchers
+             */
+            customerVouchers?: Array<{
+                /**
+                 * Universally Unique Identifier
+                 */
+                id: string;
+                /**
+                 * Universally Unique Identifier
+                 */
+                customerId: string;
+                /**
+                 * ISO 8601 datetime with timezone
+                 */
+                claimedAt: string;
+                /**
+                 * Status of voucher from customer perspective
+                 */
+                status: 'claimed' | 'redeemed' | 'expired';
+                notificationPreferences: {
+                    [key: string]: unknown;
+                } | null;
+                /**
+                 * ISO 8601 datetime with timezone
+                 */
+                redeemedAt: string | null;
+                /**
+                 * ISO 8601 datetime with timezone
+                 */
+                createdAt: string;
+                /**
+                 * ISO 8601 datetime with timezone
+                 */
+                updatedAt: string;
+            }>;
+            isActive: boolean;
+            isExpired: boolean;
+            redemptionRate: number;
+            daysUntilExpiry: number | null;
             /**
              * When the record was created
              */
@@ -6077,9 +13037,341 @@ export type GetVoucherListResponses = {
     };
 };
 
-export type GetVoucherListResponse = GetVoucherListResponses[keyof GetVoucherListResponses];
+export type GetAdminVoucherListResponse = GetAdminVoucherListResponses[keyof GetAdminVoucherListResponses];
 
-export type GetVoucherByIdData = {
+export type CreateAdminVoucherData = {
+    /**
+     * Create new voucher with translations
+     */
+    body?: {
+        /**
+         * Universally Unique Identifier
+         */
+        businessId: string;
+        /**
+         * Universally Unique Identifier
+         */
+        categoryId: string;
+        /**
+         * Title translations by language code
+         */
+        title: {
+            [key: string]: string;
+        };
+        /**
+         * Description translations by language code
+         */
+        description: {
+            [key: string]: string;
+        };
+        /**
+         * Terms and conditions translations by language code
+         */
+        termsAndConditions: {
+            [key: string]: string;
+        };
+        /**
+         * Type of discount the voucher provides
+         */
+        discountType: 'percentage' | 'fixed';
+        discountValue: number;
+        currency?: string;
+        /**
+         * Geographic location as GeoJSON Point
+         */
+        location?: {
+            type: 'Point';
+            coordinates: [
+                number,
+                number
+            ];
+        } | null;
+        imageUrl?: string | null;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        validFrom: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        expiresAt: string;
+        maxRedemptions?: number | null;
+        maxRedemptionsPerUser?: number;
+        metadata?: {
+            [key: string]: unknown;
+        } | null;
+    };
+    path?: never;
+    query?: never;
+    url: '/vouchers';
+};
+
+export type CreateAdminVoucherErrors = {
+    /**
+     * Standard error response
+     */
+    400: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type CreateAdminVoucherError = CreateAdminVoucherErrors[keyof CreateAdminVoucherErrors];
+
+export type CreateAdminVoucherResponses = {
+    /**
+     * Detailed voucher information for admin with industry-standard include relations
+     */
+    201: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        /**
+         * Universally Unique Identifier
+         */
+        businessId: string;
+        /**
+         * Universally Unique Identifier
+         */
+        categoryId: string;
+        /**
+         * Current state of the voucher lifecycle
+         */
+        state: 'draft' | 'published' | 'claimed' | 'redeemed' | 'expired' | 'suspended';
+        /**
+         * Voucher title in requested language
+         */
+        title: string;
+        /**
+         * Voucher description in requested language
+         */
+        description: string;
+        /**
+         * Voucher terms and conditions in requested language
+         */
+        terms: string;
+        /**
+         * Type of discount the voucher provides
+         */
+        discountType: 'percentage' | 'fixed';
+        /**
+         * Decimal number with 2 decimal places
+         */
+        discountValue: number;
+        currency?: string;
+        /**
+         * Geographic location as GeoJSON Point
+         */
+        location: {
+            type: 'Point';
+            coordinates: [
+                number,
+                number
+            ];
+        } | null;
+        imageUrl: string | null;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        validFrom: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        expiresAt: string;
+        maxRedemptions: number | null;
+        maxRedemptionsPerUser?: number;
+        currentRedemptions?: number;
+        scanCount?: number;
+        claimCount?: number;
+        metadata: {
+            [key: string]: unknown;
+        } | null;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        deletedAt: string | null;
+        /**
+         * Complete business object when ?include=business
+         */
+        business?: {
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            name: string;
+        };
+        /**
+         * Complete category object when ?include=category
+         */
+        category?: {
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            name: string;
+        };
+        /**
+         * Voucher codes when ?include=codes
+         */
+        codes?: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            code: string;
+            /**
+             * Type of voucher code
+             */
+            type: 'qr' | 'short' | 'static';
+            isActive: boolean;
+            metadata: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            createdAt: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            updatedAt: string;
+        }>;
+        /**
+         * Redemption history when ?include=redemptions
+         */
+        redemptions?: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            /**
+             * Universally Unique Identifier
+             */
+            userId: string;
+            codeUsed: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            redeemedAt: string;
+            metadata: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            createdAt: string;
+        }>;
+        /**
+         * Scan analytics when ?include=scans
+         */
+        scans?: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            /**
+             * Universally Unique Identifier
+             */
+            userId: string | null;
+            /**
+             * Type of voucher scan
+             */
+            scanType: 'customer' | 'business';
+            /**
+             * Source of the voucher scan
+             */
+            scanSource: 'camera' | 'gallery' | 'link' | 'share';
+            /**
+             * Geographic location as GeoJSON Point
+             */
+            location: {
+                type: 'Point';
+                coordinates: [
+                    number,
+                    number
+                ];
+            } | null;
+            deviceInfo: {
+                [key: string]: unknown;
+            };
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            scannedAt: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            createdAt: string;
+        }>;
+        /**
+         * Customer wallet entries when ?include=customerVouchers
+         */
+        customerVouchers?: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            /**
+             * Universally Unique Identifier
+             */
+            customerId: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            claimedAt: string;
+            /**
+             * Status of voucher from customer perspective
+             */
+            status: 'claimed' | 'redeemed' | 'expired';
+            notificationPreferences: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            redeemedAt: string | null;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            createdAt: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            updatedAt: string;
+        }>;
+        isActive: boolean;
+        isExpired: boolean;
+        redemptionRate: number;
+        daysUntilExpiry: number | null;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    };
+};
+
+export type CreateAdminVoucherResponse = CreateAdminVoucherResponses[keyof CreateAdminVoucherResponses];
+
+export type DeleteAdminVoucherData = {
     body?: never;
     path: {
         /**
@@ -6091,7 +13383,7 @@ export type GetVoucherByIdData = {
     url: '/vouchers/{id}';
 };
 
-export type GetVoucherByIdErrors = {
+export type DeleteAdminVoucherErrors = {
     /**
      * Standard error response
      */
@@ -6115,11 +13407,58 @@ export type GetVoucherByIdErrors = {
     };
 };
 
-export type GetVoucherByIdError = GetVoucherByIdErrors[keyof GetVoucherByIdErrors];
+export type DeleteAdminVoucherError = DeleteAdminVoucherErrors[keyof DeleteAdminVoucherErrors];
 
-export type GetVoucherByIdResponses = {
+export type DeleteAdminVoucherResponses = {
     /**
-     * Public voucher information
+     * Voucher deleted successfully
+     */
+    204: void;
+};
+
+export type DeleteAdminVoucherResponse = DeleteAdminVoucherResponses[keyof DeleteAdminVoucherResponses];
+
+export type GetAdminVoucherByIdData = {
+    body?: never;
+    path: {
+        /**
+         * Voucher ID
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/vouchers/{id}';
+};
+
+export type GetAdminVoucherByIdErrors = {
+    /**
+     * Standard error response
+     */
+    404: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type GetAdminVoucherByIdError = GetAdminVoucherByIdErrors[keyof GetAdminVoucherByIdErrors];
+
+export type GetAdminVoucherByIdResponses = {
+    /**
+     * Detailed voucher information for admin with industry-standard include relations
      */
     200: {
         /**
@@ -6139,36 +13478,80 @@ export type GetVoucherByIdResponses = {
          */
         state: 'draft' | 'published' | 'claimed' | 'redeemed' | 'expired' | 'suspended';
         /**
-         * Multilingual voucher title
+         * Voucher title in requested language
          */
-        title?: unknown;
+        title: string;
         /**
-         * Multilingual voucher description
+         * Voucher description in requested language
          */
-        description?: unknown;
+        description: string;
         /**
-         * Multilingual voucher terms
+         * Voucher terms and conditions in requested language
          */
-        terms?: unknown;
+        terms: string;
         /**
          * Type of discount the voucher provides
          */
         discountType: 'percentage' | 'fixed';
+        /**
+         * Decimal number with 2 decimal places
+         */
         discountValue: number;
         currency?: string;
         /**
-         * GeoJSON Point or Polygon
+         * Geographic location as GeoJSON Point
          */
-        location?: unknown;
-        imageUrl?: string | null;
+        location: {
+            type: 'Point';
+            coordinates: [
+                number,
+                number
+            ];
+        } | null;
+        imageUrl: string | null;
+        /**
+         * ISO 8601 datetime with timezone
+         */
         validFrom: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
         expiresAt: string;
-        maxRedemptions?: number | null;
+        maxRedemptions: number | null;
         maxRedemptionsPerUser?: number;
         currentRedemptions?: number;
-        metadata?: {
+        scanCount?: number;
+        claimCount?: number;
+        metadata: {
             [key: string]: unknown;
         } | null;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        deletedAt: string | null;
+        /**
+         * Complete business object when ?include=business
+         */
+        business?: {
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            name: string;
+        };
+        /**
+         * Complete category object when ?include=category
+         */
+        category?: {
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            name: string;
+        };
+        /**
+         * Voucher codes when ?include=codes
+         */
         codes?: Array<{
             /**
              * Universally Unique Identifier
@@ -6180,10 +13563,125 @@ export type GetVoucherByIdResponses = {
              */
             type: 'qr' | 'short' | 'static';
             isActive: boolean;
-            metadata?: {
+            metadata: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            createdAt: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            updatedAt: string;
+        }>;
+        /**
+         * Redemption history when ?include=redemptions
+         */
+        redemptions?: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            /**
+             * Universally Unique Identifier
+             */
+            userId: string;
+            codeUsed: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            redeemedAt: string;
+            metadata: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            createdAt: string;
+        }>;
+        /**
+         * Scan analytics when ?include=scans
+         */
+        scans?: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            /**
+             * Universally Unique Identifier
+             */
+            userId: string | null;
+            /**
+             * Type of voucher scan
+             */
+            scanType: 'customer' | 'business';
+            /**
+             * Source of the voucher scan
+             */
+            scanSource: 'camera' | 'gallery' | 'link' | 'share';
+            /**
+             * Geographic location as GeoJSON Point
+             */
+            location: {
+                type: 'Point';
+                coordinates: [
+                    number,
+                    number
+                ];
+            } | null;
+            deviceInfo: {
                 [key: string]: unknown;
             };
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            scannedAt: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            createdAt: string;
         }>;
+        /**
+         * Customer wallet entries when ?include=customerVouchers
+         */
+        customerVouchers?: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            /**
+             * Universally Unique Identifier
+             */
+            customerId: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            claimedAt: string;
+            /**
+             * Status of voucher from customer perspective
+             */
+            status: 'claimed' | 'redeemed' | 'expired';
+            notificationPreferences: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            redeemedAt: string | null;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            createdAt: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            updatedAt: string;
+        }>;
+        isActive: boolean;
+        isExpired: boolean;
+        redemptionRate: number;
+        daysUntilExpiry: number | null;
         /**
          * When the record was created
          */
@@ -6195,7 +13693,336 @@ export type GetVoucherByIdResponses = {
     };
 };
 
-export type GetVoucherByIdResponse = GetVoucherByIdResponses[keyof GetVoucherByIdResponses];
+export type GetAdminVoucherByIdResponse = GetAdminVoucherByIdResponses[keyof GetAdminVoucherByIdResponses];
+
+export type UpdateAdminVoucherData = {
+    /**
+     * Update voucher information and translations
+     */
+    body?: {
+        /**
+         * Title translations by language code
+         */
+        title?: {
+            [key: string]: string;
+        };
+        /**
+         * Description translations by language code
+         */
+        description?: {
+            [key: string]: string;
+        };
+        /**
+         * Terms and conditions translations by language code
+         */
+        termsAndConditions?: {
+            [key: string]: string;
+        };
+        /**
+         * Type of discount the voucher provides
+         */
+        discountType?: 'percentage' | 'fixed';
+        discountValue?: number;
+        currency?: string;
+        /**
+         * Geographic location as GeoJSON Point
+         */
+        location?: {
+            type: 'Point';
+            coordinates: [
+                number,
+                number
+            ];
+        } | null;
+        imageUrl?: string | null;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        validFrom?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        expiresAt?: string;
+        maxRedemptions?: number | null;
+        maxRedemptionsPerUser?: number;
+        metadata?: {
+            [key: string]: unknown;
+        } | null;
+    };
+    path: {
+        /**
+         * Voucher ID
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/vouchers/{id}';
+};
+
+export type UpdateAdminVoucherErrors = {
+    /**
+     * Standard error response
+     */
+    404: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type UpdateAdminVoucherError = UpdateAdminVoucherErrors[keyof UpdateAdminVoucherErrors];
+
+export type UpdateAdminVoucherResponses = {
+    /**
+     * Detailed voucher information for admin with industry-standard include relations
+     */
+    200: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        /**
+         * Universally Unique Identifier
+         */
+        businessId: string;
+        /**
+         * Universally Unique Identifier
+         */
+        categoryId: string;
+        /**
+         * Current state of the voucher lifecycle
+         */
+        state: 'draft' | 'published' | 'claimed' | 'redeemed' | 'expired' | 'suspended';
+        /**
+         * Voucher title in requested language
+         */
+        title: string;
+        /**
+         * Voucher description in requested language
+         */
+        description: string;
+        /**
+         * Voucher terms and conditions in requested language
+         */
+        terms: string;
+        /**
+         * Type of discount the voucher provides
+         */
+        discountType: 'percentage' | 'fixed';
+        /**
+         * Decimal number with 2 decimal places
+         */
+        discountValue: number;
+        currency?: string;
+        /**
+         * Geographic location as GeoJSON Point
+         */
+        location: {
+            type: 'Point';
+            coordinates: [
+                number,
+                number
+            ];
+        } | null;
+        imageUrl: string | null;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        validFrom: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        expiresAt: string;
+        maxRedemptions: number | null;
+        maxRedemptionsPerUser?: number;
+        currentRedemptions?: number;
+        scanCount?: number;
+        claimCount?: number;
+        metadata: {
+            [key: string]: unknown;
+        } | null;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        deletedAt: string | null;
+        /**
+         * Complete business object when ?include=business
+         */
+        business?: {
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            name: string;
+        };
+        /**
+         * Complete category object when ?include=category
+         */
+        category?: {
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            name: string;
+        };
+        /**
+         * Voucher codes when ?include=codes
+         */
+        codes?: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            code: string;
+            /**
+             * Type of voucher code
+             */
+            type: 'qr' | 'short' | 'static';
+            isActive: boolean;
+            metadata: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            createdAt: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            updatedAt: string;
+        }>;
+        /**
+         * Redemption history when ?include=redemptions
+         */
+        redemptions?: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            /**
+             * Universally Unique Identifier
+             */
+            userId: string;
+            codeUsed: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            redeemedAt: string;
+            metadata: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            createdAt: string;
+        }>;
+        /**
+         * Scan analytics when ?include=scans
+         */
+        scans?: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            /**
+             * Universally Unique Identifier
+             */
+            userId: string | null;
+            /**
+             * Type of voucher scan
+             */
+            scanType: 'customer' | 'business';
+            /**
+             * Source of the voucher scan
+             */
+            scanSource: 'camera' | 'gallery' | 'link' | 'share';
+            /**
+             * Geographic location as GeoJSON Point
+             */
+            location: {
+                type: 'Point';
+                coordinates: [
+                    number,
+                    number
+                ];
+            } | null;
+            deviceInfo: {
+                [key: string]: unknown;
+            };
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            scannedAt: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            createdAt: string;
+        }>;
+        /**
+         * Customer wallet entries when ?include=customerVouchers
+         */
+        customerVouchers?: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            /**
+             * Universally Unique Identifier
+             */
+            customerId: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            claimedAt: string;
+            /**
+             * Status of voucher from customer perspective
+             */
+            status: 'claimed' | 'redeemed' | 'expired';
+            notificationPreferences: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            redeemedAt: string | null;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            createdAt: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            updatedAt: string;
+        }>;
+        isActive: boolean;
+        isExpired: boolean;
+        redemptionRate: number;
+        daysUntilExpiry: number | null;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    };
+};
+
+export type UpdateAdminVoucherResponse = UpdateAdminVoucherResponses[keyof UpdateAdminVoucherResponses];
 
 export type ScanVoucherData = {
     /**
@@ -7323,7 +15150,7 @@ export type ResendVerificationResponses = {
     200: MessageResponse;
 };
 
-export type ResendVerificationResponse = ResendVerificationResponses[keyof ResendVerificationResponses];
+export type ResendVerificationResponse2 = ResendVerificationResponses[keyof ResendVerificationResponses];
 
 export type ChangePasswordData = {
     /**
@@ -8558,6 +16385,7740 @@ export type DownloadVoucherBookPdfResponses = {
 
 export type DownloadVoucherBookPdfResponse = DownloadVoucherBookPdfResponses[keyof DownloadVoucherBookPdfResponses];
 
+export type GetAdminCategoryTreeData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/categories/tree';
+};
+
+export type GetAdminCategoryTreeResponses = {
+    /**
+     * Hierarchical category tree structure for admin
+     */
+    200: {
+        categories: Array<AdminCategoryResponse>;
+        totalCount: number;
+    };
+};
+
+export type GetAdminCategoryTreeResponse = GetAdminCategoryTreeResponses[keyof GetAdminCategoryTreeResponses];
+
+export type MoveAdminCategoryData = {
+    /**
+     * Move category to different parent or change sort order
+     */
+    body?: {
+        /**
+         * New parent category ID (null for root level)
+         */
+        parentId?: string;
+        /**
+         * New sort order within parent
+         */
+        sortOrder?: number;
+    };
+    path: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/categories/{id}/move';
+};
+
+export type MoveAdminCategoryErrors = {
+    /**
+     * Standard error response
+     */
+    404: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type MoveAdminCategoryError = MoveAdminCategoryErrors[keyof MoveAdminCategoryErrors];
+
+export type MoveAdminCategoryResponses = {
+    /**
+     * Category moved successfully
+     */
+    200: AdminCategoryResponse;
+};
+
+export type MoveAdminCategoryResponse = MoveAdminCategoryResponses[keyof MoveAdminCategoryResponses];
+
+export type ToggleAdminCategoryActivationData = {
+    /**
+     * Toggle category activation status
+     */
+    body?: {
+        /**
+         * New activation status
+         */
+        isActive: boolean;
+    };
+    path: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/categories/{id}/activation';
+};
+
+export type ToggleAdminCategoryActivationErrors = {
+    /**
+     * Standard error response
+     */
+    404: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type ToggleAdminCategoryActivationError = ToggleAdminCategoryActivationErrors[keyof ToggleAdminCategoryActivationErrors];
+
+export type ToggleAdminCategoryActivationResponses = {
+    /**
+     * Category activation toggled successfully
+     */
+    200: AdminCategoryResponse;
+};
+
+export type ToggleAdminCategoryActivationResponse = ToggleAdminCategoryActivationResponses[keyof ToggleAdminCategoryActivationResponses];
+
+export type BulkUpdateAdminCategoriesData = {
+    /**
+     * Update multiple categories at once
+     */
+    body?: {
+        categoryIds: Array<string>;
+        updates: {
+            isActive?: boolean;
+            /**
+             * Universally Unique Identifier
+             */
+            parentId?: string;
+        };
+    };
+    path?: never;
+    query?: never;
+    url: '/categories/bulk-update';
+};
+
+export type BulkUpdateAdminCategoriesErrors = {
+    /**
+     * Standard error response
+     */
+    400: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type BulkUpdateAdminCategoriesError = BulkUpdateAdminCategoriesErrors[keyof BulkUpdateAdminCategoriesErrors];
+
+export type BulkUpdateAdminCategoriesResponses = {
+    /**
+     * Bulk category operation result
+     */
+    200: {
+        successful: number;
+        failed: number;
+        errors?: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            categoryId: string;
+            error: string;
+        }>;
+    };
+};
+
+export type BulkUpdateAdminCategoriesResponse = BulkUpdateAdminCategoriesResponses[keyof BulkUpdateAdminCategoriesResponses];
+
+export type BulkDeleteAdminCategoriesData = {
+    /**
+     * Delete multiple categories
+     */
+    body?: {
+        categoryIds: Array<string>;
+    };
+    path?: never;
+    query?: never;
+    url: '/categories/bulk-delete';
+};
+
+export type BulkDeleteAdminCategoriesErrors = {
+    /**
+     * Standard error response
+     */
+    400: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type BulkDeleteAdminCategoriesError = BulkDeleteAdminCategoriesErrors[keyof BulkDeleteAdminCategoriesErrors];
+
+export type BulkDeleteAdminCategoriesResponses = {
+    /**
+     * Bulk category operation result
+     */
+    200: {
+        successful: number;
+        failed: number;
+        errors?: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            categoryId: string;
+            error: string;
+        }>;
+    };
+};
+
+export type BulkDeleteAdminCategoriesResponse = BulkDeleteAdminCategoriesResponses[keyof BulkDeleteAdminCategoriesResponses];
+
+export type GetAdminBusinessListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Page number
+         */
+        page?: number;
+        /**
+         * Items per page
+         */
+        limit?: number;
+        sortBy?: 'businessName' | 'avgRating' | 'verified' | 'active' | 'createdAt' | 'updatedAt';
+        /**
+         * Sort order
+         */
+        sortOrder?: 'asc' | 'desc';
+        /**
+         * Search query
+         */
+        search?: string;
+        /**
+         * Filter by owner
+         */
+        userId?: string;
+        /**
+         * Filter by category
+         */
+        categoryId?: string;
+        /**
+         * Filter by status
+         */
+        status?: 'all' | 'active' | 'inactive' | 'verified' | 'unverified';
+        /**
+         * Filter by verification status
+         */
+        verified?: boolean;
+        /**
+         * Filter by active status
+         */
+        active?: boolean;
+        /**
+         * Minimum rating filter
+         */
+        minRating?: number;
+        /**
+         * Maximum rating filter
+         */
+        maxRating?: number;
+        /**
+         * Include soft deleted businesses
+         */
+        includeDeleted?: boolean;
+        /**
+         * Created date from
+         */
+        createdFrom?: string;
+        /**
+         * Created date to
+         */
+        createdTo?: string;
+        /**
+         * Updated date from
+         */
+        updatedFrom?: string;
+        /**
+         * Updated date to
+         */
+        updatedTo?: string;
+        /**
+         * Comma-separated relations: user,category
+         */
+        include?: string;
+    };
+    url: '/admin/businesses';
+};
+
+export type GetAdminBusinessListResponses = {
+    /**
+     * Paginated response
+     */
+    200: {
+        /**
+         * Page items
+         */
+        data: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            /**
+             * User who owns this business
+             */
+            userId: string;
+            /**
+             * Translation key for business name
+             */
+            businessNameKey: string;
+            /**
+             * Translation key for business description
+             */
+            businessDescriptionKey?: string;
+            /**
+             * Category this business belongs to
+             */
+            categoryId: string;
+            /**
+             * Whether business is verified
+             */
+            verified?: boolean;
+            /**
+             * Whether business is active
+             */
+            active?: boolean;
+            /**
+             * Average rating of the business
+             */
+            avgRating?: number;
+            /**
+             * Soft deletion timestamp
+             */
+            deletedAt: string | null;
+            /**
+             * Business owner details when ?include=user
+             */
+            user?: {
+                id: string;
+                email: string;
+                firstName: string;
+                lastName: string;
+                phoneNumber?: string;
+                /**
+                 * Date in YYYY-MM-DD format
+                 */
+                dateOfBirth?: string;
+                avatarUrl?: string;
+                /**
+                 * User account status
+                 */
+                status: 'active' | 'suspended' | 'banned' | 'unconfirmed';
+                /**
+                 * User role in the system
+                 */
+                role: 'admin' | 'customer' | 'business';
+                emailVerified: boolean;
+                phoneVerified: boolean;
+                /**
+                 * ISO 8601 datetime with timezone
+                 */
+                lastLoginAt?: string;
+                /**
+                 * When the record was created
+                 */
+                createdAt: string;
+                /**
+                 * When the record was last updated
+                 */
+                updatedAt: string;
+            };
+            category?: CategoryResponse;
+            /**
+             * When the record was created
+             */
+            createdAt: string;
+            /**
+             * When the record was last updated
+             */
+            updatedAt: string;
+        }>;
+        /**
+         * Pagination information
+         */
+        pagination: {
+            /**
+             * Current page number
+             */
+            page: number;
+            /**
+             * Items per page
+             */
+            limit: number;
+            /**
+             * Total number of items
+             */
+            total: number;
+            /**
+             * Total number of pages
+             */
+            totalPages: number;
+            /**
+             * Whether there is a next page
+             */
+            hasNext: boolean;
+            /**
+             * Whether there is a previous page
+             */
+            hasPrev: boolean;
+        };
+    };
+};
+
+export type GetAdminBusinessListResponse = GetAdminBusinessListResponses[keyof GetAdminBusinessListResponses];
+
+export type CreateAdminBusinessData = {
+    /**
+     * Create a new business
+     */
+    body?: {
+        /**
+         * User who will own this business
+         */
+        userId: string;
+        /**
+         * Business name
+         */
+        businessName: string;
+        /**
+         * Business description
+         */
+        businessDescription?: string;
+        /**
+         * Category this business belongs to
+         */
+        categoryId: string;
+        /**
+         * Whether business is verified
+         */
+        verified?: boolean;
+        /**
+         * Whether business is active
+         */
+        active?: boolean;
+    };
+    path?: never;
+    query?: never;
+    url: '/admin/businesses';
+};
+
+export type CreateAdminBusinessResponses = {
+    /**
+     * Business information for admin management
+     */
+    201: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        /**
+         * User who owns this business
+         */
+        userId: string;
+        /**
+         * Translation key for business name
+         */
+        businessNameKey: string;
+        /**
+         * Translation key for business description
+         */
+        businessDescriptionKey?: string;
+        /**
+         * Category this business belongs to
+         */
+        categoryId: string;
+        /**
+         * Whether business is verified
+         */
+        verified?: boolean;
+        /**
+         * Whether business is active
+         */
+        active?: boolean;
+        /**
+         * Average rating of the business
+         */
+        avgRating?: number;
+        /**
+         * Soft deletion timestamp
+         */
+        deletedAt: string | null;
+        /**
+         * Business owner details when ?include=user
+         */
+        user?: {
+            id: string;
+            email: string;
+            firstName: string;
+            lastName: string;
+            phoneNumber?: string;
+            /**
+             * Date in YYYY-MM-DD format
+             */
+            dateOfBirth?: string;
+            avatarUrl?: string;
+            /**
+             * User account status
+             */
+            status: 'active' | 'suspended' | 'banned' | 'unconfirmed';
+            /**
+             * User role in the system
+             */
+            role: 'admin' | 'customer' | 'business';
+            emailVerified: boolean;
+            phoneVerified: boolean;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            lastLoginAt?: string;
+            /**
+             * When the record was created
+             */
+            createdAt: string;
+            /**
+             * When the record was last updated
+             */
+            updatedAt: string;
+        };
+        category?: CategoryResponse;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    };
+};
+
+export type CreateAdminBusinessResponse = CreateAdminBusinessResponses[keyof CreateAdminBusinessResponses];
+
+export type DeleteAdminBusinessData = {
+    body?: never;
+    path: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/admin/businesses/{id}';
+};
+
+export type DeleteAdminBusinessResponses = {
+    /**
+     * Business deleted successfully
+     */
+    204: void;
+};
+
+export type DeleteAdminBusinessResponse = DeleteAdminBusinessResponses[keyof DeleteAdminBusinessResponses];
+
+export type GetAdminBusinessByIdData = {
+    body?: never;
+    path: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/admin/businesses/{id}';
+};
+
+export type GetAdminBusinessByIdResponses = {
+    /**
+     * Business information for admin management
+     */
+    200: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        /**
+         * User who owns this business
+         */
+        userId: string;
+        /**
+         * Translation key for business name
+         */
+        businessNameKey: string;
+        /**
+         * Translation key for business description
+         */
+        businessDescriptionKey?: string;
+        /**
+         * Category this business belongs to
+         */
+        categoryId: string;
+        /**
+         * Whether business is verified
+         */
+        verified?: boolean;
+        /**
+         * Whether business is active
+         */
+        active?: boolean;
+        /**
+         * Average rating of the business
+         */
+        avgRating?: number;
+        /**
+         * Soft deletion timestamp
+         */
+        deletedAt: string | null;
+        /**
+         * Business owner details when ?include=user
+         */
+        user?: {
+            id: string;
+            email: string;
+            firstName: string;
+            lastName: string;
+            phoneNumber?: string;
+            /**
+             * Date in YYYY-MM-DD format
+             */
+            dateOfBirth?: string;
+            avatarUrl?: string;
+            /**
+             * User account status
+             */
+            status: 'active' | 'suspended' | 'banned' | 'unconfirmed';
+            /**
+             * User role in the system
+             */
+            role: 'admin' | 'customer' | 'business';
+            emailVerified: boolean;
+            phoneVerified: boolean;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            lastLoginAt?: string;
+            /**
+             * When the record was created
+             */
+            createdAt: string;
+            /**
+             * When the record was last updated
+             */
+            updatedAt: string;
+        };
+        category?: CategoryResponse;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    };
+};
+
+export type GetAdminBusinessByIdResponse = GetAdminBusinessByIdResponses[keyof GetAdminBusinessByIdResponses];
+
+export type UpdateAdminBusinessData = {
+    /**
+     * Update business information
+     */
+    body?: {
+        /**
+         * Business name
+         */
+        businessName?: string;
+        /**
+         * Business description
+         */
+        businessDescription?: string;
+        /**
+         * Category this business belongs to
+         */
+        categoryId?: string;
+        /**
+         * Whether business is verified
+         */
+        verified?: boolean;
+        /**
+         * Whether business is active
+         */
+        active?: boolean;
+    };
+    path: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/admin/businesses/{id}';
+};
+
+export type UpdateAdminBusinessResponses = {
+    /**
+     * Business information for admin management
+     */
+    200: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        /**
+         * User who owns this business
+         */
+        userId: string;
+        /**
+         * Translation key for business name
+         */
+        businessNameKey: string;
+        /**
+         * Translation key for business description
+         */
+        businessDescriptionKey?: string;
+        /**
+         * Category this business belongs to
+         */
+        categoryId: string;
+        /**
+         * Whether business is verified
+         */
+        verified?: boolean;
+        /**
+         * Whether business is active
+         */
+        active?: boolean;
+        /**
+         * Average rating of the business
+         */
+        avgRating?: number;
+        /**
+         * Soft deletion timestamp
+         */
+        deletedAt: string | null;
+        /**
+         * Business owner details when ?include=user
+         */
+        user?: {
+            id: string;
+            email: string;
+            firstName: string;
+            lastName: string;
+            phoneNumber?: string;
+            /**
+             * Date in YYYY-MM-DD format
+             */
+            dateOfBirth?: string;
+            avatarUrl?: string;
+            /**
+             * User account status
+             */
+            status: 'active' | 'suspended' | 'banned' | 'unconfirmed';
+            /**
+             * User role in the system
+             */
+            role: 'admin' | 'customer' | 'business';
+            emailVerified: boolean;
+            phoneVerified: boolean;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            lastLoginAt?: string;
+            /**
+             * When the record was created
+             */
+            createdAt: string;
+            /**
+             * When the record was last updated
+             */
+            updatedAt: string;
+        };
+        category?: CategoryResponse;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    };
+};
+
+export type UpdateAdminBusinessResponse = UpdateAdminBusinessResponses[keyof UpdateAdminBusinessResponses];
+
+export type UpdateAdminBusinessVerificationData = {
+    /**
+     * Update business verification status via PATCH
+     */
+    body?: {
+        /**
+         * New verification status
+         */
+        verified: boolean;
+    };
+    path: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/admin/businesses/{id}/verification';
+};
+
+export type UpdateAdminBusinessVerificationResponses = {
+    /**
+     * Business verification updated successfully
+     */
+    204: void;
+};
+
+export type UpdateAdminBusinessVerificationResponse = UpdateAdminBusinessVerificationResponses[keyof UpdateAdminBusinessVerificationResponses];
+
+export type ActivateAdminBusinessData = {
+    body?: never;
+    path: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/admin/businesses/{id}/activate';
+};
+
+export type ActivateAdminBusinessResponses = {
+    /**
+     * Business activated successfully
+     */
+    204: void;
+};
+
+export type ActivateAdminBusinessResponse = ActivateAdminBusinessResponses[keyof ActivateAdminBusinessResponses];
+
+export type DeactivateAdminBusinessData = {
+    body?: never;
+    path: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/admin/businesses/{id}/deactivate';
+};
+
+export type DeactivateAdminBusinessResponses = {
+    /**
+     * Business deactivated successfully
+     */
+    204: void;
+};
+
+export type DeactivateAdminBusinessResponse = DeactivateAdminBusinessResponses[keyof DeactivateAdminBusinessResponses];
+
+export type UpdateAdminBusinessRatingData = {
+    /**
+     * Update business rating data
+     */
+    body?: {
+        /**
+         * New rating value for the business
+         */
+        rating: number;
+    };
+    path: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/admin/businesses/{id}/rating';
+};
+
+export type UpdateAdminBusinessRatingResponses = {
+    /**
+     * Business information for admin management
+     */
+    200: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        /**
+         * User who owns this business
+         */
+        userId: string;
+        /**
+         * Translation key for business name
+         */
+        businessNameKey: string;
+        /**
+         * Translation key for business description
+         */
+        businessDescriptionKey?: string;
+        /**
+         * Category this business belongs to
+         */
+        categoryId: string;
+        /**
+         * Whether business is verified
+         */
+        verified?: boolean;
+        /**
+         * Whether business is active
+         */
+        active?: boolean;
+        /**
+         * Average rating of the business
+         */
+        avgRating?: number;
+        /**
+         * Soft deletion timestamp
+         */
+        deletedAt: string | null;
+        /**
+         * Business owner details when ?include=user
+         */
+        user?: {
+            id: string;
+            email: string;
+            firstName: string;
+            lastName: string;
+            phoneNumber?: string;
+            /**
+             * Date in YYYY-MM-DD format
+             */
+            dateOfBirth?: string;
+            avatarUrl?: string;
+            /**
+             * User account status
+             */
+            status: 'active' | 'suspended' | 'banned' | 'unconfirmed';
+            /**
+             * User role in the system
+             */
+            role: 'admin' | 'customer' | 'business';
+            emailVerified: boolean;
+            phoneVerified: boolean;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            lastLoginAt?: string;
+            /**
+             * When the record was created
+             */
+            createdAt: string;
+            /**
+             * When the record was last updated
+             */
+            updatedAt: string;
+        };
+        category?: CategoryResponse;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    };
+};
+
+export type UpdateAdminBusinessRatingResponse = UpdateAdminBusinessRatingResponses[keyof UpdateAdminBusinessRatingResponses];
+
+export type BulkDeleteAdminBusinessesData = {
+    /**
+     * Delete multiple businesses
+     */
+    body?: {
+        businessIds: Array<string>;
+    };
+    path?: never;
+    query?: never;
+    url: '/admin/businesses/bulk';
+};
+
+export type BulkDeleteAdminBusinessesResponses = {
+    /**
+     * Bulk business operation result
+     */
+    200: {
+        successful: number;
+        failed: number;
+        errors?: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            businessId: string;
+            error: string;
+        }>;
+    };
+};
+
+export type BulkDeleteAdminBusinessesResponse = BulkDeleteAdminBusinessesResponses[keyof BulkDeleteAdminBusinessesResponses];
+
+export type BulkUpdateAdminBusinessesData = {
+    /**
+     * Update multiple businesses at once
+     */
+    body?: {
+        businessIds: Array<string>;
+        updates: {
+            active?: boolean;
+            verified?: boolean;
+            /**
+             * Universally Unique Identifier
+             */
+            categoryId?: string;
+        };
+    };
+    path?: never;
+    query?: never;
+    url: '/admin/businesses/bulk';
+};
+
+export type BulkUpdateAdminBusinessesResponses = {
+    /**
+     * Bulk business operation result
+     */
+    200: {
+        successful: number;
+        failed: number;
+        errors?: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            businessId: string;
+            error: string;
+        }>;
+    };
+};
+
+export type BulkUpdateAdminBusinessesResponse = BulkUpdateAdminBusinessesResponses[keyof BulkUpdateAdminBusinessesResponses];
+
+export type GetAdminFileListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Search in filename or file key
+         */
+        search?: string;
+        userId?: string;
+        /**
+         * File type category
+         */
+        fileType?: 'image' | 'video' | 'document' | 'audio' | 'other';
+        /**
+         * File processing status
+         */
+        status?: 'pending' | 'uploaded' | 'processing' | 'processed' | 'failed' | 'deleted';
+        /**
+         * Supported storage provider
+         */
+        provider?: 'aws_s3' | 'local' | 'minio';
+        mimeType?: string;
+        minSize?: number;
+        maxSize?: number;
+        isPublic?: boolean | null;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        fromDate?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        toDate?: string;
+        page?: number;
+        limit?: number;
+        /**
+         * Field to sort files by
+         */
+        sortBy?: 'uploadedAt' | 'fileSize' | 'fileName' | 'createdAt' | 'updatedAt';
+        /**
+         * Sort order - ascending (asc) or descending (desc)
+         */
+        sortOrder?: 'asc' | 'desc';
+        /**
+         * Comma-separated relations: user
+         */
+        include?: string;
+    };
+    url: '/storage/files';
+};
+
+export type GetAdminFileListResponses = {
+    /**
+     * Paginated response
+     */
+    200: {
+        /**
+         * Page items
+         */
+        data: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            userId: string;
+            userName?: string;
+            userEmail?: string;
+            fileKey: string;
+            fileName: string;
+            fileSize: number;
+            mimeType: string;
+            /**
+             * File type category
+             */
+            fileType: 'image' | 'video' | 'document' | 'audio' | 'other';
+            /**
+             * File processing status
+             */
+            status: 'pending' | 'uploaded' | 'processing' | 'processed' | 'failed' | 'deleted';
+            /**
+             * Supported storage provider
+             */
+            provider: 'aws_s3' | 'local' | 'minio';
+            bucketName?: string;
+            region?: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            uploadedAt?: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            deletedAt?: string;
+            metadata?: {
+                [key: string]: string;
+            };
+            error?: string;
+            isPublic?: boolean;
+            downloadCount?: number;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            lastAccessedAt?: string;
+            /**
+             * When the record was created
+             */
+            createdAt: string;
+            /**
+             * When the record was last updated
+             */
+            updatedAt: string;
+        }>;
+        /**
+         * Pagination information
+         */
+        pagination: {
+            /**
+             * Current page number
+             */
+            page: number;
+            /**
+             * Items per page
+             */
+            limit: number;
+            /**
+             * Total number of items
+             */
+            total: number;
+            /**
+             * Total number of pages
+             */
+            totalPages: number;
+            /**
+             * Whether there is a next page
+             */
+            hasNext: boolean;
+            /**
+             * Whether there is a previous page
+             */
+            hasPrev: boolean;
+        };
+    };
+};
+
+export type GetAdminFileListResponse = GetAdminFileListResponses[keyof GetAdminFileListResponses];
+
+export type CreateInternalFileData = {
+    /**
+     * Internal file creation request
+     */
+    body?: {
+        userId: string;
+        fileKey: string;
+        fileName: string;
+        fileSize: number;
+        mimeType: string;
+        /**
+         * File type category
+         */
+        fileType: 'image' | 'video' | 'document' | 'audio' | 'other';
+        /**
+         * Supported storage provider
+         */
+        provider: 'aws_s3' | 'local' | 'minio';
+        bucketName?: string;
+        region?: string;
+        isPublic?: boolean;
+        metadata?: {
+            [key: string]: string;
+        };
+    };
+    path?: never;
+    query?: never;
+    url: '/storage/files';
+};
+
+export type CreateInternalFileResponses = {
+    /**
+     * Internal file response
+     */
+    201: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        userId: string;
+        fileKey: string;
+        fileName: string;
+        fileSize: number;
+        mimeType: string;
+        /**
+         * File type category
+         */
+        fileType: 'image' | 'video' | 'document' | 'audio' | 'other';
+        /**
+         * File processing status
+         */
+        status: 'pending' | 'uploaded' | 'processing' | 'processed' | 'failed' | 'deleted';
+        /**
+         * Supported storage provider
+         */
+        provider: 'aws_s3' | 'local' | 'minio';
+        bucketName?: string;
+        region?: string;
+        isPublic: boolean;
+        metadata?: {
+            [key: string]: string;
+        };
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        uploadedAt?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        createdAt: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        updatedAt: string;
+    };
+};
+
+export type CreateInternalFileResponse = CreateInternalFileResponses[keyof CreateInternalFileResponses];
+
+export type BulkActionAdminFilesData = {
+    /**
+     * Bulk action on multiple files
+     */
+    body?: {
+        fileIds: Array<string>;
+        action: 'delete' | 'make_public' | 'make_private' | 'change_status';
+        /**
+         * File processing status
+         */
+        newStatus?: 'pending' | 'uploaded' | 'processing' | 'processed' | 'failed' | 'deleted';
+    };
+    path?: never;
+    query?: never;
+    url: '/storage/files/bulk-action';
+};
+
+export type BulkActionAdminFilesErrors = {
+    /**
+     * Standard error response
+     */
+    400: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type BulkActionAdminFilesError = BulkActionAdminFilesErrors[keyof BulkActionAdminFilesErrors];
+
+export type BulkActionAdminFilesResponses = {
+    /**
+     * Bulk file action results
+     */
+    200: {
+        successful: Array<string>;
+        failed: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            fileId: string;
+            error: string;
+        }>;
+        totalProcessed: number;
+        totalSuccessful: number;
+        totalFailed: number;
+    };
+};
+
+export type BulkActionAdminFilesResponse = BulkActionAdminFilesResponses[keyof BulkActionAdminFilesResponses];
+
+export type GetAdminStorageAnalyticsData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/storage/analytics';
+};
+
+export type GetAdminStorageAnalyticsResponses = {
+    /**
+     * Storage usage analytics
+     */
+    200: {
+        period: {
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            start: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            end: string;
+        };
+        totalFiles: number;
+        /**
+         * Total size in bytes
+         */
+        totalSize: number;
+        newFiles: number;
+        deletedFiles: number;
+        /**
+         * Average size in bytes
+         */
+        averageFileSize?: number;
+        filesByType: {
+            image?: number;
+            video?: number;
+            document?: number;
+            audio?: number;
+            other?: number;
+        };
+        filesByStatus: {
+            pending?: number;
+            uploaded?: number;
+            processing?: number;
+            processed?: number;
+            failed?: number;
+            deleted?: number;
+        };
+        filesByProvider: {
+            aws_s3?: number;
+            local?: number;
+            minio?: number;
+        };
+        storageByProvider: {
+            aws_s3?: number;
+            local?: number;
+            minio?: number;
+        };
+        topUsers: Array<{
+            userId: string;
+            userName: string;
+            fileCount: number;
+            totalSize: number;
+        }>;
+    };
+};
+
+export type GetAdminStorageAnalyticsResponse = GetAdminStorageAnalyticsResponses[keyof GetAdminStorageAnalyticsResponses];
+
+export type GetAdminStorageConfigurationData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/storage/configuration';
+};
+
+export type GetAdminStorageConfigurationResponses = {
+    /**
+     * Storage service configuration
+     */
+    200: {
+        providers: Array<{
+            /**
+             * Supported storage provider
+             */
+            name: 'aws_s3' | 'local' | 'minio';
+            isActive: boolean;
+            isDefault: boolean;
+            config: {
+                bucket?: string;
+                region?: string;
+                endpoint?: string;
+                maxFileSize: number;
+                allowedMimeTypes: Array<string>;
+            };
+        }>;
+        globalSettings: {
+            maxFileSize: number;
+            maxFilesPerUser?: number;
+            defaultExpiration: number;
+            compressionEnabled: boolean;
+            virusScanEnabled: boolean;
+        };
+    };
+};
+
+export type GetAdminStorageConfigurationResponse = GetAdminStorageConfigurationResponses[keyof GetAdminStorageConfigurationResponses];
+
+export type UpdateAdminStorageConfigurationData = {
+    /**
+     * Update storage configuration
+     */
+    body?: {
+        /**
+         * Supported storage provider
+         */
+        provider: 'aws_s3' | 'local' | 'minio';
+        config?: {
+            bucket?: string;
+            region?: string;
+            endpoint?: string;
+            maxFileSize?: number;
+            allowedMimeTypes?: Array<string>;
+        };
+        globalSettings?: {
+            maxFileSize?: number;
+            maxFilesPerUser?: number;
+            defaultExpiration?: number;
+            compressionEnabled?: boolean;
+            virusScanEnabled?: boolean;
+        };
+    };
+    path?: never;
+    query?: never;
+    url: '/storage/configuration';
+};
+
+export type UpdateAdminStorageConfigurationErrors = {
+    /**
+     * Standard error response
+     */
+    400: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type UpdateAdminStorageConfigurationError = UpdateAdminStorageConfigurationErrors[keyof UpdateAdminStorageConfigurationErrors];
+
+export type UpdateAdminStorageConfigurationResponses = {
+    /**
+     * Storage service configuration
+     */
+    200: {
+        providers: Array<{
+            /**
+             * Supported storage provider
+             */
+            name: 'aws_s3' | 'local' | 'minio';
+            isActive: boolean;
+            isDefault: boolean;
+            config: {
+                bucket?: string;
+                region?: string;
+                endpoint?: string;
+                maxFileSize: number;
+                allowedMimeTypes: Array<string>;
+            };
+        }>;
+        globalSettings: {
+            maxFileSize: number;
+            maxFilesPerUser?: number;
+            defaultExpiration: number;
+            compressionEnabled: boolean;
+            virusScanEnabled: boolean;
+        };
+    };
+};
+
+export type UpdateAdminStorageConfigurationResponse = UpdateAdminStorageConfigurationResponses[keyof UpdateAdminStorageConfigurationResponses];
+
+export type PatchVouchersBulkUpdateData = {
+    /**
+     * Update multiple vouchers at once
+     */
+    body?: {
+        voucherIds: Array<string>;
+        updates: {
+            /**
+             * Current state of the voucher lifecycle
+             */
+            state?: 'draft' | 'published' | 'claimed' | 'redeemed' | 'expired' | 'suspended';
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            expiresAt?: string;
+            maxRedemptions?: number | null;
+            maxRedemptionsPerUser?: number;
+        };
+        reason: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/vouchers/bulk-update';
+};
+
+export type PatchVouchersBulkUpdateErrors = {
+    /**
+     * Standard error response
+     */
+    400: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type PatchVouchersBulkUpdateError = PatchVouchersBulkUpdateErrors[keyof PatchVouchersBulkUpdateErrors];
+
+export type PatchVouchersBulkUpdateResponses = {
+    /**
+     * Vouchers updated successfully
+     */
+    200: {
+        /**
+         * Number of successful operations
+         */
+        successful: number;
+        /**
+         * Number of failed operations
+         */
+        failed: number;
+        /**
+         * Details of failed operations
+         */
+        errors?: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            voucherId: string;
+            error: string;
+        }>;
+    };
+};
+
+export type PatchVouchersBulkUpdateResponse = PatchVouchersBulkUpdateResponses[keyof PatchVouchersBulkUpdateResponses];
+
+export type GetVouchersAnalyticsData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        startDate?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        endDate?: string;
+        /**
+         * Analytics grouping period
+         */
+        groupBy?: 'day' | 'week' | 'month';
+    };
+    url: '/vouchers/analytics';
+};
+
+export type GetVouchersAnalyticsResponses = {
+    /**
+     * Voucher analytics data
+     */
+    200: {
+        /**
+         * Universally Unique Identifier
+         */
+        voucherId: string;
+        period: {
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            start: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            end: string;
+        };
+        totalScans: number;
+        totalClaims: number;
+        totalRedemptions: number;
+        uniqueUsers: number;
+        redemptionRate: number;
+        scansBySource: {
+            [key: string]: number;
+        };
+        scansByType: {
+            [key: string]: number;
+        };
+        dailyStats: Array<{
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            date: string;
+            scans: number;
+            claims: number;
+            redemptions: number;
+        }>;
+    };
+};
+
+export type GetVouchersAnalyticsResponse = GetVouchersAnalyticsResponses[keyof GetVouchersAnalyticsResponses];
+
+export type GetAdminUserListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Search in name, email, phone
+         */
+        search?: string;
+        email?: string;
+        /**
+         * User account status
+         */
+        status?: 'active' | 'suspended' | 'banned' | 'unconfirmed';
+        /**
+         * User role in the system
+         */
+        role?: 'admin' | 'customer' | 'business';
+        emailVerified?: boolean;
+        phoneVerified?: boolean;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        registeredFrom?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        registeredTo?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        lastLoginFrom?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        lastLoginTo?: string;
+        minSpent?: number;
+        maxSpent?: number;
+        hasReports?: boolean;
+        page?: number;
+        limit?: number;
+        /**
+         * Field to sort users by (admin view)
+         */
+        sortBy?: 'createdAt' | 'lastLoginAt' | 'email';
+        sortOrder?: 'ASC' | 'DESC';
+    };
+    url: '/admin/users';
+};
+
+export type GetAdminUserListResponses = {
+    /**
+     * Paginated response
+     */
+    200: {
+        /**
+         * Page items
+         */
+        data: Array<{
+            id: string;
+            email: string;
+            firstName: string;
+            lastName: string;
+            phoneNumber?: string;
+            /**
+             * Date in YYYY-MM-DD format
+             */
+            dateOfBirth?: string;
+            avatarUrl?: string;
+            /**
+             * User account status
+             */
+            status: 'active' | 'suspended' | 'banned' | 'unconfirmed';
+            /**
+             * User role in the system
+             */
+            role: 'admin' | 'customer' | 'business';
+            emailVerified: boolean;
+            phoneVerified: boolean;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            lastLoginAt?: string;
+            /**
+             * When the record was created
+             */
+            createdAt: string;
+            /**
+             * When the record was last updated
+             */
+            updatedAt: string;
+        }>;
+        /**
+         * Pagination information
+         */
+        pagination: {
+            /**
+             * Current page number
+             */
+            page: number;
+            /**
+             * Items per page
+             */
+            limit: number;
+            /**
+             * Total number of items
+             */
+            total: number;
+            /**
+             * Total number of pages
+             */
+            totalPages: number;
+            /**
+             * Whether there is a next page
+             */
+            hasNext: boolean;
+            /**
+             * Whether there is a previous page
+             */
+            hasPrev: boolean;
+        };
+    };
+};
+
+export type GetAdminUserListResponse = GetAdminUserListResponses[keyof GetAdminUserListResponses];
+
+export type CreateAdminUserData = {
+    /**
+     * Create a new user (admin only)
+     */
+    body?: {
+        email: string;
+        firstName: string;
+        lastName: string;
+        phoneNumber: string;
+        /**
+         * Date in YYYY-MM-DD format
+         */
+        dateOfBirth?: string;
+        /**
+         * User role in the system
+         */
+        role?: 'admin' | 'customer' | 'business';
+        /**
+         * User account status
+         */
+        status?: 'active' | 'suspended' | 'banned' | 'unconfirmed';
+        appVersion?: string;
+        alias?: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/admin/users';
+};
+
+export type CreateAdminUserErrors = {
+    /**
+     * Standard error response
+     */
+    400: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+    /**
+     * Standard error response
+     */
+    409: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type CreateAdminUserError = CreateAdminUserErrors[keyof CreateAdminUserErrors];
+
+export type CreateAdminUserResponses = {
+    /**
+     * Detailed user information for admin
+     */
+    201: {
+        id: string;
+        email: string;
+        firstName: string;
+        lastName: string;
+        phoneNumber?: string;
+        /**
+         * Date in YYYY-MM-DD format
+         */
+        dateOfBirth?: string;
+        avatarUrl?: string;
+        /**
+         * User account status
+         */
+        status: 'active' | 'suspended' | 'banned' | 'unconfirmed';
+        /**
+         * User role in the system
+         */
+        role: 'admin' | 'customer' | 'business';
+        emailVerified: boolean;
+        phoneVerified: boolean;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        lastLoginAt?: string;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    };
+};
+
+export type CreateAdminUserResponse = CreateAdminUserResponses[keyof CreateAdminUserResponses];
+
+export type DeleteAdminUserData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/admin/users/{id}';
+};
+
+export type DeleteAdminUserErrors = {
+    /**
+     * Standard error response
+     */
+    404: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type DeleteAdminUserError = DeleteAdminUserErrors[keyof DeleteAdminUserErrors];
+
+export type DeleteAdminUserResponses = {
+    /**
+     * User deleted successfully
+     */
+    204: void;
+};
+
+export type DeleteAdminUserResponse = DeleteAdminUserResponses[keyof DeleteAdminUserResponses];
+
+export type GetAdminUserByIdData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/admin/users/{id}';
+};
+
+export type GetAdminUserByIdResponses = {
+    /**
+     * Detailed user information for admin
+     */
+    200: {
+        id: string;
+        email: string;
+        firstName: string;
+        lastName: string;
+        phoneNumber?: string;
+        /**
+         * Date in YYYY-MM-DD format
+         */
+        dateOfBirth?: string;
+        avatarUrl?: string;
+        /**
+         * User account status
+         */
+        status: 'active' | 'suspended' | 'banned' | 'unconfirmed';
+        /**
+         * User role in the system
+         */
+        role: 'admin' | 'customer' | 'business';
+        emailVerified: boolean;
+        phoneVerified: boolean;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        lastLoginAt?: string;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    };
+};
+
+export type GetAdminUserByIdResponse = GetAdminUserByIdResponses[keyof GetAdminUserByIdResponses];
+
+export type UpdateAdminUserData = {
+    /**
+     * Update user information (admin)
+     */
+    body?: {
+        firstName?: string;
+        lastName?: string;
+        phoneNumber?: string;
+        /**
+         * Date in YYYY-MM-DD format
+         */
+        dateOfBirth?: string;
+        /**
+         * User role in the system
+         */
+        role?: 'admin' | 'customer' | 'business';
+        /**
+         * User account status
+         */
+        status?: 'active' | 'suspended' | 'banned' | 'unconfirmed';
+        appVersion?: string;
+        alias?: string;
+        activeMembership?: boolean;
+        description?: string;
+        specialties?: Array<string>;
+    };
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/admin/users/{id}';
+};
+
+export type UpdateAdminUserErrors = {
+    /**
+     * Standard error response
+     */
+    404: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type UpdateAdminUserError = UpdateAdminUserErrors[keyof UpdateAdminUserErrors];
+
+export type UpdateAdminUserResponses = {
+    /**
+     * Detailed user information for admin
+     */
+    200: {
+        id: string;
+        email: string;
+        firstName: string;
+        lastName: string;
+        phoneNumber?: string;
+        /**
+         * Date in YYYY-MM-DD format
+         */
+        dateOfBirth?: string;
+        avatarUrl?: string;
+        /**
+         * User account status
+         */
+        status: 'active' | 'suspended' | 'banned' | 'unconfirmed';
+        /**
+         * User role in the system
+         */
+        role: 'admin' | 'customer' | 'business';
+        emailVerified: boolean;
+        phoneVerified: boolean;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        lastLoginAt?: string;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    };
+};
+
+export type UpdateAdminUserResponse = UpdateAdminUserResponses[keyof UpdateAdminUserResponses];
+
+export type UpdateAdminUserStatusData = {
+    /**
+     * Update user account status
+     */
+    body?: {
+        /**
+         * User account status
+         */
+        status: 'active' | 'suspended' | 'banned' | 'unconfirmed';
+        reason?: string;
+        /**
+         * Suspension duration in days
+         */
+        duration?: number;
+        notifyUser?: boolean;
+    };
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/admin/users/{id}/status';
+};
+
+export type UpdateAdminUserStatusResponses = {
+    /**
+     * Detailed user information for admin
+     */
+    200: {
+        id: string;
+        email: string;
+        firstName: string;
+        lastName: string;
+        phoneNumber?: string;
+        /**
+         * Date in YYYY-MM-DD format
+         */
+        dateOfBirth?: string;
+        avatarUrl?: string;
+        /**
+         * User account status
+         */
+        status: 'active' | 'suspended' | 'banned' | 'unconfirmed';
+        /**
+         * User role in the system
+         */
+        role: 'admin' | 'customer' | 'business';
+        emailVerified: boolean;
+        phoneVerified: boolean;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        lastLoginAt?: string;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    };
+};
+
+export type UpdateAdminUserStatusResponse = UpdateAdminUserStatusResponses[keyof UpdateAdminUserStatusResponses];
+
+export type BanAdminUserData = {
+    /**
+     * Ban a user
+     */
+    body?: {
+        reason?: string;
+        /**
+         * Ban duration in days
+         */
+        duration?: number;
+        notifyUser?: boolean;
+    };
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/admin/users/{id}/ban';
+};
+
+export type BanAdminUserResponses = {
+    /**
+     * User banned successfully
+     */
+    204: void;
+};
+
+export type BanAdminUserResponse = BanAdminUserResponses[keyof BanAdminUserResponses];
+
+export type UnbanAdminUserData = {
+    /**
+     * Unban a user
+     */
+    body?: {
+        reason?: string;
+        notifyUser?: boolean;
+    };
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/admin/users/{id}/unban';
+};
+
+export type UnbanAdminUserResponses = {
+    /**
+     * User unbanned successfully
+     */
+    204: void;
+};
+
+export type UnbanAdminUserResponse = UnbanAdminUserResponses[keyof UnbanAdminUserResponses];
+
+export type GetAdminUserByEmailData = {
+    body?: never;
+    path: {
+        email: string;
+    };
+    query?: never;
+    url: '/admin/users/email/{email}';
+};
+
+export type GetAdminUserByEmailErrors = {
+    /**
+     * Standard error response
+     */
+    404: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type GetAdminUserByEmailError = GetAdminUserByEmailErrors[keyof GetAdminUserByEmailErrors];
+
+export type GetAdminUserByEmailResponses = {
+    /**
+     * Detailed user information for admin
+     */
+    200: {
+        id: string;
+        email: string;
+        firstName: string;
+        lastName: string;
+        phoneNumber?: string;
+        /**
+         * Date in YYYY-MM-DD format
+         */
+        dateOfBirth?: string;
+        avatarUrl?: string;
+        /**
+         * User account status
+         */
+        status: 'active' | 'suspended' | 'banned' | 'unconfirmed';
+        /**
+         * User role in the system
+         */
+        role: 'admin' | 'customer' | 'business';
+        emailVerified: boolean;
+        phoneVerified: boolean;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        lastLoginAt?: string;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    };
+};
+
+export type GetAdminUserByEmailResponse = GetAdminUserByEmailResponses[keyof GetAdminUserByEmailResponses];
+
+export type VerifyAdminUserData = {
+    body?: {
+        type: 'EMAIL' | 'PHONE' | 'ACCOUNT_CONFIRMATION';
+        token?: string;
+        code?: string;
+        userId?: string;
+        email?: string;
+        phoneNumber?: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/admin/users/verify';
+};
+
+export type VerifyAdminUserErrors = {
+    /**
+     * Standard error response
+     */
+    400: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+    /**
+     * Standard error response
+     */
+    404: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type VerifyAdminUserError = VerifyAdminUserErrors[keyof VerifyAdminUserErrors];
+
+export type VerifyAdminUserResponses = {
+    /**
+     * User verified successfully
+     */
+    204: void;
+};
+
+export type VerifyAdminUserResponse = VerifyAdminUserResponses[keyof VerifyAdminUserResponses];
+
+export type ResendAdminUserVerificationData = {
+    body?: {
+        type: 'EMAIL' | 'PHONE';
+        userId?: string;
+        email?: string;
+        phoneNumber?: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/admin/users/resend-verification';
+};
+
+export type ResendAdminUserVerificationErrors = {
+    /**
+     * Standard error response
+     */
+    400: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+    /**
+     * Standard error response
+     */
+    404: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type ResendAdminUserVerificationError = ResendAdminUserVerificationErrors[keyof ResendAdminUserVerificationErrors];
+
+export type ResendAdminUserVerificationResponses = {
+    /**
+     * Verification resent
+     */
+    200: {
+        success: boolean;
+        message: string;
+    };
+};
+
+export type ResendAdminUserVerificationResponse = ResendAdminUserVerificationResponses[keyof ResendAdminUserVerificationResponses];
+
+export type GetAdminUserVerificationStatusData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/admin/users/{id}/verification-status';
+};
+
+export type GetAdminUserVerificationStatusErrors = {
+    /**
+     * Standard error response
+     */
+    401: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+    /**
+     * Standard error response
+     */
+    403: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+    /**
+     * Standard error response
+     */
+    404: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type GetAdminUserVerificationStatusError = GetAdminUserVerificationStatusErrors[keyof GetAdminUserVerificationStatusErrors];
+
+export type GetAdminUserVerificationStatusResponses = {
+    /**
+     * User verification status information
+     */
+    200: {
+        userId: string;
+        emailVerified: boolean;
+        phoneVerified: boolean;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        verificationDate?: string;
+    };
+};
+
+export type GetAdminUserVerificationStatusResponse = GetAdminUserVerificationStatusResponses[keyof GetAdminUserVerificationStatusResponses];
+
+export type UploadAdminUserAvatarData = {
+    /**
+     * Upload avatar for a user (admin only)
+     */
+    body?: {
+        /**
+         * Avatar image file (multipart/form-data)
+         */
+        file?: unknown;
+    };
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/admin/users/{id}/avatar';
+};
+
+export type UploadAdminUserAvatarErrors = {
+    /**
+     * Standard error response
+     */
+    400: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+    /**
+     * Standard error response
+     */
+    404: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type UploadAdminUserAvatarError = UploadAdminUserAvatarErrors[keyof UploadAdminUserAvatarErrors];
+
+export type UploadAdminUserAvatarResponses = {
+    /**
+     * Avatar upload response
+     */
+    200: {
+        /**
+         * URL of the uploaded avatar
+         */
+        avatarUrl: string;
+    };
+};
+
+export type UploadAdminUserAvatarResponse = UploadAdminUserAvatarResponses[keyof UploadAdminUserAvatarResponses];
+
+export type GetAdminCurrentUserData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/admin/users/me';
+};
+
+export type GetAdminCurrentUserErrors = {
+    /**
+     * Standard error response
+     */
+    401: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+    /**
+     * Standard error response
+     */
+    403: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type GetAdminCurrentUserError = GetAdminCurrentUserErrors[keyof GetAdminCurrentUserErrors];
+
+export type GetAdminCurrentUserResponses = {
+    /**
+     * Detailed user information for admin
+     */
+    200: {
+        id: string;
+        email: string;
+        firstName: string;
+        lastName: string;
+        phoneNumber?: string;
+        /**
+         * Date in YYYY-MM-DD format
+         */
+        dateOfBirth?: string;
+        avatarUrl?: string;
+        /**
+         * User account status
+         */
+        status: 'active' | 'suspended' | 'banned' | 'unconfirmed';
+        /**
+         * User role in the system
+         */
+        role: 'admin' | 'customer' | 'business';
+        emailVerified: boolean;
+        phoneVerified: boolean;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        lastLoginAt?: string;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    };
+};
+
+export type GetAdminCurrentUserResponse = GetAdminCurrentUserResponses[keyof GetAdminCurrentUserResponses];
+
+export type UpdateAdminCurrentUserData = {
+    /**
+     * Update current admin user profile
+     */
+    body?: {
+        firstName?: string;
+        lastName?: string;
+        phoneNumber?: string;
+        /**
+         * Date in YYYY-MM-DD format
+         */
+        dateOfBirth?: string;
+        avatarUrl?: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/admin/users/me';
+};
+
+export type UpdateAdminCurrentUserErrors = {
+    /**
+     * Standard error response
+     */
+    400: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+    /**
+     * Standard error response
+     */
+    401: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+    /**
+     * Standard error response
+     */
+    403: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type UpdateAdminCurrentUserError = UpdateAdminCurrentUserErrors[keyof UpdateAdminCurrentUserErrors];
+
+export type UpdateAdminCurrentUserResponses = {
+    /**
+     * Detailed user information for admin
+     */
+    200: {
+        id: string;
+        email: string;
+        firstName: string;
+        lastName: string;
+        phoneNumber?: string;
+        /**
+         * Date in YYYY-MM-DD format
+         */
+        dateOfBirth?: string;
+        avatarUrl?: string;
+        /**
+         * User account status
+         */
+        status: 'active' | 'suspended' | 'banned' | 'unconfirmed';
+        /**
+         * User role in the system
+         */
+        role: 'admin' | 'customer' | 'business';
+        emailVerified: boolean;
+        phoneVerified: boolean;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        lastLoginAt?: string;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    };
+};
+
+export type UpdateAdminCurrentUserResponse = UpdateAdminCurrentUserResponses[keyof UpdateAdminCurrentUserResponses];
+
+export type GetAdminTransactionListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Page number
+         */
+        page?: number;
+        /**
+         * Items per page
+         */
+        limit?: number;
+        /**
+         * Field to sort by
+         */
+        sortBy?: string;
+        /**
+         * Sort order
+         */
+        sortOrder?: 'asc' | 'desc';
+        /**
+         * Search query
+         */
+        search?: string;
+        /**
+         * Start date (ISO 8601)
+         */
+        fromDate?: string;
+        /**
+         * End date (ISO 8601)
+         */
+        toDate?: string;
+        type?: 'payment' | 'refund' | 'transfer' | 'payout' | 'adjustment';
+        status?: 'pending' | 'processing' | 'completed' | 'failed' | 'cancelled';
+        paymentMethod?: 'card' | 'bankTransfer' | 'wallet' | 'cash';
+        userId?: string;
+        /**
+         * Universally Unique Identifier
+         */
+        businessId?: string;
+        stripePaymentIntentId?: string;
+        minAmount?: number;
+        maxAmount?: number;
+        currency?: string;
+        hasDispute?: boolean;
+    };
+    url: '/transactions';
+};
+
+export type GetAdminTransactionListResponses = {
+    /**
+     * List of transactions
+     */
+    200: {
+        data: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            type: 'payment' | 'refund' | 'transfer' | 'payout' | 'adjustment';
+            status: 'pending' | 'processing' | 'completed' | 'failed' | 'cancelled';
+            amount: number;
+            currency: string;
+            fee?: number;
+            tax?: number;
+            netAmount: number;
+            userId?: string;
+            userName?: string;
+            /**
+             * Universally Unique Identifier
+             */
+            businessId?: string;
+            businessName?: string;
+            paymentMethod: 'card' | 'bankTransfer' | 'wallet' | 'cash';
+            stripePaymentIntentId?: string;
+            stripeChargeId?: string;
+            stripeRefundId?: string;
+            /**
+             * Type of related entity
+             */
+            referenceType?: string;
+            /**
+             * ID of related entity
+             */
+            referenceId?: string;
+            description?: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            processedAt?: string;
+            failureReason?: string;
+            failureCode?: string;
+            disputeStatus?: 'warning' | 'needsResponse' | 'underReview' | 'won' | 'lost';
+            disputeReason?: string;
+            refundReason?: string;
+            refundedAmount?: number;
+            metadata?: {
+                [key: string]: unknown;
+            };
+            ipAddress?: string;
+            userAgent?: string;
+            /**
+             * When the record was created
+             */
+            createdAt: string;
+            /**
+             * When the record was last updated
+             */
+            updatedAt: string;
+        }>;
+        pagination: {
+            page: number;
+            limit: number;
+            total: number;
+            totalPages: number;
+        };
+    };
+};
+
+export type GetAdminTransactionListResponse = GetAdminTransactionListResponses[keyof GetAdminTransactionListResponses];
+
+export type GetAdminTransactionByIdData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/transactions/{id}';
+};
+
+export type GetAdminTransactionByIdResponses = {
+    /**
+     * Detailed transaction information for admin
+     */
+    200: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        type: 'payment' | 'refund' | 'transfer' | 'payout' | 'adjustment';
+        status: 'pending' | 'processing' | 'completed' | 'failed' | 'cancelled';
+        amount: number;
+        currency: string;
+        fee?: number;
+        tax?: number;
+        netAmount: number;
+        userId?: string;
+        userName?: string;
+        /**
+         * Universally Unique Identifier
+         */
+        businessId?: string;
+        businessName?: string;
+        paymentMethod: 'card' | 'bankTransfer' | 'wallet' | 'cash';
+        stripePaymentIntentId?: string;
+        stripeChargeId?: string;
+        stripeRefundId?: string;
+        /**
+         * Type of related entity
+         */
+        referenceType?: string;
+        /**
+         * ID of related entity
+         */
+        referenceId?: string;
+        description?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        processedAt?: string;
+        failureReason?: string;
+        failureCode?: string;
+        disputeStatus?: 'warning' | 'needsResponse' | 'underReview' | 'won' | 'lost';
+        disputeReason?: string;
+        refundReason?: string;
+        refundedAmount?: number;
+        metadata?: {
+            [key: string]: unknown;
+        };
+        ipAddress?: string;
+        userAgent?: string;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    };
+};
+
+export type GetAdminTransactionByIdResponse = GetAdminTransactionByIdResponses[keyof GetAdminTransactionByIdResponses];
+
+export type GetAdminFinancialReportsData = {
+    body?: never;
+    path?: never;
+    query: {
+        reportType: 'revenue' | 'transactions' | 'payouts' | 'disputes' | 'summary';
+        period: '7d' | '30d' | '90d' | '1y' | 'custom';
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        startDate?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        endDate?: string;
+        groupBy?: 'day' | 'week' | 'month';
+        includeDetails?: boolean;
+        format?: 'json' | 'csv' | 'pdf';
+    };
+    url: '/payments/reports';
+};
+
+export type GetAdminFinancialReportsResponses = {
+    /**
+     * Financial report data
+     */
+    200: {
+        reportType: 'revenue' | 'transactions' | 'payouts' | 'disputes' | 'summary';
+        period: {
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            start: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            end: string;
+        };
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        generatedAt: string;
+        /**
+         * Financial summary for a period
+         */
+        summary: {
+            period: {
+                /**
+                 * ISO 8601 datetime with timezone
+                 */
+                start: string;
+                /**
+                 * ISO 8601 datetime with timezone
+                 */
+                end: string;
+            };
+            totalRevenue: number;
+            totalRefunds: number;
+            totalFees: number;
+            netRevenue: number;
+            /**
+             * Revenue by transaction type (all keys optional)
+             */
+            revenueByType: {
+                payment?: number;
+                refund?: number;
+                transfer?: number;
+                payout?: number;
+                adjustment?: number;
+            };
+            /**
+             * Revenue by payment method (all keys optional)
+             */
+            revenueByPaymentMethod: {
+                card?: number;
+                bankTransfer?: number;
+                wallet?: number;
+                cash?: number;
+            };
+            transactionCount: number;
+            successfulCount: number;
+            failedCount: number;
+            disputeCount: number;
+            averageTransactionAmount: number;
+            topBusinesses?: Array<{
+                /**
+                 * Universally Unique Identifier
+                 */
+                businessId: string;
+                businessName: string;
+                revenue: number;
+                transactionCount: number;
+            }>;
+            topUsers?: Array<{
+                userId: string;
+                userName: string;
+                spent: number;
+                transactionCount: number;
+            }>;
+        };
+        timeSeries?: Array<{
+            date: string;
+            revenue: number;
+            transactions: number;
+            refunds: number;
+            disputes: number;
+        }>;
+        downloadUrl?: string;
+    };
+};
+
+export type GetAdminFinancialReportsResponse = GetAdminFinancialReportsResponses[keyof GetAdminFinancialReportsResponses];
+
+export type RefundAdminTransactionData = {
+    /**
+     * Refund a transaction
+     */
+    body?: {
+        /**
+         * Partial refund amount
+         */
+        amount?: number;
+        reason: 'duplicate' | 'fraudulent' | 'customerRequest' | 'other';
+        description: string;
+        notifyUser?: boolean;
+    };
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/transactions/{id}/refund';
+};
+
+export type RefundAdminTransactionErrors = {
+    /**
+     * Standard error response
+     */
+    404: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type RefundAdminTransactionError = RefundAdminTransactionErrors[keyof RefundAdminTransactionErrors];
+
+export type RefundAdminTransactionResponses = {
+    /**
+     * Detailed transaction information for admin
+     */
+    200: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        type: 'payment' | 'refund' | 'transfer' | 'payout' | 'adjustment';
+        status: 'pending' | 'processing' | 'completed' | 'failed' | 'cancelled';
+        amount: number;
+        currency: string;
+        fee?: number;
+        tax?: number;
+        netAmount: number;
+        userId?: string;
+        userName?: string;
+        /**
+         * Universally Unique Identifier
+         */
+        businessId?: string;
+        businessName?: string;
+        paymentMethod: 'card' | 'bankTransfer' | 'wallet' | 'cash';
+        stripePaymentIntentId?: string;
+        stripeChargeId?: string;
+        stripeRefundId?: string;
+        /**
+         * Type of related entity
+         */
+        referenceType?: string;
+        /**
+         * ID of related entity
+         */
+        referenceId?: string;
+        description?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        processedAt?: string;
+        failureReason?: string;
+        failureCode?: string;
+        disputeStatus?: 'warning' | 'needsResponse' | 'underReview' | 'won' | 'lost';
+        disputeReason?: string;
+        refundReason?: string;
+        refundedAmount?: number;
+        metadata?: {
+            [key: string]: unknown;
+        };
+        ipAddress?: string;
+        userAgent?: string;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    };
+};
+
+export type RefundAdminTransactionResponse = RefundAdminTransactionResponses[keyof RefundAdminTransactionResponses];
+
+export type GetPromoCodesData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Page number
+         */
+        page?: number;
+        /**
+         * Items per page
+         */
+        limit?: number;
+        /**
+         * Field to sort by
+         */
+        sortBy?: string;
+        /**
+         * Sort order
+         */
+        sortOrder?: 'asc' | 'desc';
+        /**
+         * Search query
+         */
+        search?: string;
+        type?: 'percentage' | 'fixedAmount';
+        isActive?: boolean;
+        status?: 'active' | 'expired' | 'depleted' | 'disabled';
+        createdBy?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        createdFrom?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        createdTo?: string;
+    };
+    url: '/promo-codes';
+};
+
+export type GetPromoCodesResponses = {
+    /**
+     * Paginated response
+     */
+    200: {
+        /**
+         * Page items
+         */
+        data: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            code: string;
+            type: 'percentage' | 'fixedAmount';
+            value: number;
+            description?: string;
+            maxUses?: number;
+            usedCount?: number;
+            maxUsesPerUser?: number;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            validFrom: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            validUntil?: string;
+            minPurchaseAmount?: number;
+            applicableToBusinesses?: Array<string>;
+            applicableToUserTiers?: Array<string>;
+            firstTimeOnly?: boolean;
+            isActive?: boolean;
+            totalDiscountGiven?: number;
+            createdBy: string;
+            adminNotes?: string;
+            /**
+             * When the record was created
+             */
+            createdAt: string;
+            /**
+             * When the record was last updated
+             */
+            updatedAt: string;
+        }>;
+        /**
+         * Pagination information
+         */
+        pagination: {
+            /**
+             * Current page number
+             */
+            page: number;
+            /**
+             * Items per page
+             */
+            limit: number;
+            /**
+             * Total number of items
+             */
+            total: number;
+            /**
+             * Total number of pages
+             */
+            totalPages: number;
+            /**
+             * Whether there is a next page
+             */
+            hasNext: boolean;
+            /**
+             * Whether there is a previous page
+             */
+            hasPrev: boolean;
+        };
+    };
+};
+
+export type GetPromoCodesResponse = GetPromoCodesResponses[keyof GetPromoCodesResponses];
+
+export type PostPromoCodesData = {
+    /**
+     * Create a new promo code
+     */
+    body?: {
+        code: string;
+        type: 'percentage' | 'fixedAmount';
+        value: number;
+        description?: string;
+        maxUses?: number;
+        maxUsesPerUser?: number;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        validFrom: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        validUntil?: string;
+        minPurchaseAmount?: number;
+        applicableToBusinesses?: Array<string>;
+        applicableToUserTiers?: Array<string>;
+        firstTimeOnly?: boolean;
+        adminNotes?: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/promo-codes';
+};
+
+export type PostPromoCodesErrors = {
+    /**
+     * Standard error response
+     */
+    400: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type PostPromoCodesError = PostPromoCodesErrors[keyof PostPromoCodesErrors];
+
+export type PostPromoCodesResponses = {
+    /**
+     * Detailed promo code information for admin
+     */
+    201: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        code: string;
+        type: 'percentage' | 'fixedAmount';
+        value: number;
+        description?: string;
+        maxUses?: number;
+        usedCount?: number;
+        maxUsesPerUser?: number;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        validFrom: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        validUntil?: string;
+        minPurchaseAmount?: number;
+        applicableToBusinesses?: Array<string>;
+        applicableToUserTiers?: Array<string>;
+        firstTimeOnly?: boolean;
+        isActive?: boolean;
+        totalDiscountGiven?: number;
+        createdBy: string;
+        adminNotes?: string;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    };
+};
+
+export type PostPromoCodesResponse = PostPromoCodesResponses[keyof PostPromoCodesResponses];
+
+export type PatchPromoCodesByIdData = {
+    /**
+     * Update promo code
+     */
+    body?: {
+        description?: string;
+        maxUses?: number;
+        maxUsesPerUser?: number;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        validFrom?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        validUntil?: string;
+        minPurchaseAmount?: number;
+        applicableToBusinesses?: Array<string>;
+        applicableToUserTiers?: Array<string>;
+        firstTimeOnly?: boolean;
+        isActive?: boolean;
+        adminNotes?: string;
+    };
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/promo-codes/{id}';
+};
+
+export type PatchPromoCodesByIdErrors = {
+    /**
+     * Standard error response
+     */
+    404: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type PatchPromoCodesByIdError = PatchPromoCodesByIdErrors[keyof PatchPromoCodesByIdErrors];
+
+export type PatchPromoCodesByIdResponses = {
+    /**
+     * Detailed promo code information for admin
+     */
+    200: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        code: string;
+        type: 'percentage' | 'fixedAmount';
+        value: number;
+        description?: string;
+        maxUses?: number;
+        usedCount?: number;
+        maxUsesPerUser?: number;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        validFrom: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        validUntil?: string;
+        minPurchaseAmount?: number;
+        applicableToBusinesses?: Array<string>;
+        applicableToUserTiers?: Array<string>;
+        firstTimeOnly?: boolean;
+        isActive?: boolean;
+        totalDiscountGiven?: number;
+        createdBy: string;
+        adminNotes?: string;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    };
+};
+
+export type PatchPromoCodesByIdResponse = PatchPromoCodesByIdResponses[keyof PatchPromoCodesByIdResponses];
+
+export type GetSubscriptionsData = {
+    body?: never;
+    path?: never;
+    query?: {
+        status?: 'ACTIVE' | 'CANCELLED' | 'EXPIRED';
+        planId?: string;
+        userId?: string;
+        page?: number;
+        limit?: number;
+    };
+    url: '/subscriptions';
+};
+
+export type GetSubscriptionsResponses = {
+    /**
+     * List of subscriptions
+     */
+    200: {
+        data: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            userId: string;
+            /**
+             * Universally Unique Identifier
+             */
+            planId: string;
+            status: 'ACTIVE' | 'CANCELLED' | 'EXPIRED';
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            startDate: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            endDate?: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            nextBillingDate?: string;
+        }>;
+        pagination: {
+            page: number;
+            limit: number;
+            total: number;
+            totalPages: number;
+        };
+    };
+};
+
+export type GetSubscriptionsResponse = GetSubscriptionsResponses[keyof GetSubscriptionsResponses];
+
+export type GetSubscriptionsPlansData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Page number
+         */
+        page?: number;
+        /**
+         * Items per page
+         */
+        limit?: number;
+        /**
+         * Field to sort by
+         */
+        sortBy?: string;
+        /**
+         * Sort order
+         */
+        sortOrder?: 'asc' | 'desc';
+        /**
+         * Search query
+         */
+        search?: string;
+        billingInterval?: 'day' | 'week' | 'month' | 'year';
+        isActive?: boolean;
+        isPublic?: boolean;
+        minPrice?: number;
+        maxPrice?: number;
+        createdBy?: string;
+    };
+    url: '/subscriptions/plans';
+};
+
+export type GetSubscriptionsPlansResponses = {
+    /**
+     * Paginated response
+     */
+    200: {
+        /**
+         * Page items
+         */
+        data: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            name: string;
+            description: string;
+            price: number;
+            currency?: 'usd' | 'eur' | 'gbp';
+            billingInterval: 'day' | 'week' | 'month' | 'year';
+            trialPeriodDays?: number;
+            maxUsagePerMonth?: number;
+            isActive?: boolean;
+            isPublic?: boolean;
+            stripePriceId?: string;
+            stripeProductId?: string;
+            activeSubscriptions?: number;
+            totalSubscriptions?: number;
+            monthlyRevenue?: number;
+            createdBy: string;
+            adminNotes?: string;
+            /**
+             * When the record was created
+             */
+            createdAt: string;
+            /**
+             * When the record was last updated
+             */
+            updatedAt: string;
+        }>;
+        /**
+         * Pagination information
+         */
+        pagination: {
+            /**
+             * Current page number
+             */
+            page: number;
+            /**
+             * Items per page
+             */
+            limit: number;
+            /**
+             * Total number of items
+             */
+            total: number;
+            /**
+             * Total number of pages
+             */
+            totalPages: number;
+            /**
+             * Whether there is a next page
+             */
+            hasNext: boolean;
+            /**
+             * Whether there is a previous page
+             */
+            hasPrev: boolean;
+        };
+    };
+};
+
+export type GetSubscriptionsPlansResponse = GetSubscriptionsPlansResponses[keyof GetSubscriptionsPlansResponses];
+
+export type PostSubscriptionsPlansData = {
+    /**
+     * Create a new subscription plan
+     */
+    body?: {
+        name: string;
+        description: string;
+        price: number;
+        currency?: 'usd' | 'eur' | 'gbp';
+        billingInterval: 'day' | 'week' | 'month' | 'year';
+        trialPeriodDays?: number;
+        maxUsagePerMonth?: number;
+        isActive?: boolean;
+        isPublic?: boolean;
+        adminNotes?: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/subscriptions/plans';
+};
+
+export type PostSubscriptionsPlansErrors = {
+    /**
+     * Standard error response
+     */
+    400: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type PostSubscriptionsPlansError = PostSubscriptionsPlansErrors[keyof PostSubscriptionsPlansErrors];
+
+export type PostSubscriptionsPlansResponses = {
+    /**
+     * Detailed subscription plan for admin
+     */
+    201: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        name: string;
+        description: string;
+        price: number;
+        currency?: 'usd' | 'eur' | 'gbp';
+        billingInterval: 'day' | 'week' | 'month' | 'year';
+        trialPeriodDays?: number;
+        maxUsagePerMonth?: number;
+        isActive?: boolean;
+        isPublic?: boolean;
+        stripePriceId?: string;
+        stripeProductId?: string;
+        activeSubscriptions?: number;
+        totalSubscriptions?: number;
+        monthlyRevenue?: number;
+        createdBy: string;
+        adminNotes?: string;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    };
+};
+
+export type PostSubscriptionsPlansResponse = PostSubscriptionsPlansResponses[keyof PostSubscriptionsPlansResponses];
+
+export type PatchSubscriptionsPlansByIdData = {
+    /**
+     * Update subscription plan
+     */
+    body?: {
+        name?: string;
+        description?: string;
+        maxUsagePerMonth?: number;
+        isActive?: boolean;
+        isPublic?: boolean;
+        adminNotes?: string;
+    };
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/subscriptions/plans/{id}';
+};
+
+export type PatchSubscriptionsPlansByIdErrors = {
+    /**
+     * Standard error response
+     */
+    404: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type PatchSubscriptionsPlansByIdError = PatchSubscriptionsPlansByIdErrors[keyof PatchSubscriptionsPlansByIdErrors];
+
+export type PatchSubscriptionsPlansByIdResponses = {
+    /**
+     * Detailed subscription plan for admin
+     */
+    200: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        name: string;
+        description: string;
+        price: number;
+        currency?: 'usd' | 'eur' | 'gbp';
+        billingInterval: 'day' | 'week' | 'month' | 'year';
+        trialPeriodDays?: number;
+        maxUsagePerMonth?: number;
+        isActive?: boolean;
+        isPublic?: boolean;
+        stripePriceId?: string;
+        stripeProductId?: string;
+        activeSubscriptions?: number;
+        totalSubscriptions?: number;
+        monthlyRevenue?: number;
+        createdBy: string;
+        adminNotes?: string;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    };
+};
+
+export type PatchSubscriptionsPlansByIdResponse = PatchSubscriptionsPlansByIdResponses[keyof PatchSubscriptionsPlansByIdResponses];
+
+export type GetAdminSupportTicketListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Search in title, description
+         */
+        search?: string;
+        ticketNumber?: string;
+        userId?: string;
+        assignedTo?: string;
+        /**
+         * Support ticket status
+         */
+        status?: 'open' | 'assigned' | 'in_progress' | 'waiting_customer' | 'waiting_internal' | 'resolved' | 'closed';
+        /**
+         * Support ticket priority level
+         */
+        priority?: 'low' | 'medium' | 'high' | 'urgent' | 'critical';
+        /**
+         * Support ticket category/type
+         */
+        type?: 'billing' | 'technical' | 'account' | 'general' | 'bug_report' | 'feature_request';
+        page?: number;
+        limit?: number;
+        /**
+         * Field to sort admin tickets by
+         */
+        sortBy?: 'createdAt' | 'updatedAt' | 'resolvedAt' | 'priority' | 'status';
+        /**
+         * Sort order - ascending (asc) or descending (desc)
+         */
+        sortOrder?: 'asc' | 'desc';
+        /**
+         * Comma-separated relations: user,assignedUser
+         */
+        include?: string;
+    };
+    url: '/support/tickets';
+};
+
+export type GetAdminSupportTicketListResponses = {
+    /**
+     * List of support tickets
+     */
+    200: {
+        data: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            ticketNumber?: string;
+            userId: string;
+            userName: string;
+            userEmail: string;
+            title: string;
+            description: string;
+            /**
+             * Support ticket category/type
+             */
+            type: 'billing' | 'technical' | 'account' | 'general' | 'bug_report' | 'feature_request';
+            /**
+             * Support ticket status
+             */
+            status: 'open' | 'assigned' | 'in_progress' | 'waiting_customer' | 'waiting_internal' | 'resolved' | 'closed';
+            /**
+             * Support ticket priority level
+             */
+            priority: 'low' | 'medium' | 'high' | 'urgent' | 'critical';
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            resolvedAt?: string;
+            assignedTo?: string;
+            assignedToName?: string;
+            files?: Array<string>;
+            /**
+             * When the record was created
+             */
+            createdAt: string;
+            /**
+             * When the record was last updated
+             */
+            updatedAt: string;
+        }>;
+        pagination: {
+            page: number;
+            limit: number;
+            total: number;
+            totalPages: number;
+        };
+    };
+};
+
+export type GetAdminSupportTicketListResponse = GetAdminSupportTicketListResponses[keyof GetAdminSupportTicketListResponses];
+
+export type GetAdminSupportTicketByIdData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/support/tickets/{id}';
+};
+
+export type GetAdminSupportTicketByIdResponses = {
+    /**
+     * Support ticket for admin
+     */
+    200: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        ticketNumber?: string;
+        userId: string;
+        userName: string;
+        userEmail: string;
+        title: string;
+        description: string;
+        /**
+         * Support ticket category/type
+         */
+        type: 'billing' | 'technical' | 'account' | 'general' | 'bug_report' | 'feature_request';
+        /**
+         * Support ticket status
+         */
+        status: 'open' | 'assigned' | 'in_progress' | 'waiting_customer' | 'waiting_internal' | 'resolved' | 'closed';
+        /**
+         * Support ticket priority level
+         */
+        priority: 'low' | 'medium' | 'high' | 'urgent' | 'critical';
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        resolvedAt?: string;
+        assignedTo?: string;
+        assignedToName?: string;
+        files?: Array<string>;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    };
+};
+
+export type GetAdminSupportTicketByIdResponse = GetAdminSupportTicketByIdResponses[keyof GetAdminSupportTicketByIdResponses];
+
+export type UpdateAdminTicketStatusData = {
+    /**
+     * Update ticket status
+     */
+    body?: {
+        /**
+         * Support ticket status
+         */
+        status: 'open' | 'assigned' | 'in_progress' | 'waiting_customer' | 'waiting_internal' | 'resolved' | 'closed';
+        note?: string;
+        notifyUser?: boolean;
+    };
+    path: {
+        /**
+         * Ticket ID
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/support/tickets/{id}/status';
+};
+
+export type UpdateAdminTicketStatusResponses = {
+    /**
+     * Support ticket for admin
+     */
+    200: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        ticketNumber?: string;
+        userId: string;
+        userName: string;
+        userEmail: string;
+        title: string;
+        description: string;
+        /**
+         * Support ticket category/type
+         */
+        type: 'billing' | 'technical' | 'account' | 'general' | 'bug_report' | 'feature_request';
+        /**
+         * Support ticket status
+         */
+        status: 'open' | 'assigned' | 'in_progress' | 'waiting_customer' | 'waiting_internal' | 'resolved' | 'closed';
+        /**
+         * Support ticket priority level
+         */
+        priority: 'low' | 'medium' | 'high' | 'urgent' | 'critical';
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        resolvedAt?: string;
+        assignedTo?: string;
+        assignedToName?: string;
+        files?: Array<string>;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    };
+};
+
+export type UpdateAdminTicketStatusResponse = UpdateAdminTicketStatusResponses[keyof UpdateAdminTicketStatusResponses];
+
+export type AssignAdminTicketToAgentData = {
+    /**
+     * Assign ticket to agent
+     */
+    body?: {
+        assigneeId: string;
+        note?: string;
+        /**
+         * Support ticket priority level
+         */
+        priority?: 'low' | 'medium' | 'high' | 'urgent' | 'critical';
+    };
+    path: {
+        /**
+         * Ticket ID
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/support/tickets/{id}/assign';
+};
+
+export type AssignAdminTicketToAgentResponses = {
+    /**
+     * Support ticket for admin
+     */
+    200: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        ticketNumber?: string;
+        userId: string;
+        userName: string;
+        userEmail: string;
+        title: string;
+        description: string;
+        /**
+         * Support ticket category/type
+         */
+        type: 'billing' | 'technical' | 'account' | 'general' | 'bug_report' | 'feature_request';
+        /**
+         * Support ticket status
+         */
+        status: 'open' | 'assigned' | 'in_progress' | 'waiting_customer' | 'waiting_internal' | 'resolved' | 'closed';
+        /**
+         * Support ticket priority level
+         */
+        priority: 'low' | 'medium' | 'high' | 'urgent' | 'critical';
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        resolvedAt?: string;
+        assignedTo?: string;
+        assignedToName?: string;
+        files?: Array<string>;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    };
+};
+
+export type AssignAdminTicketToAgentResponse = AssignAdminTicketToAgentResponses[keyof AssignAdminTicketToAgentResponses];
+
+export type GetAdminProblemListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Search in title, description
+         */
+        search?: string;
+        ticketNumber?: string;
+        userId?: string;
+        assignedTo?: string;
+        /**
+         * Support ticket status
+         */
+        status?: 'open' | 'assigned' | 'in_progress' | 'waiting_customer' | 'waiting_internal' | 'resolved' | 'closed';
+        /**
+         * Support ticket priority level
+         */
+        priority?: 'low' | 'medium' | 'high' | 'urgent' | 'critical';
+        /**
+         * Support ticket category/type
+         */
+        type?: 'billing' | 'technical' | 'account' | 'general' | 'bug_report' | 'feature_request';
+        page?: number;
+        limit?: number;
+        /**
+         * Field to sort admin tickets by
+         */
+        sortBy?: 'createdAt' | 'updatedAt' | 'resolvedAt' | 'priority' | 'status';
+        /**
+         * Sort order - ascending (asc) or descending (desc)
+         */
+        sortOrder?: 'asc' | 'desc';
+        /**
+         * Comma-separated relations: user,assignedUser
+         */
+        include?: string;
+    };
+    url: '/admin/problems';
+};
+
+export type GetAdminProblemListResponses = {
+    /**
+     * List of problems
+     */
+    200: {
+        data: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            ticketNumber?: string;
+            userId: string;
+            userName: string;
+            userEmail: string;
+            title: string;
+            description: string;
+            /**
+             * Support ticket category/type
+             */
+            type: 'billing' | 'technical' | 'account' | 'general' | 'bug_report' | 'feature_request';
+            /**
+             * Support ticket status
+             */
+            status: 'open' | 'assigned' | 'in_progress' | 'waiting_customer' | 'waiting_internal' | 'resolved' | 'closed';
+            /**
+             * Support ticket priority level
+             */
+            priority: 'low' | 'medium' | 'high' | 'urgent' | 'critical';
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            resolvedAt?: string;
+            assignedTo?: string;
+            assignedToName?: string;
+            files?: Array<string>;
+            /**
+             * When the record was created
+             */
+            createdAt: string;
+            /**
+             * When the record was last updated
+             */
+            updatedAt: string;
+        }>;
+        pagination: {
+            page: number;
+            limit: number;
+            total: number;
+            totalPages: number;
+            hasNext: boolean;
+            hasPrevious: boolean;
+        };
+    };
+};
+
+export type GetAdminProblemListResponse = GetAdminProblemListResponses[keyof GetAdminProblemListResponses];
+
+export type DeleteAdminProblemData = {
+    body?: never;
+    path: {
+        /**
+         * Problem ID
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/admin/problems/{id}';
+};
+
+export type DeleteAdminProblemResponses = {
+    /**
+     * Problem deleted successfully
+     */
+    204: void;
+};
+
+export type DeleteAdminProblemResponse = DeleteAdminProblemResponses[keyof DeleteAdminProblemResponses];
+
+export type GetAdminProblemByIdData = {
+    body?: never;
+    path: {
+        /**
+         * Problem ID
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/admin/problems/{id}';
+};
+
+export type GetAdminProblemByIdResponses = {
+    /**
+     * Support ticket for admin
+     */
+    200: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        ticketNumber?: string;
+        userId: string;
+        userName: string;
+        userEmail: string;
+        title: string;
+        description: string;
+        /**
+         * Support ticket category/type
+         */
+        type: 'billing' | 'technical' | 'account' | 'general' | 'bug_report' | 'feature_request';
+        /**
+         * Support ticket status
+         */
+        status: 'open' | 'assigned' | 'in_progress' | 'waiting_customer' | 'waiting_internal' | 'resolved' | 'closed';
+        /**
+         * Support ticket priority level
+         */
+        priority: 'low' | 'medium' | 'high' | 'urgent' | 'critical';
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        resolvedAt?: string;
+        assignedTo?: string;
+        assignedToName?: string;
+        files?: Array<string>;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    };
+};
+
+export type GetAdminProblemByIdResponse = GetAdminProblemByIdResponses[keyof GetAdminProblemByIdResponses];
+
+export type UpdateAdminProblemData = {
+    /**
+     * Admin update support problem
+     */
+    body?: {
+        title?: string;
+        description?: string;
+        /**
+         * Support ticket priority level
+         */
+        priority?: 'low' | 'medium' | 'high' | 'urgent' | 'critical';
+        /**
+         * Support ticket category/type
+         */
+        type?: 'billing' | 'technical' | 'account' | 'general' | 'bug_report' | 'feature_request';
+        /**
+         * Support ticket status
+         */
+        status?: 'open' | 'assigned' | 'in_progress' | 'waiting_customer' | 'waiting_internal' | 'resolved' | 'closed';
+        assignedTo?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        resolvedAt?: string;
+        files?: Array<string>;
+    };
+    path: {
+        /**
+         * Problem ID
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/admin/problems/{id}';
+};
+
+export type UpdateAdminProblemResponses = {
+    /**
+     * Support ticket for admin
+     */
+    200: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        ticketNumber?: string;
+        userId: string;
+        userName: string;
+        userEmail: string;
+        title: string;
+        description: string;
+        /**
+         * Support ticket category/type
+         */
+        type: 'billing' | 'technical' | 'account' | 'general' | 'bug_report' | 'feature_request';
+        /**
+         * Support ticket status
+         */
+        status: 'open' | 'assigned' | 'in_progress' | 'waiting_customer' | 'waiting_internal' | 'resolved' | 'closed';
+        /**
+         * Support ticket priority level
+         */
+        priority: 'low' | 'medium' | 'high' | 'urgent' | 'critical';
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        resolvedAt?: string;
+        assignedTo?: string;
+        assignedToName?: string;
+        files?: Array<string>;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    };
+};
+
+export type UpdateAdminProblemResponse = UpdateAdminProblemResponses[keyof UpdateAdminProblemResponses];
+
+export type GetAdminCommentListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        page?: number;
+        limit?: number;
+        sortBy?: string;
+        sortOrder?: 'ASC' | 'DESC';
+    };
+    url: '/admin/comments';
+};
+
+export type GetAdminCommentListResponses = {
+    /**
+     * List of comments
+     */
+    200: {
+        data: Array<unknown>;
+        pagination: {
+            page: number;
+            limit: number;
+            total: number;
+            totalPages: number;
+            hasNext: boolean;
+            hasPrevious: boolean;
+        };
+    };
+};
+
+export type GetAdminCommentListResponse = GetAdminCommentListResponses[keyof GetAdminCommentListResponses];
+
+export type PostAdminCommentsData = {
+    body?: {
+        /**
+         * Universally Unique Identifier
+         */
+        problemId: string;
+        content: string;
+        isInternal?: boolean;
+    };
+    path?: never;
+    query?: never;
+    url: '/admin/comments';
+};
+
+export type PostAdminCommentsResponses = {
+    /**
+     * Comment created successfully
+     */
+    201: unknown;
+};
+
+export type GetAdminCommentsByProblemIdData = {
+    body?: never;
+    path: {
+        /**
+         * Problem ID
+         */
+        problemId: string;
+    };
+    query?: never;
+    url: '/admin/comments/problem/{problemId}';
+};
+
+export type GetAdminCommentsByProblemIdResponses = {
+    /**
+     * List of comments for the problem
+     */
+    200: {
+        data: Array<unknown>;
+    };
+};
+
+export type GetAdminCommentsByProblemIdResponse = GetAdminCommentsByProblemIdResponses[keyof GetAdminCommentsByProblemIdResponses];
+
+export type DeleteAdminCommentsByIdData = {
+    body?: never;
+    path: {
+        /**
+         * Comment ID
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/admin/comments/{id}';
+};
+
+export type DeleteAdminCommentsByIdResponses = {
+    /**
+     * Comment deleted successfully
+     */
+    204: void;
+};
+
+export type DeleteAdminCommentsByIdResponse = DeleteAdminCommentsByIdResponses[keyof DeleteAdminCommentsByIdResponses];
+
+export type PutAdminCommentsByIdData = {
+    body?: {
+        content: string;
+        isInternal?: boolean;
+    };
+    path: {
+        /**
+         * Comment ID
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/admin/comments/{id}';
+};
+
+export type PutAdminCommentsByIdResponses = {
+    /**
+     * Comment updated successfully
+     */
+    200: unknown;
+};
+
+export type PostTemplatesSeedData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/templates/seed';
+};
+
+export type PostTemplatesSeedResponses = {
+    /**
+     * Templates seeded successfully
+     */
+    201: {
+        created: number;
+        message: string;
+    };
+};
+
+export type PostTemplatesSeedResponse = PostTemplatesSeedResponses[keyof PostTemplatesSeedResponses];
+
+export type GetAdminVoucherBookListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Page number
+         */
+        page?: number;
+        /**
+         * Items per page
+         */
+        limit?: number;
+        /**
+         * Field to sort voucher books by
+         */
+        sortBy?: 'createdAt' | 'updatedAt' | 'title' | 'year' | 'month' | 'status' | 'publishedAt';
+        /**
+         * Sort order
+         */
+        sortOrder?: 'asc' | 'desc';
+        /**
+         * Search query
+         */
+        search?: string;
+        /**
+         * Voucher book type
+         */
+        bookType?: 'monthly' | 'special_edition' | 'regional' | 'seasonal' | 'promotional';
+        /**
+         * Voucher book status
+         */
+        status?: 'draft' | 'ready_for_print' | 'published' | 'archived';
+        /**
+         * Filter by year
+         */
+        year?: number;
+        /**
+         * Filter by month
+         */
+        month?: number;
+        /**
+         * Filter by creator
+         */
+        createdBy?: string;
+        /**
+         * Filter by last updater
+         */
+        updatedBy?: string;
+        /**
+         * Filter books with/without content
+         */
+        hasContent?: boolean;
+        /**
+         * Filter books with/without generated PDF
+         */
+        hasPdf?: boolean;
+    };
+    url: '/admin/voucher-books';
+};
+
+export type GetAdminVoucherBookListResponses = {
+    /**
+     * Paginated response
+     */
+    200: {
+        /**
+         * Page items
+         */
+        data: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            /**
+             * Voucher book title
+             */
+            title: string;
+            /**
+             * Book edition (e.g., "January 2024")
+             */
+            edition?: string;
+            /**
+             * Voucher book type
+             */
+            bookType: 'monthly' | 'special_edition' | 'regional' | 'seasonal' | 'promotional';
+            /**
+             * Month for monthly books (1-12)
+             */
+            month?: number;
+            /**
+             * Year of publication
+             */
+            year: number;
+            /**
+             * Voucher book status
+             */
+            status: 'draft' | 'ready_for_print' | 'published' | 'archived';
+            /**
+             * Total number of pages
+             */
+            totalPages: number;
+            /**
+             * When the book was published
+             */
+            publishedAt?: string;
+            /**
+             * URL of the cover image
+             */
+            coverImageUrl?: string;
+            /**
+             * URL of the back cover image
+             */
+            backImageUrl?: string;
+            /**
+             * URL of the generated PDF
+             */
+            pdfUrl?: string;
+            /**
+             * When the PDF was generated
+             */
+            pdfGeneratedAt?: string;
+            /**
+             * Additional book metadata
+             */
+            metadata?: {
+                [key: string]: unknown;
+            };
+            /**
+             * User who created the book
+             */
+            createdBy: string;
+            /**
+             * User who last updated the book
+             */
+            updatedBy?: string;
+            /**
+             * Actual number of pages with content
+             */
+            pageCount: number;
+            /**
+             * Total number of ad placements
+             */
+            totalPlacements: number;
+            /**
+             * Number of distribution records
+             */
+            distributionCount: number;
+            /**
+             * When the record was created
+             */
+            createdAt: string;
+            /**
+             * When the record was last updated
+             */
+            updatedAt: string;
+        }>;
+        /**
+         * Pagination information
+         */
+        pagination: {
+            /**
+             * Current page number
+             */
+            page: number;
+            /**
+             * Items per page
+             */
+            limit: number;
+            /**
+             * Total number of items
+             */
+            total: number;
+            /**
+             * Total number of pages
+             */
+            totalPages: number;
+            /**
+             * Whether there is a next page
+             */
+            hasNext: boolean;
+            /**
+             * Whether there is a previous page
+             */
+            hasPrev: boolean;
+        };
+    };
+};
+
+export type GetAdminVoucherBookListResponse = GetAdminVoucherBookListResponses[keyof GetAdminVoucherBookListResponses];
+
+export type CreateAdminVoucherBookData = {
+    /**
+     * Create a new voucher book
+     */
+    body?: {
+        /**
+         * Voucher book title
+         */
+        title: string;
+        /**
+         * Book edition (e.g., "January 2024")
+         */
+        edition?: string;
+        /**
+         * Voucher book type
+         */
+        bookType: 'monthly' | 'special_edition' | 'regional' | 'seasonal' | 'promotional';
+        /**
+         * Month for monthly books (1-12)
+         */
+        month?: number;
+        /**
+         * Year of publication
+         */
+        year: number;
+        /**
+         * Total number of pages
+         */
+        totalPages?: number;
+        /**
+         * URL of the cover image
+         */
+        coverImageUrl?: string;
+        /**
+         * URL of the back cover image
+         */
+        backImageUrl?: string;
+        /**
+         * Additional book metadata
+         */
+        metadata?: {
+            [key: string]: unknown;
+        };
+    };
+    path?: never;
+    query?: never;
+    url: '/admin/voucher-books';
+};
+
+export type CreateAdminVoucherBookErrors = {
+    /**
+     * Standard error response
+     */
+    400: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type CreateAdminVoucherBookError = CreateAdminVoucherBookErrors[keyof CreateAdminVoucherBookErrors];
+
+export type CreateAdminVoucherBookResponses = {
+    /**
+     * Admin voucher book information with full management details
+     */
+    201: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        /**
+         * Voucher book title
+         */
+        title: string;
+        /**
+         * Book edition (e.g., "January 2024")
+         */
+        edition?: string;
+        /**
+         * Voucher book type
+         */
+        bookType: 'monthly' | 'special_edition' | 'regional' | 'seasonal' | 'promotional';
+        /**
+         * Month for monthly books (1-12)
+         */
+        month?: number;
+        /**
+         * Year of publication
+         */
+        year: number;
+        /**
+         * Voucher book status
+         */
+        status: 'draft' | 'ready_for_print' | 'published' | 'archived';
+        /**
+         * Total number of pages
+         */
+        totalPages: number;
+        /**
+         * When the book was published
+         */
+        publishedAt?: string;
+        /**
+         * URL of the cover image
+         */
+        coverImageUrl?: string;
+        /**
+         * URL of the back cover image
+         */
+        backImageUrl?: string;
+        /**
+         * URL of the generated PDF
+         */
+        pdfUrl?: string;
+        /**
+         * When the PDF was generated
+         */
+        pdfGeneratedAt?: string;
+        /**
+         * Additional book metadata
+         */
+        metadata?: {
+            [key: string]: unknown;
+        };
+        /**
+         * User who created the book
+         */
+        createdBy: string;
+        /**
+         * User who last updated the book
+         */
+        updatedBy?: string;
+        /**
+         * Actual number of pages with content
+         */
+        pageCount: number;
+        /**
+         * Total number of ad placements
+         */
+        totalPlacements: number;
+        /**
+         * Number of distribution records
+         */
+        distributionCount: number;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    };
+};
+
+export type CreateAdminVoucherBookResponse = CreateAdminVoucherBookResponses[keyof CreateAdminVoucherBookResponses];
+
+export type DeleteAdminVoucherBookData = {
+    body?: never;
+    path: {
+        /**
+         * Voucher book ID
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/admin/voucher-books/{id}';
+};
+
+export type DeleteAdminVoucherBookErrors = {
+    /**
+     * Standard error response
+     */
+    404: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type DeleteAdminVoucherBookError = DeleteAdminVoucherBookErrors[keyof DeleteAdminVoucherBookErrors];
+
+export type DeleteAdminVoucherBookResponses = {
+    /**
+     * Voucher book deleted successfully
+     */
+    204: void;
+};
+
+export type DeleteAdminVoucherBookResponse = DeleteAdminVoucherBookResponses[keyof DeleteAdminVoucherBookResponses];
+
+export type GetAdminVoucherBookByIdData = {
+    body?: never;
+    path: {
+        /**
+         * Voucher book ID
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/admin/voucher-books/{id}';
+};
+
+export type GetAdminVoucherBookByIdErrors = {
+    /**
+     * Standard error response
+     */
+    404: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type GetAdminVoucherBookByIdError = GetAdminVoucherBookByIdErrors[keyof GetAdminVoucherBookByIdErrors];
+
+export type GetAdminVoucherBookByIdResponses = {
+    /**
+     * Admin voucher book information with full management details
+     */
+    200: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        /**
+         * Voucher book title
+         */
+        title: string;
+        /**
+         * Book edition (e.g., "January 2024")
+         */
+        edition?: string;
+        /**
+         * Voucher book type
+         */
+        bookType: 'monthly' | 'special_edition' | 'regional' | 'seasonal' | 'promotional';
+        /**
+         * Month for monthly books (1-12)
+         */
+        month?: number;
+        /**
+         * Year of publication
+         */
+        year: number;
+        /**
+         * Voucher book status
+         */
+        status: 'draft' | 'ready_for_print' | 'published' | 'archived';
+        /**
+         * Total number of pages
+         */
+        totalPages: number;
+        /**
+         * When the book was published
+         */
+        publishedAt?: string;
+        /**
+         * URL of the cover image
+         */
+        coverImageUrl?: string;
+        /**
+         * URL of the back cover image
+         */
+        backImageUrl?: string;
+        /**
+         * URL of the generated PDF
+         */
+        pdfUrl?: string;
+        /**
+         * When the PDF was generated
+         */
+        pdfGeneratedAt?: string;
+        /**
+         * Additional book metadata
+         */
+        metadata?: {
+            [key: string]: unknown;
+        };
+        /**
+         * User who created the book
+         */
+        createdBy: string;
+        /**
+         * User who last updated the book
+         */
+        updatedBy?: string;
+        /**
+         * Actual number of pages with content
+         */
+        pageCount: number;
+        /**
+         * Total number of ad placements
+         */
+        totalPlacements: number;
+        /**
+         * Number of distribution records
+         */
+        distributionCount: number;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    };
+};
+
+export type GetAdminVoucherBookByIdResponse = GetAdminVoucherBookByIdResponses[keyof GetAdminVoucherBookByIdResponses];
+
+export type UpdateAdminVoucherBookData = {
+    /**
+     * Update voucher book information
+     */
+    body?: {
+        /**
+         * Voucher book title
+         */
+        title?: string;
+        /**
+         * Book edition (e.g., "January 2024")
+         */
+        edition?: string;
+        /**
+         * Voucher book type
+         */
+        bookType?: 'monthly' | 'special_edition' | 'regional' | 'seasonal' | 'promotional';
+        /**
+         * Month for monthly books (1-12)
+         */
+        month?: number;
+        /**
+         * Year of publication
+         */
+        year?: number;
+        /**
+         * Total number of pages
+         */
+        totalPages?: number;
+        /**
+         * URL of the cover image
+         */
+        coverImageUrl?: string;
+        /**
+         * URL of the back cover image
+         */
+        backImageUrl?: string;
+        /**
+         * Additional book metadata
+         */
+        metadata?: {
+            [key: string]: unknown;
+        };
+    };
+    path: {
+        /**
+         * Voucher book ID
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/admin/voucher-books/{id}';
+};
+
+export type UpdateAdminVoucherBookErrors = {
+    /**
+     * Standard error response
+     */
+    404: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type UpdateAdminVoucherBookError = UpdateAdminVoucherBookErrors[keyof UpdateAdminVoucherBookErrors];
+
+export type UpdateAdminVoucherBookResponses = {
+    /**
+     * Admin voucher book information with full management details
+     */
+    200: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        /**
+         * Voucher book title
+         */
+        title: string;
+        /**
+         * Book edition (e.g., "January 2024")
+         */
+        edition?: string;
+        /**
+         * Voucher book type
+         */
+        bookType: 'monthly' | 'special_edition' | 'regional' | 'seasonal' | 'promotional';
+        /**
+         * Month for monthly books (1-12)
+         */
+        month?: number;
+        /**
+         * Year of publication
+         */
+        year: number;
+        /**
+         * Voucher book status
+         */
+        status: 'draft' | 'ready_for_print' | 'published' | 'archived';
+        /**
+         * Total number of pages
+         */
+        totalPages: number;
+        /**
+         * When the book was published
+         */
+        publishedAt?: string;
+        /**
+         * URL of the cover image
+         */
+        coverImageUrl?: string;
+        /**
+         * URL of the back cover image
+         */
+        backImageUrl?: string;
+        /**
+         * URL of the generated PDF
+         */
+        pdfUrl?: string;
+        /**
+         * When the PDF was generated
+         */
+        pdfGeneratedAt?: string;
+        /**
+         * Additional book metadata
+         */
+        metadata?: {
+            [key: string]: unknown;
+        };
+        /**
+         * User who created the book
+         */
+        createdBy: string;
+        /**
+         * User who last updated the book
+         */
+        updatedBy?: string;
+        /**
+         * Actual number of pages with content
+         */
+        pageCount: number;
+        /**
+         * Total number of ad placements
+         */
+        totalPlacements: number;
+        /**
+         * Number of distribution records
+         */
+        distributionCount: number;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    };
+};
+
+export type UpdateAdminVoucherBookResponse = UpdateAdminVoucherBookResponses[keyof UpdateAdminVoucherBookResponses];
+
+export type UpdateAdminVoucherBookStatusData = {
+    /**
+     * Publish a voucher book
+     */
+    body?: {
+        /**
+         * Publication date (defaults to now)
+         */
+        publishedAt?: string;
+        /**
+         * Generate PDF during publication
+         */
+        generatePdf?: boolean;
+    };
+    path: {
+        /**
+         * Voucher book ID
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/admin/voucher-books/{id}/status';
+};
+
+export type UpdateAdminVoucherBookStatusErrors = {
+    /**
+     * Standard error response
+     */
+    404: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type UpdateAdminVoucherBookStatusError = UpdateAdminVoucherBookStatusErrors[keyof UpdateAdminVoucherBookStatusErrors];
+
+export type UpdateAdminVoucherBookStatusResponses = {
+    /**
+     * Admin voucher book information with full management details
+     */
+    200: {
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        /**
+         * Voucher book title
+         */
+        title: string;
+        /**
+         * Book edition (e.g., "January 2024")
+         */
+        edition?: string;
+        /**
+         * Voucher book type
+         */
+        bookType: 'monthly' | 'special_edition' | 'regional' | 'seasonal' | 'promotional';
+        /**
+         * Month for monthly books (1-12)
+         */
+        month?: number;
+        /**
+         * Year of publication
+         */
+        year: number;
+        /**
+         * Voucher book status
+         */
+        status: 'draft' | 'ready_for_print' | 'published' | 'archived';
+        /**
+         * Total number of pages
+         */
+        totalPages: number;
+        /**
+         * When the book was published
+         */
+        publishedAt?: string;
+        /**
+         * URL of the cover image
+         */
+        coverImageUrl?: string;
+        /**
+         * URL of the back cover image
+         */
+        backImageUrl?: string;
+        /**
+         * URL of the generated PDF
+         */
+        pdfUrl?: string;
+        /**
+         * When the PDF was generated
+         */
+        pdfGeneratedAt?: string;
+        /**
+         * Additional book metadata
+         */
+        metadata?: {
+            [key: string]: unknown;
+        };
+        /**
+         * User who created the book
+         */
+        createdBy: string;
+        /**
+         * User who last updated the book
+         */
+        updatedBy?: string;
+        /**
+         * Actual number of pages with content
+         */
+        pageCount: number;
+        /**
+         * Total number of ad placements
+         */
+        totalPlacements: number;
+        /**
+         * Number of distribution records
+         */
+        distributionCount: number;
+        /**
+         * When the record was created
+         */
+        createdAt: string;
+        /**
+         * When the record was last updated
+         */
+        updatedAt: string;
+    };
+};
+
+export type UpdateAdminVoucherBookStatusResponse = UpdateAdminVoucherBookStatusResponses[keyof UpdateAdminVoucherBookStatusResponses];
+
+export type GenerateAdminVoucherBookPdfData = {
+    /**
+     * Generate PDF for voucher book
+     */
+    body?: {
+        /**
+         * Force regeneration even if PDF already exists
+         */
+        force?: boolean;
+        /**
+         * Generation priority
+         */
+        priority?: 'low' | 'normal' | 'high';
+    };
+    path: {
+        /**
+         * Voucher book ID
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/admin/voucher-books/{id}/generate-pdf';
+};
+
+export type GenerateAdminVoucherBookPdfErrors = {
+    /**
+     * Standard error response
+     */
+    404: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type GenerateAdminVoucherBookPdfError = GenerateAdminVoucherBookPdfErrors[keyof GenerateAdminVoucherBookPdfErrors];
+
+export type GenerateAdminVoucherBookPdfResponses = {
+    /**
+     * PDF generation job status
+     */
+    200: {
+        /**
+         * PDF generation job ID
+         */
+        jobId: string;
+        /**
+         * Generation status
+         */
+        status: 'queued' | 'processing' | 'completed' | 'failed';
+        /**
+         * Status message
+         */
+        message: string;
+        /**
+         * Estimated completion time
+         */
+        estimatedCompletion?: string;
+        /**
+         * PDF URL if already completed
+         */
+        pdfUrl?: string;
+    };
+};
+
+export type GenerateAdminVoucherBookPdfResponse = GenerateAdminVoucherBookPdfResponses[keyof GenerateAdminVoucherBookPdfResponses];
+
+export type BulkArchiveAdminVoucherBooksData = {
+    /**
+     * Bulk operation on multiple voucher books
+     */
+    body?: {
+        /**
+         * Voucher book IDs to operate on
+         */
+        bookIds: Array<string>;
+        /**
+         * Operation to perform
+         */
+        operation: 'publish' | 'archive' | 'generate_pdf' | 'delete';
+        /**
+         * Operation-specific options
+         */
+        options?: {
+            [key: string]: unknown;
+        };
+    };
+    path?: never;
+    query?: never;
+    url: '/admin/voucher-books/bulk-archive';
+};
+
+export type BulkArchiveAdminVoucherBooksErrors = {
+    /**
+     * Standard error response
+     */
+    400: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type BulkArchiveAdminVoucherBooksError = BulkArchiveAdminVoucherBooksErrors[keyof BulkArchiveAdminVoucherBooksErrors];
+
+export type BulkArchiveAdminVoucherBooksResponses = {
+    /**
+     * Voucher books archived successfully
+     */
+    200: {
+        /**
+         * Number of books archived
+         */
+        archived: number;
+        /**
+         * Number of books that failed to archive
+         */
+        failed: number;
+        /**
+         * Error messages for failed operations
+         */
+        errors: Array<string>;
+    };
+};
+
+export type BulkArchiveAdminVoucherBooksResponse = BulkArchiveAdminVoucherBooksResponses[keyof BulkArchiveAdminVoucherBooksResponses];
+
+export type GetAdminVoucherBookStatisticsData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/admin/voucher-books/statistics';
+};
+
+export type GetAdminVoucherBookStatisticsResponses = {
+    /**
+     * Bulk operation results
+     */
+    200: {
+        /**
+         * Number of successful operations
+         */
+        successful: number;
+        /**
+         * Number of failed operations
+         */
+        failed: number;
+        /**
+         * Detailed results for each book
+         */
+        results: Array<{
+            /**
+             * Voucher book ID
+             */
+            bookId: string;
+            /**
+             * Whether operation succeeded
+             */
+            success: boolean;
+            /**
+             * Error message if failed
+             */
+            error?: string;
+        }>;
+    };
+};
+
+export type GetAdminVoucherBookStatisticsResponse = GetAdminVoucherBookStatisticsResponses[keyof GetAdminVoucherBookStatisticsResponses];
+
+export type BulkGetInternalBusinessesData = {
+    /**
+     * Get multiple businesses by IDs
+     */
+    body?: {
+        businessIds: Array<string>;
+        /**
+         * Comma-separated relations: user,category
+         */
+        include?: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/businesses/bulk';
+};
+
+export type BulkGetInternalBusinessesResponses = {
+    /**
+     * Businesses data with not found IDs
+     */
+    200: {
+        businesses: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            userId: string;
+            businessNameKey: string;
+            businessDescriptionKey?: string;
+            /**
+             * Universally Unique Identifier
+             */
+            categoryId: string;
+            verified: boolean;
+            active: boolean;
+            avgRating: number;
+        }>;
+        notFound?: Array<string>;
+    };
+};
+
+export type BulkGetInternalBusinessesResponse = BulkGetInternalBusinessesResponses[keyof BulkGetInternalBusinessesResponses];
+
+export type ValidateInternalBusinessesData = {
+    /**
+     * Validate businesses exist and optionally check if active/verified
+     */
+    body?: {
+        businessIds: Array<string>;
+        checkActive?: boolean;
+        checkVerified?: boolean;
+    };
+    path?: never;
+    query?: never;
+    url: '/businesses/validate';
+};
+
+export type ValidateInternalBusinessesResponses = {
+    /**
+     * Validation results for businesses
+     */
+    200: {
+        valid: Array<string>;
+        invalid: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            reason: string;
+        }>;
+    };
+};
+
+export type ValidateInternalBusinessesResponse = ValidateInternalBusinessesResponses[keyof ValidateInternalBusinessesResponses];
+
+export type GetInternalBusinessesByUserData = {
+    /**
+     * Get all businesses owned by a user
+     */
+    body?: {
+        userId: string;
+        includeInactive?: boolean;
+        includeUnverified?: boolean;
+    };
+    path?: never;
+    query?: never;
+    url: '/businesses/by-user';
+};
+
+export type GetInternalBusinessesByUserResponses = {
+    /**
+     * User businesses data
+     */
+    200: {
+        businesses: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            userId: string;
+            businessNameKey: string;
+            businessDescriptionKey?: string;
+            /**
+             * Universally Unique Identifier
+             */
+            categoryId: string;
+            verified: boolean;
+            active: boolean;
+            avgRating: number;
+        }>;
+        totalCount: number;
+    };
+};
+
+export type GetInternalBusinessesByUserResponse = GetInternalBusinessesByUserResponses[keyof GetInternalBusinessesByUserResponses];
+
+export type CheckInternalBusinessExistsData = {
+    /**
+     * Check if business exists and is active
+     */
+    body?: {
+        /**
+         * Universally Unique Identifier
+         */
+        businessId: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/businesses/exists';
+};
+
+export type CheckInternalBusinessExistsResponses = {
+    /**
+     * Business existence check result
+     */
+    200: {
+        exists: boolean;
+        isActive?: boolean;
+        isVerified?: boolean;
+        /**
+         * Internal business data for services
+         */
+        business?: {
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            userId: string;
+            businessNameKey: string;
+            businessDescriptionKey?: string;
+            /**
+             * Universally Unique Identifier
+             */
+            categoryId: string;
+            verified: boolean;
+            active: boolean;
+            avgRating: number;
+        };
+    };
+};
+
+export type CheckInternalBusinessExistsResponse = CheckInternalBusinessExistsResponses[keyof CheckInternalBusinessExistsResponses];
+
+export type BulkGetInternalCategoriesData = {
+    /**
+     * Get multiple categories by IDs
+     */
+    body?: {
+        categoryIds: Array<string>;
+    };
+    path?: never;
+    query?: never;
+    url: '/categories/bulk';
+};
+
+export type BulkGetInternalCategoriesResponses = {
+    /**
+     * Paginated response
+     */
+    200: {
+        /**
+         * Page items
+         */
+        data: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            nameKey: string;
+            descriptionKey?: string;
+            icon?: string;
+            /**
+             * Universally Unique Identifier
+             */
+            parentId?: string;
+            isActive: boolean;
+            sortOrder: number;
+        }>;
+        /**
+         * Pagination information
+         */
+        pagination: {
+            /**
+             * Current page number
+             */
+            page: number;
+            /**
+             * Items per page
+             */
+            limit: number;
+            /**
+             * Total number of items
+             */
+            total: number;
+            /**
+             * Total number of pages
+             */
+            totalPages: number;
+            /**
+             * Whether there is a next page
+             */
+            hasNext: boolean;
+            /**
+             * Whether there is a previous page
+             */
+            hasPrev: boolean;
+        };
+    };
+};
+
+export type BulkGetInternalCategoriesResponse = BulkGetInternalCategoriesResponses[keyof BulkGetInternalCategoriesResponses];
+
+export type ValidateInternalCategoriesData = {
+    /**
+     * Validate categories exist and optionally check if active
+     */
+    body?: {
+        categoryIds: Array<string>;
+        checkActive?: boolean;
+    };
+    path?: never;
+    query?: never;
+    url: '/categories/validate';
+};
+
+export type ValidateInternalCategoriesResponses = {
+    /**
+     * Validation results for categories
+     */
+    200: {
+        /**
+         * Whether all categories are valid
+         */
+        valid: boolean;
+        /**
+         * Individual validation results
+         */
+        results: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            categoryId: string;
+            exists: boolean;
+            isActive: boolean;
+            valid: boolean;
+        }>;
+    };
+};
+
+export type ValidateInternalCategoriesResponse = ValidateInternalCategoriesResponses[keyof ValidateInternalCategoriesResponses];
+
+export type CheckInternalCategoryExistsData = {
+    /**
+     * Check if category exists and is active
+     */
+    body?: {
+        /**
+         * Universally Unique Identifier
+         */
+        categoryId: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/categories/exists';
+};
+
+export type CheckInternalCategoryExistsResponses = {
+    /**
+     * Category existence check result
+     */
+    200: {
+        exists: boolean;
+        isActive?: boolean;
+        /**
+         * Internal category data for services
+         */
+        category?: {
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            nameKey: string;
+            descriptionKey?: string;
+            icon?: string;
+            /**
+             * Universally Unique Identifier
+             */
+            parentId?: string;
+            isActive: boolean;
+            sortOrder: number;
+        };
+    };
+};
+
+export type CheckInternalCategoryExistsResponse = CheckInternalCategoryExistsResponses[keyof CheckInternalCategoryExistsResponses];
+
+export type BulkDeleteInternalFilesData = {
+    /**
+     * Internal bulk delete files request
+     */
+    body?: {
+        fileIds: Array<string>;
+        /**
+         * If provided, only delete files owned by this user
+         */
+        userId?: string;
+        reason?: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/storage/files/bulk';
+};
+
+export type BulkDeleteInternalFilesResponses = {
+    /**
+     * Internal bulk delete response
+     */
+    200: {
+        deleted: Array<string>;
+        failed: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            fileId: string;
+            error: string;
+        }>;
+        totalDeleted: number;
+        totalFailed: number;
+    };
+};
+
+export type BulkDeleteInternalFilesResponse = BulkDeleteInternalFilesResponses[keyof BulkDeleteInternalFilesResponses];
+
+export type GetInternalUserFilesData = {
+    /**
+     * Get files for a specific user
+     */
+    body?: {
+        userId: string;
+        /**
+         * File type category
+         */
+        fileType?: 'image' | 'video' | 'document' | 'audio' | 'other';
+        /**
+         * File processing status
+         */
+        status?: 'pending' | 'uploaded' | 'processing' | 'processed' | 'failed' | 'deleted';
+        limit?: number;
+        offset?: number;
+    };
+    path?: never;
+    query?: never;
+    url: '/storage/users/files';
+};
+
+export type GetInternalUserFilesResponses = {
+    /**
+     * User files
+     */
+    200: Array<{
+        /**
+         * Universally Unique Identifier
+         */
+        id: string;
+        userId: string;
+        fileKey: string;
+        fileName: string;
+        fileSize: number;
+        mimeType: string;
+        /**
+         * File type category
+         */
+        fileType: 'image' | 'video' | 'document' | 'audio' | 'other';
+        /**
+         * File processing status
+         */
+        status: 'pending' | 'uploaded' | 'processing' | 'processed' | 'failed' | 'deleted';
+        /**
+         * Supported storage provider
+         */
+        provider: 'aws_s3' | 'local' | 'minio';
+        bucketName?: string;
+        region?: string;
+        isPublic: boolean;
+        metadata?: {
+            [key: string]: string;
+        };
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        uploadedAt?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        createdAt: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        updatedAt: string;
+    }>;
+};
+
+export type GetInternalUserFilesResponse = GetInternalUserFilesResponses[keyof GetInternalUserFilesResponses];
+
+export type GetInternalUserFileSummaryData = {
+    body?: never;
+    path: {
+        userId: string;
+    };
+    query?: never;
+    url: '/storage/users/{userId}/summary';
+};
+
+export type GetInternalUserFileSummaryResponses = {
+    /**
+     * User file summary for internal use
+     */
+    200: {
+        userId: string;
+        totalFiles: number;
+        /**
+         * Total size in bytes
+         */
+        totalSize: number;
+        filesByType: {
+            image?: number;
+            video?: number;
+            document?: number;
+            audio?: number;
+            other?: number;
+        };
+        filesByStatus: {
+            pending?: number;
+            uploaded?: number;
+            processing?: number;
+            processed?: number;
+            failed?: number;
+            deleted?: number;
+        };
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        oldestFile?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        newestFile?: string;
+    };
+};
+
+export type GetInternalUserFileSummaryResponse = GetInternalUserFileSummaryResponses[keyof GetInternalUserFileSummaryResponses];
+
+export type CheckInternalUserQuotaData = {
+    /**
+     * Check if user can upload file within quota
+     */
+    body?: {
+        userId: string;
+        fileSize: number;
+        /**
+         * File type category
+         */
+        fileType?: 'image' | 'video' | 'document' | 'audio' | 'other';
+    };
+    path?: never;
+    query?: never;
+    url: '/storage/quota/check';
+};
+
+export type CheckInternalUserQuotaResponses = {
+    /**
+     * User storage quota information
+     */
+    200: {
+        userId: string;
+        canUpload: boolean;
+        quotaExceeded: boolean;
+        /**
+         * Current usage in bytes
+         */
+        currentUsage: number;
+        /**
+         * Quota limit in bytes
+         */
+        quotaLimit: number;
+        /**
+         * Remaining space in bytes
+         */
+        remainingSpace: number;
+        fileCountLimit?: number;
+        currentFileCount: number;
+    };
+};
+
+export type CheckInternalUserQuotaResponse = CheckInternalUserQuotaResponses[keyof CheckInternalUserQuotaResponses];
+
+export type MigrateInternalFileData = {
+    /**
+     * Migrate file between storage providers
+     */
+    body?: {
+        /**
+         * Universally Unique Identifier
+         */
+        fileId: string;
+        /**
+         * Supported storage provider
+         */
+        targetProvider: 'aws_s3' | 'local' | 'minio';
+        targetBucket?: string;
+        targetRegion?: string;
+        deleteOriginal?: boolean;
+    };
+    path?: never;
+    query?: never;
+    url: '/storage/files/migrate';
+};
+
+export type MigrateInternalFileResponses = {
+    /**
+     * File migration result
+     */
+    200: {
+        /**
+         * Universally Unique Identifier
+         */
+        fileId: string;
+        /**
+         * Supported storage provider
+         */
+        oldProvider: 'aws_s3' | 'local' | 'minio';
+        /**
+         * Supported storage provider
+         */
+        newProvider: 'aws_s3' | 'local' | 'minio';
+        oldFileKey: string;
+        newFileKey: string;
+        migrationStatus: 'success' | 'failed' | 'partial';
+        error?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        migratedAt: string;
+    };
+};
+
+export type MigrateInternalFileResponse = MigrateInternalFileResponses[keyof MigrateInternalFileResponses];
+
+export type CleanupInternalOrphanedFilesData = {
+    /**
+     * Cleanup orphaned files request
+     */
+    body?: {
+        /**
+         * Delete files older than this date
+         */
+        olderThan: string;
+        dryRun?: boolean;
+        /**
+         * Supported storage provider
+         */
+        provider?: 'aws_s3' | 'local' | 'minio';
+        batchSize?: number;
+    };
+    path?: never;
+    query?: never;
+    url: '/storage/cleanup/orphaned';
+};
+
+export type CleanupInternalOrphanedFilesResponses = {
+    /**
+     * Cleanup orphaned files response
+     */
+    200: {
+        filesFound: number;
+        filesDeleted: number;
+        /**
+         * Storage freed in bytes
+         */
+        storageFreed: number;
+        errors: Array<string>;
+        dryRun: boolean;
+    };
+};
+
+export type CleanupInternalOrphanedFilesResponse = CleanupInternalOrphanedFilesResponses[keyof CleanupInternalOrphanedFilesResponses];
+
+export type GetInternalStorageHealthData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/storage/health';
+};
+
+export type GetInternalStorageHealthResponses = {
+    /**
+     * Storage service health status
+     */
+    200: {
+        service: 'storage';
+        /**
+         * System health status
+         */
+        status: 'healthy' | 'degraded' | 'unhealthy';
+        timestamp: string;
+        providersStatus: {
+            /**
+             * System health status
+             */
+            aws_s3?: 'healthy' | 'degraded' | 'unhealthy';
+            /**
+             * System health status
+             */
+            local?: 'healthy' | 'degraded' | 'unhealthy';
+            /**
+             * System health status
+             */
+            minio?: 'healthy' | 'degraded' | 'unhealthy';
+        };
+        totalFiles: number;
+        /**
+         * Total storage in bytes
+         */
+        totalStorageUsed: number;
+        /**
+         * For local storage
+         */
+        diskSpaceRemaining?: number;
+    };
+};
+
+export type GetInternalStorageHealthResponse = GetInternalStorageHealthResponses[keyof GetInternalStorageHealthResponses];
+
+export type BulkGetInternalVouchersData = {
+    /**
+     * Batch fetch vouchers by IDs
+     */
+    body?: {
+        /**
+         * List of voucher IDs to fetch
+         */
+        voucherIds: Array<string>;
+        /**
+         * Comma-separated relations: business,category,codes
+         */
+        include?: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/vouchers/bulk';
+};
+
+export type BulkGetInternalVouchersResponses = {
+    /**
+     * Batch fetch vouchers response with pagination metadata
+     */
+    200: {
+        /**
+         * Page items
+         */
+        data: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            /**
+             * Universally Unique Identifier
+             */
+            businessId: string;
+            /**
+             * Universally Unique Identifier
+             */
+            categoryId: string;
+            /**
+             * Current state of the voucher lifecycle
+             */
+            state: 'draft' | 'published' | 'claimed' | 'redeemed' | 'expired' | 'suspended';
+            /**
+             * Voucher title in requested language
+             */
+            title: string;
+            /**
+             * Voucher description in requested language
+             */
+            description: string;
+            /**
+             * Voucher terms and conditions in requested language
+             */
+            terms: string;
+            /**
+             * Type of discount the voucher provides
+             */
+            discountType: 'percentage' | 'fixed';
+            /**
+             * Decimal number with 2 decimal places
+             */
+            discountValue: number;
+            currency?: string;
+            /**
+             * Geographic location as GeoJSON Point
+             */
+            location: {
+                type: 'Point';
+                coordinates: [
+                    number,
+                    number
+                ];
+            } | null;
+            imageUrl: string | null;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            validFrom: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            expiresAt: string;
+            maxRedemptions: number | null;
+            maxRedemptionsPerUser?: number;
+            currentRedemptions?: number;
+            scanCount?: number;
+            claimCount?: number;
+            metadata: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            deletedAt: string | null;
+            /**
+             * Complete business object when ?include=business
+             */
+            business?: {
+                /**
+                 * Universally Unique Identifier
+                 */
+                id: string;
+                name: string;
+            };
+            /**
+             * Complete category object when ?include=category
+             */
+            category?: {
+                /**
+                 * Universally Unique Identifier
+                 */
+                id: string;
+                name: string;
+            };
+            /**
+             * Voucher codes when ?include=codes
+             */
+            codes?: Array<{
+                /**
+                 * Universally Unique Identifier
+                 */
+                id: string;
+                code: string;
+                /**
+                 * Type of voucher code
+                 */
+                type: 'qr' | 'short' | 'static';
+                isActive: boolean;
+                metadata: {
+                    [key: string]: unknown;
+                } | null;
+                /**
+                 * ISO 8601 datetime with timezone
+                 */
+                createdAt: string;
+                /**
+                 * ISO 8601 datetime with timezone
+                 */
+                updatedAt: string;
+            }>;
+            /**
+             * Redemption history when ?include=redemptions
+             */
+            redemptions?: Array<{
+                /**
+                 * Universally Unique Identifier
+                 */
+                id: string;
+                /**
+                 * Universally Unique Identifier
+                 */
+                userId: string;
+                codeUsed: string;
+                /**
+                 * ISO 8601 datetime with timezone
+                 */
+                redeemedAt: string;
+                metadata: {
+                    [key: string]: unknown;
+                } | null;
+                /**
+                 * ISO 8601 datetime with timezone
+                 */
+                createdAt: string;
+            }>;
+            /**
+             * Scan analytics when ?include=scans
+             */
+            scans?: Array<{
+                /**
+                 * Universally Unique Identifier
+                 */
+                id: string;
+                /**
+                 * Universally Unique Identifier
+                 */
+                userId: string | null;
+                /**
+                 * Type of voucher scan
+                 */
+                scanType: 'customer' | 'business';
+                /**
+                 * Source of the voucher scan
+                 */
+                scanSource: 'camera' | 'gallery' | 'link' | 'share';
+                /**
+                 * Geographic location as GeoJSON Point
+                 */
+                location: {
+                    type: 'Point';
+                    coordinates: [
+                        number,
+                        number
+                    ];
+                } | null;
+                deviceInfo: {
+                    [key: string]: unknown;
+                };
+                /**
+                 * ISO 8601 datetime with timezone
+                 */
+                scannedAt: string;
+                /**
+                 * ISO 8601 datetime with timezone
+                 */
+                createdAt: string;
+            }>;
+            /**
+             * Customer wallet entries when ?include=customerVouchers
+             */
+            customerVouchers?: Array<{
+                /**
+                 * Universally Unique Identifier
+                 */
+                id: string;
+                /**
+                 * Universally Unique Identifier
+                 */
+                customerId: string;
+                /**
+                 * ISO 8601 datetime with timezone
+                 */
+                claimedAt: string;
+                /**
+                 * Status of voucher from customer perspective
+                 */
+                status: 'claimed' | 'redeemed' | 'expired';
+                notificationPreferences: {
+                    [key: string]: unknown;
+                } | null;
+                /**
+                 * ISO 8601 datetime with timezone
+                 */
+                redeemedAt: string | null;
+                /**
+                 * ISO 8601 datetime with timezone
+                 */
+                createdAt: string;
+                /**
+                 * ISO 8601 datetime with timezone
+                 */
+                updatedAt: string;
+            }>;
+            isActive: boolean;
+            isExpired: boolean;
+            redemptionRate: number;
+            daysUntilExpiry: number | null;
+            /**
+             * When the record was created
+             */
+            createdAt: string;
+            /**
+             * When the record was last updated
+             */
+            updatedAt: string;
+        }>;
+        /**
+         * Pagination information
+         */
+        pagination: {
+            /**
+             * Current page number
+             */
+            page: number;
+            /**
+             * Items per page
+             */
+            limit: number;
+            /**
+             * Total number of items
+             */
+            total: number;
+            /**
+             * Total number of pages
+             */
+            totalPages: number;
+            /**
+             * Whether there is a next page
+             */
+            hasNext: boolean;
+            /**
+             * Whether there is a previous page
+             */
+            hasPrev: boolean;
+        };
+        /**
+         * IDs of vouchers that were not found
+         */
+        notFound: Array<string>;
+    };
+};
+
+export type BulkGetInternalVouchersResponse = BulkGetInternalVouchersResponses[keyof BulkGetInternalVouchersResponses];
+
+export type ValidateInternalVoucherData = {
+    /**
+     * Validate voucher availability and constraints
+     */
+    body?: {
+        /**
+         * Universally Unique Identifier
+         */
+        voucherId: string;
+        /**
+         * User ID for user-specific validation
+         */
+        userId?: string;
+        /**
+         * Check if redemption limit reached
+         */
+        checkRedemptionLimit?: boolean;
+        /**
+         * Check if voucher is expired
+         */
+        checkExpiry?: boolean;
+        /**
+         * Check if voucher is in valid state
+         */
+        checkState?: boolean;
+    };
+    path?: never;
+    query?: never;
+    url: '/vouchers/validate';
+};
+
+export type ValidateInternalVoucherResponses = {
+    /**
+     * Voucher validation result
+     */
+    200: {
+        isValid: boolean;
+        /**
+         * Reason if validation failed
+         */
+        reason?: string;
+        /**
+         * Voucher details if valid
+         */
+        voucher?: {
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            /**
+             * Universally Unique Identifier
+             */
+            businessId: string;
+            /**
+             * Universally Unique Identifier
+             */
+            categoryId: string;
+            /**
+             * Current state of the voucher lifecycle
+             */
+            state: 'draft' | 'published' | 'claimed' | 'redeemed' | 'expired' | 'suspended';
+            /**
+             * Voucher title in requested language
+             */
+            title: string;
+            /**
+             * Voucher description in requested language
+             */
+            description: string;
+            /**
+             * Voucher terms and conditions in requested language
+             */
+            terms: string;
+            /**
+             * Type of discount the voucher provides
+             */
+            discountType: 'percentage' | 'fixed';
+            /**
+             * Decimal number with 2 decimal places
+             */
+            discountValue: number;
+            currency?: string;
+            /**
+             * Geographic location as GeoJSON Point
+             */
+            location: {
+                type: 'Point';
+                coordinates: [
+                    number,
+                    number
+                ];
+            } | null;
+            imageUrl: string | null;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            validFrom: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            expiresAt: string;
+            maxRedemptions: number | null;
+            maxRedemptionsPerUser?: number;
+            currentRedemptions?: number;
+            scanCount?: number;
+            claimCount?: number;
+            metadata: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            deletedAt: string | null;
+            /**
+             * Complete business object when ?include=business
+             */
+            business?: {
+                /**
+                 * Universally Unique Identifier
+                 */
+                id: string;
+                name: string;
+            };
+            /**
+             * Complete category object when ?include=category
+             */
+            category?: {
+                /**
+                 * Universally Unique Identifier
+                 */
+                id: string;
+                name: string;
+            };
+            /**
+             * Voucher codes when ?include=codes
+             */
+            codes?: Array<{
+                /**
+                 * Universally Unique Identifier
+                 */
+                id: string;
+                code: string;
+                /**
+                 * Type of voucher code
+                 */
+                type: 'qr' | 'short' | 'static';
+                isActive: boolean;
+                metadata: {
+                    [key: string]: unknown;
+                } | null;
+                /**
+                 * ISO 8601 datetime with timezone
+                 */
+                createdAt: string;
+                /**
+                 * ISO 8601 datetime with timezone
+                 */
+                updatedAt: string;
+            }>;
+            /**
+             * Redemption history when ?include=redemptions
+             */
+            redemptions?: Array<{
+                /**
+                 * Universally Unique Identifier
+                 */
+                id: string;
+                /**
+                 * Universally Unique Identifier
+                 */
+                userId: string;
+                codeUsed: string;
+                /**
+                 * ISO 8601 datetime with timezone
+                 */
+                redeemedAt: string;
+                metadata: {
+                    [key: string]: unknown;
+                } | null;
+                /**
+                 * ISO 8601 datetime with timezone
+                 */
+                createdAt: string;
+            }>;
+            /**
+             * Scan analytics when ?include=scans
+             */
+            scans?: Array<{
+                /**
+                 * Universally Unique Identifier
+                 */
+                id: string;
+                /**
+                 * Universally Unique Identifier
+                 */
+                userId: string | null;
+                /**
+                 * Type of voucher scan
+                 */
+                scanType: 'customer' | 'business';
+                /**
+                 * Source of the voucher scan
+                 */
+                scanSource: 'camera' | 'gallery' | 'link' | 'share';
+                /**
+                 * Geographic location as GeoJSON Point
+                 */
+                location: {
+                    type: 'Point';
+                    coordinates: [
+                        number,
+                        number
+                    ];
+                } | null;
+                deviceInfo: {
+                    [key: string]: unknown;
+                };
+                /**
+                 * ISO 8601 datetime with timezone
+                 */
+                scannedAt: string;
+                /**
+                 * ISO 8601 datetime with timezone
+                 */
+                createdAt: string;
+            }>;
+            /**
+             * Customer wallet entries when ?include=customerVouchers
+             */
+            customerVouchers?: Array<{
+                /**
+                 * Universally Unique Identifier
+                 */
+                id: string;
+                /**
+                 * Universally Unique Identifier
+                 */
+                customerId: string;
+                /**
+                 * ISO 8601 datetime with timezone
+                 */
+                claimedAt: string;
+                /**
+                 * Status of voucher from customer perspective
+                 */
+                status: 'claimed' | 'redeemed' | 'expired';
+                notificationPreferences: {
+                    [key: string]: unknown;
+                } | null;
+                /**
+                 * ISO 8601 datetime with timezone
+                 */
+                redeemedAt: string | null;
+                /**
+                 * ISO 8601 datetime with timezone
+                 */
+                createdAt: string;
+                /**
+                 * ISO 8601 datetime with timezone
+                 */
+                updatedAt: string;
+            }>;
+            isActive: boolean;
+            isExpired: boolean;
+            redemptionRate: number;
+            daysUntilExpiry: number | null;
+            /**
+             * When the record was created
+             */
+            createdAt: string;
+            /**
+             * When the record was last updated
+             */
+            updatedAt: string;
+        };
+    };
+};
+
+export type ValidateInternalVoucherResponse = ValidateInternalVoucherResponses[keyof ValidateInternalVoucherResponses];
+
+export type GetInternalServiceHealthData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/health';
+};
+
+export type GetInternalServiceHealthResponses = {
+    /**
+     * Service is healthy
+     */
+    200: {
+        status: 'healthy' | 'degraded' | 'unhealthy';
+        /**
+         * Service URL
+         */
+        url: string;
+        /**
+         * Response time in milliseconds
+         */
+        responseTime: number;
+    };
+};
+
+export type GetInternalServiceHealthResponse = GetInternalServiceHealthResponses[keyof GetInternalServiceHealthResponses];
+
+export type GetInternalServiceRegistryData = {
+    body?: never;
+    path?: never;
+    query?: {
+        serviceName?: string;
+        serviceType?: 'API_GATEWAY' | 'MICROSERVICE' | 'DATABASE' | 'CACHE' | 'QUEUE' | 'STORAGE' | 'MONITORING';
+        environment?: 'DEVELOPMENT' | 'STAGING' | 'PRODUCTION' | 'TEST';
+        status?: 'STARTING' | 'HEALTHY' | 'DEGRADED' | 'UNHEALTHY' | 'STOPPED';
+        region?: string;
+        tags?: Array<string>;
+        healthyOnly?: boolean;
+        includeMetrics?: boolean;
+    };
+    url: '/services/registry';
+};
+
+export type GetInternalServiceRegistryResponses = {
+    /**
+     * List of registered services
+     */
+    200: {
+        services: Array<{
+            /**
+             * Universally Unique Identifier
+             */
+            id: string;
+            serviceName: string;
+            serviceType: 'API_GATEWAY' | 'MICROSERVICE' | 'DATABASE' | 'CACHE' | 'QUEUE' | 'STORAGE' | 'MONITORING';
+            version: string;
+            instanceId: string;
+            endpoints: Array<{
+                protocol: 'http' | 'https' | 'tcp' | 'grpc';
+                host: string;
+                port: number;
+                path?: string;
+                healthCheckPath?: string;
+            }>;
+            environment: 'DEVELOPMENT' | 'STAGING' | 'PRODUCTION' | 'TEST';
+            region?: string;
+            availabilityZone?: string;
+            status: 'STARTING' | 'HEALTHY' | 'DEGRADED' | 'UNHEALTHY' | 'STOPPED';
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            lastHealthCheck?: string;
+            healthCheckUrl?: string;
+            metadata?: {
+                [key: string]: string;
+            };
+            tags?: Array<string>;
+            metrics?: {
+                cpuUsage?: number;
+                memoryUsage?: number;
+                diskUsage?: number;
+                requestCount?: number;
+                errorRate?: number;
+                responseTime?: number;
+            };
+            registeredBy?: string;
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            lastSeen: string;
+            ttl?: number;
+            /**
+             * When the record was created
+             */
+            createdAt: string;
+            /**
+             * When the record was last updated
+             */
+            updatedAt: string;
+        }>;
+        totalCount: number;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        lastUpdated: string;
+    };
+};
+
+export type GetInternalServiceRegistryResponse = GetInternalServiceRegistryResponses[keyof GetInternalServiceRegistryResponses];
+
+export type RegisterInternalServiceData = {
+    /**
+     * Register a service instance
+     */
+    body?: {
+        serviceName: string;
+        serviceType: 'API_GATEWAY' | 'MICROSERVICE' | 'DATABASE' | 'CACHE' | 'QUEUE' | 'STORAGE' | 'MONITORING';
+        version: string;
+        instanceId: string;
+        endpoints: Array<{
+            protocol: 'http' | 'https' | 'tcp' | 'grpc';
+            host: string;
+            port: number;
+            path?: string;
+            healthCheckPath?: string;
+        }>;
+        environment: 'DEVELOPMENT' | 'STAGING' | 'PRODUCTION' | 'TEST';
+        region?: string;
+        availabilityZone?: string;
+        healthCheckUrl?: string;
+        healthCheckInterval?: number;
+        metadata?: {
+            [key: string]: string;
+        };
+        tags?: Array<string>;
+        ttl?: number;
+        autoDeregister?: boolean;
+    };
+    path?: never;
+    query?: never;
+    url: '/services/register';
+};
+
+export type RegisterInternalServiceErrors = {
+    /**
+     * Standard error response
+     */
+    400: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type RegisterInternalServiceError = RegisterInternalServiceErrors[keyof RegisterInternalServiceErrors];
+
+export type RegisterInternalServiceResponses = {
+    /**
+     * Service registration confirmation
+     */
+    201: {
+        /**
+         * Universally Unique Identifier
+         */
+        instanceId: string;
+        serviceName: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        registeredAt: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        expiresAt: string;
+        healthCheckUrl?: string;
+    };
+};
+
+export type RegisterInternalServiceResponse = RegisterInternalServiceResponses[keyof RegisterInternalServiceResponses];
+
+export type DeregisterInternalServiceData = {
+    /**
+     * Deregister service instance
+     */
+    body?: {
+        reason?: 'SHUTDOWN' | 'MAINTENANCE' | 'ERROR' | 'SCALE_DOWN';
+        gracefulShutdown?: boolean;
+        drainConnections?: boolean;
+        drainTimeoutSeconds?: number;
+    };
+    path: {
+        instanceId: string;
+    };
+    query?: never;
+    url: '/services/{instanceId}/deregister';
+};
+
+export type DeregisterInternalServiceErrors = {
+    /**
+     * Standard error response
+     */
+    404: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type DeregisterInternalServiceError = DeregisterInternalServiceErrors[keyof DeregisterInternalServiceErrors];
+
+export type DeregisterInternalServiceResponses = {
+    /**
+     * Service deregistration confirmation
+     */
+    200: {
+        /**
+         * Universally Unique Identifier
+         */
+        instanceId: string;
+        serviceName: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        deregisteredAt: string;
+        gracefulShutdown: boolean;
+        message?: string;
+    };
+};
+
+export type DeregisterInternalServiceResponse = DeregisterInternalServiceResponses[keyof DeregisterInternalServiceResponses];
+
+export type GetInternalServiceEndpointsData = {
+    body?: never;
+    path: {
+        serviceName: string;
+    };
+    query?: {
+        environment?: 'DEVELOPMENT' | 'STAGING' | 'PRODUCTION' | 'TEST';
+        healthyOnly?: boolean;
+    };
+    url: '/services/{serviceName}/endpoints';
+};
+
+export type GetInternalServiceEndpointsErrors = {
+    /**
+     * Standard error response
+     */
+    404: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type GetInternalServiceEndpointsError = GetInternalServiceEndpointsErrors[keyof GetInternalServiceEndpointsErrors];
+
+export type GetInternalServiceEndpointsResponses = {
+    /**
+     * Available endpoints for a service
+     */
+    200: {
+        serviceName: string;
+        instances: Array<{
+            instanceId: string;
+            endpoints: Array<{
+                protocol: 'http' | 'https' | 'tcp' | 'grpc';
+                host: string;
+                port: number;
+                path?: string;
+                healthCheckPath?: string;
+            }>;
+            status: 'STARTING' | 'HEALTHY' | 'DEGRADED' | 'UNHEALTHY' | 'STOPPED';
+            /**
+             * ISO 8601 datetime with timezone
+             */
+            lastSeen: string;
+            loadBalanceWeight?: number;
+        }>;
+        loadBalancingStrategy?: 'ROUND_ROBIN' | 'LEAST_CONNECTIONS' | 'WEIGHTED';
+    };
+};
+
+export type GetInternalServiceEndpointsResponse = GetInternalServiceEndpointsResponses[keyof GetInternalServiceEndpointsResponses];
+
+export type GetInternalServiceConfigData = {
+    body?: never;
+    path: {
+        serviceName: string;
+    };
+    query?: {
+        environment?: 'DEVELOPMENT' | 'STAGING' | 'PRODUCTION' | 'TEST';
+        configKeys?: Array<string>;
+    };
+    url: '/config/{serviceName}';
+};
+
+export type GetInternalServiceConfigErrors = {
+    /**
+     * Standard error response
+     */
+    404: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type GetInternalServiceConfigError = GetInternalServiceConfigErrors[keyof GetInternalServiceConfigErrors];
+
+export type GetInternalServiceConfigResponses = {
+    /**
+     * Service configuration data
+     */
+    200: {
+        serviceName: string;
+        environment: 'DEVELOPMENT' | 'STAGING' | 'PRODUCTION' | 'TEST';
+        configuration: {
+            [key: string]: unknown;
+        };
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        lastUpdated: string;
+        version: string;
+    };
+};
+
+export type GetInternalServiceConfigResponse = GetInternalServiceConfigResponses[keyof GetInternalServiceConfigResponses];
+
+export type ValidateInternalTokenData = {
+    /**
+     * Validate JWT token
+     */
+    body?: {
+        token: string;
+        checkExpiry?: boolean;
+        requiredRoles?: Array<string>;
+    };
+    path?: never;
+    query?: never;
+    url: '/auth/validate-token';
+};
+
+export type ValidateInternalTokenResponses = {
+    /**
+     * Token validation result
+     */
+    200: {
+        valid: boolean;
+        userId?: string;
+        email?: string;
+        roles: Array<string>;
+        permissions: Array<string>;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        expiresAt?: string;
+        metadata?: {
+            [key: string]: unknown;
+        };
+    };
+};
+
+export type ValidateInternalTokenResponse = ValidateInternalTokenResponses[keyof ValidateInternalTokenResponses];
+
+export type GetInternalUserByEmailData = {
+    /**
+     * Get user by email
+     */
+    body?: {
+        email: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/auth/user-by-email';
+};
+
+export type GetInternalUserByEmailErrors = {
+    /**
+     * Standard error response
+     */
+    404: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type GetInternalUserByEmailError = GetInternalUserByEmailErrors[keyof GetInternalUserByEmailErrors];
+
+export type GetInternalUserByEmailResponses = {
+    /**
+     * Auth user details
+     */
+    200: {
+        id: string;
+        email: string;
+        emailVerified: boolean;
+        roles: Array<string>;
+        active: boolean;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        lastLoginAt?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        createdAt: string;
+    };
+};
+
+export type GetInternalUserByEmailResponse = GetInternalUserByEmailResponses[keyof GetInternalUserByEmailResponses];
+
+export type SendInternalSystemNotificationData = {
+    /**
+     * Send system notification
+     */
+    body?: {
+        userIds?: Array<string>;
+        /**
+         * Send to all users
+         */
+        broadcast?: boolean;
+        title: string;
+        message: string;
+        category: 'system' | 'security' | 'billing' | 'marketing';
+        priority?: 'low' | 'normal' | 'high' | 'urgent';
+        channels?: Array<'email' | 'inApp' | 'sms' | 'push'>;
+        templateId?: string;
+        templateVariables?: {
+            [key: string]: unknown;
+        };
+        actionUrl?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        expiresAt?: string;
+        metadata?: {
+            [key: string]: unknown;
+        };
+    };
+    path?: never;
+    query?: never;
+    url: '/notifications/system';
+};
+
+export type SendInternalSystemNotificationResponses = {
+    /**
+     * System notification result
+     */
+    201: {
+        /**
+         * Universally Unique Identifier
+         */
+        notificationId: string;
+        recipientCount: number;
+        channels: {
+            [key: string]: {
+                sent: number;
+                failed: number;
+            };
+        };
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp: string;
+    };
+};
+
+export type SendInternalSystemNotificationResponse = SendInternalSystemNotificationResponses[keyof SendInternalSystemNotificationResponses];
+
+export type SendInternalTransactionalEmailData = {
+    /**
+     * Send transactional email
+     */
+    body?: {
+        userId: string;
+        templateKey: 'welcome' | 'passwordReset' | 'emailVerification' | 'paymentSuccess' | 'paymentFailed' | 'subscriptionActivated' | 'subscriptionCancelled';
+        variables: {
+            [key: string]: unknown;
+        };
+        /**
+         * Override template subject
+         */
+        subject?: string;
+        replyTo?: string;
+        attachments?: Array<{
+            filename: string;
+            /**
+             * Base64 encoded
+             */
+            content: string;
+            contentType: string;
+        }>;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        sendAt?: string;
+        trackOpens?: boolean;
+        trackClicks?: boolean;
+    };
+    path?: never;
+    query?: never;
+    url: '/emails/transactional';
+};
+
+export type SendInternalTransactionalEmailResponses = {
+    /**
+     * Transactional email result
+     */
+    200: {
+        messageId: string;
+        status: 'queued' | 'sent' | 'delivered' | 'failed' | 'bounced' | 'complained' | 'rejected';
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        scheduledAt?: string;
+        errorMessage?: string;
+    };
+};
+
+export type SendInternalTransactionalEmailResponse = SendInternalTransactionalEmailResponses[keyof SendInternalTransactionalEmailResponses];
+
+export type GetInternalUserByIdData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/users/{id}';
+};
+
+export type GetInternalUserByIdErrors = {
+    /**
+     * Standard error response
+     */
+    404: {
+        statusCode: number;
+        error: string;
+        message: string;
+        details?: Array<{
+            field: string;
+            message: string;
+            code?: string;
+        }>;
+        /**
+         * Request correlation ID
+         */
+        correlationId?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        timestamp?: string;
+    };
+};
+
+export type GetInternalUserByIdError = GetInternalUserByIdErrors[keyof GetInternalUserByIdErrors];
+
+export type GetInternalUserByIdResponses = {
+    /**
+     * Internal user data for services
+     */
+    200: {
+        id: string;
+        email: string;
+        firstName: string;
+        lastName: string;
+        phoneNumber?: string;
+        isActive: boolean;
+        isVerified: boolean;
+        /**
+         * User role in the system
+         */
+        role: 'admin' | 'customer' | 'business';
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        createdAt: string;
+        canMakePayments?: boolean;
+        canBookSessions?: boolean;
+        hasValidSubscription?: boolean;
+        stripeCustomerId?: string;
+        language?: string;
+        timezone?: string;
+        notificationPreferences: {
+            email?: boolean;
+            push?: boolean;
+            sms?: boolean;
+        };
+    };
+};
+
+export type GetInternalUserByIdResponse = GetInternalUserByIdResponses[keyof GetInternalUserByIdResponses];
+
+export type BatchGetInternalUsersData = {
+    /**
+     * Get multiple users by ID
+     */
+    body?: {
+        userIds: Array<string>;
+        /**
+         * Specific fields to return
+         */
+        fields?: Array<string>;
+    };
+    path?: never;
+    query?: never;
+    url: '/users/batch';
+};
+
+export type BatchGetInternalUsersResponses = {
+    /**
+     * User list
+     */
+    200: Array<{
+        id: string;
+        email: string;
+        firstName: string;
+        lastName: string;
+        phoneNumber?: string;
+        isActive: boolean;
+        isVerified: boolean;
+        /**
+         * User role in the system
+         */
+        role: 'admin' | 'customer' | 'business';
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        createdAt: string;
+        canMakePayments?: boolean;
+        canBookSessions?: boolean;
+        hasValidSubscription?: boolean;
+        stripeCustomerId?: string;
+        language?: string;
+        timezone?: string;
+        notificationPreferences: {
+            email?: boolean;
+            push?: boolean;
+            sms?: boolean;
+        };
+    }>;
+};
+
+export type BatchGetInternalUsersResponse = BatchGetInternalUsersResponses[keyof BatchGetInternalUsersResponses];
+
+export type UpdateInternalUserMembershipData = {
+    /**
+     * Update subscription from payment service
+     */
+    body?: {
+        stripeSubscriptionId: string;
+        /**
+         * Subscription status
+         */
+        status: 'active' | 'canceled' | 'incomplete' | 'incompleteExpired' | 'pastDue' | 'trialing' | 'unpaid';
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        currentPeriodStart?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        currentPeriodEnd?: string;
+        /**
+         * ISO 8601 datetime with timezone
+         */
+        canceledAt?: string;
+        cancelAtPeriodEnd?: boolean;
+        metadata?: {
+            [key: string]: unknown;
+        };
+    };
+    path?: never;
+    query?: never;
+    url: '/subscriptions/user-membership';
+};
+
+export type UpdateInternalUserMembershipResponses = {
+    /**
+     * Membership updated
+     */
+    200: MessageResponse;
+};
+
+export type UpdateInternalUserMembershipResponse = UpdateInternalUserMembershipResponses[keyof UpdateInternalUserMembershipResponses];
+
+export type CreateInternalSubscriptionFromStripeData = {
+    /**
+     * Get subscription by Stripe ID
+     */
+    body?: {
+        stripeSubscriptionId: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/subscriptions/from-stripe';
+};
+
+export type CreateInternalSubscriptionFromStripeResponses = {
+    /**
+     * Subscription created
+     */
+    201: {
+        id: string;
+        status: string;
+    };
+};
+
+export type CreateInternalSubscriptionFromStripeResponse = CreateInternalSubscriptionFromStripeResponses[keyof CreateInternalSubscriptionFromStripeResponses];
+
+export type UpdateInternalSubscriptionStatusData = {
+    /**
+     * Process subscription webhook event
+     */
+    body?: {
+        event: {
+            /**
+             * Subscription event type for webhooks and notifications
+             */
+            type: 'customer.subscription.created' | 'customer.subscription.updated' | 'customer.subscription.deleted' | 'customer.subscription.trial_will_end' | 'invoice.payment_failed' | 'invoice.payment_succeeded' | 'created' | 'cancelled' | 'paymentFailed' | 'creditsAllocated' | 'renewalReminder' | 'trialEnding';
+            data: {
+                object?: unknown;
+            };
+            created: number;
+        };
+        stripeSignature?: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/subscriptions/status';
+};
+
+export type UpdateInternalSubscriptionStatusResponses = {
+    /**
+     * Status updated
+     */
+    200: MessageResponse;
+};
+
+export type UpdateInternalSubscriptionStatusResponse = UpdateInternalSubscriptionStatusResponses[keyof UpdateInternalSubscriptionStatusResponses];
+
 export type ClientOptions = {
-    baseUrl: 'http://localhost:5500/api/v1' | 'https://api.pika.com/v1' | 'https://api.staging.pikaom/v1' | (string & {});
+    baseUrl: 'http://localhost:5500/api/v1' | 'http://0.0.0.0:5502' | 'http://0.0.0.0:5501' | 'http://0.0.0.0:5506' | 'http://0.0.0.0:5507' | 'http://0.0.0.0:5510' | 'http://0.0.0.0:5505' | 'http://0.0.0.0:5508' | (string & {});
 };

@@ -14,32 +14,36 @@ A modern, enterprise-grade business management dashboard built with Next.js 15, 
 
 ## 📊 Code Quality Metrics
 
-| Metric | Score | Status |
-|--------|-------|--------|
-| TypeScript Coverage | 99.55% | ✅ Excellent |
-| Circular Dependencies | 0 | ✅ Perfect |
-| Code Duplication | 0% | ✅ Perfect |
-| Bundle Size | Optimized | ✅ Tree-shaken |
-| Accessibility | WCAG 2.1 AA | ✅ Compliant |
+| Metric                | Score       | Status         |
+| --------------------- | ----------- | -------------- |
+| TypeScript Coverage   | 99.55%      | ✅ Excellent   |
+| Circular Dependencies | 0           | ✅ Perfect     |
+| Code Duplication      | 0%          | ✅ Perfect     |
+| Bundle Size           | Optimized   | ✅ Tree-shaken |
+| Accessibility         | WCAG 2.1 AA | ✅ Compliant   |
 
 ## 🛠️ Technology Stack
 
 ### Core
+
 - **Next.js 15.4.4** - React framework with App Router
 - **React 19.1.1** - Latest React with concurrent features
 - **TypeScript 5.8.3** - Type-safe development
 
 ### UI/UX
+
 - **Ant Design 5.26.6** - Enterprise component library
 - **Tailwind CSS 3.4.18** - Utility-first styling
 - **Lucide React** - Modern icon library
 
 ### State Management
+
 - **Zustand 5.0.6** - Lightweight state management
 - **TanStack Query** - Server state management
 - **React Hook Form 7.61.1** - Performant forms
 
 ### Code Quality
+
 - **ESLint 9.32.0** - Code linting
 - **Prettier 3.6.2** - Code formatting
 - **Vitest** - Unit testing framework
@@ -119,6 +123,7 @@ npm run quality:all
 ## 📋 Available Scripts
 
 ### Development
+
 ```bash
 npm run dev          # Start dev server with Turbopack
 npm run build        # Build for production
@@ -126,6 +131,7 @@ npm start           # Start production server
 ```
 
 ### Code Quality
+
 ```bash
 npm run check       # Run all checks (type, format, lint)
 npm run check:fix   # Fix all auto-fixable issues
@@ -135,6 +141,7 @@ npm run typecheck   # Run TypeScript compiler
 ```
 
 ### Quality Analysis
+
 ```bash
 npm run quality:all          # Run all quality checks
 npm run quality:type-coverage # Analyze type coverage
@@ -145,6 +152,7 @@ npm run quality:bundle       # Analyze bundle size
 ```
 
 ### Testing
+
 ```bash
 npm test                # Run unit tests
 npm run test:coverage   # Run tests with coverage
@@ -153,6 +161,7 @@ npm run test:e2e        # Run E2E tests
 ```
 
 ### Pre-commit
+
 ```bash
 npm run pre-commit  # Run before committing
 npm run validate    # Quick validation
@@ -176,7 +185,7 @@ import { api } from '@/lib/api/client'
 
 const { data, isLoading } = useQuery({
   queryKey: ['vouchers'],
-  queryFn: () => api.vouchers.getVouchers()
+  queryFn: () => api.vouchers.getVouchers(),
 })
 ```
 
@@ -202,6 +211,7 @@ const { data, mutate } = useVouchers()
 ## 🌍 Internationalization
 
 Supports three languages:
+
 - 🇪🇸 Spanish (default)
 - 🇬🇧 English
 - 🇵🇾 Guaraní
@@ -265,6 +275,7 @@ This project is proprietary software. All rights reserved.
 ## 🙏 Acknowledgments
 
 Built with ❤️ using:
+
 - [Next.js](https://nextjs.org/)
 - [React](https://react.dev/)
 - [Ant Design](https://ant.design/)
