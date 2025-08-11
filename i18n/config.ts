@@ -1,5 +1,4 @@
 import { SupportedLanguage, type LanguageCode } from '@merodami/pika-types'
-import { includes } from 'lodash-es'
 
 export const locales = Object.values(SupportedLanguage)
 export type Locale = LanguageCode
@@ -45,5 +44,5 @@ export function getLocaleConfig(locale: Locale) {
 
 // Check if a string is a valid locale
 export function isValidLocale(locale: string): locale is Locale {
-  return includes(locales, locale)
+  return locales.includes(locale as Locale)
 }

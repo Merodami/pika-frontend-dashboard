@@ -14,7 +14,7 @@
     "url": "https://github.com/Merodami/pika-frontend-dashboard/issues"
   },
   "scripts": {
-    "install:deps": "npx dotenv-cli -e .env -- yarn",
+    "install:deps": "npx dotenv-cli -e .env -- npm install",
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
@@ -39,7 +39,8 @@
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
     "test:e2e": "playwright test",
-    "generate:api": "openapi-ts -f hey-api.config.ts",
+    "generate:api": "orval --config orval.config.ts",
+    "update:deps": "npx dotenv-cli -e .env -- npm install @merodami/pika-api@latest @merodami/pika-types@latest",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -48,8 +49,8 @@
     "@ant-design/nextjs-registry": "^1.1.0",
     "@ant-design/v5-patch-for-react-19": "^1.0.3",
     "@hookform/resolvers": "^5.2.1",
-    "@merodami/pika-api": "^1.1.2",
-    "@merodami/pika-types": "^1.1.2",
+    "@merodami/pika-api": "^1.1.10",
+    "@merodami/pika-types": "^1.1.10",
     "@tailwindcss/postcss": "^4.1.11",
     "@tanstack/react-query": "^5.84.2",
     "@tanstack/react-query-devtools": "^5.84.2",
@@ -73,12 +74,10 @@
     "server-only": "^0.0.1",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.3.1",
-    "zod": "^4.0.15",
+    "zod": "^4.0.16",
     "zustand": "^5.0.7"
   },
   "devDependencies": {
-    "@hey-api/client-axios": "^0.9.1",
-    "@hey-api/openapi-ts": "^0.80.5",
     "@next/bundle-analyzer": "^15.4.6",
     "@playwright/test": "^1.54.2",
     "@types/form-data": "^2.5.2",
@@ -101,6 +100,7 @@
     "knip": "^5.62.0",
     "lint-staged": "^16.1.5",
     "madge": "^8.0.0",
+    "orval": "^7.11.2",
     "prettier": "^3.6.2",
     "tailwindcss": "^4.1.11",
     "type-coverage": "^2.29.7",
@@ -115,6 +115,5 @@
     "*.{json,md,yml,yaml,css,scss}": [
       "prettier --write"
     ]
-  },
-  "packageManager": "yarn@4.9.1+sha512.f95ce356460e05be48d66401c1ae64ef84d163dd689964962c6888a9810865e39097a5e9de748876c2e0bf89b232d583c33982773e9903ae7a76257270986538"
+  }
 }

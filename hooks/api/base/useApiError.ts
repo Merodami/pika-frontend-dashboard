@@ -1,7 +1,6 @@
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
-import { ApiError } from '@/lib/api/generated'
 import { useAuthStore } from '@/store/authStore'
 
 /**
@@ -13,20 +12,31 @@ export function useApiError() {
   const logout = useAuthStore((state) => state.logout)
 
   return (error: unknown) => {
-    // Handle ApiError instances from generated SDK
-    if (error instanceof ApiError) {
-      const status = error.status
-      const body = error.body as {
+    // Handle hey-api error responses
+    if (error && typeof error === 'object' && 'response' in error) {
+      const response = (error as any).response
+      const status = response?.status
+      const body = response?.data as {
         message?: string
         details?: Array<{ field: string; message: string }>
       }
 
       // Our backend returns errors in this format:
       // { statusCode: number, error: string, message: string, details?: Array }
-      const errorMessage = body?.message || error.message || 'An error occurred'
+      const errorMessage = body?.message || 'An error occurred'
       const details = body?.details
 
-      handleSpecificError(status, errorMessage, details)
+      if (status) {
+        handleSpecificError(status, errorMessage, details)
+        return
+      }
+    }
+    
+    // Handle error objects with status and message
+    if (error && typeof error === 'object' && 'status' in error) {
+      const err = error as any
+      const errorMessage = err.message || err.statusText || 'An error occurred'
+      handleSpecificError(err.status, errorMessage)
       return
     }
 

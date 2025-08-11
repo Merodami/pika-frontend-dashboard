@@ -12,6 +12,15 @@ const nextConfig: NextConfig = {
       '@ant-design/nextjs-registry',
     ],
   },
+  webpack: (config) => {
+    // Create aliases for old package names to new ones
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@pika/types': '@merodami/pika-types',
+      '@pika/api': '@merodami/pika-api',
+    }
+    return config
+  },
 }
 
 export default withNextIntl(nextConfig)

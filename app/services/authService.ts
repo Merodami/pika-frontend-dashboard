@@ -3,8 +3,7 @@ import 'server-only'
 import { UserRole, type UserRoleType } from '@merodami/pika-types'
 import { cache } from 'react'
 
-import { UsersService } from '@/lib/api/generated'
-import { configureApiClient } from '@/lib/api/serverClient'
+import { getUserProfile } from '@/lib/api/orval-client'
 import {
   clearTokens,
   getAccessToken,
@@ -32,19 +31,17 @@ export const getCurrentUser = cache(async (): Promise<User | null> => {
 
     if (!token) return null
 
-    // Configure API client with the token
-    await configureApiClient()
-
-    const response = await UsersService.getUserProfile()
+    // With Orval, directly call the function - token is handled by interceptor
+    const userData = await getUserProfile()
 
     return {
-      id: response.id,
-      email: response.email,
-      firstName: response.firstName,
-      lastName: response.lastName,
-      role: response.role as UserRoleType,
-      createdAt: response.createdAt,
-      updatedAt: response.updatedAt,
+      id: userData.id,
+      email: userData.email,
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+      role: userData.role as UserRoleType,
+      createdAt: userData.createdAt,
+      updatedAt: userData.updatedAt,
     }
   } catch (error) {
     return null

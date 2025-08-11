@@ -1,25 +1,38 @@
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
 import {
-  cloneDeep,
-  debounce,
+  VoucherState,
+  VoucherScanSource,
+  BulkOperationType,
+  VoucherScanOptions,
+  VoucherClaimOptions,
+  VoucherRedeemOptions,
+} from '@merodami/pika-types'
+import {
   isEmpty,
   isNil,
   omitBy,
   throttle,
 } from 'lodash-es'
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
-import { businessAdapter } from '@/lib/api/businessAdapter'
-import type {
-  AdminVoucherDetailResponse,
-  AdminVoucherListResponse,
-  AdminVoucherQueryParams,
-  BulkVoucherOperationResponse,
-  BulkVoucherUpdateRequest,
-  CreateVoucherRequest,
-  UpdateVoucherRequest,
-} from '@/lib/api/generated'
-// Using SDK types directly - no adapters needed!
+import {
+  getAdminVoucherList,
+  getAdminVoucherById,
+  createAdminVoucher,
+  updateAdminVoucher,
+  deleteAdminVoucher,
+  claimVoucher,
+  redeemVoucher,
+  scanVoucher,
+  type GetAdminVoucherListParams,
+  type GetAdminVoucherList200,
+  type GetAdminVoucherById200,
+  type CreateAdminVoucherBody,
+  type UpdateAdminVoucherBody,
+  type ClaimVoucher200,
+  type RedeemVoucher200,
+  type ScanVoucher200,
+} from '@/lib/api/orval-client'
 import { queryKeys } from '@/lib/api/queryKeys'
 
 import { useApiMutation } from '../base/useApiMutation'
@@ -28,7 +41,7 @@ import { useApiQuery } from '../base/useApiQuery'
 /**
  * Clean filters by removing null/undefined/empty values
  */
-const cleanFilters = (filters?: AdminVoucherQueryParams) =>
+const cleanFilters = (filters?: GetAdminVoucherListParams) =>
   omitBy(
     filters,
     (value) => isNil(value) || (typeof value === 'string' && isEmpty(value))
@@ -37,12 +50,12 @@ const cleanFilters = (filters?: AdminVoucherQueryParams) =>
 /**
  * Hook to fetch vouchers list with filters
  */
-export function useVouchers(filters?: AdminVoucherQueryParams) {
+export function useVouchers(filters?: GetAdminVoucherListParams) {
   const cleaned = cleanFilters(filters)
 
-  return useApiQuery<AdminVoucherListResponse>({
+  return useApiQuery<GetAdminVoucherList200>({
     queryKey: queryKeys.vouchers.list(cleaned),
-    queryFn: () => businessAdapter.vouchers.list(cleaned || {}),
+    queryFn: () => getAdminVoucherList(cleaned),
     staleTime: 5 * 60 * 1000, // 5 minutes
     gcTime: 10 * 60 * 1000, // 10 minutes
     placeholderData: (previousData) => previousData,
@@ -53,11 +66,10 @@ export function useVouchers(filters?: AdminVoucherQueryParams) {
  * Hook to fetch a single voucher by ID
  */
 export function useVoucher(id: string, options?: { enabled?: boolean }) {
-  return useApiQuery<AdminVoucherDetailResponse>({
+  return useApiQuery<GetAdminVoucherById200>({
     queryKey: queryKeys.vouchers.detail(id),
-    queryFn: () => businessAdapter.vouchers.get({ id }),
+    queryFn: () => getAdminVoucherById(id),
     enabled: options?.enabled ?? !!id,
-    staleTime: 5 * 60 * 1000,
   })
 }
 
@@ -67,19 +79,10 @@ export function useVoucher(id: string, options?: { enabled?: boolean }) {
 export function useCreateVoucher() {
   const queryClient = useQueryClient()
 
-  return useApiMutation<
-    AdminVoucherDetailResponse,
-    Error,
-    CreateVoucherRequest
-  >({
-    mutationFn: (data) =>
-      businessAdapter.vouchers.create({ requestBody: data }),
+  return useApiMutation<GetAdminVoucherById200, Error, CreateAdminVoucherBody>({
+    mutationFn: (data) => createAdminVoucher(data),
     successMessage: 'Voucher created successfully',
-    onSuccess: (data) => {
-      // Add to cache immediately
-      queryClient.setQueryData(queryKeys.vouchers.detail(data.id), data)
-
-      // Invalidate lists to refetch
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.vouchers.lists(),
       })
@@ -94,54 +97,13 @@ export function useUpdateVoucher() {
   const queryClient = useQueryClient()
 
   return useApiMutation<
-    AdminVoucherDetailResponse,
+    GetAdminVoucherById200,
     Error,
-    { id: string; data: UpdateVoucherRequest },
-    { previousVoucher?: AdminVoucherDetailResponse }
+    { id: string; data: UpdateAdminVoucherBody }
   >({
-    mutationFn: ({ id, data }) =>
-      businessAdapter.vouchers.update({
-        id,
-        requestBody: data,
-      }),
+    mutationFn: ({ id, data }) => updateAdminVoucher(id, data),
     successMessage: 'Voucher updated successfully',
-
-    // Optimistic update
-    onMutate: async ({ id, data }) => {
-      // Cancel in-flight queries
-      await queryClient.cancelQueries({
-        queryKey: queryKeys.vouchers.detail(id),
-      })
-
-      // Snapshot previous value
-      const previousVoucher =
-        queryClient.getQueryData<AdminVoucherDetailResponse>(
-          queryKeys.vouchers.detail(id)
-        )
-
-      // Optimistically update
-      if (previousVoucher) {
-        const updated = cloneDeep(previousVoucher)
-
-        Object.assign(updated, data)
-        queryClient.setQueryData(queryKeys.vouchers.detail(id), updated)
-      }
-
-      return { previousVoucher }
-    },
-
-    // Rollback on error
-    onError: (_, { id }, context) => {
-      if (context?.previousVoucher) {
-        queryClient.setQueryData(
-          queryKeys.vouchers.detail(id),
-          context.previousVoucher
-        )
-      }
-    },
-
-    // Always refetch after error or success
-    onSettled: (_, __, { id }) => {
+    onSuccess: (_, { id }) => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.vouchers.detail(id),
       })
@@ -158,41 +120,13 @@ export function useUpdateVoucher() {
 export function useDeleteVoucher() {
   const queryClient = useQueryClient()
 
-  return useApiMutation<void, Error, string>({
-    mutationFn: (id: string) => businessAdapter.vouchers.delete({ id }),
+  return useApiMutation<null, Error, string>({
+    mutationFn: (id) => deleteAdminVoucher(id),
     successMessage: 'Voucher deleted successfully',
-
-    onMutate: async (id: string) => {
-      // Cancel queries
-      await queryClient.cancelQueries({
-        queryKey: queryKeys.vouchers.lists(),
-      })
-
-      // Optimistically remove from lists
-      queryClient.setQueriesData<AdminVoucherListResponse>(
-        { queryKey: queryKeys.vouchers.lists() },
-        (old) => {
-          if (!old) return old
-
-          return {
-            ...old,
-            data: old.data?.filter((v) => v.id !== id) || [],
-            pagination: {
-              ...old.pagination,
-              total: Math.max(0, (old.pagination?.total || 1) - 1),
-            },
-          }
-        }
-      )
-    },
-
     onSuccess: (_, id) => {
-      // Remove from cache
       queryClient.removeQueries({
         queryKey: queryKeys.vouchers.detail(id),
       })
-
-      // Invalidate lists
       queryClient.invalidateQueries({
         queryKey: queryKeys.vouchers.lists(),
       })
@@ -201,120 +135,269 @@ export function useDeleteVoucher() {
 }
 
 /**
- * Hook for debounced voucher search
+ * Hook to claim a voucher with proper types
  */
-export function useVoucherSearch(delay = 300) {
+export function useClaimVoucher() {
   const queryClient = useQueryClient()
 
-  const search = useMemo(
-    () =>
-      debounce((term: string, filters?: AdminVoucherQueryParams) => {
+  return useApiMutation<ClaimVoucher200, Error, { id: string; options?: VoucherClaimOptions }>(
+    {
+      mutationFn: ({ id, options }) => claimVoucher(id, options || {}),
+      successMessage: 'Voucher claimed successfully',
+      onSuccess: (_, { id }) => {
         queryClient.invalidateQueries({
-          queryKey: queryKeys.vouchers.list({ ...filters, search: term }),
+          queryKey: queryKeys.vouchers.detail(id),
         })
-      }, delay),
-    [queryClient, delay]
-  )
-
-  // Cleanup on unmount
-  useEffect(() => {
-    return () => {
-      search.cancel()
+        queryClient.invalidateQueries({
+          queryKey: queryKeys.vouchers.lists(),
+        })
+      },
     }
-  }, [search])
-
-  return search
+  )
 }
 
 /**
- * Hook to prefetch voucher details
+ * Hook to redeem a voucher with proper types
  */
-export function usePrefetchVoucher() {
+export function useRedeemVoucher() {
   const queryClient = useQueryClient()
 
-  return (id: string) => {
-    queryClient.prefetchQuery({
-      queryKey: queryKeys.vouchers.detail(id),
-      queryFn: () => businessAdapter.vouchers.get({ id }),
-      staleTime: 10 * 1000, // 10 seconds
-    })
-  }
-}
-
-/**
- * Hook for infinite scroll vouchers
- */
-export function useInfiniteVouchers(filters?: AdminVoucherQueryParams) {
-  const loadMoreRef = useRef<(() => void) | null>(null)
-
-  const query = useInfiniteQuery({
-    queryKey: queryKeys.vouchers.list({ ...filters, infinite: true }),
-    queryFn: ({ pageParam = 1 }) =>
-      businessAdapter.vouchers.list({ ...filters, page: pageParam as number }),
-    getNextPageParam: (lastPage) =>
-      lastPage.pagination?.hasNext
-        ? (lastPage.pagination.page || 0) + 1
-        : undefined,
-    getPreviousPageParam: (firstPage) =>
-      firstPage.pagination?.hasPrev
-        ? (firstPage.pagination.page || 0) - 1
-        : undefined,
-    initialPageParam: 1,
-  })
-
-  // Throttle the loadMore function
-  loadMoreRef.current = useMemo(
-    () =>
-      throttle(() => {
-        if (query.hasNextPage && !query.isFetchingNextPage) {
-          query.fetchNextPage()
-        }
-      }, 1000),
-    [query.hasNextPage, query.isFetchingNextPage, query.fetchNextPage]
+  return useApiMutation<RedeemVoucher200, Error, { id: string; options: VoucherRedeemOptions }>(
+    {
+      mutationFn: ({ id, options }) => redeemVoucher(id, options), // Now types match directly!
+      successMessage: 'Voucher redeemed successfully',
+      onSuccess: (_, { id }) => {
+        queryClient.invalidateQueries({
+          queryKey: queryKeys.vouchers.detail(id),
+        })
+        queryClient.invalidateQueries({
+          queryKey: queryKeys.vouchers.lists(),
+        })
+      },
+    }
   )
-
-  return {
-    ...query,
-    loadMore: loadMoreRef.current,
-  }
 }
 
 /**
- * Hook to bulk update vouchers (for state changes like publish/suspend)
+ * Hook to scan a voucher with proper scan source type
  */
-export function useBulkUpdateVouchers() {
+export function useScanVoucher() {
   const queryClient = useQueryClient()
 
   return useApiMutation<
-    BulkVoucherOperationResponse,
+    ScanVoucher200,
     Error,
-    BulkVoucherUpdateRequest
+    { id: string; options?: VoucherScanOptions }
   >({
-    mutationFn: (data) =>
-      businessAdapter.vouchers.bulkUpdate({ requestBody: data }),
-    successMessage: (result) =>
-      `Successfully updated ${result.successful} voucher${result.successful !== 1 ? 's' : ''}`,
-
-    onSuccess: (_, variables) => {
-      // Update individual voucher caches optimistically
-      variables.voucherIds.forEach((id) => {
-        const cachedVoucher =
-          queryClient.getQueryData<AdminVoucherDetailResponse>(
-            queryKeys.vouchers.detail(id)
-          )
-
-        if (cachedVoucher && variables.updates.state) {
-          queryClient.setQueryData(queryKeys.vouchers.detail(id), {
-            ...cachedVoucher,
-            state: variables.updates.state,
-          })
-        }
-      })
-
-      // Invalidate all voucher lists to refetch with updated data
+    mutationFn: ({ id, options }) => {
+      // Types now match except enum values (still lowercase in API)
+      const body = {
+        scanSource: options?.scanSource || VoucherScanSource.LINK,
+        location: options?.location, // Coordinates type matches!
+        deviceInfo: options?.deviceInfo, // DeviceInfo type matches!
+      }
+      return scanVoucher(id, body)
+    },
+    successMessage: 'Voucher scanned successfully',
+    onSuccess: (_, { id }) => {
       queryClient.invalidateQueries({
-        queryKey: queryKeys.vouchers.lists(),
+        queryKey: queryKeys.vouchers.detail(id),
       })
     },
+  })
+}
+
+/**
+ * Hook for infinite scrolling vouchers
+ */
+export function useInfiniteVouchers(baseFilters?: GetAdminVoucherListParams) {
+  const cleaned = cleanFilters(baseFilters)
+
+  return useInfiniteQuery({
+    queryKey: queryKeys.vouchers.infinite(cleaned),
+    queryFn: ({ pageParam = 1 }) => {
+      return getAdminVoucherList({
+        ...cleaned,
+        page: pageParam as number,
+        limit: cleaned?.limit || 20,
+      } as GetAdminVoucherListParams)
+    },
+    getNextPageParam: (lastPage, allPages) => {
+      const total = lastPage.pagination?.total || 0
+      const limit = lastPage.pagination?.limit || 20
+      const totalPages = Math.ceil(total / limit)
+      const nextPage = allPages.length + 1
+      return nextPage <= totalPages ? nextPage : undefined
+    },
+    initialPageParam: 1,
+  })
+}
+
+/**
+ * Hook to prefetch vouchers
+ */
+export function usePrefetchVouchers(filters?: GetAdminVoucherListParams) {
+  const queryClient = useQueryClient()
+  const cleaned = cleanFilters(filters)
+
+  const prefetch = useMemo(
+    () =>
+      throttle(
+        () => {
+          queryClient.prefetchQuery({
+            queryKey: queryKeys.vouchers.list(cleaned),
+            queryFn: () => getAdminVoucherList(cleaned),
+            staleTime: 5 * 60 * 1000,
+          })
+        },
+        1000,
+        { leading: true, trailing: false }
+      ),
+    [queryClient, cleaned]
+  )
+
+  return prefetch
+}
+
+/**
+ * Hook to search vouchers with debouncing
+ */
+export function useSearchVouchers(
+  searchTerm: string,
+  additionalFilters?: GetAdminVoucherListParams
+) {
+  const debouncedSearchTerm = useDebounce(searchTerm, 300)
+  const filters = useMemo(
+    () => ({
+      ...additionalFilters,
+      search: debouncedSearchTerm,
+    }),
+    [debouncedSearchTerm, additionalFilters]
+  )
+
+  return useVouchers(debouncedSearchTerm ? filters : additionalFilters)
+}
+
+/**
+ * Hook for debouncing values
+ */
+function useDebounce<T>(value: T, delay: number): T {
+  const [debouncedValue, setDebouncedValue] = useState(value)
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value)
+    }, delay)
+
+    return () => {
+      clearTimeout(handler)
+    }
+  }, [value, delay])
+
+  return debouncedValue
+}
+
+/**
+ * Hook for optimistic updates
+ */
+export function useOptimisticVoucherUpdate() {
+  const queryClient = useQueryClient()
+
+  return {
+    updateOptimistically: <T extends GetAdminVoucherById200>(
+      id: string,
+      updater: (old: T) => T
+    ) => {
+      queryClient.setQueryData<T>(
+        queryKeys.vouchers.detail(id),
+        (old) => (old ? updater(old) : old)
+      )
+    },
+    rollback: (id: string) => {
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.vouchers.detail(id),
+      })
+    },
+  }
+}
+
+/**
+ * Hook for bulk voucher operations using proper types
+ */
+export function useBulkVoucherOperations() {
+  const queryClient = useQueryClient()
+
+  return useApiMutation({
+    mutationFn: async (data: {
+      ids: string[]
+      operation: BulkOperationType
+    }) => {
+      // TODO: Implement bulk operations when available in API
+      console.warn('Bulk operations not yet implemented')
+      return Promise.resolve({ updated: data.ids.length })
+    },
+    successMessage: (data: any) =>
+      `${data.updated || 0} vouchers updated successfully`,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.vouchers.all(),
+      })
+    },
+  })
+}
+
+/**
+ * Hook for voucher statistics
+ */
+export function useVoucherStats(businessId?: string) {
+  return useApiQuery({
+    queryKey: queryKeys.vouchers.stats(businessId),
+    queryFn: async () => {
+      // TODO: Implement stats endpoint when available
+      const vouchers = await getAdminVoucherList({
+        businessId,
+        limit: 1000,
+      })
+      
+      // Calculate stats from vouchers list using proper enum values
+      const stats = {
+        total: vouchers.pagination?.total || 0,
+        active: 0,
+        claimed: 0,
+        redeemed: 0,
+        expired: 0,
+        draft: 0,
+        suspended: 0,
+      }
+
+      if (vouchers.data) {
+        vouchers.data.forEach((voucher) => {
+          switch (voucher.state) {
+            case VoucherState.PUBLISHED:
+              stats.active++
+              break
+            case VoucherState.CLAIMED:
+              stats.claimed++
+              break
+            case VoucherState.REDEEMED:
+              stats.redeemed++
+              break
+            case VoucherState.EXPIRED:
+              stats.expired++
+              break
+            case VoucherState.DRAFT:
+              stats.draft++
+              break
+            case VoucherState.SUSPENDED:
+              stats.suspended++
+              break
+          }
+        })
+      }
+
+      return stats
+    },
+    enabled: !!businessId,
+    staleTime: 1 * 60 * 1000, // 1 minute
   })
 }

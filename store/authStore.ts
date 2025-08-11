@@ -2,8 +2,9 @@ import { type UserRoleType } from '@merodami/pika-types'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
-import { api } from '@/lib/api/client'
-import type { UserProfileResponse } from '@/lib/api/generated'
+import { authToken, authRegister, getUserProfile } from '@/lib/api/orval-client'
+import { AuthTokenBodyOneOfGrantType } from '@/lib/api/orval-client'
+import type { GetUserProfile200 } from '@/lib/api/orval-client'
 
 // Simple storage helpers (since we removed lib/auth/tokens.ts)
 function getStoredUser(): User | null {
@@ -47,7 +48,7 @@ interface AuthState {
 }
 
 // Convert UserProfile to User interface
-function mapUserProfileToUser(profile: UserProfileResponse): User {
+function mapUserProfileToUser(profile: GetUserProfile200): User {
   return {
     id: profile.id,
     email: profile.email,
@@ -75,18 +76,16 @@ export const useAuthStore = create<AuthState>()(
         set({ isLoading: true, error: null })
 
         try {
-          await api.auth.authToken({
-            requestBody: {
-              grantType: 'password' as const,
-              username: email,
-              password: password,
-            },
+          await authToken({
+            grantType: AuthTokenBodyOneOfGrantType.password,
+            username: email,
+            password: password,
           })
 
           // Tokens are handled server-side via actions
 
           // Get user profile after login
-          const userResponse = await api.users.getUserProfile()
+          const userResponse = await getUserProfile()
           const user = mapUserProfileToUser(userResponse)
 
           setStoredUser(user)
@@ -121,15 +120,13 @@ export const useAuthStore = create<AuthState>()(
           const firstName = nameParts[0] || name
           const lastName = nameParts.slice(1).join(' ') || ''
 
-          const response = await api.auth.authRegister({
-            requestBody: {
-              email,
-              password,
-              firstName,
-              lastName,
-              acceptTerms: true,
-              marketingConsent: false,
-            },
+          const response = await authRegister({
+            email,
+            password,
+            firstName,
+            lastName,
+            acceptTerms: true,
+            marketingConsent: false,
           })
 
           // Registration successful but no tokens yet
@@ -185,7 +182,7 @@ export const useAuthStore = create<AuthState>()(
 
         try {
           // Verify token is still valid by fetching user profile
-          const userResponse = await api.users.getUserProfile()
+          const userResponse = await getUserProfile()
           const user = mapUserProfileToUser(userResponse)
 
           setStoredUser(user)

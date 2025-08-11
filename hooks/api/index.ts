@@ -5,15 +5,20 @@ export { useApiQuery } from './base/useApiQuery'
 
 // Voucher hooks
 export {
-  useBulkUpdateVouchers,
+  useBulkVoucherOperations,
+  useClaimVoucher,
   useCreateVoucher,
   useDeleteVoucher,
   useInfiniteVouchers,
-  usePrefetchVoucher,
+  useOptimisticVoucherUpdate,
+  usePrefetchVouchers,
+  useRedeemVoucher,
+  useScanVoucher,
+  useSearchVouchers,
   useUpdateVoucher,
   useVoucher,
   useVouchers,
-  useVoucherSearch,
+  useVoucherStats,
 } from './vouchers/useVouchers'
 
 // Business hooks
@@ -32,12 +37,9 @@ export {
 // User hooks
 export {
   useCreateUser,
-  useCurrentUser,
   useDeleteUser,
-  useResendVerification,
-  useToggleUserBan,
   useUpdateUser,
   useUser,
   useUsers,
-  useVerifyUser,
+  useUserStats,
 } from './users/useUsers'

@@ -12,9 +12,9 @@ import { authFrontend, authPublic, shared } from '@merodami/pika-api'
 
 // Import SDK types for API responses
 import type {
-  AuthTokensResponse as AuthTokensResponseType,
-  AuthUserResponse as AuthUserResponseType,
-} from '@/lib/api/generated'
+  AuthToken200 as AuthTokensResponseType,
+  GetUserProfile200 as AuthUserResponseType,
+} from '@/lib/api/orval-client'
 
 // ============= Direct exports from frontend schemas =============
 
@@ -42,6 +42,7 @@ export const {
 
 // Form data types from frontend schemas
 export type LoginFormData = authFrontend.LoginFormData
+export type LoginFormValues = authFrontend.LoginFormData // Alias for compatibility
 export type RegisterFormData = authFrontend.RegisterFormData
 export type ForgotPasswordFormData = authFrontend.ForgotPasswordFormData
 export type ResetPasswordFormData = authFrontend.ResetPasswordFormData

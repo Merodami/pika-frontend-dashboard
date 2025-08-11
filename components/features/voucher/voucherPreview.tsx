@@ -29,9 +29,9 @@ export function VoucherPreview({
 }: VoucherPreviewProps) {
   const getDiscountDisplay = () => {
     switch (voucherDesign.discountType) {
-      case VoucherDiscountType.percentage:
+      case VoucherDiscountType.PERCENTAGE:
         return `${voucherDesign.discountValue}% OFF`
-      case VoucherDiscountType.fixed:
+      case VoucherDiscountType.FIXED:
         return `$${voucherDesign.discountValue} OFF`
       default:
         return 'SPECIAL OFFER'

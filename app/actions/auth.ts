@@ -5,7 +5,8 @@ import { redirect } from 'next/navigation'
 import type { z } from 'zod'
 
 import { clearTokens, setTokens } from '@/app/services/authService'
-import { AuthenticationService } from '@/lib/api/generated'
+import { authToken, authRegister } from '@/lib/api/orval-client'
+import { AuthTokenBodyOneOfGrantType } from '@/lib/api/orval-client'
 
 // Server action for login
 export async function login(data: z.infer<typeof authPublic.TokenRequest>) {
@@ -15,17 +16,21 @@ export async function login(data: z.infer<typeof authPublic.TokenRequest>) {
       throw new Error('Invalid grant type')
     }
 
-    const response = await AuthenticationService.authToken({
-      requestBody: data,
+    // With Orval, it's much cleaner - directly returns data or throws
+    const tokenData = await authToken({
+      grantType: AuthTokenBodyOneOfGrantType.password,
+      username: data.username!,
+      password: data.password!,
+      scope: data.scope,
     })
 
     console.log('Login response:', {
-      hasAccessToken: !!response.accessToken,
-      hasRefreshToken: !!response.refreshToken,
+      hasAccessToken: !!tokenData?.accessToken,
+      hasRefreshToken: !!tokenData?.refreshToken,
     })
 
-    if (response.accessToken && response.refreshToken) {
-      await setTokens(response.accessToken, response.refreshToken)
+    if (tokenData?.accessToken && tokenData?.refreshToken) {
+      await setTokens(tokenData.accessToken, tokenData.refreshToken)
       console.log('Tokens set successfully')
       return { success: true }
     }
@@ -44,9 +49,8 @@ export async function register(
   data: z.infer<typeof authPublic.RegisterRequest>
 ) {
   try {
-    await AuthenticationService.authRegister({
-      requestBody: data,
-    })
+    // With Orval, clean and simple
+    await authRegister(data)
 
     // Registration successful - return success flag
     return { success: true }
