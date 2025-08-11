@@ -24,14 +24,8 @@ export async function login(data: z.infer<typeof authPublic.TokenRequest>) {
       scope: data.scope,
     })
 
-    console.log('Login response:', {
-      hasAccessToken: !!tokenData?.accessToken,
-      hasRefreshToken: !!tokenData?.refreshToken,
-    })
-
     if (tokenData?.accessToken && tokenData?.refreshToken) {
       await setTokens(tokenData.accessToken, tokenData.refreshToken)
-      console.log('Tokens set successfully')
       return { success: true }
     }
 
@@ -62,7 +56,9 @@ export async function register(
 }
 
 // Server action for logout
-export async function logout() {
+export async function logout(locale?: string) {
   await clearTokens()
-  redirect('/login')
+  // Use provided locale or default to 'en'
+  const redirectLocale = locale || 'en'
+  redirect(`/${redirectLocale}/login`)
 }

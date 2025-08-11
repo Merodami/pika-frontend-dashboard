@@ -30,6 +30,8 @@ export function LoginForm() {
   const [isLoading, setIsLoading] = useState(false)
   const { formDrafts, saveFormDraft, clearFormDraft } = useAppStore()
 
+  const isDevelopment = process.env.NODE_ENV === 'development'
+  
   const {
     control,
     handleSubmit,
@@ -37,8 +39,8 @@ export function LoginForm() {
   } = useForm<LoginFormInput, unknown, LoginFormOutput>({
     resolver: zodResolver(loginSchema),
     defaultValues: formDrafts['login'] || {
-      email: '',
-      password: '',
+      email: isDevelopment ? 'admin@example.com' : '',
+      password: isDevelopment ? 'AdminPassword123!' : '',
       rememberMe: false,
     },
   })
@@ -58,10 +60,8 @@ export function LoginForm() {
         // Clear form draft on success
         clearFormDraft('login')
 
-        // Industry standard approach: refresh router to update server component state
-        // then navigate to home page
-        router.refresh()
-        router.push(`/${router.locale}`)
+        // Force page reload to ensure cookies are properly set and middleware runs
+        window.location.href = `/${router.locale}`
       }
     } catch {
       setError(t('error'))

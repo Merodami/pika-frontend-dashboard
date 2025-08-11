@@ -17,23 +17,15 @@ AXIOS_INSTANCE.interceptors.request.use(
       // Server-side: get token from cookies
       try {
         const cookieStore = await cookies();
-        const token = cookieStore.get('accessToken')?.value;
+        const token = cookieStore.get('pika-access-token')?.value;
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
         }
       } catch (e) {
         // Not in Next.js server context
       }
-    } else {
-      // Client-side: get token from cookies  
-      const token = document.cookie
-        .split('; ')
-        .find(row => row.startsWith('accessToken='))
-        ?.split('=')[1];
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
     }
+    // Client-side: httpOnly cookies are handled automatically by browser
     return config;
   },
   (error) => {
@@ -45,10 +37,9 @@ AXIOS_INSTANCE.interceptors.request.use(
 AXIOS_INSTANCE.interceptors.response.use(
   (response) => response,
   (error: AxiosError) => {
-    // We can handle errors globally here
     if (error.response?.status === 401) {
-      // Handle unauthorized
-      console.error('Unauthorized access');
+      // Handle unauthorized - could trigger token refresh here
+      // For now, just reject to let the calling code handle it
     }
     return Promise.reject(error);
   }
