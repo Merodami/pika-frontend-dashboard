@@ -13,19 +13,6 @@
       "maxDuration": 30
     }
   },
-  "env": {
-    "NODE_VERSION": "20.x"
-  },
-  "build": {
-    "env": {
-      "NODE_AUTH_TOKEN": "@github_packages_token",
-      "NEXT_PUBLIC_API_URL": "@api_url",
-      "NEXT_PUBLIC_API_GATEWAY_URL": "@api_gateway_url",
-      "NEXT_PUBLIC_ENV": "@environment",
-      "NEXT_PUBLIC_ENABLE_OFFLINE": "@enable_offline",
-      "NEXT_PUBLIC_ENABLE_PWA": "@enable_pwa"
-    }
-  },
   "headers": [
     {
       "source": "/api/(.*)",
