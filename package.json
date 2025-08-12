@@ -41,7 +41,7 @@
     "test:e2e": "playwright test",
     "generate:api": "orval --config orval.config.ts",
     "update:deps": "npx dotenv-cli -e .env -- npm install @merodami/pika-api@latest @merodami/pika-types@latest",
-    "prepare": "husky install"
+    "prepare": "husky install || true"
   },
   "dependencies": {
     "@ant-design/cssinjs": "^1.24.0",
