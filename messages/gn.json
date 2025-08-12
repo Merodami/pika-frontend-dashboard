@@ -153,5 +153,74 @@
     "title": "Toguahápe ndojejuhu",
     "message": "Disculpa, toguahá eike hague ndopĩri.",
     "backHome": "Take ñepyrũme"
+  },
+  "profile": {
+    "title": "Che Perfil",
+    "description": "Ehecha ha emohenda ne perfil marandu",
+    "editProfile": "Emohenda Perfil",
+    "notProvided": "Noñeme'ẽi",
+    "never": "Araka'eve",
+    "verified": "Ojehechajey",
+    "unverified": "Noñehechajey",
+    "personalInfo": {
+      "title": "Marandu Personal",
+      "firstName": "Téra",
+      "lastName": "Terajoapy",
+      "dateOfBirth": "Teñoiha Ára",
+      "preferredLanguage": "Ñe'ẽ Ojeipotáva"
+    },
+    "contactInfo": {
+      "title": "Marandu Ñeñongatu",
+      "email": "Correo Electrónico",
+      "phone": "Teléfono Papapy"
+    },
+    "security": {
+      "title": "Tekorosã ha Cuenta",
+      "accountStatus": "Cuenta Rekotee",
+      "role": "Tembiapo",
+      "memberSince": "Miembro Guive",
+      "lastLogin": "Jeike Paha",
+      "changePassword": "Emoambue Ñe'ẽñemi",
+      "twoFactor": "Mokõi Factor Ñemoneĩ",
+      "verifyEmail": "Ehechajey Correo"
+    },
+    "status": {
+      "active": "Oĩva",
+      "inactive": "Noĩriva",
+      "suspended": "Ojejokóva",
+      "unconfirmed": "Noñemoneĩri",
+      "banned": "Ojejoko"
+    },
+    "role": {
+      "admin": "Ñangarekohára",
+      "business": "Negocio",
+      "user": "Puruhára",
+      "customer": "Joguarã"
+    },
+    "languages": {
+      "en": "Inglés",
+      "es": "Español",
+      "gn": "Guarani"
+    }
+  },
+  "settings": {
+    "title": "Ñemboheko",
+    "description": "Emohenda ne cuenta ñemboheko ha ne preferenciakuéra",
+    "language": {
+      "title": "Ñe'ẽ",
+      "description": "Eiporavo ne ñe'ẽ reipotáva interfazpe"
+    },
+    "notifications": {
+      "title": "Marandu",
+      "description": "Emohenda mba'éichapa og̃uahẽta ndéve marandu"
+    },
+    "security": {
+      "title": "Tekorosã",
+      "description": "Emohenda ne tekorosã ha mokõi factor autenticación"
+    },
+    "profile": {
+      "title": "Marandu Personal",
+      "description": "Ne cuenta marandu ha detalle"
+    }
   }
 }

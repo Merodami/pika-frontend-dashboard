@@ -22,74 +22,96 @@ const publicRoutes = [
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
-
-  console.log('Middleware: Processing path:', pathname)
-
-  // Get locale preference from header (sent by client)
-  const preferredLocale = request.headers.get('x-preferred-locale')
-
-  // Apply intl middleware
+  
+  // First, apply intl middleware to ensure locale is present
   const response = intlMiddleware(request)
-
-  // Extract locale from pathname
+  
+  // Extract locale from pathname after intl middleware has normalized it
   const pathnameHasLocale = locales.some(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   )
 
-  // Get the pathname without locale
+  // Get the pathname without locale (keep leading slash)
   const pathnameWithoutLocale = pathnameHasLocale
-    ? pathname.slice(3) // Remove /xx/
+    ? pathname.substring(3) // Remove "/es" but keep the rest including leading slash
     : pathname
 
-  // Check if it's a public route
-  const isPublicRoute = publicRoutes.some((route) =>
-    pathnameWithoutLocale.startsWith(route)
-  )
+  // Check if it's a public route - exact match or with query params
+  const isPublicRoute = publicRoutes.some((route) => {
+    // Exact match or route with query params (e.g., /login?from=...)
+    return pathnameWithoutLocale === route || 
+           pathnameWithoutLocale.startsWith(route + '?') ||
+           pathnameWithoutLocale.startsWith(route + '/')
+  })
 
   // Modern auth check: Look for token in multiple places
   const accessToken =
-    request.cookies.get('pika-access-token') ||
+    request.cookies.get('pika-access-token')?.value ||
     request.headers.get('Authorization')?.replace('Bearer ', '')
 
+  // If not a public route and no token, redirect to login
   if (!isPublicRoute && !accessToken) {
-    // Get locale for redirect (prefer stored locale, then pathname, then default)
-    const locale =
-      preferredLocale ||
-      (pathnameHasLocale ? pathname.substring(1, 3) : defaultLocale)
+    // Get locale for redirect - use the one from the normalized path
+    const locale = pathnameHasLocale ? pathname.split('/')[1] : defaultLocale
 
     // Redirect to login if no token
     const url = new URL(`/${locale}/login`, request.url)
+    
+    // Only add 'from' parameter if not already on login page and not root
+    if (!pathnameWithoutLocale.startsWith('/login') && pathname !== '/' && pathname !== `/${locale}`) {
+      url.searchParams.set('from', pathname)
+    }
 
-    url.searchParams.set('from', pathname)
-
-    return NextResponse.redirect(url)
+    // Use 307 temporary redirect to avoid browser caching
+    return NextResponse.redirect(url, { status: 307 })
   }
 
-  // Add security headers
+  // Add comprehensive security headers
   const headers = new Headers(response.headers)
 
+  // Prevent clickjacking attacks
   headers.set('X-Frame-Options', 'DENY')
+  
+  // Prevent MIME type sniffing
   headers.set('X-Content-Type-Options', 'nosniff')
+  
+  // Enable XSS protection (legacy browsers)
   headers.set('X-XSS-Protection', '1; mode=block')
+  
+  // Control referrer information
   headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
+  
+  // Restrict browser features
   headers.set(
     'Permissions-Policy',
-    'camera=(), microphone=(), geolocation=(), interest-cohort=()'
+    'camera=(), microphone=(), geolocation=(), interest-cohort=(), payment=(), usb=()'
   )
-
-  // CSP header for production
+  
+  // Strict Transport Security (HSTS) for production
   if (process.env.NODE_ENV === 'production') {
     headers.set(
+      'Strict-Transport-Security',
+      'max-age=63072000; includeSubDomains; preload'
+    )
+  }
+
+  // Content Security Policy for production
+  if (process.env.NODE_ENV === 'production') {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5500'
+    headers.set(
       'Content-Security-Policy',
-      "default-src 'self'; " +
-        "script-src 'self' 'unsafe-eval' 'unsafe-inline'; " +
-        "style-src 'self' 'unsafe-inline'; " +
-        "img-src 'self' data: https:; " +
-        "font-src 'self' data:; " +
-        "connect-src 'self' " +
-        (process.env.NEXT_PUBLIC_API_URL || '') +
-        '; ' +
-        "frame-ancestors 'none';"
+      [
+        "default-src 'self'",
+        "script-src 'self' 'unsafe-eval' 'unsafe-inline'",
+        "style-src 'self' 'unsafe-inline'",
+        "img-src 'self' data: https: blob:",
+        "font-src 'self' data:",
+        `connect-src 'self' ${apiUrl} ws: wss:`,
+        "frame-ancestors 'none'",
+        "base-uri 'self'",
+        "form-action 'self'",
+        "upgrade-insecure-requests"
+      ].join('; ')
     )
   }
 

@@ -12,9 +12,9 @@ export const queryKeys = {
       [...queryKeys.vouchers.lists(), filters] as const,
     details: () => [...queryKeys.vouchers.all(), 'detail'] as const,
     detail: (id: string) => [...queryKeys.vouchers.details(), id] as const,
-    // analytics: (id: string) => [...queryKeys.vouchers.all(), 'analytics', id] as const, // Unused: no references in hooks
-    // codes: (id: string) => [...queryKeys.vouchers.all(), 'codes', id] as const, // Unused: no references in hooks
-    // stats: (businessId: string) => [...queryKeys.vouchers.all(), 'stats', businessId] as const, // Unused: no references in hooks
+    infinite: (filters?: Record<string, unknown>) =>
+      [...queryKeys.vouchers.all(), 'infinite', filters] as const,
+    stats: (businessId?: string) => [...queryKeys.vouchers.all(), 'stats', businessId] as const,
   },
 
   // Business query keys
@@ -39,7 +39,7 @@ export const queryKeys = {
       [...queryKeys.users.lists(), filters] as const,
     me: () => [...queryKeys.users.all(), 'me'] as const,
     detail: (id: string) => [...queryKeys.users.all(), id] as const,
-    // stats: (ids: string[]) => [...queryKeys.users.all(), 'stats', ids] as const, // Unused
+    stats: (id: string) => [...queryKeys.users.all(), 'stats', id] as const,
   },
 
   // UNUSED QUERY KEYS - Commented out during cleanup, can be restored if needed
