@@ -18,11 +18,12 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
   switch (user.role) {
     case UserRole.ADMIN:
       redirect(`/${locale}/admin`)
-      break
     case UserRole.BUSINESS:
       redirect(`/${locale}/business`)
-      break
     default:
       redirect(`/${locale}/unauthorized`)
   }
+
+  // This will never be reached but ensures Next.js can properly analyze the component
+  return null
 }
