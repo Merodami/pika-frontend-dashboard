@@ -7,9 +7,10 @@
  */
 
 /**
- * Upload user avatar via multipart/form-data
+ * Avatar upload result
  */
-export interface UploadAvatarRequest {
-  /** Avatar image file (JPEG, PNG, or WebP) */
-  avatar?: Blob
+export interface UploadAvatarResponse {
+  /** URL of the uploaded avatar */
+  avatarUrl: string
+  message?: string
 }

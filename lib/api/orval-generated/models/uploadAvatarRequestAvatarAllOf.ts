@@ -6,10 +6,4 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Upload user avatar via multipart/form-data
- */
-export interface UploadAvatarRequest {
-  /** Avatar image file (JPEG, PNG, or WebP) */
-  avatar?: Blob
-}
+export type UploadAvatarRequestAvatarAllOf = string | null

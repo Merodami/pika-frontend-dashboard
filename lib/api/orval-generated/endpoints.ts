@@ -237,6 +237,8 @@ import type {
   UpdateUserProfileBody,
   UploadAdminUserAvatar200,
   UploadAdminUserAvatarBody,
+  UploadAvatarRequest,
+  UploadAvatarResponse,
   UploadFile201,
   UploadFileBody,
   ValidateInternalBusinesses200,
@@ -769,6 +771,23 @@ export const updateUserProfile = (
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     data: updateUserProfileBody,
+  })
+}
+
+/**
+ * @summary Upload user avatar
+ */
+export const uploadUserAvatar = (uploadAvatarRequest: UploadAvatarRequest) => {
+  const formData = new FormData()
+  if (uploadAvatarRequest.avatar !== undefined) {
+    formData.append(`avatar`, uploadAvatarRequest.avatar)
+  }
+
+  return customInstance<UploadAvatarResponse>({
+    url: `/users/me/avatar`,
+    method: 'POST',
+    headers: { 'Content-Type': 'multipart/form-data' },
+    data: formData,
   })
 }
 
@@ -1359,8 +1378,8 @@ export const uploadAdminUserAvatar = (
   uploadAdminUserAvatarBody: UploadAdminUserAvatarBody
 ) => {
   const formData = new FormData()
-  if (uploadAdminUserAvatarBody.file !== undefined) {
-    formData.append(`file`, uploadAdminUserAvatarBody.file)
+  if (uploadAdminUserAvatarBody.avatar !== undefined) {
+    formData.append(`avatar`, uploadAdminUserAvatarBody.avatar)
   }
 
   return customInstance<UploadAdminUserAvatar200>({
@@ -2361,6 +2380,9 @@ export type GetUserProfileResult = NonNullable<
 >
 export type UpdateUserProfileResult = NonNullable<
   Awaited<ReturnType<typeof updateUserProfile>>
+>
+export type UploadUserAvatarResult = NonNullable<
+  Awaited<ReturnType<typeof uploadUserAvatar>>
 >
 export type HandleStripeWebhookResult = NonNullable<
   Awaited<ReturnType<typeof handleStripeWebhook>>

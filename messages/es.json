@@ -227,12 +227,15 @@
     "status": {
       "active": "Activo",
       "inactive": "Inactivo",
-      "suspended": "Suspendido"
+      "suspended": "Suspendido",
+      "unconfirmed": "No confirmado",
+      "banned": "Prohibido"
     },
     "role": {
       "admin": "Administrador",
       "business": "Negocio",
-      "user": "Usuario"
+      "user": "Usuario",
+      "customer": "Cliente"
     },
     "languages": {
       "en": "Inglés",

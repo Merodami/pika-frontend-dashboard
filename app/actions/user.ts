@@ -1,7 +1,7 @@
 'use server'
 
 import { updateUserProfile } from '@/lib/api/orval-client'
-import type { UpdateUserProfileBody } from '@/lib/api/orval-generated'
+import type { UpdateUserProfileBody } from '@/lib/api/orval-client'
 
 export async function updateUserLanguage(language: string) {
   try {

@@ -7,9 +7,6 @@
  */
 
 /**
- * Upload user avatar via multipart/form-data
+ * Binary file data
  */
-export interface UploadAvatarRequest {
-  /** Avatar image file (JPEG, PNG, or WebP) */
-  avatar?: Blob
-}
+export type BinaryFile = Blob

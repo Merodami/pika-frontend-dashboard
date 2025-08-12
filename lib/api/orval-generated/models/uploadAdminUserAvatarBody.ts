@@ -10,6 +10,6 @@
  * Upload avatar for a user (admin only)
  */
 export type UploadAdminUserAvatarBody = {
-  /** Avatar image file (multipart/form-data) */
-  file?: unknown
+  /** Avatar image file (JPEG, PNG, or WebP) */
+  avatar?: Blob
 }

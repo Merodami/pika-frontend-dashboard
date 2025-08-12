@@ -1,15 +1,15 @@
 'use client'
 
 import { useState, useTransition } from 'react'
-import { Card, Form, Input, Button, DatePicker, Select, message, Spin } from 'antd'
+import { Card, Form, Input, Button, DatePicker, Select, message } from 'antd'
 import { Save, ArrowLeft } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import dayjs from 'dayjs'
-import { omit } from 'lodash'
+import { omitBy, isUndefined } from 'lodash-es'
 
 import { updateProfile } from '@/app/actions/user'
-import type { GetUserProfile200, UpdateUserProfileBody } from '@/lib/api/orval-generated'
+import type { GetUserProfile200, UpdateUserProfileBody } from '@/lib/api/orval-client'
 
 const { Option } = Select
 
@@ -40,13 +40,13 @@ export default function EditProfileForm({ locale, initialData }: EditProfileForm
     
     try {
       // Prepare data for API
-      const updateData: UpdateUserProfileBody = omit({
+      const updateData: UpdateUserProfileBody = omitBy({
         firstName: values.firstName,
         lastName: values.lastName,
         phoneNumber: values.phoneNumber || undefined,
         dateOfBirth: values.dateOfBirth ? dayjs(values.dateOfBirth).format('YYYY-MM-DD') : undefined,
         preferredLanguage: values.preferredLanguage
-      }, value => value === undefined)
+      }, isUndefined)
 
       const result = await updateProfile(updateData)
 

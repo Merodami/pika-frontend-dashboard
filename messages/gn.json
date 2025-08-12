@@ -187,12 +187,15 @@
     "status": {
       "active": "Oĩva",
       "inactive": "Noĩriva",
-      "suspended": "Ojejokóva"
+      "suspended": "Ojejokóva",
+      "unconfirmed": "Noñemoneĩri",
+      "banned": "Ojejoko"
     },
     "role": {
       "admin": "Ñangarekohára",
       "business": "Negocio",
-      "user": "Puruhára"
+      "user": "Puruhára",
+      "customer": "Joguarã"
     },
     "languages": {
       "en": "Inglés",

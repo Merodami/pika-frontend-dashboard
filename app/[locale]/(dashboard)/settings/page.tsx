@@ -1,4 +1,4 @@
-import { Card, Divider } from 'antd'
+import { Card } from 'antd'
 import { Globe, Bell, Shield, User } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 
