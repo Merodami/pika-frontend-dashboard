@@ -1,8 +1,6 @@
-import { UserRole } from '@merodami/pika-types'
-import { redirect } from 'next/navigation'
-
 import { requireAuth } from '@/app/services/authService'
 import type { Locale } from '@/i18n/config'
+import { DashboardRedirect } from './DashboardRedirect'
 
 // Force dynamic rendering since we use cookies for authentication
 export const dynamic = 'force-dynamic'
@@ -15,15 +13,5 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
   const user = await requireAuth()
   const { locale } = await params
 
-  switch (user.role) {
-    case UserRole.ADMIN:
-      redirect(`/${locale}/admin`)
-    case UserRole.BUSINESS:
-      redirect(`/${locale}/business`)
-    default:
-      redirect(`/${locale}/unauthorized`)
-  }
-
-  // This will never be reached but ensures Next.js can properly analyze the component
-  return null
+  return <DashboardRedirect userRole={user.role} locale={locale} />
 }
