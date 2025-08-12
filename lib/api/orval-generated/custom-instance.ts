@@ -1,31 +1,29 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
-import { cookies } from 'next/headers';
+
+// For client-side, use the proxy route to handle auth
+const getBaseURL = () => {
+  if (typeof window !== 'undefined') {
+    // Client-side: use proxy route
+    return '/api/proxy';
+  }
+  // Server-side: direct API call
+  return process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5500/api/v1';
+};
 
 // Create axios instance with default config
 const AXIOS_INSTANCE = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5500/api/v1',
+  baseURL: getBaseURL(),
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true, // Important for httpOnly cookies
 });
 
-// Request interceptor for auth
+// Request interceptor - simplified for client compatibility
 AXIOS_INSTANCE.interceptors.request.use(
-  async (config) => {
-    // Add auth token from cookies
-    if (typeof window === 'undefined') {
-      // Server-side: get token from cookies
-      try {
-        const cookieStore = await cookies();
-        const token = cookieStore.get('pika-access-token')?.value;
-        if (token) {
-          config.headers.Authorization = `Bearer ${token}`;
-        }
-      } catch (e) {
-        // Not in Next.js server context
-      }
-    }
-    // Client-side: httpOnly cookies are handled automatically by browser
+  (config) => {
+    // Client-side: cookies are automatically sent with withCredentials: true
+    // Server-side: this file shouldn't be used, use server-instance instead
     return config;
   },
   (error) => {

@@ -9,6 +9,9 @@ import { DashboardHeader } from '@/components/layouts/dashboardHeader'
 import { LoadingSkeleton } from '@/components/ui/loadingSkeleton'
 import type { Locale } from '@/i18n/config'
 
+// Force dynamic rendering for authenticated routes
+export const dynamic = 'force-dynamic'
+
 interface DashboardLayoutProps {
   children: React.ReactNode
   params: Promise<{ locale: Locale }>

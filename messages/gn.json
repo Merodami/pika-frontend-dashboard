@@ -79,7 +79,11 @@
   },
   "dashboard": {
     "title": "Panel Ñangarekoha",
+    "description": "Pika Panel Ñangarekoha",
     "welcome": "Tereg̃uahẽ porãite, {name}",
+    "admin": {
+      "subtitle": "Ko'ápe oĩ ne plataforma resumen"
+    },
     "metrics": {
       "totalVouchers": "Kupón Opavave",
       "activeVouchers": "Kupón Hendýva",
