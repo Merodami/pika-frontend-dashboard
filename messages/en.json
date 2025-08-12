@@ -193,5 +193,71 @@
     "title": "Page not found",
     "message": "Sorry, the page you visited does not exist.",
     "backHome": "Back Home"
+  },
+  "profile": {
+    "title": "My Profile",
+    "description": "View and manage your profile information",
+    "editProfile": "Edit Profile",
+    "notProvided": "Not provided",
+    "never": "Never",
+    "verified": "Verified",
+    "unverified": "Unverified",
+    "personalInfo": {
+      "title": "Personal Information",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "dateOfBirth": "Date of Birth",
+      "preferredLanguage": "Preferred Language"
+    },
+    "contactInfo": {
+      "title": "Contact Information",
+      "email": "Email Address",
+      "phone": "Phone Number"
+    },
+    "security": {
+      "title": "Security & Account",
+      "accountStatus": "Account Status",
+      "role": "Role",
+      "memberSince": "Member Since",
+      "lastLogin": "Last Login",
+      "changePassword": "Change Password",
+      "twoFactor": "Two-Factor Authentication",
+      "verifyEmail": "Verify Email"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive",
+      "suspended": "Suspended"
+    },
+    "role": {
+      "admin": "Administrator",
+      "business": "Business",
+      "user": "User"
+    },
+    "languages": {
+      "en": "English",
+      "es": "Spanish",
+      "gn": "Guarani"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "description": "Manage your account settings and preferences",
+    "language": {
+      "title": "Language",
+      "description": "Choose your preferred language for the interface"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "description": "Configure how you receive notifications"
+    },
+    "security": {
+      "title": "Security",
+      "description": "Manage your security settings and two-factor authentication"
+    },
+    "profile": {
+      "title": "Profile Information",
+      "description": "Your account details and information"
+    }
   }
 }

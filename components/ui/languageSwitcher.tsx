@@ -5,6 +5,7 @@ import { useRouter, usePathname } from 'next/navigation'
 import { useLocale } from 'next-intl'
 import { useTransition } from 'react'
 
+import { updateUserLanguage } from '@/app/actions/user'
 import { locales, localeConfig, type Locale } from '@/i18n/config'
 import { useAppStore } from '@/store/app.store'
 
@@ -47,24 +48,11 @@ export function LanguageSwitcher() {
       // Navigate to new locale path
       router.push(newPath)
 
-      // Update user preference in backend (if logged in)
-      // In modern architecture, we should use the auth store for token
-      const token =
-        sessionStorage.getItem('pika-access-token') ||
-        localStorage.getItem('pika-access-token')
-
-      if (token) {
-        // Fire and forget - don't block navigation
-        fetch('/api/user/language', {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-            'x-user-language': newLocale,
-          },
-          body: JSON.stringify({ language: newLocale }),
-        }).catch(console.error)
-      }
+      // Update user preference in backend using server action
+      // Non-blocking - don't prevent navigation
+      updateUserLanguage(newLocale).catch((error) => {
+        console.error('Failed to update language preference:', error)
+      })
     })
   }
 

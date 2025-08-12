@@ -15,11 +15,7 @@ export type GetBusinessList200DataItemUser = {
   firstName: string
   /** @maxLength 50 */
   lastName: string
-  /** @maxLength 100 */
-  displayName?: string
   avatarUrl?: string
-  /** @maxLength 500 */
-  bio?: string
   /** ISO 8601 datetime with timezone */
   createdAt: string
 }

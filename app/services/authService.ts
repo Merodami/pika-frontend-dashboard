@@ -17,6 +17,7 @@ export interface User {
   firstName: string
   lastName: string
   role: UserRoleType
+  preferredLanguage?: string
   createdAt: string
   updatedAt: string
 }
@@ -40,6 +41,7 @@ export const getCurrentUser = cache(async (): Promise<User | null> => {
       firstName: userData.firstName,
       lastName: userData.lastName,
       role: userData.role as UserRoleType,
+      preferredLanguage: userData.preferredLanguage,
       createdAt: userData.createdAt,
       updatedAt: userData.updatedAt,
     }

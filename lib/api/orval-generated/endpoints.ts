@@ -1360,7 +1360,7 @@ export const uploadAdminUserAvatar = (
 ) => {
   const formData = new FormData()
   if (uploadAdminUserAvatarBody.file !== undefined) {
-    formData.append(`file`, uploadAdminUserAvatarBody.file as Blob)
+    formData.append(`file`, uploadAdminUserAvatarBody.file)
   }
 
   return customInstance<UploadAdminUserAvatar200>({

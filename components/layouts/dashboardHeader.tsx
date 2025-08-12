@@ -3,7 +3,6 @@ import { getTranslations } from 'next-intl/server'
 import type { User as UserType } from '@/app/services/authService'
 import { NotificationDropdown } from '@/components/features/notificationDropdown'
 import { UserMenu } from '@/components/features/userMenu'
-import { LanguageSwitcher } from '@/components/ui/languageSwitcher'
 import { ThemeToggle } from '@/components/ui/themeToggle'
 import type { Locale } from '@/i18n/config'
 
@@ -27,9 +26,6 @@ export async function DashboardHeader({ user, locale }: DashboardHeaderProps) {
 
         {/* Right section - User controls */}
         <div className="flex items-center gap-4">
-          {/* Language Switcher */}
-          <LanguageSwitcher />
-
           {/* Theme Toggle */}
           <ThemeToggle />
 

@@ -193,5 +193,71 @@
     "title": "Página no encontrada",
     "message": "Lo sentimos, la página que visitaste no existe.",
     "backHome": "Volver al inicio"
+  },
+  "profile": {
+    "title": "Mi Perfil",
+    "description": "Ver y administrar tu información de perfil",
+    "editProfile": "Editar Perfil",
+    "notProvided": "No proporcionado",
+    "never": "Nunca",
+    "verified": "Verificado",
+    "unverified": "No verificado",
+    "personalInfo": {
+      "title": "Información Personal",
+      "firstName": "Nombre",
+      "lastName": "Apellido",
+      "dateOfBirth": "Fecha de Nacimiento",
+      "preferredLanguage": "Idioma Preferido"
+    },
+    "contactInfo": {
+      "title": "Información de Contacto",
+      "email": "Correo Electrónico",
+      "phone": "Número de Teléfono"
+    },
+    "security": {
+      "title": "Seguridad y Cuenta",
+      "accountStatus": "Estado de Cuenta",
+      "role": "Rol",
+      "memberSince": "Miembro Desde",
+      "lastLogin": "Último Acceso",
+      "changePassword": "Cambiar Contraseña",
+      "twoFactor": "Autenticación de Dos Factores",
+      "verifyEmail": "Verificar Correo"
+    },
+    "status": {
+      "active": "Activo",
+      "inactive": "Inactivo",
+      "suspended": "Suspendido"
+    },
+    "role": {
+      "admin": "Administrador",
+      "business": "Negocio",
+      "user": "Usuario"
+    },
+    "languages": {
+      "en": "Inglés",
+      "es": "Español",
+      "gn": "Guaraní"
+    }
+  },
+  "settings": {
+    "title": "Configuración",
+    "description": "Administra la configuración y preferencias de tu cuenta",
+    "language": {
+      "title": "Idioma",
+      "description": "Elige tu idioma preferido para la interfaz"
+    },
+    "notifications": {
+      "title": "Notificaciones",
+      "description": "Configura cómo recibes las notificaciones"
+    },
+    "security": {
+      "title": "Seguridad",
+      "description": "Administra tu configuración de seguridad y autenticación de dos factores"
+    },
+    "profile": {
+      "title": "Información del Perfil",
+      "description": "Los detalles e información de tu cuenta"
+    }
   }
 }

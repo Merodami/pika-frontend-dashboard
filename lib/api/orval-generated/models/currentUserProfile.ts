@@ -16,16 +16,12 @@ export interface CurrentUserProfile {
   firstName: string
   /** @maxLength 50 */
   lastName: string
-  /** @maxLength 100 */
-  displayName?: string
   /**
    * Phone number in E.164 format
    * @pattern ^\+[1-9]\d{1,14}$
    */
   phoneNumber?: string
   avatarUrl?: string
-  /** @maxLength 500 */
-  bio?: string
   /**
    * Date in YYYY-MM-DD format
    * @pattern ^\d{4}-\d{2}-\d{2}$
