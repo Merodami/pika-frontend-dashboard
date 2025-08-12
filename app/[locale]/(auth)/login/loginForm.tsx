@@ -60,8 +60,15 @@ export function LoginForm() {
         // Clear form draft on success
         clearFormDraft('login')
 
+        // Redirect based on user role
+        const redirectPath = result.user?.role === 'admin' 
+          ? `/${router.locale}/admin`
+          : result.user?.role === 'business'
+          ? `/${router.locale}/business`
+          : `/${router.locale}/profile`
+
         // Force page reload to ensure cookies are properly set and middleware runs
-        window.location.href = `/${router.locale}`
+        window.location.href = redirectPath
       }
     } catch {
       setError(t('error'))

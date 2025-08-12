@@ -26,7 +26,14 @@ export async function login(data: z.infer<typeof authPublic.TokenRequest>) {
 
     if (tokenData?.accessToken && tokenData?.refreshToken) {
       await setTokens(tokenData.accessToken, tokenData.refreshToken)
-      return { success: true }
+      
+      // Return user info from the token response
+      return { 
+        success: true,
+        user: tokenData.user ? {
+          role: tokenData.user.role
+        } : undefined
+      }
     }
 
     throw new Error('Invalid response from server')
