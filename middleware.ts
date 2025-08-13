@@ -2,7 +2,7 @@ import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import createMiddleware from 'next-intl/middleware'
 
-import { defaultLocale, locales } from './i18n/config'
+import { defaultLocale, locales } from './i18n/edge-config'
 
 // Create the i18n middleware
 const intlMiddleware = createMiddleware({
