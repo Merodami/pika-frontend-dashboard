@@ -6,15 +6,17 @@
  * OpenAPI spec version: 1.0.0
  */
 
+/**
+ * Type of payment method
+ */
 export type UserPaymentMethodsResponsePaymentMethodsItemType =
   (typeof UserPaymentMethodsResponsePaymentMethodsItemType)[keyof typeof UserPaymentMethodsResponsePaymentMethodsItemType]
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const UserPaymentMethodsResponsePaymentMethodsItemType = {
-  CARD: 'CARD',
-  BANK_ACCOUNT: 'BANK_ACCOUNT',
-  PAYPAL: 'PAYPAL',
-  APPLE_PAY: 'APPLE_PAY',
-  GOOGLE_PAY: 'GOOGLE_PAY',
-  WALLET: 'WALLET',
+  card: 'card',
+  bankAccount: 'bankAccount',
+  applePay: 'applePay',
+  googlePay: 'googlePay',
+  wallet: 'wallet',
 } as const

@@ -11,7 +11,10 @@ export type SendSMSResponseStatus =
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const SendSMSResponseStatus = {
-  SENT: 'SENT',
-  FAILED: 'FAILED',
-  QUEUED: 'QUEUED',
+  pending: 'pending',
+  queued: 'queued',
+  sent: 'sent',
+  delivered: 'delivered',
+  failed: 'failed',
+  cancelled: 'cancelled',
 } as const

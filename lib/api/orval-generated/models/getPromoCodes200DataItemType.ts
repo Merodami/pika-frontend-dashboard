@@ -11,6 +11,6 @@ export type GetPromoCodes200DataItemType =
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const GetPromoCodes200DataItemType = {
-  percentage: 'percentage',
   fixedAmount: 'fixedAmount',
+  percentage: 'percentage',
 } as const

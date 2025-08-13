@@ -6,14 +6,17 @@ import { z } from 'zod'
 
 import { clearTokens, setTokens } from '@/app/services/authService'
 import { authToken, authRegister } from '@/lib/api/orval-client'
-import { AuthTokenBodyOneOfGrantType, RegisterRequestRegistrationSource } from '@/lib/api/orval-client'
+import {
+  AuthTokenBodyOneOfGrantType,
+  RegisterRequestRegistrationSource,
+} from '@/lib/api/orval-client'
 
 // Server action for login
 export async function login(data: z.infer<typeof authPublic.TokenRequest>) {
   try {
     // Validate input with the same schema as API
     const validatedData = authPublic.TokenRequest.parse(data)
-    
+
     // Type guard to ensure it's a password grant
     if (validatedData.grantType !== 'password') {
       throw new Error('Invalid grant type')
@@ -29,49 +32,69 @@ export async function login(data: z.infer<typeof authPublic.TokenRequest>) {
 
     if (tokenData?.accessToken && tokenData?.refreshToken) {
       await setTokens(tokenData.accessToken, tokenData.refreshToken)
-      
+
       // Return user info from the token response
-      return { 
+      return {
         success: true,
-        user: tokenData.user ? {
-          role: tokenData.user.role
-        } : undefined
+        user: tokenData.user
+          ? {
+              role: tokenData.user.role,
+            }
+          : undefined,
       }
     }
 
     throw new Error('Invalid response from server')
   } catch (error: any) {
     console.error('Login error:', error)
-    
+
     // Return validation errors directly from schema
     if (error instanceof z.ZodError) {
-      return { error: error.issues[0]?.message || 'Validation failed', errorCode: 'validation' }
+      return {
+        error: error.issues[0]?.message || 'Validation failed',
+        errorCode: 'validation',
+      }
     }
-    
+
     // Check for specific error types from API
     if (error?.response?.status === 401) {
+      // Check for specific error messages from backend
+      const errorMessage = error?.response?.data?.message || ''
+
+      if (errorMessage.includes('account is inactive')) {
+        return { error: 'Account is inactive', errorCode: 'accountSuspended' }
+      }
+
+      if (errorMessage.includes('account is not verified')) {
+        return { error: 'Account not verified', errorCode: 'accountLocked' }
+      }
+
+      // Default 401 error
       return { error: 'Invalid credentials', errorCode: 'invalidCredentials' }
     }
-    
+
     if (error?.response?.status === 403) {
       return { error: 'Access denied', errorCode: 'accessDenied' }
     }
-    
+
     if (error?.response?.status === 423) {
       return { error: 'Account locked', errorCode: 'accountLocked' }
     }
-    
+
     // Return API error message with a generic error code
     if (error?.response?.data?.message) {
       return { error: error.response.data.message, errorCode: 'serverError' }
     }
-    
+
     // Fallback for network errors
     if (error?.code === 'ECONNREFUSED' || error?.code === 'ETIMEDOUT') {
       return { error: 'Network error', errorCode: 'networkError' }
     }
-    
-    return { error: 'An unexpected error occurred', errorCode: 'somethingWentWrong' }
+
+    return {
+      error: 'An unexpected error occurred',
+      errorCode: 'somethingWentWrong',
+    }
   }
 }
 
@@ -82,14 +105,14 @@ export async function register(
   try {
     // Validate using the same schema as backend
     const validatedData = authPublic.RegisterRequest.parse(data)
-    
+
     // Add registrationSource for admin dashboard registrations
     // Since this is an admin/business only app, all registrations come from admin dashboard
     const apiData = {
       ...validatedData,
-      registrationSource: RegisterRequestRegistrationSource.admin_dashboard
+      registrationSource: RegisterRequestRegistrationSource.adminDashboard,
     }
-    
+
     // Call API with validated data including registration source
     await authRegister(apiData)
 
@@ -97,32 +120,38 @@ export async function register(
     return { success: true }
   } catch (error: any) {
     console.error('Registration error:', error)
-    
+
     // Return validation errors directly from schema
     if (error instanceof z.ZodError) {
-      return { error: error.issues[0]?.message || 'Validation failed', errorCode: 'validation' }
+      return {
+        error: error.issues[0]?.message || 'Validation failed',
+        errorCode: 'validation',
+      }
     }
-    
+
     // Check for specific error types from API
     if (error?.response?.status === 409) {
       return { error: 'Email already exists', errorCode: 'emailExists' }
     }
-    
+
     if (error?.response?.status === 403) {
       return { error: 'Access denied', errorCode: 'accessDenied' }
     }
-    
+
     // Return API error message with a generic error code
     if (error?.response?.data?.message) {
       return { error: error.response.data.message, errorCode: 'serverError' }
     }
-    
+
     // Fallback for network errors
     if (error?.code === 'ECONNREFUSED' || error?.code === 'ETIMEDOUT') {
       return { error: 'Network error', errorCode: 'networkError' }
     }
-    
-    return { error: 'An unexpected error occurred', errorCode: 'somethingWentWrong' }
+
+    return {
+      error: 'An unexpected error occurred',
+      errorCode: 'somethingWentWrong',
+    }
   }
 }
 

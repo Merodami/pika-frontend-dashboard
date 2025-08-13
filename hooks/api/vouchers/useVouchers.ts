@@ -7,12 +7,7 @@ import {
   VoucherClaimOptions,
   VoucherRedeemOptions,
 } from '@merodami/pika-types'
-import {
-  isEmpty,
-  isNil,
-  omitBy,
-  throttle,
-} from 'lodash-es'
+import { isEmpty, isNil, omitBy, throttle } from 'lodash-es'
 import { useEffect, useMemo, useState } from 'react'
 
 import {
@@ -140,20 +135,22 @@ export function useDeleteVoucher() {
 export function useClaimVoucher() {
   const queryClient = useQueryClient()
 
-  return useApiMutation<ClaimVoucher200, Error, { id: string; options?: VoucherClaimOptions }>(
-    {
-      mutationFn: ({ id, options }) => claimVoucher(id, options || {}),
-      successMessage: 'Voucher claimed successfully',
-      onSuccess: (_, { id }) => {
-        queryClient.invalidateQueries({
-          queryKey: queryKeys.vouchers.detail(id),
-        })
-        queryClient.invalidateQueries({
-          queryKey: queryKeys.vouchers.lists(),
-        })
-      },
-    }
-  )
+  return useApiMutation<
+    ClaimVoucher200,
+    Error,
+    { id: string; options?: VoucherClaimOptions }
+  >({
+    mutationFn: ({ id, options }) => claimVoucher(id, options || {}),
+    successMessage: 'Voucher claimed successfully',
+    onSuccess: (_, { id }) => {
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.vouchers.detail(id),
+      })
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.vouchers.lists(),
+      })
+    },
+  })
 }
 
 /**
@@ -162,20 +159,22 @@ export function useClaimVoucher() {
 export function useRedeemVoucher() {
   const queryClient = useQueryClient()
 
-  return useApiMutation<RedeemVoucher200, Error, { id: string; options: VoucherRedeemOptions }>(
-    {
-      mutationFn: ({ id, options }) => redeemVoucher(id, options), // Now types match directly!
-      successMessage: 'Voucher redeemed successfully',
-      onSuccess: (_, { id }) => {
-        queryClient.invalidateQueries({
-          queryKey: queryKeys.vouchers.detail(id),
-        })
-        queryClient.invalidateQueries({
-          queryKey: queryKeys.vouchers.lists(),
-        })
-      },
-    }
-  )
+  return useApiMutation<
+    RedeemVoucher200,
+    Error,
+    { id: string; options: VoucherRedeemOptions }
+  >({
+    mutationFn: ({ id, options }) => redeemVoucher(id, options), // Now types match directly!
+    successMessage: 'Voucher redeemed successfully',
+    onSuccess: (_, { id }) => {
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.vouchers.detail(id),
+      })
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.vouchers.lists(),
+      })
+    },
+  })
 }
 
 /**
@@ -308,9 +307,8 @@ export function useOptimisticVoucherUpdate() {
       id: string,
       updater: (old: T) => T
     ) => {
-      queryClient.setQueryData<T>(
-        queryKeys.vouchers.detail(id),
-        (old) => (old ? updater(old) : old)
+      queryClient.setQueryData<T>(queryKeys.vouchers.detail(id), (old) =>
+        old ? updater(old) : old
       )
     },
     rollback: (id: string) => {
@@ -358,7 +356,7 @@ export function useVoucherStats(businessId?: string) {
         businessId,
         limit: 1000,
       })
-      
+
       // Calculate stats from vouchers list using proper enum values
       const stats = {
         total: vouchers.pagination?.total || 0,

@@ -12,7 +12,11 @@ export type SendInternalSystemNotificationBodyCategory =
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const SendInternalSystemNotificationBodyCategory = {
   system: 'system',
-  security: 'security',
-  billing: 'billing',
   marketing: 'marketing',
+  transaction: 'transaction',
+  social: 'social',
+  security: 'security',
+  reminder: 'reminder',
+  update: 'update',
+  billing: 'billing',
 } as const

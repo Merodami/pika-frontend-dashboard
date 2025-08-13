@@ -8,7 +8,7 @@
 
 export type GetAdminStorageAnalytics200StorageByProvider = {
   /** @minimum 0 */
-  aws_s3?: number
+  awsS3?: number
   /** @minimum 0 */
   local?: number
   /** @minimum 0 */

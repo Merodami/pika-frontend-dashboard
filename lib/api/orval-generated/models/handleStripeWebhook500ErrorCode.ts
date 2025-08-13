@@ -11,7 +11,7 @@ export type HandleStripeWebhook500ErrorCode =
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const HandleStripeWebhook500ErrorCode = {
-  INVALID_SIGNATURE: 'INVALID_SIGNATURE',
-  PROCESSING_ERROR: 'PROCESSING_ERROR',
-  UNKNOWN_EVENT_TYPE: 'UNKNOWN_EVENT_TYPE',
+  invalidSignature: 'invalidSignature',
+  processingError: 'processingError',
+  unknownEventType: 'unknownEventType',
 } as const

@@ -11,8 +11,8 @@ export type VerifyUserResponseVerificationLevel =
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const VerifyUserResponseVerificationLevel = {
-  NONE: 'NONE',
-  EMAIL: 'EMAIL',
-  PHONE: 'PHONE',
-  FULL: 'FULL',
+  none: 'none',
+  email: 'email',
+  phone: 'phone',
+  full: 'full',
 } as const

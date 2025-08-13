@@ -22,10 +22,10 @@ const publicRoutes = [
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
-  
+
   // First, apply intl middleware to ensure locale is present
   const response = intlMiddleware(request)
-  
+
   // Extract locale from pathname after intl middleware has normalized it
   const pathnameHasLocale = locales.some(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
@@ -39,9 +39,11 @@ export async function middleware(request: NextRequest) {
   // Check if it's a public route - exact match or with query params
   const isPublicRoute = publicRoutes.some((route) => {
     // Exact match or route with query params (e.g., /login?from=...)
-    return pathnameWithoutLocale === route || 
-           pathnameWithoutLocale.startsWith(route + '?') ||
-           pathnameWithoutLocale.startsWith(route + '/')
+    return (
+      pathnameWithoutLocale === route ||
+      pathnameWithoutLocale.startsWith(route + '?') ||
+      pathnameWithoutLocale.startsWith(route + '/')
+    )
   })
 
   // Modern auth check: Look for token in multiple places
@@ -56,9 +58,13 @@ export async function middleware(request: NextRequest) {
 
     // Redirect to login if no token
     const url = new URL(`/${locale}/login`, request.url)
-    
+
     // Only add 'from' parameter if not already on login page and not root
-    if (!pathnameWithoutLocale.startsWith('/login') && pathname !== '/' && pathname !== `/${locale}`) {
+    if (
+      !pathnameWithoutLocale.startsWith('/login') &&
+      pathname !== '/' &&
+      pathname !== `/${locale}`
+    ) {
       url.searchParams.set('from', pathname)
     }
 
@@ -71,22 +77,22 @@ export async function middleware(request: NextRequest) {
 
   // Prevent clickjacking attacks
   headers.set('X-Frame-Options', 'DENY')
-  
+
   // Prevent MIME type sniffing
   headers.set('X-Content-Type-Options', 'nosniff')
-  
+
   // Enable XSS protection (legacy browsers)
   headers.set('X-XSS-Protection', '1; mode=block')
-  
+
   // Control referrer information
   headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
-  
+
   // Restrict browser features
   headers.set(
     'Permissions-Policy',
     'camera=(), microphone=(), geolocation=(), interest-cohort=(), payment=(), usb=()'
   )
-  
+
   // Strict Transport Security (HSTS) for production
   if (process.env.NODE_ENV === 'production') {
     headers.set(
@@ -110,7 +116,7 @@ export async function middleware(request: NextRequest) {
         "frame-ancestors 'none'",
         "base-uri 'self'",
         "form-action 'self'",
-        "upgrade-insecure-requests"
+        'upgrade-insecure-requests',
       ].join('; ')
     )
   }

@@ -11,8 +11,8 @@ export type CheckUserPermissionRequestAction =
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CheckUserPermissionRequestAction = {
-  READ: 'READ',
-  CREATE: 'CREATE',
-  UPDATE: 'UPDATE',
-  DELETE: 'DELETE',
+  read: 'read',
+  create: 'create',
+  update: 'update',
+  delete: 'delete',
 } as const

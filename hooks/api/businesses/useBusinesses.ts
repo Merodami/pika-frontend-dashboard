@@ -62,7 +62,11 @@ export function useBusiness(id: string, options?: { enabled?: boolean }) {
 export function useCreateBusiness() {
   const queryClient = useQueryClient()
 
-  return useApiMutation<GetAdminBusinessById200, Error, CreateAdminBusinessBody>({
+  return useApiMutation<
+    GetAdminBusinessById200,
+    Error,
+    CreateAdminBusinessBody
+  >({
     mutationFn: (data) => createAdminBusiness(data),
     successMessage: 'Business created successfully',
     onSuccess: () => {
@@ -125,9 +129,7 @@ export function useToggleBusinessActive() {
 
   return useApiMutation<null, Error, { id: string; active: boolean }>({
     mutationFn: ({ id, active }) =>
-      active
-        ? activateAdminBusiness(id)
-        : deactivateAdminBusiness(id),
+      active ? activateAdminBusiness(id) : deactivateAdminBusiness(id),
     successMessage: 'Business status updated successfully',
     onSuccess: (_, { id }) => {
       queryClient.invalidateQueries({

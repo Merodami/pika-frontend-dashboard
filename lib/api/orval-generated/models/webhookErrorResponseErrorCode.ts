@@ -11,7 +11,7 @@ export type WebhookErrorResponseErrorCode =
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const WebhookErrorResponseErrorCode = {
-  INVALID_SIGNATURE: 'INVALID_SIGNATURE',
-  PROCESSING_ERROR: 'PROCESSING_ERROR',
-  UNKNOWN_EVENT_TYPE: 'UNKNOWN_EVENT_TYPE',
+  invalidSignature: 'invalidSignature',
+  processingError: 'processingError',
+  unknownEventType: 'unknownEventType',
 } as const

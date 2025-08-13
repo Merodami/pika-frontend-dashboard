@@ -15,7 +15,7 @@ export type CreateAdminVoucherBookBodyBookType =
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CreateAdminVoucherBookBodyBookType = {
   monthly: 'monthly',
-  special_edition: 'special_edition',
+  specialEdition: 'specialEdition',
   regional: 'regional',
   seasonal: 'seasonal',
   promotional: 'promotional',

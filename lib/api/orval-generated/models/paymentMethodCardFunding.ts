@@ -11,8 +11,8 @@ export type PaymentMethodCardFunding =
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PaymentMethodCardFunding = {
-  CREDIT: 'CREDIT',
-  DEBIT: 'DEBIT',
-  PREPAID: 'PREPAID',
-  UNKNOWN: 'UNKNOWN',
+  credit: 'credit',
+  debit: 'debit',
+  prepaid: 'prepaid',
+  unknown: 'unknown',
 } as const

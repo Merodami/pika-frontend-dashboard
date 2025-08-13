@@ -15,7 +15,7 @@ export type AdminVoucherBookQueryParamsBookType =
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const AdminVoucherBookQueryParamsBookType = {
   monthly: 'monthly',
-  special_edition: 'special_edition',
+  specialEdition: 'specialEdition',
   regional: 'regional',
   seasonal: 'seasonal',
   promotional: 'promotional',

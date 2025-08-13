@@ -114,7 +114,12 @@
       "uniqueCustomers": "Unique Customers"
     },
     "recentActivity": "Recent Activity",
-    "viewAllActivity": "View all activity"
+    "viewAllActivity": "View all activity",
+    "topPerformingVouchers": "Top Performing Vouchers",
+    "voucher": "Voucher",
+    "redemptions": "Redemptions",
+    "views": "Views",
+    "conversionRate": "Conversion Rate"
   },
   "vouchers": {
     "title": "Vouchers",
@@ -174,8 +179,8 @@
     "invalidCredentials": "Invalid email or password",
     "dashboardAccessDenied": "You don't have permission to access this resource",
     "sessionExpired": "Your session has expired. Please log in again.",
-    "accountLocked": "Account locked. Please try again later.",
-    "accountSuspended": "Your account has been suspended. Please contact support.",
+    "accountLocked": "Account not verified. Please check your email or contact support.",
+    "accountSuspended": "Your account is inactive. Please contact your administrator for activation.",
     "somethingWentWrong": "Something went wrong. Please try again.",
     "tryAgain": "Please try again",
     "contactAdmin": "Please contact your administrator for assistance"

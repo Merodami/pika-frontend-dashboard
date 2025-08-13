@@ -11,9 +11,11 @@ export type BatchUpdateNotificationStatusRequestUpdatesItemStatus =
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const BatchUpdateNotificationStatusRequestUpdatesItemStatus = {
-  DELIVERED: 'DELIVERED',
-  OPENED: 'OPENED',
-  CLICKED: 'CLICKED',
-  BOUNCED: 'BOUNCED',
-  FAILED: 'FAILED',
+  sent: 'sent',
+  delivered: 'delivered',
+  opened: 'opened',
+  clicked: 'clicked',
+  bounced: 'bounced',
+  complained: 'complained',
+  unsubscribed: 'unsubscribed',
 } as const

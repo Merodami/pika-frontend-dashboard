@@ -114,7 +114,12 @@
       "uniqueCustomers": "Clientes Únicos"
     },
     "recentActivity": "Actividad Reciente",
-    "viewAllActivity": "Ver toda la actividad"
+    "viewAllActivity": "Ver toda la actividad",
+    "topPerformingVouchers": "Cupones de Mejor Rendimiento",
+    "voucher": "Cupón",
+    "redemptions": "Canjes",
+    "views": "Vistas",
+    "conversionRate": "Tasa de Conversión"
   },
   "vouchers": {
     "title": "Cupones",
@@ -174,8 +179,8 @@
     "invalidCredentials": "Correo o contraseña incorrectos",
     "dashboardAccessDenied": "No tienes permiso para acceder a este recurso",
     "sessionExpired": "Tu sesión ha expirado. Por favor, inicia sesión nuevamente.",
-    "accountLocked": "Cuenta bloqueada. Por favor, intenta más tarde.",
-    "accountSuspended": "Tu cuenta ha sido suspendida. Por favor, contacta a soporte.",
+    "accountLocked": "Cuenta no verificada. Por favor, revisa tu correo o contacta a soporte.",
+    "accountSuspended": "Tu cuenta está inactiva. Por favor, contacta a tu administrador para activación.",
     "somethingWentWrong": "Algo salió mal. Por favor, intenta de nuevo.",
     "tryAgain": "Por favor, intenta de nuevo",
     "contactAdmin": "Por favor, contacta a tu administrador para obtener ayuda"

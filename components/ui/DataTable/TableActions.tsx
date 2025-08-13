@@ -3,9 +3,17 @@
 import { ReactNode } from 'react'
 import { Button, Dropdown, Space, Modal, message } from 'antd'
 import type { MenuProps } from 'antd'
-import { 
-  MoreVertical, Trash2, Edit, Eye, Download, 
-  Mail, UserCheck, UserX, Archive, Copy 
+import {
+  MoreVertical,
+  Trash2,
+  Edit,
+  Eye,
+  Download,
+  Mail,
+  UserCheck,
+  UserX,
+  Archive,
+  Copy,
 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
@@ -34,10 +42,10 @@ export function TableActions({
   actions,
   type = 'dropdown',
   size = 'middle',
-  className
+  className,
 }: TableActionsProps) {
   const t = useTranslations('common')
-  
+
   const handleAction = async (action: TableAction) => {
     if (action.confirm) {
       Modal.confirm({
@@ -52,7 +60,7 @@ export function TableActions({
           } catch (error) {
             message.error(t('message.errorOccurred'))
           }
-        }
+        },
       })
     } else {
       try {
@@ -62,13 +70,13 @@ export function TableActions({
       }
     }
   }
-  
-  const visibleActions = actions.filter(action => !action.hidden)
-  
+
+  const visibleActions = actions.filter((action) => !action.hidden)
+
   if (type === 'buttons') {
     return (
       <Space size="small" className={className}>
-        {visibleActions.map(action => (
+        {visibleActions.map((action) => (
           <Button
             key={action.key}
             size={size}
@@ -83,16 +91,16 @@ export function TableActions({
       </Space>
     )
   }
-  
-  const menuItems: MenuProps['items'] = visibleActions.map(action => ({
+
+  const menuItems: MenuProps['items'] = visibleActions.map((action) => ({
     key: action.key,
     label: action.label,
     icon: action.icon,
     danger: action.danger,
     disabled: action.disabled,
-    onClick: () => handleAction(action)
+    onClick: () => handleAction(action),
   }))
-  
+
   return (
     <Dropdown
       menu={{ items: menuItems }}
@@ -133,15 +141,17 @@ export function BulkActions({
   actions,
   selectedKeys,
   onClear,
-  className
+  className,
 }: BulkActionsProps) {
   const t = useTranslations('common')
-  
+
   const handleAction = async (action: BulkAction) => {
     if (action.confirm) {
       Modal.confirm({
         title: action.confirm.title,
-        content: action.confirm.content || `This action will affect ${selectedKeys.length} item(s).`,
+        content:
+          action.confirm.content ||
+          `This action will affect ${selectedKeys.length} item(s).`,
         okText: t('button.confirm'),
         cancelText: t('button.cancel'),
         okButtonProps: { danger: action.danger },
@@ -153,7 +163,7 @@ export function BulkActions({
           } catch (error) {
             message.error(t('message.errorOccurred'))
           }
-        }
+        },
       })
     } else {
       try {
@@ -165,14 +175,14 @@ export function BulkActions({
       }
     }
   }
-  
+
   if (selectedKeys.length === 0) {
     return null
   }
-  
+
   return (
     <Space size="small" className={className}>
-      {actions.map(action => (
+      {actions.map((action) => (
         <Button
           key={action.key}
           size="small"
@@ -194,16 +204,16 @@ export const commonActions = {
     key: 'view',
     label: 'View',
     icon: <Eye className="w-4 h-4" />,
-    onClick
+    onClick,
   }),
-  
+
   edit: (onClick: () => void): TableAction => ({
     key: 'edit',
     label: 'Edit',
     icon: <Edit className="w-4 h-4" />,
-    onClick
+    onClick,
   }),
-  
+
   delete: (onClick: () => void, itemName?: string): TableAction => ({
     key: 'delete',
     label: 'Delete',
@@ -212,51 +222,51 @@ export const commonActions = {
     danger: true,
     confirm: {
       title: `Delete ${itemName || 'item'}?`,
-      content: 'This action cannot be undone.'
-    }
+      content: 'This action cannot be undone.',
+    },
   }),
-  
+
   duplicate: (onClick: () => void): TableAction => ({
     key: 'duplicate',
     label: 'Duplicate',
     icon: <Copy className="w-4 h-4" />,
-    onClick
+    onClick,
   }),
-  
+
   archive: (onClick: () => void): TableAction => ({
     key: 'archive',
     label: 'Archive',
     icon: <Archive className="w-4 h-4" />,
-    onClick
+    onClick,
   }),
-  
+
   activate: (onClick: () => void): TableAction => ({
     key: 'activate',
     label: 'Activate',
     icon: <UserCheck className="w-4 h-4" />,
-    onClick
+    onClick,
   }),
-  
+
   deactivate: (onClick: () => void): TableAction => ({
     key: 'deactivate',
     label: 'Deactivate',
     icon: <UserX className="w-4 h-4" />,
-    onClick
+    onClick,
   }),
-  
+
   sendEmail: (onClick: () => void): TableAction => ({
     key: 'sendEmail',
     label: 'Send Email',
     icon: <Mail className="w-4 h-4" />,
-    onClick
+    onClick,
   }),
-  
+
   download: (onClick: () => void): TableAction => ({
     key: 'download',
     label: 'Download',
     icon: <Download className="w-4 h-4" />,
-    onClick
-  })
+    onClick,
+  }),
 }
 
 // Common bulk actions
@@ -269,38 +279,38 @@ export const commonBulkActions = {
     danger: true,
     confirm: {
       title: 'Delete selected items?',
-      content: 'This action cannot be undone.'
-    }
+      content: 'This action cannot be undone.',
+    },
   }),
-  
+
   archiveMultiple: (onClick: (keys: React.Key[]) => void): BulkAction => ({
     key: 'archiveMultiple',
     label: 'Archive',
     icon: <Archive className="w-4 h-4" />,
     onClick,
     confirm: {
-      title: 'Archive selected items?'
-    }
+      title: 'Archive selected items?',
+    },
   }),
-  
+
   activateMultiple: (onClick: (keys: React.Key[]) => void): BulkAction => ({
     key: 'activateMultiple',
     label: 'Activate',
     icon: <UserCheck className="w-4 h-4" />,
-    onClick
+    onClick,
   }),
-  
+
   deactivateMultiple: (onClick: (keys: React.Key[]) => void): BulkAction => ({
     key: 'deactivateMultiple',
     label: 'Deactivate',
     icon: <UserX className="w-4 h-4" />,
-    onClick
+    onClick,
   }),
-  
+
   exportSelected: (onClick: (keys: React.Key[]) => void): BulkAction => ({
     key: 'exportSelected',
     label: 'Export Selected',
     icon: <Download className="w-4 h-4" />,
-    onClick
-  })
+    onClick,
+  }),
 }

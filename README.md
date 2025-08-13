@@ -294,6 +294,7 @@ npm run vercel:build
 #### Build Configuration
 
 The project includes:
+
 - `.vercelignore` - Excludes unnecessary files from deployment
 - `vercel.json` - Configures build settings, regions, and security headers
 - Production-optimized dependencies in `package.json`

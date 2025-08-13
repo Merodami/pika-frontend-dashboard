@@ -23,7 +23,7 @@ export default async function UsersPage({
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
-  
+
   // Require admin role - will throw if not admin
   try {
     await requireAdmin()

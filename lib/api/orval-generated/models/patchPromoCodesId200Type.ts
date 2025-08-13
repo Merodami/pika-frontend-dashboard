@@ -11,6 +11,6 @@ export type PatchPromoCodesId200Type =
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PatchPromoCodesId200Type = {
-  percentage: 'percentage',
   fixedAmount: 'fixedAmount',
+  percentage: 'percentage',
 } as const

@@ -89,7 +89,12 @@
       "activeVouchers": "Kupón Hendýva",
       "totalRedemptions": "Jepuru Opavave",
       "revenue": "Jehupytyrã",
-      "growth": "Ñembotuichave"
+      "growth": "Ñembotuichave",
+      "topPerformingVouchers": "Kupón Iporãvéva",
+      "voucher": "Kupón",
+      "redemptions": "Jepuru",
+      "views": "Jehecha",
+      "conversionRate": "Tasa Conversión"
     }
   },
   "vouchers": {
@@ -150,8 +155,8 @@
     "invalidCredentials": "Correo térã ñe'ẽñemi ndoikói",
     "dashboardAccessDenied": "Ndererekói permiso reike hag̃ua ko'ápe",
     "sessionExpired": "Ne sesión opáma. Eike jey.",
-    "accountLocked": "Ne cuenta ojejoko. Eha'ã jey ag̃ave.",
-    "accountSuspended": "Ne cuenta ojejoko. Eñe'ẽ soporte ndive.",
+    "accountLocked": "Ne cuenta noñehechajey. Ehecha ne correo térã eñe'ẽ soporte ndive.",
+    "accountSuspended": "Ne cuenta nohendýi. Eñe'ẽ ne administrador ndive omohendy hag̃ua.",
     "somethingWentWrong": "Oĩ mba'e vai. Eha'ã jey.",
     "tryAgain": "Eha'ã jey",
     "contactAdmin": "Eñe'ẽ ne administrador ndive reñepytyvõ hag̃ua"

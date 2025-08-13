@@ -14,7 +14,8 @@ export const queryKeys = {
     detail: (id: string) => [...queryKeys.vouchers.details(), id] as const,
     infinite: (filters?: Record<string, unknown>) =>
       [...queryKeys.vouchers.all(), 'infinite', filters] as const,
-    stats: (businessId?: string) => [...queryKeys.vouchers.all(), 'stats', businessId] as const,
+    stats: (businessId?: string) =>
+      [...queryKeys.vouchers.all(), 'stats', businessId] as const,
   },
 
   // Business query keys

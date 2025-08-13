@@ -15,7 +15,7 @@ export type UpdateAdminVoucherBookStatus200BookType =
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const UpdateAdminVoucherBookStatus200BookType = {
   monthly: 'monthly',
-  special_edition: 'special_edition',
+  specialEdition: 'specialEdition',
   regional: 'regional',
   seasonal: 'seasonal',
   promotional: 'promotional',

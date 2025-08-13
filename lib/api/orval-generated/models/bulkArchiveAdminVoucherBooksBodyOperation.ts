@@ -16,6 +16,6 @@ export type BulkArchiveAdminVoucherBooksBodyOperation =
 export const BulkArchiveAdminVoucherBooksBodyOperation = {
   publish: 'publish',
   archive: 'archive',
-  generate_pdf: 'generate_pdf',
+  generatePdf: 'generatePdf',
   delete: 'delete',
 } as const

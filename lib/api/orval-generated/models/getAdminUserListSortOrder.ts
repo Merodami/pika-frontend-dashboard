@@ -11,6 +11,6 @@ export type GetAdminUserListSortOrder =
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const GetAdminUserListSortOrder = {
-  ASC: 'ASC',
-  DESC: 'DESC',
+  asc: 'asc',
+  desc: 'desc',
 } as const

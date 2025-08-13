@@ -11,7 +11,7 @@ export type VerifyAdminUserBodyType =
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const VerifyAdminUserBodyType = {
-  EMAIL: 'EMAIL',
-  PHONE: 'PHONE',
-  ACCOUNT_CONFIRMATION: 'ACCOUNT_CONFIRMATION',
+  email: 'email',
+  phone: 'phone',
+  accountConfirmation: 'accountConfirmation',
 } as const

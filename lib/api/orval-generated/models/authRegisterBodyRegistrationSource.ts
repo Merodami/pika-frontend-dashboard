@@ -15,5 +15,5 @@ export type AuthRegisterBodyRegistrationSource =
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const AuthRegisterBodyRegistrationSource = {
   public: 'public',
-  admin_dashboard: 'admin_dashboard',
+  adminDashboard: 'adminDashboard',
 } as const

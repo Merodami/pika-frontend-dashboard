@@ -10,4 +10,7 @@ export * from './orval-generated/endpoints'
 export * from './orval-generated/models'
 
 // Re-export custom instance if needed
-export { customInstance, default as axiosInstance } from './orval-generated/custom-instance'
+export {
+  customInstance,
+  default as axiosInstance,
+} from './orval-generated/custom-instance'

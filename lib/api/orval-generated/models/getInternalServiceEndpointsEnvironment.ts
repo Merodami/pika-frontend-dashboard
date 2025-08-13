@@ -11,8 +11,8 @@ export type GetInternalServiceEndpointsEnvironment =
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const GetInternalServiceEndpointsEnvironment = {
-  DEVELOPMENT: 'DEVELOPMENT',
-  STAGING: 'STAGING',
-  PRODUCTION: 'PRODUCTION',
-  TEST: 'TEST',
+  development: 'development',
+  staging: 'staging',
+  production: 'production',
+  test: 'test',
 } as const

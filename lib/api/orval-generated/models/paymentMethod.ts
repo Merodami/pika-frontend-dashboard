@@ -17,6 +17,7 @@ export interface PaymentMethod {
   id: string
   userId: string
   stripePaymentMethodId: string
+  /** Type of payment method */
   type: PaymentMethodType
   isDefault?: boolean
   card?: PaymentMethodCard

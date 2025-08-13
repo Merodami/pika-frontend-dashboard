@@ -11,9 +11,9 @@ export type ServiceRegistryQueryStatus =
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ServiceRegistryQueryStatus = {
-  STARTING: 'STARTING',
-  HEALTHY: 'HEALTHY',
-  DEGRADED: 'DEGRADED',
-  UNHEALTHY: 'UNHEALTHY',
-  STOPPED: 'STOPPED',
+  starting: 'starting',
+  healthy: 'healthy',
+  degraded: 'degraded',
+  unhealthy: 'unhealthy',
+  stopped: 'stopped',
 } as const

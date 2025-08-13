@@ -89,12 +89,12 @@ export async function requireAdmin() {
 // Ensure user is either admin or business (dashboard access)
 export async function requireDashboardAccess() {
   const user = await requireAuth()
-  
+
   if (user.role !== UserRole.ADMIN && user.role !== UserRole.BUSINESS) {
     // User doesn't have the right role for dashboard access
     // This will be caught by error boundary and redirect to login
     throw new Error('Dashboard access denied - Admin or Business role required')
   }
-  
+
   return user
 }

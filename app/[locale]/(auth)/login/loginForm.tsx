@@ -13,7 +13,11 @@ import { useAppStore } from '@/store/app.store'
 import { AuthFormWrapper } from '@/components/auth/authFormWrapper'
 import { LocalizedLink } from '@/components/ui/LocalizedLink'
 import { useLocalizedRouter } from '@/hooks/useLocalizedRouter'
-import { LoginFormSchema, transformLoginToTokenRequest, type LoginFormData } from '@/lib/validations/auth'
+import {
+  LoginFormSchema,
+  transformLoginToTokenRequest,
+  type LoginFormData,
+} from '@/lib/validations/auth'
 
 // Extract input and output types for proper branded type handling
 type LoginFormInput = z.input<typeof LoginFormSchema>
@@ -28,7 +32,7 @@ export function LoginForm() {
   const { formDrafts, saveFormDraft, clearFormDraft } = useAppStore()
 
   const isDevelopment = process.env.NODE_ENV === 'development'
-  
+
   const {
     control,
     handleSubmit,
@@ -53,8 +57,8 @@ export function LoginForm() {
 
       if (result?.error) {
         // Use error code for translation if available, otherwise use the error message
-        const errorMessage = result.errorCode 
-          ? tErrors(result.errorCode as any) 
+        const errorMessage = result.errorCode
+          ? tErrors(result.errorCode as any)
           : result.error
         setError(errorMessage)
       } else if (result?.success) {
@@ -63,14 +67,15 @@ export function LoginForm() {
           setError(tErrors('accessDenied'))
           return
         }
-        
+
         // Clear form draft on success
         clearFormDraft('login')
 
         // Redirect based on user role
-        const redirectPath = result.user?.role === 'admin' 
-          ? `/${router.locale}/admin`
-          : `/${router.locale}/business`
+        const redirectPath =
+          result.user?.role === 'admin'
+            ? `/${router.locale}/admin`
+            : `/${router.locale}/business`
 
         // Force page reload to ensure cookies are properly set and middleware runs
         window.location.href = redirectPath

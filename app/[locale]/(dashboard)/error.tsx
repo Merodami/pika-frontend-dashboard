@@ -19,7 +19,7 @@ export default function DashboardError({
   useEffect(() => {
     // Log error for debugging
     console.error('Dashboard error:', error)
-    
+
     // If it's an auth/access error, redirect to login after a short delay
     if (
       error.message.includes('Unauthorized') ||
@@ -38,9 +38,7 @@ export default function DashboardError({
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-bold mb-4">{t('forbidden')}</h2>
-          <p className="text-gray-600 mb-6">
-            {t('dashboardAccessDenied')}
-          </p>
+          <p className="text-gray-600 mb-6">{t('dashboardAccessDenied')}</p>
           <Button type="primary" onClick={() => router.push('/login')}>
             {tCommon('button.back')}
           </Button>
@@ -54,9 +52,7 @@ export default function DashboardError({
     <div className="min-h-screen flex items-center justify-center">
       <div className="text-center">
         <h2 className="text-2xl font-bold mb-4">{t('somethingWentWrong')}</h2>
-        <p className="text-gray-600 mb-6">
-          {t('contactAdmin')}
-        </p>
+        <p className="text-gray-600 mb-6">{t('contactAdmin')}</p>
         <div className="space-x-4">
           <Button onClick={() => reset()}>{t('tryAgain')}</Button>
           <Button type="primary" onClick={() => router.push('/login')}>

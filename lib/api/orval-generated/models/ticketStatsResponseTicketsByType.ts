@@ -16,7 +16,7 @@ export type TicketStatsResponseTicketsByType = {
   /** @minimum 0 */
   general?: number
   /** @minimum 0 */
-  bug_report?: number
+  bugReport?: number
   /** @minimum 0 */
-  feature_request?: number
+  featureRequest?: number
 }

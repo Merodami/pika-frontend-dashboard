@@ -1,5 +1,9 @@
 import { useState, useCallback, useMemo } from 'react'
-import { TablePaginationConfig, SorterResult, FilterValue } from 'antd/es/table/interface'
+import {
+  TablePaginationConfig,
+  SorterResult,
+  FilterValue,
+} from 'antd/es/table/interface'
 import { debounce } from 'lodash-es'
 import type { PaginationMetadata } from '@/lib/api/orval-client'
 
@@ -18,7 +22,10 @@ export interface UseDataTableOptions {
   debounceDelay?: number
   onSearch?: (search: string) => void
   onFilter?: (filters: Record<string, any>) => void
-  onSort?: (field: string | undefined, order: 'asc' | 'desc' | undefined) => void
+  onSort?: (
+    field: string | undefined,
+    order: 'asc' | 'desc' | undefined
+  ) => void
   onPageChange?: (page: number, pageSize: number) => void
   onSelectionChange?: (selectedRowKeys: React.Key[]) => void
 }
@@ -26,7 +33,7 @@ export interface UseDataTableOptions {
 export interface UseDataTableReturn<T = any> {
   // State
   state: DataTableState
-  
+
   // Actions
   setPage: (page: number) => void
   setPageSize: (pageSize: number) => void
@@ -38,7 +45,7 @@ export interface UseDataTableReturn<T = any> {
   clearFilters: () => void
   clearSelection: () => void
   reset: () => void
-  
+
   // Handlers for Ant Design Table
   handleTableChange: (
     pagination: TablePaginationConfig,
@@ -48,7 +55,7 @@ export interface UseDataTableReturn<T = any> {
   handleSearch: (value: string) => void
   handleFilter: (key: string, value: any) => void
   handleSelectionChange: (selectedRowKeys: React.Key[]) => void
-  
+
   // Computed values
   pagination: TablePaginationConfig
   queryParams: Record<string, any>
@@ -64,7 +71,7 @@ export function useDataTable<T = any>(
     onFilter,
     onSort,
     onPageChange,
-    onSelectionChange
+    onSelectionChange,
   } = options
 
   // State
@@ -78,81 +85,111 @@ export function useDataTable<T = any>(
 
   // Debounced search handler
   const debouncedSearch = useMemo(
-    () => debounce((value: string) => {
-      setSearchState(value)
-      setPage(1) // Reset to first page on search
-      onSearch?.(value)
-    }, debounceDelay),
+    () =>
+      debounce((value: string) => {
+        setSearchState(value)
+        setPage(1) // Reset to first page on search
+        onSearch?.(value)
+      }, debounceDelay),
     [debounceDelay, onSearch]
   )
 
   // Handlers
-  const handleTableChange = useCallback((
-    pagination: TablePaginationConfig,
-    tableFilters: Record<string, FilterValue | null>,
-    sorter: SorterResult<T> | SorterResult<T>[]
-  ) => {
-    // Handle pagination
-    if (pagination.current && pagination.current !== page) {
-      setPage(pagination.current)
-      onPageChange?.(pagination.current, pageSize)
-    }
-    if (pagination.pageSize && pagination.pageSize !== pageSize) {
-      setPageSize(pagination.pageSize)
-      setPage(1) // Reset to first page on page size change
-      onPageChange?.(1, pagination.pageSize)
-    }
-
-    // Handle sorting
-    if (!Array.isArray(sorter)) {
-      const newSortField = sorter.field as string | undefined
-      const newSortOrder = sorter.order === 'ascend' ? 'asc' : sorter.order === 'descend' ? 'desc' : undefined
-      
-      if (newSortField !== sortField || newSortOrder !== sortOrder) {
-        setSortField(newSortField)
-        setSortOrder(newSortOrder)
-        setPage(1) // Reset to first page on sort change
-        onSort?.(newSortField, newSortOrder)
+  const handleTableChange = useCallback(
+    (
+      pagination: TablePaginationConfig,
+      tableFilters: Record<string, FilterValue | null>,
+      sorter: SorterResult<T> | SorterResult<T>[]
+    ) => {
+      // Handle pagination
+      if (pagination.current && pagination.current !== page) {
+        setPage(pagination.current)
+        onPageChange?.(pagination.current, pageSize)
       }
-    }
-
-    // Handle filters
-    const processedFilters = Object.entries(tableFilters).reduce((acc, [key, value]) => {
-      if (value !== null && value !== undefined) {
-        acc[key] = Array.isArray(value) ? value : value
+      if (pagination.pageSize && pagination.pageSize !== pageSize) {
+        setPageSize(pagination.pageSize)
+        setPage(1) // Reset to first page on page size change
+        onPageChange?.(1, pagination.pageSize)
       }
-      return acc
-    }, {} as Record<string, any>)
 
-    if (JSON.stringify(processedFilters) !== JSON.stringify(filters)) {
-      setFilters(processedFilters)
+      // Handle sorting
+      if (!Array.isArray(sorter)) {
+        const newSortField = sorter.field as string | undefined
+        const newSortOrder =
+          sorter.order === 'ascend'
+            ? 'asc'
+            : sorter.order === 'descend'
+              ? 'desc'
+              : undefined
+
+        if (newSortField !== sortField || newSortOrder !== sortOrder) {
+          setSortField(newSortField)
+          setSortOrder(newSortOrder)
+          setPage(1) // Reset to first page on sort change
+          onSort?.(newSortField, newSortOrder)
+        }
+      }
+
+      // Handle filters
+      const processedFilters = Object.entries(tableFilters).reduce(
+        (acc, [key, value]) => {
+          if (value !== null && value !== undefined) {
+            acc[key] = Array.isArray(value) ? value : value
+          }
+          return acc
+        },
+        {} as Record<string, any>
+      )
+
+      if (JSON.stringify(processedFilters) !== JSON.stringify(filters)) {
+        setFilters(processedFilters)
+        setPage(1) // Reset to first page on filter change
+        onFilter?.(processedFilters)
+      }
+    },
+    [
+      page,
+      pageSize,
+      sortField,
+      sortOrder,
+      filters,
+      onPageChange,
+      onSort,
+      onFilter,
+    ]
+  )
+
+  const handleSearch = useCallback(
+    (value: string) => {
+      debouncedSearch(value)
+    },
+    [debouncedSearch]
+  )
+
+  const handleFilter = useCallback(
+    (key: string, value: any) => {
+      const newFilters = { ...filters }
+
+      if (value === null || value === undefined || value === '') {
+        delete newFilters[key]
+      } else {
+        newFilters[key] = value
+      }
+
+      setFilters(newFilters)
       setPage(1) // Reset to first page on filter change
-      onFilter?.(processedFilters)
-    }
-  }, [page, pageSize, sortField, sortOrder, filters, onPageChange, onSort, onFilter])
+      onFilter?.(newFilters)
+    },
+    [filters, onFilter]
+  )
 
-  const handleSearch = useCallback((value: string) => {
-    debouncedSearch(value)
-  }, [debouncedSearch])
-
-  const handleFilter = useCallback((key: string, value: any) => {
-    const newFilters = { ...filters }
-    
-    if (value === null || value === undefined || value === '') {
-      delete newFilters[key]
-    } else {
-      newFilters[key] = value
-    }
-    
-    setFilters(newFilters)
-    setPage(1) // Reset to first page on filter change
-    onFilter?.(newFilters)
-  }, [filters, onFilter])
-
-  const handleSelectionChange = useCallback((keys: React.Key[]) => {
-    setSelectedRowKeys(keys)
-    onSelectionChange?.(keys)
-  }, [onSelectionChange])
+  const handleSelectionChange = useCallback(
+    (keys: React.Key[]) => {
+      setSelectedRowKeys(keys)
+      onSelectionChange?.(keys)
+    },
+    [onSelectionChange]
+  )
 
   // Actions
   const clearFilters = useCallback(() => {
@@ -178,18 +215,21 @@ export function useDataTable<T = any>(
   }, [initialPageSize])
 
   // Computed values
-  const pagination: TablePaginationConfig = useMemo(() => ({
-    current: page,
-    pageSize,
-    showSizeChanger: true,
-    showTotal: (total, range) => `${range[0]}-${range[1]} of ${total}`,
-    pageSizeOptions: ['10', '20', '50', '100']
-  }), [page, pageSize])
+  const pagination: TablePaginationConfig = useMemo(
+    () => ({
+      current: page,
+      pageSize,
+      showSizeChanger: true,
+      showTotal: (total, range) => `${range[0]}-${range[1]} of ${total}`,
+      pageSizeOptions: ['10', '20', '50', '100'],
+    }),
+    [page, pageSize]
+  )
 
   const queryParams = useMemo(() => {
     const params: Record<string, any> = {
       page,
-      limit: pageSize
+      limit: pageSize,
     }
 
     if (search) {
@@ -217,17 +257,20 @@ export function useDataTable<T = any>(
     sortField,
     sortOrder,
     filters,
-    selectedRowKeys
+    selectedRowKeys,
   }
 
-  const setSearch = useCallback((value: string) => {
-    handleSearch(value)
-  }, [handleSearch])
+  const setSearch = useCallback(
+    (value: string) => {
+      handleSearch(value)
+    },
+    [handleSearch]
+  )
 
   return {
     // State
     state,
-    
+
     // Actions
     setPage,
     setPageSize,
@@ -239,35 +282,41 @@ export function useDataTable<T = any>(
     clearFilters,
     clearSelection,
     reset,
-    
+
     // Handlers
     handleTableChange,
     handleSearch,
     handleFilter,
     handleSelectionChange,
-    
+
     // Computed
     pagination,
-    queryParams
+    queryParams,
   }
 }
 
 // Helper hook for server-side pagination
 export function useServerDataTable<T = any>(
   options: UseDataTableOptions = {}
-): UseDataTableReturn<T> & { 
-  serverPagination: (metadata: PaginationMetadata | undefined) => TablePaginationConfig 
+): UseDataTableReturn<T> & {
+  serverPagination: (
+    metadata: PaginationMetadata | undefined
+  ) => TablePaginationConfig
 } {
   const dataTable = useDataTable<T>(options)
 
-  const serverPagination = useCallback((metadata: PaginationMetadata | undefined) => ({
-    ...dataTable.pagination,
-    total: metadata?.total || 0,
-    showTotal: (total: number, range: [number, number]) => `${range[0]}-${range[1]} of ${total}`,
-  }), [dataTable.pagination])
+  const serverPagination = useCallback(
+    (metadata: PaginationMetadata | undefined) => ({
+      ...dataTable.pagination,
+      total: metadata?.total || 0,
+      showTotal: (total: number, range: [number, number]) =>
+        `${range[0]}-${range[1]} of ${total}`,
+    }),
+    [dataTable.pagination]
+  )
 
   return {
     ...dataTable,
-    serverPagination
+    serverPagination,
   }
 }

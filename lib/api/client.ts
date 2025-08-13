@@ -4,5 +4,5 @@
  */
 
 // Re-export endpoints configured with client instance
-export * from './orval-generated/endpoints';
-export * from './orval-generated/models';
+export * from './orval-generated/endpoints'
+export * from './orval-generated/models'

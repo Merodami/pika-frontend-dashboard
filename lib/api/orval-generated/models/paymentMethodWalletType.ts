@@ -11,7 +11,7 @@ export type PaymentMethodWalletType =
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PaymentMethodWalletType = {
-  APPLE_PAY: 'APPLE_PAY',
-  GOOGLE_PAY: 'GOOGLE_PAY',
-  SAMSUNG_PAY: 'SAMSUNG_PAY',
+  applePay: 'applePay',
+  googlePay: 'googlePay',
+  samsungPay: 'samsungPay',
 } as const

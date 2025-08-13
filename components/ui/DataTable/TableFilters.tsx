@@ -1,7 +1,16 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Form, Input, Select, DatePicker, Button, Space, Tag, Drawer } from 'antd'
+import {
+  Form,
+  Input,
+  Select,
+  DatePicker,
+  Button,
+  Space,
+  Tag,
+  Drawer,
+} from 'antd'
 import { Filter, RotateCcw } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { isEmpty, omitBy, isNil } from 'lodash-es'
@@ -37,7 +46,7 @@ export function TableFilters({
   onReset,
   inline = false,
   showActiveFilters = true,
-  className
+  className,
 }: TableFiltersProps) {
   const t = useTranslations('common')
   const [form] = Form.useForm()
@@ -52,29 +61,36 @@ export function TableFilters({
 
   const handleSubmit = (formValues: Record<string, any>) => {
     // Process values based on field types
-    const processedValues = fields.reduce((acc, field) => {
-      const value = formValues[field.name]
-      
-      if (value === undefined || value === null || value === '') {
+    const processedValues = fields.reduce(
+      (acc, field) => {
+        const value = formValues[field.name]
+
+        if (value === undefined || value === null || value === '') {
+          return acc
+        }
+
+        // Handle date fields
+        if (field.type === 'date' && value) {
+          acc[field.name] = dayjs(value).format('YYYY-MM-DD')
+        } else if (
+          field.type === 'daterange' &&
+          value &&
+          Array.isArray(value)
+        ) {
+          acc[`${field.name}From`] = dayjs(value[0]).format('YYYY-MM-DD')
+          acc[`${field.name}To`] = dayjs(value[1]).format('YYYY-MM-DD')
+        } else {
+          acc[field.name] = value
+        }
+
         return acc
-      }
-      
-      // Handle date fields
-      if (field.type === 'date' && value) {
-        acc[field.name] = dayjs(value).format('YYYY-MM-DD')
-      } else if (field.type === 'daterange' && value && Array.isArray(value)) {
-        acc[`${field.name}From`] = dayjs(value[0]).format('YYYY-MM-DD')
-        acc[`${field.name}To`] = dayjs(value[1]).format('YYYY-MM-DD')
-      } else {
-        acc[field.name] = value
-      }
-      
-      return acc
-    }, {} as Record<string, any>)
-    
+      },
+      {} as Record<string, any>
+    )
+
     setActiveFilters(processedValues)
     onChange?.(processedValues)
-    
+
     if (!inline) {
       setDrawerOpen(false)
     }
@@ -90,7 +106,7 @@ export function TableFilters({
   const removeFilter = (key: string) => {
     const newValues = { ...activeFilters }
     delete newValues[key]
-    
+
     // Also remove related daterange fields
     if (key.endsWith('From') || key.endsWith('To')) {
       const baseKey = key.replace(/From$|To$/, '')
@@ -100,7 +116,7 @@ export function TableFilters({
     } else {
       form.setFieldValue(key, undefined)
     }
-    
+
     setActiveFilters(newValues)
     onChange?.(newValues)
   }
@@ -109,21 +125,18 @@ export function TableFilters({
     switch (field.type) {
       case 'text':
         return (
-          <Input 
-            placeholder={field.placeholder || field.label}
-            allowClear
-          />
+          <Input placeholder={field.placeholder || field.label} allowClear />
         )
-      
+
       case 'number':
         return (
-          <Input 
+          <Input
             type="number"
             placeholder={field.placeholder || field.label}
             allowClear
           />
         )
-      
+
       case 'select':
         return (
           <Select
@@ -131,14 +144,14 @@ export function TableFilters({
             allowClear
             className="w-full"
           >
-            {field.options?.map(option => (
+            {field.options?.map((option) => (
               <Option key={option.value} value={option.value}>
                 {option.label}
               </Option>
             ))}
           </Select>
         )
-      
+
       case 'multiselect':
         return (
           <Select
@@ -147,14 +160,14 @@ export function TableFilters({
             allowClear
             className="w-full"
           >
-            {field.options?.map(option => (
+            {field.options?.map((option) => (
               <Option key={option.value} value={option.value}>
                 {option.label}
               </Option>
             ))}
           </Select>
         )
-      
+
       case 'date':
         return (
           <DatePicker
@@ -163,7 +176,7 @@ export function TableFilters({
             placeholder={field.placeholder || field.label}
           />
         )
-      
+
       case 'daterange':
         return (
           <RangePicker
@@ -171,11 +184,11 @@ export function TableFilters({
             format="YYYY-MM-DD"
             placeholder={[
               field.placeholder?.split(',')[0] || 'Start Date',
-              field.placeholder?.split(',')[1] || 'End Date'
+              field.placeholder?.split(',')[1] || 'End Date',
             ]}
           />
         )
-      
+
       default:
         return null
     }
@@ -188,8 +201,14 @@ export function TableFilters({
       onFinish={handleSubmit}
       className={className}
     >
-      <div className={inline ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4" : "space-y-4"}>
-        {fields.map(field => (
+      <div
+        className={
+          inline
+            ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'
+            : 'space-y-4'
+        }
+      >
+        {fields.map((field) => (
           <Form.Item
             key={field.name}
             name={field.name}
@@ -201,9 +220,13 @@ export function TableFilters({
           </Form.Item>
         ))}
       </div>
-      
+
       <Space className="mt-4">
-        <Button type="primary" htmlType="submit" icon={<Filter className="w-4 h-4" />}>
+        <Button
+          type="primary"
+          htmlType="submit"
+          icon={<Filter className="w-4 h-4" />}
+        >
           {t('button.filter')}
         </Button>
         <Button onClick={handleReset} icon={<RotateCcw className="w-4 h-4" />}>
@@ -221,11 +244,15 @@ export function TableFilters({
         // Skip daterange sub-fields
         if (key.endsWith('From') || key.endsWith('To')) {
           const baseKey = key.replace(/From$|To$/, '')
-          if (activeFilters[`${baseKey}From`] && activeFilters[`${baseKey}To`] && key.endsWith('To')) {
+          if (
+            activeFilters[`${baseKey}From`] &&
+            activeFilters[`${baseKey}To`] &&
+            key.endsWith('To')
+          ) {
             return null // Skip the 'To' field, we'll show both in the 'From' tag
           }
           if (key.endsWith('From')) {
-            const field = fields.find(f => f.name === baseKey)
+            const field = fields.find((f) => f.name === baseKey)
             const label = field?.label || baseKey
             return (
               <Tag
@@ -234,16 +261,17 @@ export function TableFilters({
                 onClose={() => removeFilter(key)}
                 className="flex items-center gap-1"
               >
-                {label}: {activeFilters[`${baseKey}From`]} - {activeFilters[`${baseKey}To`]}
+                {label}: {activeFilters[`${baseKey}From`]} -{' '}
+                {activeFilters[`${baseKey}To`]}
               </Tag>
             )
           }
         }
-        
-        const field = fields.find(f => f.name === key)
+
+        const field = fields.find((f) => f.name === key)
         const label = field?.label || key
         const displayValue = Array.isArray(value) ? value.join(', ') : value
-        
+
         return (
           <Tag
             key={key}
@@ -291,7 +319,7 @@ export function TableFilters({
         </Button>
         {activeFilterTags}
       </div>
-      
+
       <Drawer
         title="Filters"
         placement="right"
@@ -311,30 +339,33 @@ export const commonFilters = {
     name: 'status',
     label: 'Status',
     type: 'select',
-    options
+    options,
   }),
-  
-  dateRange: (name: string = 'created', label: string = 'Created Date'): FilterField => ({
+
+  dateRange: (
+    name: string = 'created',
+    label: string = 'Created Date'
+  ): FilterField => ({
     name,
     label,
     type: 'daterange',
-    placeholder: 'Start Date,End Date'
+    placeholder: 'Start Date,End Date',
   }),
-  
+
   search: (name: string = 'search', label: string = 'Search'): FilterField => ({
     name,
     label,
     type: 'text',
-    placeholder: 'Search...'
+    placeholder: 'Search...',
   }),
-  
+
   role: (options: Array<{ label: string; value: string }>): FilterField => ({
     name: 'role',
     label: 'Role',
     type: 'select',
-    options
+    options,
   }),
-  
+
   multiSelect: (
     name: string,
     label: string,
@@ -343,6 +374,6 @@ export const commonFilters = {
     name,
     label,
     type: 'multiselect',
-    options
-  })
+    options,
+  }),
 }

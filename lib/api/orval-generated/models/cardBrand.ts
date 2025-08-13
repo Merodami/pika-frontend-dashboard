@@ -13,12 +13,12 @@ export type CardBrand = (typeof CardBrand)[keyof typeof CardBrand]
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CardBrand = {
-  VISA: 'VISA',
-  MASTERCARD: 'MASTERCARD',
-  AMEX: 'AMEX',
-  DISCOVER: 'DISCOVER',
-  DINERS: 'DINERS',
-  JCB: 'JCB',
-  UNIONPAY: 'UNIONPAY',
-  UNKNOWN: 'UNKNOWN',
+  visa: 'visa',
+  mastercard: 'mastercard',
+  amex: 'amex',
+  discover: 'discover',
+  diners: 'diners',
+  jcb: 'jcb',
+  unionpay: 'unionpay',
+  unknown: 'unknown',
 } as const

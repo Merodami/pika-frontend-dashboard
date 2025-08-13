@@ -12,27 +12,28 @@ export interface DataTableColumn<T = any> extends ColumnType<T> {
   hidden?: boolean
 }
 
-export interface DataTableProps<T = any> extends Omit<TableProps<T>, 'columns' | 'title'> {
+export interface DataTableProps<T = any>
+  extends Omit<TableProps<T>, 'columns' | 'title'> {
   // Data
   columns: DataTableColumn<T>[]
   data: T[]
   loading?: boolean
-  
+
   // Features
   searchable?: boolean
   searchPlaceholder?: string
   onSearch?: (value: string) => void
-  
+
   // Actions
   actions?: ReactNode
   bulkActions?: ReactNode
   showRefresh?: boolean
   onRefresh?: () => void
-  
+
   // Export
   exportable?: boolean
   onExport?: () => void
-  
+
   // Customization
   title?: string
   description?: string
@@ -46,29 +47,29 @@ export function DataTable<T extends Record<string, any>>({
   columns,
   data,
   loading = false,
-  
+
   // Features
   searchable = true,
   searchPlaceholder,
   onSearch,
-  
+
   // Actions
   actions,
   bulkActions,
   showRefresh = false,
   onRefresh,
-  
+
   // Export
   exportable = false,
   onExport,
-  
+
   // Customization
   title,
   description,
   emptyMessage,
   cardProps,
   compact = false,
-  
+
   // Table props
   rowSelection,
   pagination,
@@ -76,26 +77,29 @@ export function DataTable<T extends Record<string, any>>({
   ...tableProps
 }: DataTableProps<T>) {
   const t = useTranslations('common')
-  
+
   // Filter out hidden columns
   const visibleColumns = useMemo(
-    () => columns.filter(col => !col.hidden),
+    () => columns.filter((col) => !col.hidden),
     [columns]
   )
-  
+
   // Check if we have selected rows for bulk actions
-  const hasSelection = rowSelection?.selectedRowKeys && rowSelection.selectedRowKeys.length > 0
-  
+  const hasSelection =
+    rowSelection?.selectedRowKeys && rowSelection.selectedRowKeys.length > 0
+
   const tableHeader = (
     <div className="space-y-4">
       {/* Title and Description */}
       {(title || description) && (
         <div>
           {title && <h2 className="text-xl font-semibold">{title}</h2>}
-          {description && <p className="text-sm text-gray-500 mt-1">{description}</p>}
+          {description && (
+            <p className="text-sm text-gray-500 mt-1">{description}</p>
+          )}
         </div>
       )}
-      
+
       {/* Controls Row */}
       <div className="flex flex-col sm:flex-row gap-4 justify-between">
         {/* Left side - Search and Filters */}
@@ -109,7 +113,7 @@ export function DataTable<T extends Record<string, any>>({
               allowClear
             />
           )}
-          
+
           {/* Show bulk actions when items are selected */}
           {hasSelection && bulkActions && (
             <div className="flex items-center gap-2">
@@ -120,11 +124,11 @@ export function DataTable<T extends Record<string, any>>({
             </div>
           )}
         </div>
-        
+
         {/* Right side - Actions */}
         <Space>
           {actions}
-          
+
           {showRefresh && onRefresh && (
             <Tooltip title={t('button.refresh')}>
               <Button
@@ -134,7 +138,7 @@ export function DataTable<T extends Record<string, any>>({
               />
             </Tooltip>
           )}
-          
+
           {exportable && onExport && (
             <Tooltip title={t('button.export')}>
               <Button
@@ -147,7 +151,7 @@ export function DataTable<T extends Record<string, any>>({
       </div>
     </div>
   )
-  
+
   const tableContent = (
     <Table<T>
       columns={visibleColumns}
@@ -158,33 +162,37 @@ export function DataTable<T extends Record<string, any>>({
       onChange={onChange}
       size={compact ? 'small' : 'middle'}
       locale={{
-        emptyText: emptyMessage || <Empty description={t('message.noData')} />
+        emptyText: emptyMessage || <Empty description={t('message.noData')} />,
       }}
       {...tableProps}
     />
   )
-  
+
   // If we have a title, description, or controls, wrap in a card
-  if (title || description || searchable || actions || showRefresh || exportable) {
+  if (
+    title ||
+    description ||
+    searchable ||
+    actions ||
+    showRefresh ||
+    exportable
+  ) {
     return (
-      <Card 
-        className="shadow-sm" 
-        {...cardProps}
-      >
+      <Card className="shadow-sm" {...cardProps}>
         {tableHeader}
-        <div className="mt-4">
-          {tableContent}
-        </div>
+        <div className="mt-4">{tableContent}</div>
       </Card>
     )
   }
-  
+
   // Otherwise, just return the table
   return tableContent
 }
 
 // Export column helpers
-export function createColumns<T>(columns: DataTableColumn<T>[]): DataTableColumn<T>[] {
+export function createColumns<T>(
+  columns: DataTableColumn<T>[]
+): DataTableColumn<T>[] {
   return columns
 }
 
@@ -199,7 +207,7 @@ export function createActionColumn<T>(
     width: 100,
     exportable: false,
     render,
-    ...props
+    ...props,
   }
 }
 
@@ -213,9 +221,10 @@ export function createDateColumn<T>(
     title,
     dataIndex: dataIndex as string,
     key: dataIndex as string,
-    render: (date) => format ? format(date) : new Date(date).toLocaleDateString(),
+    render: (date) =>
+      format ? format(date) : new Date(date).toLocaleDateString(),
     sorter: true,
-    ...props
+    ...props,
   }
 }
 
@@ -232,15 +241,17 @@ export function createStatusColumn<T>(
     render: (status) => {
       const config = statusMap[status] || { label: status, color: 'default' }
       return (
-        <span className={`px-2 py-1 rounded-full text-xs font-medium ${config.color}`}>
+        <span
+          className={`px-2 py-1 rounded-full text-xs font-medium ${config.color}`}
+        >
           {config.label}
         </span>
       )
     },
     filters: Object.entries(statusMap).map(([value, config]) => ({
       text: config.label,
-      value
+      value,
     })),
-    ...props
+    ...props,
   }
 }

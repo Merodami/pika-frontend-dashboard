@@ -12,11 +12,11 @@ export type TicketStatsResponseTicketsByStatus = {
   /** @minimum 0 */
   assigned?: number
   /** @minimum 0 */
-  in_progress?: number
+  inProgress?: number
   /** @minimum 0 */
-  waiting_customer?: number
+  waitingCustomer?: number
   /** @minimum 0 */
-  waiting_internal?: number
+  waitingInternal?: number
   /** @minimum 0 */
   resolved?: number
   /** @minimum 0 */

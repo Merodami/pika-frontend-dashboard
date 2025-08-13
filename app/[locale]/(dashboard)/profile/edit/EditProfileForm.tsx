@@ -9,7 +9,10 @@ import dayjs from 'dayjs'
 import { omitBy, isUndefined } from 'lodash-es'
 
 import { updateProfile } from '@/app/actions/user'
-import type { GetUserProfile200, UpdateUserProfileBody } from '@/lib/api/orval-client'
+import type {
+  GetUserProfile200,
+  UpdateUserProfileBody,
+} from '@/lib/api/orval-client'
 
 const { Option } = Select
 
@@ -18,7 +21,10 @@ interface EditProfileFormProps {
   initialData: GetUserProfile200
 }
 
-export default function EditProfileForm({ locale, initialData }: EditProfileFormProps) {
+export default function EditProfileForm({
+  locale,
+  initialData,
+}: EditProfileFormProps) {
   const router = useRouter()
   const t = useTranslations('profile')
   const tCommon = useTranslations('common')
@@ -31,22 +37,29 @@ export default function EditProfileForm({ locale, initialData }: EditProfileForm
     firstName: initialData.firstName,
     lastName: initialData.lastName,
     phoneNumber: initialData.phoneNumber || '',
-    dateOfBirth: initialData.dateOfBirth ? dayjs(initialData.dateOfBirth) : null,
-    preferredLanguage: initialData.preferredLanguage || 'en'
+    dateOfBirth: initialData.dateOfBirth
+      ? dayjs(initialData.dateOfBirth)
+      : null,
+    preferredLanguage: initialData.preferredLanguage || 'en',
   }
 
   const handleSubmit = async (values: any) => {
     setIsSubmitting(true)
-    
+
     try {
       // Prepare data for API
-      const updateData: UpdateUserProfileBody = omitBy({
-        firstName: values.firstName,
-        lastName: values.lastName,
-        phoneNumber: values.phoneNumber || undefined,
-        dateOfBirth: values.dateOfBirth ? dayjs(values.dateOfBirth).format('YYYY-MM-DD') : undefined,
-        preferredLanguage: values.preferredLanguage
-      }, isUndefined)
+      const updateData: UpdateUserProfileBody = omitBy(
+        {
+          firstName: values.firstName,
+          lastName: values.lastName,
+          phoneNumber: values.phoneNumber || undefined,
+          dateOfBirth: values.dateOfBirth
+            ? dayjs(values.dateOfBirth).format('YYYY-MM-DD')
+            : undefined,
+          preferredLanguage: values.preferredLanguage,
+        },
+        isUndefined
+      )
 
       const result = await updateProfile(updateData)
 
@@ -74,8 +87,8 @@ export default function EditProfileForm({ locale, initialData }: EditProfileForm
   return (
     <div className="container mx-auto px-4 py-8 max-w-2xl">
       <div className="flex items-center gap-4 mb-8">
-        <Button 
-          icon={<ArrowLeft className="w-4 h-4" />} 
+        <Button
+          icon={<ArrowLeft className="w-4 h-4" />}
           onClick={handleCancel}
           disabled={isPending || isSubmitting}
         >
@@ -94,15 +107,17 @@ export default function EditProfileForm({ locale, initialData }: EditProfileForm
         >
           {/* Personal Information */}
           <div className="mb-6">
-            <h3 className="text-lg font-semibold mb-4">{t('personalInfo.title')}</h3>
-            
+            <h3 className="text-lg font-semibold mb-4">
+              {t('personalInfo.title')}
+            </h3>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Form.Item
                 name="firstName"
                 label={t('personalInfo.firstName')}
                 rules={[
                   { required: true, message: tCommon('message.required') },
-                  { max: 50, message: 'Maximum 50 characters' }
+                  { max: 50, message: 'Maximum 50 characters' },
                 ]}
               >
                 <Input placeholder={t('personalInfo.firstName')} />
@@ -113,7 +128,7 @@ export default function EditProfileForm({ locale, initialData }: EditProfileForm
                 label={t('personalInfo.lastName')}
                 rules={[
                   { required: true, message: tCommon('message.required') },
-                  { max: 50, message: 'Maximum 50 characters' }
+                  { max: 50, message: 'Maximum 50 characters' },
                 ]}
               >
                 <Input placeholder={t('personalInfo.lastName')} />
@@ -123,10 +138,12 @@ export default function EditProfileForm({ locale, initialData }: EditProfileForm
                 name="dateOfBirth"
                 label={t('personalInfo.dateOfBirth')}
               >
-                <DatePicker 
+                <DatePicker
                   className="w-full"
                   format="YYYY-MM-DD"
-                  disabledDate={(current) => current && current > dayjs().endOf('day')}
+                  disabledDate={(current) =>
+                    current && current > dayjs().endOf('day')
+                  }
                 />
               </Form.Item>
 
@@ -145,12 +162,12 @@ export default function EditProfileForm({ locale, initialData }: EditProfileForm
 
           {/* Contact Information */}
           <div className="mb-6">
-            <h3 className="text-lg font-semibold mb-4">{t('contactInfo.title')}</h3>
-            
+            <h3 className="text-lg font-semibold mb-4">
+              {t('contactInfo.title')}
+            </h3>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Form.Item
-                label={t('contactInfo.email')}
-              >
+              <Form.Item label={t('contactInfo.email')}>
                 <Input value={initialData.email} disabled />
                 <span className="text-xs text-gray-500 mt-1">
                   Email cannot be changed from this form
@@ -161,10 +178,11 @@ export default function EditProfileForm({ locale, initialData }: EditProfileForm
                 name="phoneNumber"
                 label={t('contactInfo.phone')}
                 rules={[
-                  { 
-                    pattern: /^\+[1-9]\d{1,14}$/, 
-                    message: 'Please enter a valid phone number in E.164 format (e.g., +1234567890)' 
-                  }
+                  {
+                    pattern: /^\+[1-9]\d{1,14}$/,
+                    message:
+                      'Please enter a valid phone number in E.164 format (e.g., +1234567890)',
+                  },
                 ]}
               >
                 <Input placeholder="+1234567890" />
@@ -177,9 +195,9 @@ export default function EditProfileForm({ locale, initialData }: EditProfileForm
             <Button onClick={handleCancel} disabled={isPending || isSubmitting}>
               {tCommon('button.cancel')}
             </Button>
-            <Button 
-              type="primary" 
-              htmlType="submit" 
+            <Button
+              type="primary"
+              htmlType="submit"
               loading={isPending || isSubmitting}
               icon={<Save className="w-4 h-4" />}
             >

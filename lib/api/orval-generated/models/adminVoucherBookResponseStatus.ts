@@ -15,7 +15,7 @@ export type AdminVoucherBookResponseStatus =
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const AdminVoucherBookResponseStatus = {
   draft: 'draft',
-  ready_for_print: 'ready_for_print',
+  readyForPrint: 'readyForPrint',
   published: 'published',
   archived: 'archived',
 } as const

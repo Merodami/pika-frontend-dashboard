@@ -14,4 +14,9 @@ export const AdminSubscriptionPlanDetailCurrency = {
   usd: 'usd',
   eur: 'eur',
   gbp: 'gbp',
+  cad: 'cad',
+  aud: 'aud',
+  jpy: 'jpy',
+  cny: 'cny',
+  inr: 'inr',
 } as const

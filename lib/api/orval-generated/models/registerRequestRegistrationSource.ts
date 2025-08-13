@@ -15,5 +15,5 @@ export type RegisterRequestRegistrationSource =
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const RegisterRequestRegistrationSource = {
   public: 'public',
-  admin_dashboard: 'admin_dashboard',
+  adminDashboard: 'adminDashboard',
 } as const

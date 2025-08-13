@@ -12,6 +12,6 @@ export type UserPaymentMethodsResponsePaymentMethodsItemBankAccountAccountHolder
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const UserPaymentMethodsResponsePaymentMethodsItemBankAccountAccountHolderType =
   {
-    INDIVIDUAL: 'INDIVIDUAL',
-    COMPANY: 'COMPANY',
+    individual: 'individual',
+    company: 'company',
   } as const

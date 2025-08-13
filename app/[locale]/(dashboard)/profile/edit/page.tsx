@@ -23,7 +23,7 @@ export default async function EditProfilePage({
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
-  
+
   // Get current user and full profile
   await requireAuth()
   const profile = await getUserProfile()

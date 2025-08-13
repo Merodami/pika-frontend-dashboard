@@ -11,8 +11,8 @@ export type AdminUserActivityResponseDataItemCategory =
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const AdminUserActivityResponseDataItemCategory = {
-  AUTH: 'AUTH',
-  PROFILE: 'PROFILE',
-  PAYMENT: 'PAYMENT',
-  OTHER: 'OTHER',
+  auth: 'auth',
+  profile: 'profile',
+  payment: 'payment',
+  other: 'other',
 } as const

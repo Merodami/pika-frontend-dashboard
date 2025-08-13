@@ -11,7 +11,7 @@ import type { GetInternalStorageHealth200ProvidersStatusMinio } from './getInter
 
 export type GetInternalStorageHealth200ProvidersStatus = {
   /** System health status */
-  aws_s3?: GetInternalStorageHealth200ProvidersStatusAwsS3
+  awsS3?: GetInternalStorageHealth200ProvidersStatusAwsS3
   /** System health status */
   local?: GetInternalStorageHealth200ProvidersStatusLocal
   /** System health status */
