@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Create business data for business owners
- */
 export interface CreateMyBusinessRequest {
   /**
    * Business name
@@ -21,6 +18,6 @@ export interface CreateMyBusinessRequest {
    * @maxLength 500
    */
   businessDescription?: string
-  /** Category ID */
-  categoryId: string
+  /** Category ID (can be assigned later by admin) */
+  categoryId?: string
 }

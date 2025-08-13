@@ -7,9 +7,6 @@
  */
 import type { AuthUserResponseRole } from './authUserResponseRole'
 
-/**
- * Basic user information for authentication context
- */
 export interface AuthUserResponse {
   id: string
   /** @minLength 1 */

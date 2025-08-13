@@ -9,9 +9,6 @@ import type { UpdateAdminStorageConfigurationBodyProvider } from './updateAdminS
 import type { UpdateAdminStorageConfigurationBodyConfig } from './updateAdminStorageConfigurationBodyConfig'
 import type { UpdateAdminStorageConfigurationBodyGlobalSettings } from './updateAdminStorageConfigurationBodyGlobalSettings'
 
-/**
- * Update storage configuration
- */
 export type UpdateAdminStorageConfigurationBody = {
   /** Supported storage provider */
   provider: UpdateAdminStorageConfigurationBodyProvider

@@ -43,6 +43,7 @@ import type {
   BulkUpdateAdminBusinessesBody,
   BulkUpdateAdminCategories200,
   BulkUpdateAdminCategoriesBody,
+  ChangePassword200,
   ChangePasswordBody,
   CheckInternalBusinessExists200,
   CheckInternalBusinessExistsBody,
@@ -51,7 +52,6 @@ import type {
   CheckInternalUserQuota200,
   CheckInternalUserQuotaBody,
   ClaimVoucher200,
-  ClaimVoucherBody,
   CleanupInternalOrphanedFiles200,
   CleanupInternalOrphanedFilesBody,
   CreateAdminBusiness201,
@@ -76,6 +76,7 @@ import type {
   DeregisterInternalService200,
   DeregisterInternalServiceBody,
   DownloadVoucherBookPdf200,
+  ForgotPassword200,
   ForgotPasswordBody,
   GenerateAdminVoucherBookPdf200,
   GenerateAdminVoucherBookPdfBody,
@@ -166,7 +167,6 @@ import type {
   GetVouchersAnalyticsParams,
   HandleStripeWebhook200,
   HandleStripeWebhookBody,
-  MessageResponse,
   MigrateInternalFile200,
   MigrateInternalFileBody,
   MoveAdminCategoryBody,
@@ -184,17 +184,17 @@ import type {
   PostTemplatesSeed201,
   PutAdminCommentsIdBody,
   RedeemVoucher200,
-  RedeemVoucherBody,
   RefundAdminTransaction200,
   RefundAdminTransactionBody,
   RegisterInternalService201,
   RegisterInternalServiceBody,
   ResendAdminUserVerification200,
   ResendAdminUserVerificationBody,
+  ResendVerification200,
   ResendVerificationBody,
+  ResetPassword200,
   ResetPasswordBody,
   ScanVoucher200,
-  ScanVoucherBody,
   SendInternalSystemNotification201,
   SendInternalSystemNotificationBody,
   SendInternalTransactionalEmail200,
@@ -227,7 +227,9 @@ import type {
   UpdateAdminVoucherBookBody,
   UpdateAdminVoucherBookStatus200,
   UpdateAdminVoucherBookStatusBody,
+  UpdateInternalSubscriptionStatus200,
   UpdateInternalSubscriptionStatusBody,
+  UpdateInternalUserMembership200,
   UpdateInternalUserMembershipBody,
   UpdateMyBusiness200,
   UpdateMyBusinessBody,
@@ -250,6 +252,10 @@ import type {
   ValidateInternalVoucher200,
   ValidateInternalVoucherBody,
   VerifyAdminUserBody,
+  VerifyEmail200,
+  VoucherClaimRequest,
+  VoucherRedeemRequest,
+  VoucherScanRequest,
 } from './models'
 
 import { customInstance } from './custom-instance'
@@ -582,12 +588,15 @@ export const deleteAdminVoucher = (id: string) => {
 /**
  * @summary Scan a voucher
  */
-export const scanVoucher = (id: string, scanVoucherBody: ScanVoucherBody) => {
+export const scanVoucher = (
+  id: string,
+  voucherScanRequest: VoucherScanRequest
+) => {
   return customInstance<ScanVoucher200>({
     url: `/vouchers/${id}/scan`,
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    data: scanVoucherBody,
+    data: voucherScanRequest,
   })
 }
 
@@ -596,13 +605,13 @@ export const scanVoucher = (id: string, scanVoucherBody: ScanVoucherBody) => {
  */
 export const claimVoucher = (
   id: string,
-  claimVoucherBody: ClaimVoucherBody
+  voucherClaimRequest: VoucherClaimRequest
 ) => {
   return customInstance<ClaimVoucher200>({
     url: `/vouchers/${id}/claim`,
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    data: claimVoucherBody,
+    data: voucherClaimRequest,
   })
 }
 
@@ -611,13 +620,13 @@ export const claimVoucher = (
  */
 export const redeemVoucher = (
   id: string,
-  redeemVoucherBody: RedeemVoucherBody
+  voucherRedeemRequest: VoucherRedeemRequest
 ) => {
   return customInstance<RedeemVoucher200>({
     url: `/vouchers/${id}/redeem`,
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    data: redeemVoucherBody,
+    data: voucherRedeemRequest,
   })
 }
 
@@ -697,7 +706,7 @@ export const authUserInfo = () => {
  * @summary Request password reset
  */
 export const forgotPassword = (forgotPasswordBody: ForgotPasswordBody) => {
-  return customInstance<MessageResponse>({
+  return customInstance<ForgotPassword200>({
     url: `/auth/forgot-password`,
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -709,7 +718,7 @@ export const forgotPassword = (forgotPasswordBody: ForgotPasswordBody) => {
  * @summary Reset password with token
  */
 export const resetPassword = (resetPasswordBody: ResetPasswordBody) => {
-  return customInstance<MessageResponse>({
+  return customInstance<ResetPassword200>({
     url: `/auth/reset-password`,
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -721,7 +730,7 @@ export const resetPassword = (resetPasswordBody: ResetPasswordBody) => {
  * @summary Verify email address
  */
 export const verifyEmail = (token: string) => {
-  return customInstance<MessageResponse>({
+  return customInstance<VerifyEmail200>({
     url: `/auth/verify-email/${token}`,
     method: 'GET',
   })
@@ -733,7 +742,7 @@ export const verifyEmail = (token: string) => {
 export const resendVerification = (
   resendVerificationBody: ResendVerificationBody
 ) => {
-  return customInstance<MessageResponse>({
+  return customInstance<ResendVerification200>({
     url: `/auth/resend-verification`,
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -745,7 +754,7 @@ export const resendVerification = (
  * @summary Change user password
  */
 export const changePassword = (changePasswordBody: ChangePasswordBody) => {
-  return customInstance<MessageResponse>({
+  return customInstance<ChangePassword200>({
     url: `/auth/change-password`,
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -2221,7 +2230,7 @@ export const batchGetInternalUsers = (
 export const updateInternalUserMembership = (
   updateInternalUserMembershipBody: UpdateInternalUserMembershipBody
 ) => {
-  return customInstance<MessageResponse>({
+  return customInstance<UpdateInternalUserMembership200>({
     url: `/subscriptions/user-membership`,
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -2249,7 +2258,7 @@ export const createInternalSubscriptionFromStripe = (
 export const updateInternalSubscriptionStatus = (
   updateInternalSubscriptionStatusBody: UpdateInternalSubscriptionStatusBody
 ) => {
-  return customInstance<MessageResponse>({
+  return customInstance<UpdateInternalSubscriptionStatus200>({
     url: `/subscriptions/status`,
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },

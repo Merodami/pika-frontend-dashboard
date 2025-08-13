@@ -8,9 +8,6 @@
 import type { CreateAdminUser201Status } from './createAdminUser201Status'
 import type { CreateAdminUser201Role } from './createAdminUser201Role'
 
-/**
- * Detailed user information for admin
- */
 export type CreateAdminUser201 = {
   id: string
   /** @minLength 1 */

@@ -7,9 +7,6 @@
  */
 import type { RevokeTokenRequestTokenTypeHint } from './revokeTokenRequestTokenTypeHint'
 
-/**
- * Token revocation request
- */
 export interface RevokeTokenRequest {
   /**
    * Token to revoke

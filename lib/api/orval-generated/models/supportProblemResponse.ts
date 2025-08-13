@@ -9,9 +9,6 @@ import type { SupportProblemResponseStatus } from './supportProblemResponseStatu
 import type { SupportProblemResponsePriority } from './supportProblemResponsePriority'
 import type { SupportProblemResponseType } from './supportProblemResponseType'
 
-/**
- * Support problem
- */
 export interface SupportProblemResponse {
   /** Universally Unique Identifier */
   id: string

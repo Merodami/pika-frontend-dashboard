@@ -5,13 +5,13 @@
  * Complete API documentation including public, admin, and internal endpoints
  * OpenAPI spec version: 1.0.0
  */
+import type { UpdateAdminBusinessRating200CategoryId } from './updateAdminBusinessRating200CategoryId'
+import type { UpdateAdminBusinessRating200ApprovedBy } from './updateAdminBusinessRating200ApprovedBy'
+import type { UpdateAdminBusinessRating200ApprovedAt } from './updateAdminBusinessRating200ApprovedAt'
 import type { UpdateAdminBusinessRating200DeletedAt } from './updateAdminBusinessRating200DeletedAt'
 import type { UpdateAdminBusinessRating200User } from './updateAdminBusinessRating200User'
-import type { CategoryResponse } from './categoryResponse'
+import type { UpdateAdminBusinessRating200Category } from './updateAdminBusinessRating200Category'
 
-/**
- * Business information for admin management
- */
 export type UpdateAdminBusinessRating200 = {
   /** Universally Unique Identifier */
   id: string
@@ -28,11 +28,17 @@ export type UpdateAdminBusinessRating200 = {
    */
   businessDescriptionKey?: string
   /** Category this business belongs to */
-  categoryId: string
+  categoryId: UpdateAdminBusinessRating200CategoryId
   /** Whether business is verified */
   verified?: boolean
   /** Whether business is active */
   active?: boolean
+  /** Whether business is approved by admin */
+  approved?: boolean
+  /** Admin who approved the business */
+  approvedBy?: UpdateAdminBusinessRating200ApprovedBy
+  /** When the business was approved */
+  approvedAt?: UpdateAdminBusinessRating200ApprovedAt
   /**
    * Average rating of the business
    * @minimum 0
@@ -43,7 +49,8 @@ export type UpdateAdminBusinessRating200 = {
   deletedAt: UpdateAdminBusinessRating200DeletedAt
   /** Business owner details when ?include=user */
   user?: UpdateAdminBusinessRating200User
-  category?: CategoryResponse
+  /** Category information when ?include=category */
+  category?: UpdateAdminBusinessRating200Category
   /** When the record was created */
   createdAt: string
   /** When the record was last updated */

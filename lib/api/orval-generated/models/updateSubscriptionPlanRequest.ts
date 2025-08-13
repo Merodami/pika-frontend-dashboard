@@ -7,9 +7,6 @@
  */
 import type { UpdateSubscriptionPlanRequestMetadata } from './updateSubscriptionPlanRequestMetadata'
 
-/**
- * Update a subscription plan
- */
 export interface UpdateSubscriptionPlanRequest {
   name?: string
   description?: string

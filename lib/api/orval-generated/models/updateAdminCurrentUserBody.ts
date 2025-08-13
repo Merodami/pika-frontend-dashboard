@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Update current admin user profile
- */
 export type UpdateAdminCurrentUserBody = {
   /**
    * @minLength 1

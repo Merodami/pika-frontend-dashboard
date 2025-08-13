@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Toggle business activation status
- */
 export interface AdminToggleBusinessActivationRequest {
   /** New activation status */
   active: boolean

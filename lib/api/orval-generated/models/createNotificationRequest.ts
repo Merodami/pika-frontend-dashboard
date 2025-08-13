@@ -9,9 +9,6 @@ import type { CreateNotificationRequestType } from './createNotificationRequestT
 import type { CreateNotificationRequestPriority } from './createNotificationRequestPriority'
 import type { CreateNotificationRequestMetadata } from './createNotificationRequestMetadata'
 
-/**
- * Create a new notification
- */
 export interface CreateNotificationRequest {
   userId?: string
   /** Subscription token for push notifications */

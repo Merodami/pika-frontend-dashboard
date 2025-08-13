@@ -9,9 +9,6 @@ import type { UpdateAdminVoucherBook200BookType } from './updateAdminVoucherBook
 import type { UpdateAdminVoucherBook200Status } from './updateAdminVoucherBook200Status'
 import type { UpdateAdminVoucherBook200Metadata } from './updateAdminVoucherBook200Metadata'
 
-/**
- * Admin voucher book information with full management details
- */
 export type UpdateAdminVoucherBook200 = {
   /** Universally Unique Identifier */
   id: string

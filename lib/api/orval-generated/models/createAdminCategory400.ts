@@ -7,9 +7,6 @@
  */
 import type { CreateAdminCategory400DetailsItem } from './createAdminCategory400DetailsItem'
 
-/**
- * Standard error response
- */
 export type CreateAdminCategory400 = {
   /**
    * @minimum 100

@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Create a new business
- */
 export interface AdminCreateBusinessRequest {
   /** User who will own this business */
   userId: string

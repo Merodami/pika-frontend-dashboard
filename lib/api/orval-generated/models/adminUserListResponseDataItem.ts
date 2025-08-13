@@ -8,9 +8,6 @@
 import type { AdminUserListResponseDataItemStatus } from './adminUserListResponseDataItemStatus'
 import type { AdminUserListResponseDataItemRole } from './adminUserListResponseDataItemRole'
 
-/**
- * Detailed user information for admin
- */
 export type AdminUserListResponseDataItem = {
   id: string
   /** @minLength 1 */

@@ -10,9 +10,6 @@ import type { UploadFile201Status } from './uploadFile201Status'
 import type { UploadFile201Provider } from './uploadFile201Provider'
 import type { UploadFile201Metadata } from './uploadFile201Metadata'
 
-/**
- * Response after successful file upload
- */
 export type UploadFile201 = {
   /** Storage log ID */
   id: string

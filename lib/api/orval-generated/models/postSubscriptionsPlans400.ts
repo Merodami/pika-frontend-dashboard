@@ -7,9 +7,6 @@
  */
 import type { PostSubscriptionsPlans400DetailsItem } from './postSubscriptionsPlans400DetailsItem'
 
-/**
- * Standard error response
- */
 export type PostSubscriptionsPlans400 = {
   /**
    * @minimum 100

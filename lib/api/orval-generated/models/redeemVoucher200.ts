@@ -7,9 +7,6 @@
  */
 import type { RedeemVoucher200Voucher } from './redeemVoucher200Voucher'
 
-/**
- * Voucher redemption result
- */
 export type RedeemVoucher200 = {
   message: string
   /** Universally Unique Identifier */
@@ -17,6 +14,5 @@ export type RedeemVoucher200 = {
   redeemedAt: string
   /** @minimum 0 */
   discountApplied: number
-  /** Public voucher information */
   voucher: RedeemVoucher200Voucher
 }

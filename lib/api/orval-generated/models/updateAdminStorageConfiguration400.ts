@@ -7,9 +7,6 @@
  */
 import type { UpdateAdminStorageConfiguration400DetailsItem } from './updateAdminStorageConfiguration400DetailsItem'
 
-/**
- * Standard error response
- */
 export type UpdateAdminStorageConfiguration400 = {
   /**
    * @minimum 100

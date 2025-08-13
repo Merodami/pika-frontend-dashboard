@@ -8,9 +8,6 @@
 import type { UserAddressCoordinates } from './userAddressCoordinates'
 import type { AddressType } from './addressType'
 
-/**
- * User address with metadata
- */
 export interface UserAddress {
   /** Universally Unique Identifier */
   id: string

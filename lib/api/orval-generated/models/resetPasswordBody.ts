@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Reset password with token
- */
 export type ResetPasswordBody = {
   /**
    * Password reset token from email

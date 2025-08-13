@@ -8,9 +8,6 @@
 import type { GetAdminUserById200Status } from './getAdminUserById200Status'
 import type { GetAdminUserById200Role } from './getAdminUserById200Role'
 
-/**
- * Detailed user information for admin
- */
 export type GetAdminUserById200 = {
   id: string
   /** @minLength 1 */

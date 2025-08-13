@@ -14,6 +14,9 @@ import {
   FileText,
   CreditCard,
   MessageSquare,
+  Store,
+  Calendar,
+  ChartColumn,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -28,6 +31,9 @@ const iconMap: Record<string, LucideIcon> = {
   FileText,
   CreditCard,
   MessageSquare,
+  Store,
+  Calendar,
+  ChartColumn,
 }
 
 export interface NavItem {

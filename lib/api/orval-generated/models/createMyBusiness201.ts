@@ -6,11 +6,8 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { CreateMyBusiness201User } from './createMyBusiness201User'
-import type { CategoryResponse } from './categoryResponse'
+import type { CreateMyBusiness201Category } from './createMyBusiness201Category'
 
-/**
- * Business information for public view
- */
 export type CreateMyBusiness201 = {
   /** Universally Unique Identifier */
   id: string
@@ -40,7 +37,8 @@ export type CreateMyBusiness201 = {
   avgRating?: number
   /** Business owner profile when ?include=user */
   user?: CreateMyBusiness201User
-  category?: CategoryResponse
+  /** Category information when ?include=category */
+  category?: CreateMyBusiness201Category
   /** When the record was created */
   createdAt: string
   /** When the record was last updated */

@@ -8,9 +8,6 @@
 import type { UpdateAdminUserBodyRole } from './updateAdminUserBodyRole'
 import type { UpdateAdminUserBodyStatus } from './updateAdminUserBodyStatus'
 
-/**
- * Update user information (admin)
- */
 export type UpdateAdminUserBody = {
   /**
    * @minLength 1

@@ -8,9 +8,6 @@
 import type { CreateAdminUserBodyRole } from './createAdminUserBodyRole'
 import type { CreateAdminUserBodyStatus } from './createAdminUserBodyStatus'
 
-/**
- * Create a new user (admin only)
- */
 export type CreateAdminUserBody = {
   /** @minLength 1 */
   email: string

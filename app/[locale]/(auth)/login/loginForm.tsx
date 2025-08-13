@@ -2,7 +2,6 @@
 
 import { LockOutlined, MailOutlined } from '@ant-design/icons'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { authFrontend } from '@merodami/pika-api'
 import { Button, Form, Input, Checkbox } from 'antd'
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
@@ -14,17 +13,15 @@ import { useAppStore } from '@/store/app.store'
 import { AuthFormWrapper } from '@/components/auth/authFormWrapper'
 import { LocalizedLink } from '@/components/ui/LocalizedLink'
 import { useLocalizedRouter } from '@/hooks/useLocalizedRouter'
-
-// Use the admin/business login schema with enhanced password requirements
-const loginSchema = authFrontend.AdminBusinessLoginFormSchema
+import { LoginFormSchema, transformLoginToTokenRequest, type LoginFormData } from '@/lib/validations/auth'
 
 // Extract input and output types for proper branded type handling
-type LoginFormInput = z.input<typeof loginSchema>
-type LoginFormOutput = z.output<typeof loginSchema>
-type LoginFormData = LoginFormOutput
+type LoginFormInput = z.input<typeof LoginFormSchema>
+type LoginFormOutput = z.output<typeof LoginFormSchema>
 
 export function LoginForm() {
   const t = useTranslations('auth.login')
+  const tErrors = useTranslations('errors')
   const router = useLocalizedRouter()
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -37,7 +34,7 @@ export function LoginForm() {
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormInput, unknown, LoginFormOutput>({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(LoginFormSchema),
     defaultValues: formDrafts['login'] || {
       email: isDevelopment ? 'admin@example.com' : '',
       password: isDevelopment ? 'AdminPassword123!' : '',
@@ -51,27 +48,35 @@ export function LoginForm() {
 
     try {
       // Transform to backend format
-      const tokenRequest = authFrontend.transformLoginToTokenRequest(data)
+      const tokenRequest = transformLoginToTokenRequest(data)
       const result = await login(tokenRequest)
 
       if (result?.error) {
-        setError(result.error)
+        // Use error code for translation if available, otherwise use the error message
+        const errorMessage = result.errorCode 
+          ? tErrors(result.errorCode as any) 
+          : result.error
+        setError(errorMessage)
       } else if (result?.success) {
+        // Check if user has access to the dashboard
+        if (result.user?.role !== 'admin' && result.user?.role !== 'business') {
+          setError(tErrors('accessDenied'))
+          return
+        }
+        
         // Clear form draft on success
         clearFormDraft('login')
 
         // Redirect based on user role
         const redirectPath = result.user?.role === 'admin' 
           ? `/${router.locale}/admin`
-          : result.user?.role === 'business'
-          ? `/${router.locale}/business`
-          : `/${router.locale}/profile`
+          : `/${router.locale}/business`
 
         // Force page reload to ensure cookies are properly set and middleware runs
         window.location.href = redirectPath
       }
     } catch {
-      setError(t('error'))
+      setError(tErrors('invalidCredentials'))
     } finally {
       setIsLoading(false)
     }

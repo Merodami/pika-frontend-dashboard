@@ -8,9 +8,6 @@
 import type { PostSubscriptionsPlansBodyCurrency } from './postSubscriptionsPlansBodyCurrency'
 import type { PostSubscriptionsPlansBodyBillingInterval } from './postSubscriptionsPlansBodyBillingInterval'
 
-/**
- * Create a new subscription plan
- */
 export type PostSubscriptionsPlansBody = {
   /**
    * @minLength 1

@@ -7,9 +7,6 @@
  */
 import type { IntrospectRequestTokenTypeHint } from './introspectRequestTokenTypeHint'
 
-/**
- * Token introspection request
- */
 export interface IntrospectRequest {
   /**
    * Token to validate

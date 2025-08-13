@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Query parameters for getting file URL
- */
 export interface GetFileUrlQuery {
   /**
    * URL expiration time in seconds

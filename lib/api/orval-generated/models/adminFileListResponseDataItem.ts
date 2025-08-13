@@ -10,9 +10,6 @@ import type { AdminFileListResponseDataItemStatus } from './adminFileListRespons
 import type { AdminFileListResponseDataItemProvider } from './adminFileListResponseDataItemProvider'
 import type { AdminFileListResponseDataItemMetadata } from './adminFileListResponseDataItemMetadata'
 
-/**
- * Admin file details with user information
- */
 export type AdminFileListResponseDataItem = {
   /** Universally Unique Identifier */
   id: string

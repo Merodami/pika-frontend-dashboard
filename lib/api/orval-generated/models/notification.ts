@@ -10,9 +10,6 @@ import type { NotificationStatus } from './notificationStatus'
 import type { NotificationPriority } from './notificationPriority'
 import type { NotificationMetadata } from './notificationMetadata'
 
-/**
- * User notification
- */
 export interface Notification {
   /** Universally Unique Identifier */
   id: string

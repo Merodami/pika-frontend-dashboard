@@ -7,9 +7,6 @@
  */
 import type { AuthRevokeBodyTokenTypeHint } from './authRevokeBodyTokenTypeHint'
 
-/**
- * Token revocation request
- */
 export type AuthRevokeBody = {
   /**
    * Token to revoke

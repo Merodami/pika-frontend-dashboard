@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Delete multiple businesses
- */
 export interface AdminBulkDeleteBusinessesRequest {
   /**
    * @minItems 1

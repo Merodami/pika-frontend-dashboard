@@ -7,9 +7,6 @@
  */
 import type { CreateAdminUser409DetailsItem } from './createAdminUser409DetailsItem'
 
-/**
- * Standard error response
- */
 export type CreateAdminUser409 = {
   /**
    * @minimum 100

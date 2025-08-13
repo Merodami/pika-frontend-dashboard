@@ -7,9 +7,6 @@
  */
 import type { AdminResendVerificationRequestType } from './adminResendVerificationRequestType'
 
-/**
- * Admin request to resend verification for a user
- */
 export interface AdminResendVerificationRequest {
   type: AdminResendVerificationRequestType
   userId?: string

@@ -5,15 +5,15 @@
  * Complete API documentation including public, admin, and internal endpoints
  * OpenAPI spec version: 1.0.0
  */
-import type { VoucherScanSource } from './voucherScanSource'
-import type { Coordinates } from './coordinates'
-import type { DeviceInfo } from './deviceInfo'
+import type { VoucherScanRequestScanSource } from './voucherScanRequestScanSource'
+import type { VoucherScanRequestLocation } from './voucherScanRequestLocation'
+import type { VoucherScanRequestDeviceInfo } from './voucherScanRequestDeviceInfo'
 
 /**
  * Request to track voucher scan
  */
 export interface VoucherScanRequest {
-  scanSource?: VoucherScanSource
-  location?: Coordinates
-  deviceInfo?: DeviceInfo
+  scanSource?: VoucherScanRequestScanSource
+  location?: VoucherScanRequestLocation
+  deviceInfo?: VoucherScanRequestDeviceInfo
 }

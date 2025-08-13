@@ -14,9 +14,6 @@ import type { AdminCreateVoucherRequestImageUrl } from './adminCreateVoucherRequ
 import type { AdminCreateVoucherRequestMaxRedemptions } from './adminCreateVoucherRequestMaxRedemptions'
 import type { AdminCreateVoucherRequestMetadata } from './adminCreateVoucherRequestMetadata'
 
-/**
- * Create new voucher with translations
- */
 export interface AdminCreateVoucherRequest {
   /** Universally Unique Identifier */
   businessId: string

@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Support comment
- */
 export type GetProblemComments200DataItem = {
   /** Universally Unique Identifier */
   id: string

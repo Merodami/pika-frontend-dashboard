@@ -8,9 +8,6 @@
 import type { UpdateAdminVoucherBookBodyBookType } from './updateAdminVoucherBookBodyBookType'
 import type { UpdateAdminVoucherBookBodyMetadata } from './updateAdminVoucherBookBodyMetadata'
 
-/**
- * Update voucher book information
- */
 export type UpdateAdminVoucherBookBody = {
   /**
    * Voucher book title

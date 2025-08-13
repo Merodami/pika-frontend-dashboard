@@ -7,9 +7,6 @@
  */
 import type { UserInfoResponseRole } from './userInfoResponseRole'
 
-/**
- * User information from access token
- */
 export interface UserInfoResponse {
   /** User ID */
   id: string

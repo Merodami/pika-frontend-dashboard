@@ -7,9 +7,6 @@
  */
 import type { AuthUserInfo200Role } from './authUserInfo200Role'
 
-/**
- * User information from access token
- */
 export type AuthUserInfo200 = {
   /** User ID */
   id: string

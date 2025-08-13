@@ -8,9 +8,6 @@
 import type { PatchSubscriptionsPlansId200Currency } from './patchSubscriptionsPlansId200Currency'
 import type { PatchSubscriptionsPlansId200BillingInterval } from './patchSubscriptionsPlansId200BillingInterval'
 
-/**
- * Detailed subscription plan for admin
- */
 export type PatchSubscriptionsPlansId200 = {
   /** Universally Unique Identifier */
   id: string

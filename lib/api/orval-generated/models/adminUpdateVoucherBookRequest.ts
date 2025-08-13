@@ -8,9 +8,6 @@
 import type { AdminUpdateVoucherBookRequestBookType } from './adminUpdateVoucherBookRequestBookType'
 import type { AdminUpdateVoucherBookRequestMetadata } from './adminUpdateVoucherBookRequestMetadata'
 
-/**
- * Update voucher book information
- */
 export interface AdminUpdateVoucherBookRequest {
   /**
    * Voucher book title

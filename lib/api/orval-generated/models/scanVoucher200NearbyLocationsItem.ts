@@ -5,11 +5,11 @@
  * Complete API documentation including public, admin, and internal endpoints
  * OpenAPI spec version: 1.0.0
  */
-import type { Coordinates } from './coordinates'
+import type { ScanVoucher200NearbyLocationsItemCoordinates } from './scanVoucher200NearbyLocationsItemCoordinates'
 
 export type ScanVoucher200NearbyLocationsItem = {
   name: string
   address: string
   distance: number
-  coordinates: Coordinates
+  coordinates: ScanVoucher200NearbyLocationsItemCoordinates
 }

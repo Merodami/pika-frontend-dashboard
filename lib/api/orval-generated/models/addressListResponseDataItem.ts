@@ -8,9 +8,6 @@
 import type { AddressListResponseDataItemCoordinates } from './addressListResponseDataItemCoordinates'
 import type { AddressType } from './addressType'
 
-/**
- * User address with metadata
- */
 export type AddressListResponseDataItem = {
   /** Universally Unique Identifier */
   id: string

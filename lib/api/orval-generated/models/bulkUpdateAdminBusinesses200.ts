@@ -7,9 +7,6 @@
  */
 import type { BulkUpdateAdminBusinesses200ErrorsItem } from './bulkUpdateAdminBusinesses200ErrorsItem'
 
-/**
- * Bulk business operation result
- */
 export type BulkUpdateAdminBusinesses200 = {
   /** @minimum 0 */
   successful: number

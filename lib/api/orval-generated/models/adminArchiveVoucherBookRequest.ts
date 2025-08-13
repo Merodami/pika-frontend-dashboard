@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Archive a voucher book
- */
 export interface AdminArchiveVoucherBookRequest {
   /**
    * Reason for archiving

@@ -6,6 +6,9 @@
  * OpenAPI spec version: 1.0.0
  */
 
+/**
+ * Type of payment method
+ */
 export type PaymentMethodType =
   (typeof PaymentMethodType)[keyof typeof PaymentMethodType]
 

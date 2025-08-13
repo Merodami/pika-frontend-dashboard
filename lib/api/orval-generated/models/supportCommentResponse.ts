@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Support comment
- */
 export interface SupportCommentResponse {
   /** Universally Unique Identifier */
   id: string

@@ -7,9 +7,6 @@
  */
 import type { GetAdminUserVerificationStatus403DetailsItem } from './getAdminUserVerificationStatus403DetailsItem'
 
-/**
- * Standard error response
- */
 export type GetAdminUserVerificationStatus403 = {
   /**
    * @minimum 100

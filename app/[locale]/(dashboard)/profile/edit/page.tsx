@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server'
 import { requireAuth } from '@/app/services/authService'
-import { getUserProfile } from '@/lib/api/orval-client'
+import { getUserProfile } from '@/lib/api/server-client'
 import EditProfileForm from './EditProfileForm'
 
 export async function generateMetadata({

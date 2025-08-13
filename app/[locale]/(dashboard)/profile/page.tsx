@@ -8,7 +8,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { requireAuth } from '@/app/services/authService'
-import { getUserProfile } from '@/lib/api/orval-client'
+import { getUserProfile } from '@/lib/api/server-client'
 
 export async function generateMetadata({
   params,

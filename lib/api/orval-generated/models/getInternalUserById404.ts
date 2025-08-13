@@ -7,9 +7,6 @@
  */
 import type { GetInternalUserById404DetailsItem } from './getInternalUserById404DetailsItem'
 
-/**
- * Standard error response
- */
 export type GetInternalUserById404 = {
   /**
    * @minimum 100

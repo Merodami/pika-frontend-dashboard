@@ -8,9 +8,6 @@
 import type { BatchUploadFiles200SuccessfulItem } from './batchUploadFiles200SuccessfulItem'
 import type { BatchUploadFiles200FailedItem } from './batchUploadFiles200FailedItem'
 
-/**
- * Response after batch file upload
- */
 export type BatchUploadFiles200 = {
   successful: BatchUploadFiles200SuccessfulItem[]
   failed: BatchUploadFiles200FailedItem[]

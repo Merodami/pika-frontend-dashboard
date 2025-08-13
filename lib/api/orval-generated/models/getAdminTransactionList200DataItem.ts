@@ -11,9 +11,6 @@ import type { GetAdminTransactionList200DataItemPaymentMethod } from './getAdmin
 import type { GetAdminTransactionList200DataItemDisputeStatus } from './getAdminTransactionList200DataItemDisputeStatus'
 import type { GetAdminTransactionList200DataItemMetadata } from './getAdminTransactionList200DataItemMetadata'
 
-/**
- * Detailed transaction information for admin
- */
 export type GetAdminTransactionList200DataItem = {
   /** Universally Unique Identifier */
   id: string

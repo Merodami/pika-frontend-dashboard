@@ -8,9 +8,6 @@
 import type { GetAdminStorageConfiguration200ProvidersItem } from './getAdminStorageConfiguration200ProvidersItem'
 import type { GetAdminStorageConfiguration200GlobalSettings } from './getAdminStorageConfiguration200GlobalSettings'
 
-/**
- * Storage service configuration
- */
 export type GetAdminStorageConfiguration200 = {
   providers: GetAdminStorageConfiguration200ProvidersItem[]
   globalSettings: GetAdminStorageConfiguration200GlobalSettings

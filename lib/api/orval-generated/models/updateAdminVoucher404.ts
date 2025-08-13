@@ -7,9 +7,6 @@
  */
 import type { UpdateAdminVoucher404DetailsItem } from './updateAdminVoucher404DetailsItem'
 
-/**
- * Standard error response
- */
 export type UpdateAdminVoucher404 = {
   /**
    * @minimum 100

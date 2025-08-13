@@ -7,9 +7,6 @@
  */
 import type { RegisterInternalService400DetailsItem } from './registerInternalService400DetailsItem'
 
-/**
- * Standard error response
- */
 export type RegisterInternalService400 = {
   /**
    * @minimum 100

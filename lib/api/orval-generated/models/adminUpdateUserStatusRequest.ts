@@ -7,9 +7,6 @@
  */
 import type { AdminUpdateUserStatusRequestStatus } from './adminUpdateUserStatusRequestStatus'
 
-/**
- * Update user account status
- */
 export interface AdminUpdateUserStatusRequest {
   /** User account status */
   status: AdminUpdateUserStatusRequestStatus

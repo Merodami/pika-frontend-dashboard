@@ -18,6 +18,7 @@ export default async function HomePage({ params }: PageProps) {
     redirect(`/${locale}/login`)
   }
 
+  // This dashboard is only for admin and business users
   switch (user.role) {
     case UserRole.ADMIN:
       redirect(`/${locale}/admin`)
@@ -26,6 +27,7 @@ export default async function HomePage({ params }: PageProps) {
       redirect(`/${locale}/business`)
       break
     default:
-      redirect(`/${locale}/unauthorized`)
+      // Any other role should not have access
+      redirect(`/${locale}/login`)
   }
 }

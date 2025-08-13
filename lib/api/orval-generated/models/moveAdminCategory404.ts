@@ -7,9 +7,6 @@
  */
 import type { MoveAdminCategory404DetailsItem } from './moveAdminCategory404DetailsItem'
 
-/**
- * Standard error response
- */
 export type MoveAdminCategory404 = {
   /**
    * @minimum 100

@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Change password for authenticated user
- */
 export interface ChangePasswordRequest {
   /**
    * Current password for verification

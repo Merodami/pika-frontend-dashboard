@@ -145,7 +145,16 @@
     "forbidden": "Ndaikatúi eike",
     "notFound": "Ndojejuhúi",
     "serverError": "Servidor jejavy",
-    "networkError": "Jeike jejavy"
+    "networkError": "Jeike jejavy",
+    "accessDenied": "Ojejoko jeike. Eñe'ẽ ne administrador ndive.",
+    "invalidCredentials": "Correo térã ñe'ẽñemi ndoikói",
+    "dashboardAccessDenied": "Ndererekói permiso reike hag̃ua ko'ápe",
+    "sessionExpired": "Ne sesión opáma. Eike jey.",
+    "accountLocked": "Ne cuenta ojejoko. Eha'ã jey ag̃ave.",
+    "accountSuspended": "Ne cuenta ojejoko. Eñe'ẽ soporte ndive.",
+    "somethingWentWrong": "Oĩ mba'e vai. Eha'ã jey.",
+    "tryAgain": "Eha'ã jey",
+    "contactAdmin": "Eñe'ẽ ne administrador ndive reñepytyvõ hag̃ua"
   },
   "error": {
     "title": "Ojejavy mbaʼe",

@@ -8,9 +8,6 @@
 import type { BulkActionAdminFilesBodyAction } from './bulkActionAdminFilesBodyAction'
 import type { BulkActionAdminFilesBodyNewStatus } from './bulkActionAdminFilesBodyNewStatus'
 
-/**
- * Bulk action on multiple files
- */
 export type BulkActionAdminFilesBody = {
   /**
    * @minItems 1

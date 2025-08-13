@@ -7,10 +7,6 @@
  */
 import type { GetVoucherBookById200Data } from './getVoucherBookById200Data'
 
-/**
- * Single voucher book details
- */
 export type GetVoucherBookById200 = {
-  /** Public voucher book information (read-only) */
   data: GetVoucherBookById200Data
 }

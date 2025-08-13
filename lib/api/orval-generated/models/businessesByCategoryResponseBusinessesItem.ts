@@ -6,11 +6,8 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { BusinessesByCategoryResponseBusinessesItemUser } from './businessesByCategoryResponseBusinessesItemUser'
-import type { CategoryResponse } from './categoryResponse'
+import type { BusinessesByCategoryResponseBusinessesItemCategory } from './businessesByCategoryResponseBusinessesItemCategory'
 
-/**
- * Business information for public view
- */
 export type BusinessesByCategoryResponseBusinessesItem = {
   /** Universally Unique Identifier */
   id: string
@@ -40,7 +37,8 @@ export type BusinessesByCategoryResponseBusinessesItem = {
   avgRating?: number
   /** Business owner profile when ?include=user */
   user?: BusinessesByCategoryResponseBusinessesItemUser
-  category?: CategoryResponse
+  /** Category information when ?include=category */
+  category?: BusinessesByCategoryResponseBusinessesItemCategory
   /** When the record was created */
   createdAt: string
   /** When the record was last updated */

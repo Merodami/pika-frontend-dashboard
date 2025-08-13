@@ -8,9 +8,6 @@
 import type { GetSubscriptionsPlans200DataItemCurrency } from './getSubscriptionsPlans200DataItemCurrency'
 import type { GetSubscriptionsPlans200DataItemBillingInterval } from './getSubscriptionsPlans200DataItemBillingInterval'
 
-/**
- * Detailed subscription plan for admin
- */
 export type GetSubscriptionsPlans200DataItem = {
   /** Universally Unique Identifier */
   id: string

@@ -7,9 +7,6 @@
  */
 import type { AdminGeneratePdfRequestPriority } from './adminGeneratePdfRequestPriority'
 
-/**
- * Generate PDF for voucher book
- */
 export interface AdminGeneratePdfRequest {
   /** Force regeneration even if PDF already exists */
   force?: boolean

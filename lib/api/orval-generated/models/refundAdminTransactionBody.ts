@@ -7,9 +7,6 @@
  */
 import type { RefundAdminTransactionBodyReason } from './refundAdminTransactionBodyReason'
 
-/**
- * Refund a transaction
- */
 export type RefundAdminTransactionBody = {
   /**
    * Partial refund amount

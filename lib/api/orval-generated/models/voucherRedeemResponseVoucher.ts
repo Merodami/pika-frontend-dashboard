@@ -12,9 +12,6 @@ import type { VoucherRedeemResponseVoucherMaxRedemptions } from './voucherRedeem
 import type { VoucherRedeemResponseVoucherMetadata } from './voucherRedeemResponseVoucherMetadata'
 import type { VoucherRedeemResponseVoucherCodesItem } from './voucherRedeemResponseVoucherCodesItem'
 
-/**
- * Public voucher information
- */
 export type VoucherRedeemResponseVoucher = {
   /** Universally Unique Identifier */
   id: string

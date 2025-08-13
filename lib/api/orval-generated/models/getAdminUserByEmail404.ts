@@ -7,9 +7,6 @@
  */
 import type { GetAdminUserByEmail404DetailsItem } from './getAdminUserByEmail404DetailsItem'
 
-/**
- * Standard error response
- */
 export type GetAdminUserByEmail404 = {
   /**
    * @minimum 100

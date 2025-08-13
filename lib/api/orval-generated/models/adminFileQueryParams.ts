@@ -12,9 +12,6 @@ import type { AdminFileQueryParamsIsPublic } from './adminFileQueryParamsIsPubli
 import type { AdminFileQueryParamsSortBy } from './adminFileQueryParamsSortBy'
 import type { AdminFileQueryParamsSortOrder } from './adminFileQueryParamsSortOrder'
 
-/**
- * Admin file search parameters
- */
 export interface AdminFileQueryParams {
   /** Search in filename or file key */
   search?: string

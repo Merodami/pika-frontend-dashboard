@@ -9,11 +9,7 @@ import type { GetUserVouchers200DataItemVoucher } from './getUserVouchers200Data
 import type { CustomerVoucherStatus } from './customerVoucherStatus'
 import type { GetUserVouchers200DataItemRedeemedAt } from './getUserVouchers200DataItemRedeemedAt'
 
-/**
- * User voucher with status information
- */
 export type GetUserVouchers200DataItem = {
-  /** Public voucher information */
   voucher: GetUserVouchers200DataItemVoucher
   claimedAt: string
   status: CustomerVoucherStatus

@@ -5,7 +5,7 @@
  * Complete API documentation including public, admin, and internal endpoints
  * OpenAPI spec version: 1.0.0
  */
-import type { Coordinates } from './coordinates'
+import type { VoucherRedeemRequestLocation } from './voucherRedeemRequestLocation'
 
 /**
  * Request to redeem voucher
@@ -13,5 +13,5 @@ import type { Coordinates } from './coordinates'
 export interface VoucherRedeemRequest {
   /** @minLength 1 */
   code: string
-  location?: Coordinates
+  location?: VoucherRedeemRequestLocation
 }

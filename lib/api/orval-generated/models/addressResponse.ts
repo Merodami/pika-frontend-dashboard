@@ -8,9 +8,6 @@
 import type { AddressResponseCoordinates } from './addressResponseCoordinates'
 import type { AddressType } from './addressType'
 
-/**
- * Single address details
- */
 export interface AddressResponse {
   /** Universally Unique Identifier */
   id: string

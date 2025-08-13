@@ -14,9 +14,6 @@ import type { CreateAdminVoucherBodyImageUrl } from './createAdminVoucherBodyIma
 import type { CreateAdminVoucherBodyMaxRedemptions } from './createAdminVoucherBodyMaxRedemptions'
 import type { CreateAdminVoucherBodyMetadata } from './createAdminVoucherBodyMetadata'
 
-/**
- * Create new voucher with translations
- */
 export type CreateAdminVoucherBody = {
   /** Universally Unique Identifier */
   businessId: string

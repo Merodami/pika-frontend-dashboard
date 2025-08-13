@@ -9,9 +9,6 @@ import type { GetAdminProblemList200DataItemType } from './getAdminProblemList20
 import type { GetAdminProblemList200DataItemStatus } from './getAdminProblemList200DataItemStatus'
 import type { GetAdminProblemList200DataItemPriority } from './getAdminProblemList200DataItemPriority'
 
-/**
- * Support ticket for admin
- */
 export type GetAdminProblemList200DataItem = {
   /** Universally Unique Identifier */
   id: string

@@ -7,9 +7,6 @@
  */
 import type { UserPaymentMethodsResponsePaymentMethodsItem } from './userPaymentMethodsResponsePaymentMethodsItem'
 
-/**
- * User payment methods list
- */
 export interface UserPaymentMethodsResponse {
   paymentMethods: UserPaymentMethodsResponsePaymentMethodsItem[]
   /** Universally Unique Identifier */

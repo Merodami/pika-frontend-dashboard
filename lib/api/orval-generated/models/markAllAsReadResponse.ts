@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Response when all notifications are marked as read
- */
 export interface MarkAllAsReadResponse {
   /**
    * Number of notifications marked as read

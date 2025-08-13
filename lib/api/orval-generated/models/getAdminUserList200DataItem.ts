@@ -8,9 +8,6 @@
 import type { GetAdminUserList200DataItemStatus } from './getAdminUserList200DataItemStatus'
 import type { GetAdminUserList200DataItemRole } from './getAdminUserList200DataItemRole'
 
-/**
- * Detailed user information for admin
- */
 export type GetAdminUserList200DataItem = {
   id: string
   /** @minLength 1 */

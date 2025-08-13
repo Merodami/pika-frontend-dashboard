@@ -10,15 +10,11 @@ import type { GetAdminFinancialReports200Period } from './getAdminFinancialRepor
 import type { GetAdminFinancialReports200Summary } from './getAdminFinancialReports200Summary'
 import type { GetAdminFinancialReports200TimeSeriesItem } from './getAdminFinancialReports200TimeSeriesItem'
 
-/**
- * Financial report data
- */
 export type GetAdminFinancialReports200 = {
   reportType: GetAdminFinancialReports200ReportType
   period: GetAdminFinancialReports200Period
   /** ISO 8601 datetime with timezone */
   generatedAt: string
-  /** Financial summary for a period */
   summary: GetAdminFinancialReports200Summary
   timeSeries?: GetAdminFinancialReports200TimeSeriesItem[]
   downloadUrl?: string

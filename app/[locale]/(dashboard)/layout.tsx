@@ -2,7 +2,7 @@ import { UserRole } from '@merodami/pika-types'
 import { getTranslations } from 'next-intl/server'
 import { Suspense } from 'react'
 
-import { requireAuth } from '@/app/services/authService'
+import { requireDashboardAccess } from '@/app/services/authService'
 import { AdminSidebar } from '@/components/layouts/adminSidebar'
 import { BusinessSidebar } from '@/components/layouts/businessSidebar'
 import { DashboardHeader } from '@/components/layouts/dashboardHeader'
@@ -21,8 +21,8 @@ export default async function DashboardLayout({
   children,
   params,
 }: DashboardLayoutProps) {
-  // Ensure user is authenticated
-  const user = await requireAuth()
+  // Ensure user has dashboard access (admin or business only)
+  const user = await requireDashboardAccess()
   const { locale } = await params
 
   const Sidebar = user.role === UserRole.ADMIN ? AdminSidebar : BusinessSidebar

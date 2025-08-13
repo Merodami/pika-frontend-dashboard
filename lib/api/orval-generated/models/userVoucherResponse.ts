@@ -9,11 +9,7 @@ import type { UserVoucherResponseVoucher } from './userVoucherResponseVoucher'
 import type { CustomerVoucherStatus } from './customerVoucherStatus'
 import type { UserVoucherResponseRedeemedAt } from './userVoucherResponseRedeemedAt'
 
-/**
- * User voucher with status information
- */
 export interface UserVoucherResponse {
-  /** Public voucher information */
   voucher: UserVoucherResponseVoucher
   claimedAt: string
   status: CustomerVoucherStatus

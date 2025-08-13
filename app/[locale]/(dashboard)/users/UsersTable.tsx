@@ -60,7 +60,6 @@ export default function UsersTable({ locale }: UsersTableProps) {
     switch (role) {
       case UserRole.ADMIN: return 'purple'
       case UserRole.BUSINESS: return 'blue'
-      case UserRole.CUSTOMER: return 'default'
       default: return 'default'
     }
   }
@@ -110,7 +109,6 @@ export default function UsersTable({ locale }: UsersTableProps) {
       filters: [
         { text: t('profile.role.admin'), value: UserRole.ADMIN },
         { text: t('profile.role.business'), value: UserRole.BUSINESS },
-        { text: t('profile.role.customer'), value: UserRole.CUSTOMER },
       ],
     },
     {
@@ -184,7 +182,6 @@ export default function UsersTable({ locale }: UsersTableProps) {
     commonFilters.role([
       { label: t('profile.role.admin'), value: UserRole.ADMIN },
       { label: t('profile.role.business'), value: UserRole.BUSINESS },
-      { label: t('profile.role.customer'), value: UserRole.CUSTOMER },
     ]),
     {
       name: 'emailVerified',

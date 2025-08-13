@@ -7,9 +7,6 @@
  */
 import type { GetFileUrl404DetailsItem } from './getFileUrl404DetailsItem'
 
-/**
- * Standard error response
- */
 export type GetFileUrl404 = {
   /**
    * @minimum 100

@@ -7,9 +7,6 @@
  */
 import type { BulkArchiveAdminVoucherBooks400DetailsItem } from './bulkArchiveAdminVoucherBooks400DetailsItem'
 
-/**
- * Standard error response
- */
 export type BulkArchiveAdminVoucherBooks400 = {
   /**
    * @minimum 100

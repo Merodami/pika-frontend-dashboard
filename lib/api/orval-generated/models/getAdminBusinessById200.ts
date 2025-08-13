@@ -5,13 +5,13 @@
  * Complete API documentation including public, admin, and internal endpoints
  * OpenAPI spec version: 1.0.0
  */
+import type { GetAdminBusinessById200CategoryId } from './getAdminBusinessById200CategoryId'
+import type { GetAdminBusinessById200ApprovedBy } from './getAdminBusinessById200ApprovedBy'
+import type { GetAdminBusinessById200ApprovedAt } from './getAdminBusinessById200ApprovedAt'
 import type { GetAdminBusinessById200DeletedAt } from './getAdminBusinessById200DeletedAt'
 import type { GetAdminBusinessById200User } from './getAdminBusinessById200User'
-import type { CategoryResponse } from './categoryResponse'
+import type { GetAdminBusinessById200Category } from './getAdminBusinessById200Category'
 
-/**
- * Business information for admin management
- */
 export type GetAdminBusinessById200 = {
   /** Universally Unique Identifier */
   id: string
@@ -28,11 +28,17 @@ export type GetAdminBusinessById200 = {
    */
   businessDescriptionKey?: string
   /** Category this business belongs to */
-  categoryId: string
+  categoryId: GetAdminBusinessById200CategoryId
   /** Whether business is verified */
   verified?: boolean
   /** Whether business is active */
   active?: boolean
+  /** Whether business is approved by admin */
+  approved?: boolean
+  /** Admin who approved the business */
+  approvedBy?: GetAdminBusinessById200ApprovedBy
+  /** When the business was approved */
+  approvedAt?: GetAdminBusinessById200ApprovedAt
   /**
    * Average rating of the business
    * @minimum 0
@@ -43,7 +49,8 @@ export type GetAdminBusinessById200 = {
   deletedAt: GetAdminBusinessById200DeletedAt
   /** Business owner details when ?include=user */
   user?: GetAdminBusinessById200User
-  category?: CategoryResponse
+  /** Category information when ?include=category */
+  category?: GetAdminBusinessById200Category
   /** When the record was created */
   createdAt: string
   /** When the record was last updated */

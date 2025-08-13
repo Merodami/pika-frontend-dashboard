@@ -8,9 +8,6 @@
 import type { AdminCreateUserRequestRole } from './adminCreateUserRequestRole'
 import type { AdminCreateUserRequestStatus } from './adminCreateUserRequestStatus'
 
-/**
- * Create a new user (admin only)
- */
 export interface AdminCreateUserRequest {
   /** @minLength 1 */
   email: string

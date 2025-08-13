@@ -8,9 +8,6 @@
 import type { AdminVerifyUserResponseUserStatus } from './adminVerifyUserResponseUserStatus'
 import type { AdminVerifyUserResponseUserRole } from './adminVerifyUserResponseUserRole'
 
-/**
- * Detailed user information for admin
- */
 export type AdminVerifyUserResponseUser = {
   id: string
   /** @minLength 1 */

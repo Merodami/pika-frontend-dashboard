@@ -11,9 +11,6 @@ import type { AdminFinancialReportResponseSummaryRevenueByPaymentMethod } from '
 import type { AdminFinancialReportResponseSummaryTopBusinessesItem } from './adminFinancialReportResponseSummaryTopBusinessesItem'
 import type { AdminFinancialReportResponseSummaryTopUsersItem } from './adminFinancialReportResponseSummaryTopUsersItem'
 
-/**
- * Financial summary for a period
- */
 export type AdminFinancialReportResponseSummary = {
   period: AdminFinancialReportResponseSummaryPeriod
   /** @minimum 0 */

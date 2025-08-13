@@ -8,9 +8,6 @@
 import type { CreateSupportProblemRequestPriority } from './createSupportProblemRequestPriority'
 import type { CreateSupportProblemRequestType } from './createSupportProblemRequestType'
 
-/**
- * Create new support problem
- */
 export interface CreateSupportProblemRequest {
   /**
    * @minLength 1

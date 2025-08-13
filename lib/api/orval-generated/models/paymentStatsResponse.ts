@@ -11,9 +11,6 @@ import type { PaymentStatsResponseRevenueByPaymentMethod } from './paymentStatsR
 import type { PaymentStatsResponseTopBusinessesItem } from './paymentStatsResponseTopBusinessesItem'
 import type { PaymentStatsResponseTopUsersItem } from './paymentStatsResponseTopUsersItem'
 
-/**
- * Financial summary for a period
- */
 export interface PaymentStatsResponse {
   period: PaymentStatsResponsePeriod
   /** @minimum 0 */

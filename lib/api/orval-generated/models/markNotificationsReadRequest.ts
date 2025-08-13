@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Mark notifications as read
- */
 export interface MarkNotificationsReadRequest {
   notificationIds?: string[]
   all?: boolean

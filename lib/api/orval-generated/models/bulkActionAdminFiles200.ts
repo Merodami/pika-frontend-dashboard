@@ -7,9 +7,6 @@
  */
 import type { BulkActionAdminFiles200FailedItem } from './bulkActionAdminFiles200FailedItem'
 
-/**
- * Bulk file action results
- */
 export type BulkActionAdminFiles200 = {
   successful: string[]
   failed: BulkActionAdminFiles200FailedItem[]

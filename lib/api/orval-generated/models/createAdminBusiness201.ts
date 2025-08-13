@@ -5,13 +5,13 @@
  * Complete API documentation including public, admin, and internal endpoints
  * OpenAPI spec version: 1.0.0
  */
+import type { CreateAdminBusiness201CategoryId } from './createAdminBusiness201CategoryId'
+import type { CreateAdminBusiness201ApprovedBy } from './createAdminBusiness201ApprovedBy'
+import type { CreateAdminBusiness201ApprovedAt } from './createAdminBusiness201ApprovedAt'
 import type { CreateAdminBusiness201DeletedAt } from './createAdminBusiness201DeletedAt'
 import type { CreateAdminBusiness201User } from './createAdminBusiness201User'
-import type { CategoryResponse } from './categoryResponse'
+import type { CreateAdminBusiness201Category } from './createAdminBusiness201Category'
 
-/**
- * Business information for admin management
- */
 export type CreateAdminBusiness201 = {
   /** Universally Unique Identifier */
   id: string
@@ -28,11 +28,17 @@ export type CreateAdminBusiness201 = {
    */
   businessDescriptionKey?: string
   /** Category this business belongs to */
-  categoryId: string
+  categoryId: CreateAdminBusiness201CategoryId
   /** Whether business is verified */
   verified?: boolean
   /** Whether business is active */
   active?: boolean
+  /** Whether business is approved by admin */
+  approved?: boolean
+  /** Admin who approved the business */
+  approvedBy?: CreateAdminBusiness201ApprovedBy
+  /** When the business was approved */
+  approvedAt?: CreateAdminBusiness201ApprovedAt
   /**
    * Average rating of the business
    * @minimum 0
@@ -43,7 +49,8 @@ export type CreateAdminBusiness201 = {
   deletedAt: CreateAdminBusiness201DeletedAt
   /** Business owner details when ?include=user */
   user?: CreateAdminBusiness201User
-  category?: CategoryResponse
+  /** Category information when ?include=category */
+  category?: CreateAdminBusiness201Category
   /** When the record was created */
   createdAt: string
   /** When the record was last updated */

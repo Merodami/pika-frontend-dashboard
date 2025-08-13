@@ -7,9 +7,6 @@
  */
 import type { CreateAdminVoucher400DetailsItem } from './createAdminVoucher400DetailsItem'
 
-/**
- * Standard error response
- */
 export type CreateAdminVoucher400 = {
   /**
    * @minimum 100

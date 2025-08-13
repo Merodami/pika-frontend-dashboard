@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Publish a voucher book
- */
 export interface AdminPublishVoucherBookRequest {
   /** Publication date (defaults to now) */
   publishedAt?: string

@@ -8,9 +8,6 @@
 import type { CreateSupportProblemBodyPriority } from './createSupportProblemBodyPriority'
 import type { CreateSupportProblemBodyType } from './createSupportProblemBodyType'
 
-/**
- * Create new support problem
- */
 export type CreateSupportProblemBody = {
   /**
    * @minLength 1

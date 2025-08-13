@@ -1,13 +1,3 @@
-import {
-  LayoutDashboard,
-  Ticket,
-  BarChart3,
-  Settings,
-  Store,
-  Users,
-  Calendar,
-  MessageSquare,
-} from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 
 import type { User } from '@/app/services/authService'
@@ -27,42 +17,42 @@ export async function BusinessSidebar({ locale }: BusinessSidebarProps) {
     {
       label: t('dashboard'),
       href: `/${locale}/business`,
-      icon: LayoutDashboard,
+      icon: 'LayoutDashboard' as const,
     },
     {
       label: t('myBusiness'),
       href: `/${locale}/business/profile`,
-      icon: Store,
+      icon: 'Store' as const,
     },
     {
       label: t('vouchers'),
       href: `/${locale}/business/vouchers`,
-      icon: Ticket,
+      icon: 'Ticket' as const,
     },
     {
       label: t('customers'),
       href: `/${locale}/business/customers`,
-      icon: Users,
+      icon: 'Users' as const,
     },
     {
       label: t('bookings'),
       href: `/${locale}/business/bookings`,
-      icon: Calendar,
+      icon: 'Calendar' as const,
     },
     {
       label: t('analytics'),
       href: `/${locale}/business/analytics`,
-      icon: BarChart3,
+      icon: 'BarChart3' as const,
     },
     {
       label: t('messages'),
       href: `/${locale}/business/messages`,
-      icon: MessageSquare,
+      icon: 'MessageSquare' as const,
     },
     {
       label: t('settings'),
       href: `/${locale}/business/settings`,
-      icon: Settings,
+      icon: 'Settings' as const,
     },
   ]
 

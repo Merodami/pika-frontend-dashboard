@@ -10,9 +10,6 @@ import type { BatchUploadFiles200SuccessfulItemStatus } from './batchUploadFiles
 import type { BatchUploadFiles200SuccessfulItemProvider } from './batchUploadFiles200SuccessfulItemProvider'
 import type { BatchUploadFiles200SuccessfulItemMetadata } from './batchUploadFiles200SuccessfulItemMetadata'
 
-/**
- * Response after successful file upload
- */
 export type BatchUploadFiles200SuccessfulItem = {
   /** Storage log ID */
   id: string

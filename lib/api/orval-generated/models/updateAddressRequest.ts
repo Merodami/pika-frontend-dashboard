@@ -8,9 +8,6 @@
 import type { AddressType } from './addressType'
 import type { Coordinates } from './coordinates'
 
-/**
- * Update an existing address
- */
 export interface UpdateAddressRequest {
   /**
    * @minLength 1

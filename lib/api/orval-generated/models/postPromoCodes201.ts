@@ -7,9 +7,6 @@
  */
 import type { PostPromoCodes201Type } from './postPromoCodes201Type'
 
-/**
- * Detailed promo code information for admin
- */
 export type PostPromoCodes201 = {
   /** Universally Unique Identifier */
   id: string

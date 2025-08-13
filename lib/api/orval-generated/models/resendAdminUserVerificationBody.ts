@@ -7,9 +7,6 @@
  */
 import type { ResendAdminUserVerificationBodyType } from './resendAdminUserVerificationBodyType'
 
-/**
- * Admin request to resend verification for a user
- */
 export type ResendAdminUserVerificationBody = {
   type: ResendAdminUserVerificationBodyType
   userId?: string

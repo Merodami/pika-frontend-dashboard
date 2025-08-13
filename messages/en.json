@@ -169,7 +169,16 @@
     "forbidden": "Access denied",
     "notFound": "Not found",
     "serverError": "Server error",
-    "networkError": "Connection error"
+    "networkError": "Connection error",
+    "accessDenied": "Access denied. Please contact your administrator.",
+    "invalidCredentials": "Invalid email or password",
+    "dashboardAccessDenied": "You don't have permission to access this resource",
+    "sessionExpired": "Your session has expired. Please log in again.",
+    "accountLocked": "Account locked. Please try again later.",
+    "accountSuspended": "Your account has been suspended. Please contact support.",
+    "somethingWentWrong": "Something went wrong. Please try again.",
+    "tryAgain": "Please try again",
+    "contactAdmin": "Please contact your administrator for assistance"
   },
   "user": {
     "role": {

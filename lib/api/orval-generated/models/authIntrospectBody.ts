@@ -7,9 +7,6 @@
  */
 import type { AuthIntrospectBodyTokenTypeHint } from './authIntrospectBodyTokenTypeHint'
 
-/**
- * Token introspection request
- */
 export type AuthIntrospectBody = {
   /**
    * Token to validate

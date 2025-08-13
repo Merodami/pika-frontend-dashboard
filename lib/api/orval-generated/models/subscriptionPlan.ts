@@ -8,9 +8,6 @@
 import type { SubscriptionPlanInterval } from './subscriptionPlanInterval'
 import type { SubscriptionPlanMetadata } from './subscriptionPlanMetadata'
 
-/**
- * Subscription plan details
- */
 export interface SubscriptionPlan {
   /** Universally Unique Identifier */
   id: string

@@ -7,9 +7,6 @@
  */
 import type { RegisterPushTokenRequestPlatform } from './registerPushTokenRequestPlatform'
 
-/**
- * Register device for push notifications
- */
 export interface RegisterPushTokenRequest {
   /** @minLength 1 */
   token: string

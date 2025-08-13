@@ -7,9 +7,6 @@
  */
 import type { AdminPromoCodeDetailType } from './adminPromoCodeDetailType'
 
-/**
- * Detailed promo code information for admin
- */
 export interface AdminPromoCodeDetail {
   /** Universally Unique Identifier */
   id: string

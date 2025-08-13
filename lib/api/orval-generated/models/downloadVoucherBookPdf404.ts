@@ -7,9 +7,6 @@
  */
 import type { DownloadVoucherBookPdf404DetailsItem } from './downloadVoucherBookPdf404DetailsItem'
 
-/**
- * Standard error response
- */
 export type DownloadVoucherBookPdf404 = {
   /**
    * @minimum 100

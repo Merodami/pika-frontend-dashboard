@@ -9,9 +9,6 @@ import type { AdminVoucherBookListResponseDataItemBookType } from './adminVouche
 import type { AdminVoucherBookListResponseDataItemStatus } from './adminVoucherBookListResponseDataItemStatus'
 import type { AdminVoucherBookListResponseDataItemMetadata } from './adminVoucherBookListResponseDataItemMetadata'
 
-/**
- * Admin voucher book information with full management details
- */
 export type AdminVoucherBookListResponseDataItem = {
   /** Universally Unique Identifier */
   id: string

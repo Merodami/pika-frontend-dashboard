@@ -7,9 +7,6 @@
  */
 import type { AdminAssignTicketRequestPriority } from './adminAssignTicketRequestPriority'
 
-/**
- * Assign ticket to agent
- */
 export interface AdminAssignTicketRequest {
   assigneeId: string
   /** @maxLength 500 */

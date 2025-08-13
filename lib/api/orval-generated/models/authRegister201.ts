@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Registration success response
- */
 export type AuthRegister201 = {
   message?: string
   /** Newly created user ID */

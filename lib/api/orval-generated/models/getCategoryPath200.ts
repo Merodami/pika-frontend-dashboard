@@ -7,9 +7,6 @@
  */
 import type { GetCategoryPath200DataItem } from './getCategoryPath200DataItem'
 
-/**
- * Category path from root to specified category
- */
 export type GetCategoryPath200 = {
   data: GetCategoryPath200DataItem[]
 }

@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Ban a user
- */
 export interface AdminBanUserRequest {
   /**
    * @minLength 1

@@ -9,9 +9,6 @@ import type { UpdateAdminProblem200Type } from './updateAdminProblem200Type'
 import type { UpdateAdminProblem200Status } from './updateAdminProblem200Status'
 import type { UpdateAdminProblem200Priority } from './updateAdminProblem200Priority'
 
-/**
- * Support ticket for admin
- */
 export type UpdateAdminProblem200 = {
   /** Universally Unique Identifier */
   id: string

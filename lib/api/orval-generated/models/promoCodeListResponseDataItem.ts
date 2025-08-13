@@ -7,9 +7,6 @@
  */
 import type { PromoCodeListResponseDataItemType } from './promoCodeListResponseDataItemType'
 
-/**
- * Detailed promo code information for admin
- */
 export type PromoCodeListResponseDataItem = {
   /** Universally Unique Identifier */
   id: string

@@ -10,9 +10,6 @@ import type { GetVouchersAnalytics200ScansBySource } from './getVouchersAnalytic
 import type { GetVouchersAnalytics200ScansByType } from './getVouchersAnalytics200ScansByType'
 import type { GetVouchersAnalytics200DailyStatsItem } from './getVouchersAnalytics200DailyStatsItem'
 
-/**
- * Voucher analytics data
- */
 export type GetVouchersAnalytics200 = {
   /** Universally Unique Identifier */
   voucherId: string

@@ -10,9 +10,6 @@ import type { AdminVoucherAnalyticsResponseScansBySource } from './adminVoucherA
 import type { AdminVoucherAnalyticsResponseScansByType } from './adminVoucherAnalyticsResponseScansByType'
 import type { AdminVoucherAnalyticsResponseDailyStatsItem } from './adminVoucherAnalyticsResponseDailyStatsItem'
 
-/**
- * Voucher analytics data
- */
 export interface AdminVoucherAnalyticsResponse {
   /** Universally Unique Identifier */
   voucherId: string

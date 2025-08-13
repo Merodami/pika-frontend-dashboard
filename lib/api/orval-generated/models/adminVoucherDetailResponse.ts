@@ -20,9 +20,6 @@ import type { AdminVoucherDetailResponseScansItem } from './adminVoucherDetailRe
 import type { AdminVoucherDetailResponseCustomerVouchersItem } from './adminVoucherDetailResponseCustomerVouchersItem'
 import type { AdminVoucherDetailResponseDaysUntilExpiry } from './adminVoucherDetailResponseDaysUntilExpiry'
 
-/**
- * Detailed voucher information for admin with industry-standard include relations
- */
 export interface AdminVoucherDetailResponse {
   /** Universally Unique Identifier */
   id: string

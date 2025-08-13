@@ -9,9 +9,6 @@ import type { CreateAdminVoucherBook201BookType } from './createAdminVoucherBook
 import type { CreateAdminVoucherBook201Status } from './createAdminVoucherBook201Status'
 import type { CreateAdminVoucherBook201Metadata } from './createAdminVoucherBook201Metadata'
 
-/**
- * Admin voucher book information with full management details
- */
 export type CreateAdminVoucherBook201 = {
   /** Universally Unique Identifier */
   id: string

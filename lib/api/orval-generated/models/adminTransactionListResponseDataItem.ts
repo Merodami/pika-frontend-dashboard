@@ -11,9 +11,6 @@ import type { AdminTransactionListResponseDataItemPaymentMethod } from './adminT
 import type { AdminTransactionListResponseDataItemDisputeStatus } from './adminTransactionListResponseDataItemDisputeStatus'
 import type { AdminTransactionListResponseDataItemMetadata } from './adminTransactionListResponseDataItemMetadata'
 
-/**
- * Detailed transaction information for admin
- */
 export type AdminTransactionListResponseDataItem = {
   /** Universally Unique Identifier */
   id: string

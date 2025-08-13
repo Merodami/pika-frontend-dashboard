@@ -7,9 +7,6 @@
  */
 import type { CategoryHierarchyResponseDataItem } from './categoryHierarchyResponseDataItem'
 
-/**
- * Hierarchical category tree structure
- */
 export interface CategoryHierarchyResponse {
   data: CategoryHierarchyResponseDataItem[]
 }

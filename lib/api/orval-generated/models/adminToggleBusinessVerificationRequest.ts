@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Toggle business verification status
- */
 export interface AdminToggleBusinessVerificationRequest {
   /** New verification status */
   verified: boolean

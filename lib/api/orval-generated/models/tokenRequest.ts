@@ -8,7 +8,4 @@
 import type { TokenRequestOneOf } from './tokenRequestOneOf'
 import type { TokenRequestOneOfThree } from './tokenRequestOneOfThree'
 
-/**
- * OAuth 2.0 compatible token request
- */
 export type TokenRequest = TokenRequestOneOf | TokenRequestOneOfThree

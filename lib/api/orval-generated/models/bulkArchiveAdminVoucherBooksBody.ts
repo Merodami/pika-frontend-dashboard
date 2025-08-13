@@ -8,9 +8,6 @@
 import type { BulkArchiveAdminVoucherBooksBodyOperation } from './bulkArchiveAdminVoucherBooksBodyOperation'
 import type { BulkArchiveAdminVoucherBooksBodyOptions } from './bulkArchiveAdminVoucherBooksBodyOptions'
 
-/**
- * Bulk operation on multiple voucher books
- */
 export type BulkArchiveAdminVoucherBooksBody = {
   /**
    * Voucher book IDs to operate on

@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Toggle category activation status
- */
 export interface AdminToggleCategoryActivationRequest {
   /** New activation status */
   isActive: boolean

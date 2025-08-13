@@ -8,9 +8,6 @@
 import type { CreateAdminVoucherBookBodyBookType } from './createAdminVoucherBookBodyBookType'
 import type { CreateAdminVoucherBookBodyMetadata } from './createAdminVoucherBookBodyMetadata'
 
-/**
- * Create a new voucher book
- */
 export type CreateAdminVoucherBookBody = {
   /**
    * Voucher book title

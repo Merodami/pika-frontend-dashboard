@@ -7,9 +7,6 @@
  */
 import type { PatchVouchersBulkUpdateBodyUpdates } from './patchVouchersBulkUpdateBodyUpdates'
 
-/**
- * Update multiple vouchers at once
- */
 export type PatchVouchersBulkUpdateBody = {
   /**
    * @minItems 1

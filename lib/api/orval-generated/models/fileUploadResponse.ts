@@ -10,9 +10,6 @@ import type { FileUploadResponseStatus } from './fileUploadResponseStatus'
 import type { FileUploadResponseProvider } from './fileUploadResponseProvider'
 import type { FileUploadResponseMetadata } from './fileUploadResponseMetadata'
 
-/**
- * Response after successful file upload
- */
 export interface FileUploadResponse {
   /** Storage log ID */
   id: string

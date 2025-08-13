@@ -7,9 +7,6 @@
  */
 import type { AdminUserStatsResponsePeriod } from './adminUserStatsResponsePeriod'
 
-/**
- * User statistics for admin view
- */
 export interface AdminUserStatsResponse {
   userId: string
   period: AdminUserStatsResponsePeriod

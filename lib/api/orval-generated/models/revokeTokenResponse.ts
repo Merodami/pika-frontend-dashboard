@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Token revocation response
- */
 export interface RevokeTokenResponse {
   success?: boolean
   message?: string

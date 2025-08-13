@@ -12,9 +12,6 @@ import type { ClaimVoucher200VoucherMaxRedemptions } from './claimVoucher200Vouc
 import type { ClaimVoucher200VoucherMetadata } from './claimVoucher200VoucherMetadata'
 import type { ClaimVoucher200VoucherCodesItem } from './claimVoucher200VoucherCodesItem'
 
-/**
- * Public voucher information
- */
 export type ClaimVoucher200Voucher = {
   /** Universally Unique Identifier */
   id: string

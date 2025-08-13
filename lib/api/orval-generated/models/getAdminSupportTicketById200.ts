@@ -9,9 +9,6 @@ import type { GetAdminSupportTicketById200Type } from './getAdminSupportTicketBy
 import type { GetAdminSupportTicketById200Status } from './getAdminSupportTicketById200Status'
 import type { GetAdminSupportTicketById200Priority } from './getAdminSupportTicketById200Priority'
 
-/**
- * Support ticket for admin
- */
 export type GetAdminSupportTicketById200 = {
   /** Universally Unique Identifier */
   id: string

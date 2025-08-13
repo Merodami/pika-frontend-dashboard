@@ -20,9 +20,6 @@ import type { GetAdminVoucherList200DataItemScansItem } from './getAdminVoucherL
 import type { GetAdminVoucherList200DataItemCustomerVouchersItem } from './getAdminVoucherList200DataItemCustomerVouchersItem'
 import type { GetAdminVoucherList200DataItemDaysUntilExpiry } from './getAdminVoucherList200DataItemDaysUntilExpiry'
 
-/**
- * Detailed voucher information for admin with industry-standard include relations
- */
 export type GetAdminVoucherList200DataItem = {
   /** Universally Unique Identifier */
   id: string

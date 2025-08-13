@@ -12,9 +12,6 @@ import type { VoucherListResponseDataItemMaxRedemptions } from './voucherListRes
 import type { VoucherListResponseDataItemMetadata } from './voucherListResponseDataItemMetadata'
 import type { VoucherListResponseDataItemCodesItem } from './voucherListResponseDataItemCodesItem'
 
-/**
- * Public voucher information
- */
 export type VoucherListResponseDataItem = {
   /** Universally Unique Identifier */
   id: string

@@ -7,9 +7,6 @@
  */
 import type { AssignAdminTicketToAgentBodyPriority } from './assignAdminTicketToAgentBodyPriority'
 
-/**
- * Assign ticket to agent
- */
 export type AssignAdminTicketToAgentBody = {
   assigneeId: string
   /** @maxLength 500 */

@@ -7,9 +7,6 @@
  */
 import type { GetInternalServiceConfig404DetailsItem } from './getInternalServiceConfig404DetailsItem'
 
-/**
- * Standard error response
- */
 export type GetInternalServiceConfig404 = {
   /**
    * @minimum 100

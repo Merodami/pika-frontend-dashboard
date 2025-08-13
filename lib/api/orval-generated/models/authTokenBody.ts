@@ -8,7 +8,4 @@
 import type { AuthTokenBodyOneOf } from './authTokenBodyOneOf'
 import type { AuthTokenBodyOneOfThree } from './authTokenBodyOneOfThree'
 
-/**
- * OAuth 2.0 compatible token request
- */
 export type AuthTokenBody = AuthTokenBodyOneOf | AuthTokenBodyOneOfThree

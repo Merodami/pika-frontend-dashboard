@@ -169,7 +169,16 @@
     "forbidden": "Acceso denegado",
     "notFound": "No encontrado",
     "serverError": "Error del servidor",
-    "networkError": "Error de conexión"
+    "networkError": "Error de conexión",
+    "accessDenied": "Acceso denegado. Por favor, contacta a tu administrador.",
+    "invalidCredentials": "Correo o contraseña incorrectos",
+    "dashboardAccessDenied": "No tienes permiso para acceder a este recurso",
+    "sessionExpired": "Tu sesión ha expirado. Por favor, inicia sesión nuevamente.",
+    "accountLocked": "Cuenta bloqueada. Por favor, intenta más tarde.",
+    "accountSuspended": "Tu cuenta ha sido suspendida. Por favor, contacta a soporte.",
+    "somethingWentWrong": "Algo salió mal. Por favor, intenta de nuevo.",
+    "tryAgain": "Por favor, intenta de nuevo",
+    "contactAdmin": "Por favor, contacta a tu administrador para obtener ayuda"
   },
   "user": {
     "role": {

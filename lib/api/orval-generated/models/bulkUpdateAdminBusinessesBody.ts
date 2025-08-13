@@ -7,9 +7,6 @@
  */
 import type { BulkUpdateAdminBusinessesBodyUpdates } from './bulkUpdateAdminBusinessesBodyUpdates'
 
-/**
- * Update multiple businesses at once
- */
 export type BulkUpdateAdminBusinessesBody = {
   /**
    * @minItems 1

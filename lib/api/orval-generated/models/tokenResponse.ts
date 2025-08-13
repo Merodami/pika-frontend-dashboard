@@ -8,9 +8,6 @@
 import type { TokenResponseTokenType } from './tokenResponseTokenType'
 import type { TokenResponseUser } from './tokenResponseUser'
 
-/**
- * OAuth 2.0 compatible token response
- */
 export interface TokenResponse {
   /**
    * JWT access token

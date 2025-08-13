@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Create a new category
- */
 export interface AdminCreateCategoryRequest {
   /**
    * Translation key for category name

@@ -9,9 +9,6 @@ import type { SupportProblemListResponseDataItemStatus } from './supportProblemL
 import type { SupportProblemListResponseDataItemPriority } from './supportProblemListResponseDataItemPriority'
 import type { SupportProblemListResponseDataItemType } from './supportProblemListResponseDataItemType'
 
-/**
- * Support problem
- */
 export type SupportProblemListResponseDataItem = {
   /** Universally Unique Identifier */
   id: string

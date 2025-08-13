@@ -8,9 +8,6 @@
 import type { AdminUpdateUserRequestRole } from './adminUpdateUserRequestRole'
 import type { AdminUpdateUserRequestStatus } from './adminUpdateUserRequestStatus'
 
-/**
- * Update user information (admin)
- */
 export interface AdminUpdateUserRequest {
   /**
    * @minLength 1

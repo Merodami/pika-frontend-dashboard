@@ -8,9 +8,6 @@
 import type { PostSubscriptionsPlans201Currency } from './postSubscriptionsPlans201Currency'
 import type { PostSubscriptionsPlans201BillingInterval } from './postSubscriptionsPlans201BillingInterval'
 
-/**
- * Detailed subscription plan for admin
- */
 export type PostSubscriptionsPlans201 = {
   /** Universally Unique Identifier */
   id: string

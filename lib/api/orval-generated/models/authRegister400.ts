@@ -7,9 +7,6 @@
  */
 import type { AuthRegister400DetailsItem } from './authRegister400DetailsItem'
 
-/**
- * Standard error response
- */
 export type AuthRegister400 = {
   /**
    * @minimum 100

@@ -5,22 +5,19 @@
  * Complete API documentation including public, admin, and internal endpoints
  * OpenAPI spec version: 1.0.0
  */
-import type { UserPaymentMethodsResponsePaymentMethodsItemType } from './userPaymentMethodsResponsePaymentMethodsItemType'
+import type { PaymentMethodType } from './paymentMethodType'
 import type { UserPaymentMethodsResponsePaymentMethodsItemCard } from './userPaymentMethodsResponsePaymentMethodsItemCard'
 import type { UserPaymentMethodsResponsePaymentMethodsItemBankAccount } from './userPaymentMethodsResponsePaymentMethodsItemBankAccount'
 import type { UserPaymentMethodsResponsePaymentMethodsItemWallet } from './userPaymentMethodsResponsePaymentMethodsItemWallet'
 import type { UserPaymentMethodsResponsePaymentMethodsItemBillingAddress } from './userPaymentMethodsResponsePaymentMethodsItemBillingAddress'
 import type { UserPaymentMethodsResponsePaymentMethodsItemMetadata } from './userPaymentMethodsResponsePaymentMethodsItemMetadata'
 
-/**
- * User payment method
- */
 export type UserPaymentMethodsResponsePaymentMethodsItem = {
   /** Universally Unique Identifier */
   id: string
   userId: string
   stripePaymentMethodId: string
-  type: UserPaymentMethodsResponsePaymentMethodsItemType
+  type: PaymentMethodType
   isDefault?: boolean
   card?: UserPaymentMethodsResponsePaymentMethodsItemCard
   bankAccount?: UserPaymentMethodsResponsePaymentMethodsItemBankAccount

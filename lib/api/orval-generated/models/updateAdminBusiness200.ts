@@ -5,13 +5,13 @@
  * Complete API documentation including public, admin, and internal endpoints
  * OpenAPI spec version: 1.0.0
  */
+import type { UpdateAdminBusiness200CategoryId } from './updateAdminBusiness200CategoryId'
+import type { UpdateAdminBusiness200ApprovedBy } from './updateAdminBusiness200ApprovedBy'
+import type { UpdateAdminBusiness200ApprovedAt } from './updateAdminBusiness200ApprovedAt'
 import type { UpdateAdminBusiness200DeletedAt } from './updateAdminBusiness200DeletedAt'
 import type { UpdateAdminBusiness200User } from './updateAdminBusiness200User'
-import type { CategoryResponse } from './categoryResponse'
+import type { UpdateAdminBusiness200Category } from './updateAdminBusiness200Category'
 
-/**
- * Business information for admin management
- */
 export type UpdateAdminBusiness200 = {
   /** Universally Unique Identifier */
   id: string
@@ -28,11 +28,17 @@ export type UpdateAdminBusiness200 = {
    */
   businessDescriptionKey?: string
   /** Category this business belongs to */
-  categoryId: string
+  categoryId: UpdateAdminBusiness200CategoryId
   /** Whether business is verified */
   verified?: boolean
   /** Whether business is active */
   active?: boolean
+  /** Whether business is approved by admin */
+  approved?: boolean
+  /** Admin who approved the business */
+  approvedBy?: UpdateAdminBusiness200ApprovedBy
+  /** When the business was approved */
+  approvedAt?: UpdateAdminBusiness200ApprovedAt
   /**
    * Average rating of the business
    * @minimum 0
@@ -43,7 +49,8 @@ export type UpdateAdminBusiness200 = {
   deletedAt: UpdateAdminBusiness200DeletedAt
   /** Business owner details when ?include=user */
   user?: UpdateAdminBusiness200User
-  category?: CategoryResponse
+  /** Category information when ?include=category */
+  category?: UpdateAdminBusiness200Category
   /** When the record was created */
   createdAt: string
   /** When the record was last updated */

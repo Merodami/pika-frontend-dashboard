@@ -7,9 +7,6 @@
  */
 import type { RefundAdminTransaction404DetailsItem } from './refundAdminTransaction404DetailsItem'
 
-/**
- * Standard error response
- */
 export type RefundAdminTransaction404 = {
   /**
    * @minimum 100

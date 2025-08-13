@@ -11,9 +11,6 @@ import type { GetAdminFinancialReports200SummaryRevenueByPaymentMethod } from '.
 import type { GetAdminFinancialReports200SummaryTopBusinessesItem } from './getAdminFinancialReports200SummaryTopBusinessesItem'
 import type { GetAdminFinancialReports200SummaryTopUsersItem } from './getAdminFinancialReports200SummaryTopUsersItem'
 
-/**
- * Financial summary for a period
- */
 export type GetAdminFinancialReports200Summary = {
   period: GetAdminFinancialReports200SummaryPeriod
   /** @minimum 0 */

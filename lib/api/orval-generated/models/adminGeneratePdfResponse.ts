@@ -7,9 +7,6 @@
  */
 import type { AdminGeneratePdfResponseStatus } from './adminGeneratePdfResponseStatus'
 
-/**
- * PDF generation job status
- */
 export interface AdminGeneratePdfResponse {
   /** PDF generation job ID */
   jobId: string

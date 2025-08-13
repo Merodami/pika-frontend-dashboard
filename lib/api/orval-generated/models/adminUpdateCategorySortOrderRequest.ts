@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Update category sort order
- */
 export interface AdminUpdateCategorySortOrderRequest {
   /** New sort order value */
   sortOrder: number

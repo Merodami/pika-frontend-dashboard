@@ -8,9 +8,6 @@
 import type { AdminSubscriptionPlanDetailCurrency } from './adminSubscriptionPlanDetailCurrency'
 import type { AdminSubscriptionPlanDetailBillingInterval } from './adminSubscriptionPlanDetailBillingInterval'
 
-/**
- * Detailed subscription plan for admin
- */
 export interface AdminSubscriptionPlanDetail {
   /** Universally Unique Identifier */
   id: string

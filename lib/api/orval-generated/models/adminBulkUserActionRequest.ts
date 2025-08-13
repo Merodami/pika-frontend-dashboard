@@ -7,9 +7,6 @@
  */
 import type { AdminBulkUserActionRequestUpdates } from './adminBulkUserActionRequestUpdates'
 
-/**
- * Update multiple users at once
- */
 export interface AdminBulkUserActionRequest {
   /**
    * @minItems 1

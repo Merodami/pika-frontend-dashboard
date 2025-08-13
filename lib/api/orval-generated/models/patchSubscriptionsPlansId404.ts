@@ -7,9 +7,6 @@
  */
 import type { PatchSubscriptionsPlansId404DetailsItem } from './patchSubscriptionsPlansId404DetailsItem'
 
-/**
- * Standard error response
- */
 export type PatchSubscriptionsPlansId404 = {
   /**
    * @minimum 100

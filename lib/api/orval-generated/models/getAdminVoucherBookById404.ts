@@ -7,9 +7,6 @@
  */
 import type { GetAdminVoucherBookById404DetailsItem } from './getAdminVoucherBookById404DetailsItem'
 
-/**
- * Standard error response
- */
 export type GetAdminVoucherBookById404 = {
   /**
    * @minimum 100

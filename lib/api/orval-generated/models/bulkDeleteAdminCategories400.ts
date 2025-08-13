@@ -7,9 +7,6 @@
  */
 import type { BulkDeleteAdminCategories400DetailsItem } from './bulkDeleteAdminCategories400DetailsItem'
 
-/**
- * Standard error response
- */
 export type BulkDeleteAdminCategories400 = {
   /**
    * @minimum 100

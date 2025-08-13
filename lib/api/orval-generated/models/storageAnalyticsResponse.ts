@@ -12,9 +12,6 @@ import type { StorageAnalyticsResponseFilesByProvider } from './storageAnalytics
 import type { StorageAnalyticsResponseStorageByProvider } from './storageAnalyticsResponseStorageByProvider'
 import type { StorageAnalyticsResponseTopUsersItem } from './storageAnalyticsResponseTopUsersItem'
 
-/**
- * Storage usage analytics
- */
 export interface StorageAnalyticsResponse {
   period: StorageAnalyticsResponsePeriod
   /** @minimum 0 */

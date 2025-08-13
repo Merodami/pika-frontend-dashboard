@@ -5,10 +5,8 @@
  * Complete API documentation including public, admin, and internal endpoints
  * OpenAPI spec version: 1.0.0
  */
+import type { CategoryResponseChildrenItem } from './categoryResponseChildrenItem'
 
-/**
- * Category information when ?include=category
- */
 export interface CategoryResponse {
   /** Universally Unique Identifier */
   id: string
@@ -51,5 +49,5 @@ export interface CategoryResponse {
   /** When the record was last updated */
   updatedAt: string
   /** Child categories for hierarchical display */
-  children?: CategoryResponse[]
+  children?: CategoryResponseChildrenItem[]
 }

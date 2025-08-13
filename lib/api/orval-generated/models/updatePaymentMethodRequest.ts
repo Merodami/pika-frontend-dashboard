@@ -7,9 +7,6 @@
  */
 import type { UpdatePaymentMethodRequestBillingAddress } from './updatePaymentMethodRequestBillingAddress'
 
-/**
- * Update payment method
- */
 export interface UpdatePaymentMethodRequest {
   isDefault?: boolean
   billingAddress?: UpdatePaymentMethodRequestBillingAddress

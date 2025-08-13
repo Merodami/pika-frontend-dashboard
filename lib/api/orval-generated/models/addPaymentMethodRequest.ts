@@ -7,9 +7,6 @@
  */
 import type { AddPaymentMethodRequestBillingAddress } from './addPaymentMethodRequestBillingAddress'
 
-/**
- * Add a payment method
- */
 export interface AddPaymentMethodRequest {
   stripePaymentMethodId: string
   makeDefault?: boolean

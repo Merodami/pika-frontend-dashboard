@@ -7,9 +7,6 @@
  */
 import type { ClaimVoucher404DetailsItem } from './claimVoucher404DetailsItem'
 
-/**
- * Standard error response
- */
 export type ClaimVoucher404 = {
   /**
    * @minimum 100

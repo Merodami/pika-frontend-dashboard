@@ -12,9 +12,6 @@ import type { GetAdminStorageAnalytics200FilesByProvider } from './getAdminStora
 import type { GetAdminStorageAnalytics200StorageByProvider } from './getAdminStorageAnalytics200StorageByProvider'
 import type { GetAdminStorageAnalytics200TopUsersItem } from './getAdminStorageAnalytics200TopUsersItem'
 
-/**
- * Storage usage analytics
- */
 export type GetAdminStorageAnalytics200 = {
   period: GetAdminStorageAnalytics200Period
   /** @minimum 0 */

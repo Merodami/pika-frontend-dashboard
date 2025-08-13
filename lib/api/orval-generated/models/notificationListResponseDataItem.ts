@@ -10,9 +10,6 @@ import type { NotificationListResponseDataItemStatus } from './notificationListR
 import type { NotificationListResponseDataItemPriority } from './notificationListResponseDataItemPriority'
 import type { NotificationListResponseDataItemMetadata } from './notificationListResponseDataItemMetadata'
 
-/**
- * User notification
- */
 export type NotificationListResponseDataItem = {
   /** Universally Unique Identifier */
   id: string

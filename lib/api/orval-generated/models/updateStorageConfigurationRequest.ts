@@ -9,9 +9,6 @@ import type { UpdateStorageConfigurationRequestProvider } from './updateStorageC
 import type { UpdateStorageConfigurationRequestConfig } from './updateStorageConfigurationRequestConfig'
 import type { UpdateStorageConfigurationRequestGlobalSettings } from './updateStorageConfigurationRequestGlobalSettings'
 
-/**
- * Update storage configuration
- */
 export interface UpdateStorageConfigurationRequest {
   /** Supported storage provider */
   provider: UpdateStorageConfigurationRequestProvider

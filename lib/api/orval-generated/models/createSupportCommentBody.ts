@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Create new support comment
- */
 export type CreateSupportCommentBody = {
   /** Universally Unique Identifier */
   problemId: string

@@ -9,9 +9,6 @@ import type { AdminTicketDetailResponseType } from './adminTicketDetailResponseT
 import type { AdminTicketDetailResponseStatus } from './adminTicketDetailResponseStatus'
 import type { AdminTicketDetailResponsePriority } from './adminTicketDetailResponsePriority'
 
-/**
- * Support ticket for admin
- */
 export interface AdminTicketDetailResponse {
   /** Universally Unique Identifier */
   id: string

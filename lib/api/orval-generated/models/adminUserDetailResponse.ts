@@ -8,9 +8,6 @@
 import type { AdminUserDetailResponseStatus } from './adminUserDetailResponseStatus'
 import type { AdminUserDetailResponseRole } from './adminUserDetailResponseRole'
 
-/**
- * Detailed user information for admin
- */
 export interface AdminUserDetailResponse {
   id: string
   /** @minLength 1 */

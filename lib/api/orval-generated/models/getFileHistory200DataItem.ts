@@ -10,9 +10,6 @@ import type { GetFileHistory200DataItemStatus } from './getFileHistory200DataIte
 import type { GetFileHistory200DataItemProvider } from './getFileHistory200DataItemProvider'
 import type { GetFileHistory200DataItemMetadata } from './getFileHistory200DataItemMetadata'
 
-/**
- * File storage log entry
- */
 export type GetFileHistory200DataItem = {
   /** Universally Unique Identifier */
   id: string

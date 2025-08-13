@@ -7,9 +7,6 @@
  */
 import type { GenerateAdminVoucherBookPdf200Status } from './generateAdminVoucherBookPdf200Status'
 
-/**
- * PDF generation job status
- */
 export type GenerateAdminVoucherBookPdf200 = {
   /** PDF generation job ID */
   jobId: string

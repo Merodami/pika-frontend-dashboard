@@ -12,9 +12,6 @@ import type { VoucherClaimResponseVoucherMaxRedemptions } from './voucherClaimRe
 import type { VoucherClaimResponseVoucherMetadata } from './voucherClaimResponseVoucherMetadata'
 import type { VoucherClaimResponseVoucherCodesItem } from './voucherClaimResponseVoucherCodesItem'
 
-/**
- * Public voucher information
- */
 export type VoucherClaimResponseVoucher = {
   /** Universally Unique Identifier */
   id: string

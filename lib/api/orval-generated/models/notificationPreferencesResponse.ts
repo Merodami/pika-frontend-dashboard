@@ -11,9 +11,6 @@ import type { NotificationPreferencesResponseSms } from './notificationPreferenc
 import type { NotificationPreferencesResponsePush } from './notificationPreferencesResponsePush'
 import type { NotificationPreferencesResponseQuietHours } from './notificationPreferencesResponseQuietHours'
 
-/**
- * User notification preferences
- */
 export interface NotificationPreferencesResponse {
   email: NotificationPreferencesResponseEmail
   inApp: NotificationPreferencesResponseInApp

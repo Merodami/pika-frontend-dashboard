@@ -7,9 +7,6 @@
  */
 import type { AdminBulkVoucherBookOperationResponseResultsItem } from './adminBulkVoucherBookOperationResponseResultsItem'
 
-/**
- * Bulk operation results
- */
 export interface AdminBulkVoucherBookOperationResponse {
   /**
    * Number of successful operations

@@ -6,11 +6,8 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { BusinessResponseUser } from './businessResponseUser'
-import type { CategoryResponse } from './categoryResponse'
+import type { BusinessResponseCategory } from './businessResponseCategory'
 
-/**
- * Business information for public view
- */
 export interface BusinessResponse {
   /** Universally Unique Identifier */
   id: string
@@ -40,7 +37,8 @@ export interface BusinessResponse {
   avgRating?: number
   /** Business owner profile when ?include=user */
   user?: BusinessResponseUser
-  category?: CategoryResponse
+  /** Category information when ?include=category */
+  category?: BusinessResponseCategory
   /** When the record was created */
   createdAt: string
   /** When the record was last updated */

@@ -8,9 +8,6 @@
 import type { SubscriptionResponseStatus } from './subscriptionResponseStatus'
 import type { SubscriptionResponsePlan } from './subscriptionResponsePlan'
 
-/**
- * Single subscription with plan details
- */
 export interface SubscriptionResponse {
   /** Universally Unique Identifier */
   id: string
@@ -49,6 +46,5 @@ export interface SubscriptionResponse {
   createdAt: string
   /** When the record was last updated */
   updatedAt: string
-  /** Subscription plan details */
   plan?: SubscriptionResponsePlan
 }

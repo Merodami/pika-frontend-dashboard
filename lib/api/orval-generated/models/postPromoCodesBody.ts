@@ -7,9 +7,6 @@
  */
 import type { PostPromoCodesBodyType } from './postPromoCodesBodyType'
 
-/**
- * Create a new promo code
- */
 export type PostPromoCodesBody = {
   /**
    * @minLength 3
