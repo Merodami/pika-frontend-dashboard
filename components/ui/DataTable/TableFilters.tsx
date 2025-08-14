@@ -55,8 +55,12 @@ export function TableFilters({
 
   // Sync form values with external values
   useEffect(() => {
-    form.setFieldsValue(values)
-    setActiveFilters(omitBy(values, isNil))
+    // Use setTimeout to ensure form is mounted
+    const timer = setTimeout(() => {
+      form.setFieldsValue(values)
+      setActiveFilters(omitBy(values, isNil))
+    }, 0)
+    return () => clearTimeout(timer)
   }, [values, form])
 
   const handleSubmit = (formValues: Record<string, any>) => {

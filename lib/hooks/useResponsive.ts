@@ -27,9 +27,9 @@ export function useResponsive() {
     function handleResize() {
       const width = window.innerWidth
       const height = window.innerHeight
-      
+
       setWindowSize({ width, height })
-      
+
       // Update Zustand store with responsive states
       setResponsiveState({
         isMobile: width < BREAKPOINTS.md,
@@ -40,7 +40,7 @@ export function useResponsive() {
 
     // Add event listener
     window.addEventListener('resize', handleResize)
-    
+
     // Call handler right away so state gets updated with initial window size
     handleResize()
 
@@ -51,15 +51,15 @@ export function useResponsive() {
   return {
     ...windowSize,
     isMobile: windowSize.width ? windowSize.width < BREAKPOINTS.md : false,
-    isTablet: windowSize.width 
-      ? windowSize.width >= BREAKPOINTS.md && windowSize.width < BREAKPOINTS.lg 
+    isTablet: windowSize.width
+      ? windowSize.width >= BREAKPOINTS.md && windowSize.width < BREAKPOINTS.lg
       : false,
     isDesktop: windowSize.width ? windowSize.width >= BREAKPOINTS.lg : false,
-    
+
     // Utility functions
-    isAbove: (breakpoint: keyof typeof BREAKPOINTS) => 
+    isAbove: (breakpoint: keyof typeof BREAKPOINTS) =>
       windowSize.width ? windowSize.width >= BREAKPOINTS[breakpoint] : false,
-    isBelow: (breakpoint: keyof typeof BREAKPOINTS) => 
+    isBelow: (breakpoint: keyof typeof BREAKPOINTS) =>
       windowSize.width ? windowSize.width < BREAKPOINTS[breakpoint] : false,
   }
 }
@@ -70,13 +70,13 @@ export function useMediaQuery(query: string) {
 
   useEffect(() => {
     const media = window.matchMedia(query)
-    
+
     if (media.matches !== matches) {
       setMatches(media.matches)
     }
-    
+
     const listener = (event: MediaQueryListEvent) => setMatches(event.matches)
-    
+
     // Modern browsers
     if (media.addEventListener) {
       media.addEventListener('change', listener)

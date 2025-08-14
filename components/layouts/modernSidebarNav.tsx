@@ -49,37 +49,33 @@ interface ModernSidebarNavProps {
   footer?: React.ReactNode
 }
 
-export function ModernSidebarNav({ navItems, logo, footer }: ModernSidebarNavProps) {
+export function ModernSidebarNav({ navItems, footer }: ModernSidebarNavProps) {
   // Group items by section
-  const sections = navItems.reduce((acc, item) => {
-    const section = item.section || 'main'
-    if (!acc[section]) {
-      acc[section] = []
-    }
-    acc[section].push(item)
-    return acc
-  }, {} as Record<string, NavItem[]>)
+  const sections = navItems.reduce(
+    (acc, item) => {
+      const section = item.section || 'main'
+      if (!acc[section]) {
+        acc[section] = []
+      }
+      acc[section].push(item)
+      return acc
+    },
+    {} as Record<string, NavItem[]>
+  )
 
   return (
     <>
       {/* Sidebar Header */}
       <Sidebar.Header>
-        {logo || (
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold">P</span>
-            </div>
-            <span className="font-semibold text-gray-900">Pika</span>
-          </div>
-        )}
+        <Sidebar.Logo />
         <Sidebar.CollapseToggle />
       </Sidebar.Header>
 
       {/* Sidebar Content */}
       <Sidebar.Content>
         {Object.entries(sections).map(([sectionName, items]) => (
-          <Sidebar.Section 
-            key={sectionName} 
+          <Sidebar.Section
+            key={sectionName}
             title={sectionName !== 'main' ? sectionName : undefined}
           >
             {items.map((item) => {

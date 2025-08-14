@@ -78,13 +78,13 @@
   .container-responsive {
     @apply px-4;
   }
-  
+
   @container (min-width: 640px) {
     .container-responsive {
       @apply px-6;
     }
   }
-  
+
   @container (min-width: 1024px) {
     .container-responsive {
       @apply px-8;
@@ -121,14 +121,14 @@
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
     gap: 1rem;
   }
-  
+
   @screen sm {
     .grid-responsive-auto {
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 1.5rem;
     }
   }
-  
+
   @screen lg {
     .grid-responsive-auto {
       grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -142,11 +142,11 @@
   .tap-target {
     @apply min-h-[44px] min-w-[44px];
   }
-  
+
   .tap-target-sm {
     @apply min-h-[36px] min-w-[36px];
   }
-  
+
   .tap-target-lg {
     @apply min-h-[48px] min-w-[48px];
   }
@@ -157,25 +157,25 @@
   .table-responsive {
     @apply block overflow-x-auto;
   }
-  
+
   .table-responsive table {
     @apply min-w-full;
   }
-  
+
   /* Stack table on mobile */
   @screen max-sm {
     .table-stack thead {
       @apply hidden;
     }
-    
+
     .table-stack tr {
       @apply block border-b border-gray-200 py-3;
     }
-    
+
     .table-stack td {
       @apply block text-right pl-[50%] relative;
     }
-    
+
     .table-stack td:before {
       @apply content-[attr(data-label)] absolute left-0 w-[45%] text-left font-medium;
     }
@@ -187,19 +187,19 @@
   .card-grid-responsive {
     @apply grid grid-cols-1 gap-4;
   }
-  
+
   @screen sm {
     .card-grid-responsive {
       @apply grid-cols-2 gap-6;
     }
   }
-  
+
   @screen lg {
     .card-grid-responsive {
       @apply grid-cols-3;
     }
   }
-  
+
   @screen xl {
     .card-grid-responsive {
       @apply grid-cols-4 gap-8;
@@ -212,13 +212,13 @@
   .nav-responsive {
     @apply flex flex-col space-y-2;
   }
-  
+
   @screen sm {
     .nav-responsive {
       @apply flex-row space-y-0 space-x-4;
     }
   }
-  
+
   @screen lg {
     .nav-responsive {
       @apply space-x-6;
@@ -231,19 +231,19 @@
   .modal-responsive {
     @apply w-full max-w-lg;
   }
-  
+
   @screen sm {
     .modal-responsive {
       @apply max-w-xl;
     }
   }
-  
+
   @screen lg {
     .modal-responsive {
       @apply max-w-2xl;
     }
   }
-  
+
   @screen xl {
     .modal-responsive {
       @apply max-w-4xl;
@@ -256,16 +256,16 @@
   .no-print {
     display: none !important;
   }
-  
+
   .print-only {
     display: block !important;
   }
-  
+
   /* Ensure content fits on page */
   body {
     font-size: 12pt;
   }
-  
+
   /* Remove backgrounds and shadows */
   * {
     background: transparent !important;
@@ -278,15 +278,15 @@
   .animate-slide-up {
     animation: slideUp 0.3s ease-out;
   }
-  
+
   .animate-slide-down {
     animation: slideDown 0.3s ease-out;
   }
-  
+
   .animate-slide-left {
     animation: slideLeft 0.3s ease-out;
   }
-  
+
   .animate-slide-right {
     animation: slideRight 0.3s ease-out;
   }

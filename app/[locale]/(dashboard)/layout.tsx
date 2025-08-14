@@ -27,92 +27,118 @@ export default async function DashboardLayout({
   const t = await getTranslations({ locale, namespace: 'navigation' })
 
   // Prepare nav items based on user role
-  const navItems = user.role === UserRole.ADMIN ? [
-    // Main Section
-    { label: t('dashboard'), href: `/${locale}/admin`, icon: 'LayoutDashboard' },
-    { label: t('users'), href: `/${locale}/admin/users`, icon: 'Users' },
-    { label: t('businesses'), href: `/${locale}/admin/businesses`, icon: 'Building2' },
-    
-    // Management Section
-    { 
-      label: t('vouchers'), 
-      href: `/${locale}/admin/vouchers`, 
-      icon: 'Ticket',
-      section: 'Management'
-    },
-    { 
-      label: t('voucherBooks'), 
-      href: `/${locale}/admin/voucher-books`, 
-      icon: 'BookOpen',
-      section: 'Management'
-    },
-    
-    // Analytics Section
-    { 
-      label: t('analytics'), 
-      href: `/${locale}/admin/analytics`, 
-      icon: 'BarChart3',
-      section: 'Analytics'
-    },
-    { 
-      label: t('reports'), 
-      href: `/${locale}/admin/reports`, 
-      icon: 'FileText',
-      section: 'Analytics'
-    },
-    
-    // System Section
-    { 
-      label: t('payments'), 
-      href: `/${locale}/admin/payments`, 
-      icon: 'CreditCard',
-      section: 'System'
-    },
-    { 
-      label: t('support'), 
-      href: `/${locale}/admin/support`, 
-      icon: 'MessageSquare',
-      section: 'System'
-    },
-    { 
-      label: t('settings'), 
-      href: `/${locale}/admin/settings`, 
-      icon: 'Settings',
-      section: 'System'
-    },
-  ] : [
-    // Business Owner Items
-    { label: t('dashboard'), href: `/${locale}/business`, icon: 'LayoutDashboard' },
-    { label: t('myBusiness'), href: `/${locale}/business/profile`, icon: 'Store' },
-    { label: t('vouchers'), href: `/${locale}/business/vouchers`, icon: 'Ticket' },
-    { label: t('schedule'), href: `/${locale}/business/schedule`, icon: 'Calendar' },
-    { label: t('analytics'), href: `/${locale}/business/analytics`, icon: 'ChartColumn' },
-    { label: t('settings'), href: `/${locale}/business/settings`, icon: 'Settings' },
-  ]
+  const navItems =
+    user.role === UserRole.ADMIN
+      ? [
+          // Main Section
+          {
+            label: t('dashboard'),
+            href: `/${locale}/admin`,
+            icon: 'LayoutDashboard',
+          },
+          { label: t('users'), href: `/${locale}/admin/users`, icon: 'Users' },
+          {
+            label: t('businesses'),
+            href: `/${locale}/admin/businesses`,
+            icon: 'Building2',
+          },
+
+          // Management Section
+          {
+            label: t('vouchers'),
+            href: `/${locale}/admin/vouchers`,
+            icon: 'Ticket',
+            section: 'Management',
+          },
+          {
+            label: t('voucherBooks'),
+            href: `/${locale}/admin/voucher-books`,
+            icon: 'BookOpen',
+            section: 'Management',
+          },
+
+          // Analytics Section
+          {
+            label: t('analytics'),
+            href: `/${locale}/admin/analytics`,
+            icon: 'BarChart3',
+            section: 'Analytics',
+          },
+          {
+            label: t('reports'),
+            href: `/${locale}/admin/reports`,
+            icon: 'FileText',
+            section: 'Analytics',
+          },
+
+          // System Section
+          {
+            label: t('payments'),
+            href: `/${locale}/admin/payments`,
+            icon: 'CreditCard',
+            section: 'System',
+          },
+          {
+            label: t('support'),
+            href: `/${locale}/admin/support`,
+            icon: 'MessageSquare',
+            section: 'System',
+          },
+          {
+            label: t('settings'),
+            href: `/${locale}/admin/settings`,
+            icon: 'Settings',
+            section: 'System',
+          },
+        ]
+      : [
+          // Business Owner Items
+          {
+            label: t('dashboard'),
+            href: `/${locale}/business`,
+            icon: 'LayoutDashboard',
+          },
+          {
+            label: t('myBusiness'),
+            href: `/${locale}/business/profile`,
+            icon: 'Store',
+          },
+          {
+            label: t('vouchers'),
+            href: `/${locale}/business/vouchers`,
+            icon: 'Ticket',
+          },
+          {
+            label: t('schedule'),
+            href: `/${locale}/business/schedule`,
+            icon: 'Calendar',
+          },
+          {
+            label: t('analytics'),
+            href: `/${locale}/business/analytics`,
+            icon: 'ChartColumn',
+          },
+          {
+            label: t('settings'),
+            href: `/${locale}/business/settings`,
+            icon: 'Settings',
+          },
+        ]
 
   const sidebarContent = (
-    <ModernSidebarNav 
+    <ModernSidebarNav
       navItems={navItems}
       footer={
-        <div className="text-xs text-gray-500 text-center">
-          © 2024 Pika
-        </div>
+        <div className="text-xs text-gray-500 text-center">© 2024 Pika</div>
       }
     />
   )
 
-  const headerContent = (
-    <DashboardHeader user={user} locale={locale} />
-  )
+  const headerContent = <DashboardHeader user={user} locale={locale} />
 
   return (
-    <ResponsiveDashboardWrapper
-      sidebar={sidebarContent}
-      header={headerContent}
-    >
-      <Suspense fallback={<LoadingSkeleton />}>
-        {children}
-      </Suspense>
+    <ResponsiveDashboardWrapper sidebar={sidebarContent} header={headerContent}>
+      <Suspense fallback={<LoadingSkeleton />}>{children}</Suspense>
     </ResponsiveDashboardWrapper>
   )
 }

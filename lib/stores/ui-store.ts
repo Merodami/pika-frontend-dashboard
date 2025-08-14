@@ -6,15 +6,15 @@ interface UIState {
   sidebarOpen: boolean
   sidebarCollapsed: boolean
   mobileSidebarOpen: boolean
-  
+
   // Theme
   theme: 'light' | 'dark' | 'system'
-  
+
   // Responsive states
   isMobile: boolean
   isTablet: boolean
   isDesktop: boolean
-  
+
   // User preferences
   preferences: {
     compactMode: boolean
@@ -22,13 +22,17 @@ interface UIState {
     sidebarPosition: 'left' | 'right'
     language: string
   }
-  
+
   // Actions
   toggleSidebar: () => void
   setMobileSidebarOpen: (open: boolean) => void
   collapseSidebar: (collapsed: boolean) => void
   setTheme: (theme: 'light' | 'dark' | 'system') => void
-  setResponsiveState: (state: { isMobile?: boolean; isTablet?: boolean; isDesktop?: boolean }) => void
+  setResponsiveState: (state: {
+    isMobile?: boolean
+    isTablet?: boolean
+    isDesktop?: boolean
+  }) => void
   updatePreferences: (preferences: Partial<UIState['preferences']>) => void
   resetUI: () => void
 }
@@ -53,38 +57,46 @@ export const useUIStore = create<UIState>()(
   persist(
     (set) => ({
       ...defaultState,
-      
-      toggleSidebar: () => set((state) => ({ 
-        sidebarOpen: !state.sidebarOpen 
-      })),
-      
-      setMobileSidebarOpen: (open) => set({ 
-        mobileSidebarOpen: open 
-      }),
-      
-      collapseSidebar: (collapsed) => set({ 
-        sidebarCollapsed: collapsed 
-      }),
-      
+
+      toggleSidebar: () =>
+        set((state) => ({
+          sidebarOpen: !state.sidebarOpen,
+        })),
+
+      setMobileSidebarOpen: (open) =>
+        set({
+          mobileSidebarOpen: open,
+        }),
+
+      collapseSidebar: (collapsed) =>
+        set({
+          sidebarCollapsed: collapsed,
+        }),
+
       setTheme: (theme) => set({ theme }),
-      
-      setResponsiveState: (responsiveState) => set((state) => ({
-        ...state,
-        ...responsiveState,
-      })),
-      
-      updatePreferences: (preferences) => set((state) => ({
-        preferences: {
-          ...state.preferences,
-          ...preferences,
-        },
-      })),
-      
+
+      setResponsiveState: (responsiveState) =>
+        set((state) => ({
+          ...state,
+          ...responsiveState,
+        })),
+
+      updatePreferences: (preferences) =>
+        set((state) => ({
+          preferences: {
+            ...state.preferences,
+            ...preferences,
+          },
+        })),
+
       resetUI: () => set(defaultState),
     }),
     {
       name: 'ui-storage',
-      storage: typeof window !== 'undefined' ? createJSONStorage(() => localStorage) : undefined,
+      storage:
+        typeof window !== 'undefined'
+          ? createJSONStorage(() => localStorage)
+          : undefined,
       partialize: (state) => ({
         theme: state.theme,
         sidebarCollapsed: state.sidebarCollapsed,
@@ -103,7 +115,7 @@ export const useSidebarState = () => {
   const toggle = useUIStore((state) => state.toggleSidebar)
   const setMobileOpen = useUIStore((state) => state.setMobileSidebarOpen)
   const collapse = useUIStore((state) => state.collapseSidebar)
-  
+
   return {
     isOpen,
     isCollapsed,
@@ -114,13 +126,15 @@ export const useSidebarState = () => {
   }
 }
 
-export const useTheme = () => useUIStore((state) => ({
-  theme: state.theme,
-  setTheme: state.setTheme,
-}))
+export const useTheme = () =>
+  useUIStore((state) => ({
+    theme: state.theme,
+    setTheme: state.setTheme,
+  }))
 
-export const useResponsive = () => useUIStore((state) => ({
-  isMobile: state.isMobile,
-  isTablet: state.isTablet,
-  isDesktop: state.isDesktop,
-}))
+export const useResponsive = () =>
+  useUIStore((state) => ({
+    isMobile: state.isMobile,
+    isTablet: state.isTablet,
+    isDesktop: state.isDesktop,
+  }))

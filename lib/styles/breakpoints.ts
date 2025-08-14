@@ -18,7 +18,7 @@ export const mediaQueries = {
   lg: `(min-width: ${breakpoints.lg})`,
   xl: `(min-width: ${breakpoints.xl})`,
   '2xl': `(min-width: ${breakpoints['2xl']})`,
-  
+
   // Utility queries
   mobile: `(max-width: ${breakpoints.md})`,
   tablet: `(min-width: ${breakpoints.md}) and (max-width: ${breakpoints.lg})`,

@@ -44,7 +44,9 @@ export function ResponsiveDashboardHeader({
       label: (
         <div className="py-2">
           <p className="font-medium text-gray-900">{user.email}</p>
-          <p className="text-sm text-gray-500 capitalize">{user.role} Account</p>
+          <p className="text-sm text-gray-500 capitalize">
+            {user.role} Account
+          </p>
         </div>
       ),
       disabled: true,
@@ -77,10 +79,7 @@ export function ResponsiveDashboardHeader({
     (item) => ({
       key: item.id,
       label: (
-        <div className={cn(
-          'py-2 pr-4',
-          !item.read && 'bg-blue-50 -mx-3 px-3'
-        )}>
+        <div className={cn('py-2 pr-4', !item.read && 'bg-blue-50 -mx-3 px-3')}>
           <p className="font-medium text-gray-900 text-sm">{item.title}</p>
           <p className="text-xs text-gray-500 mt-1">{item.description}</p>
           <p className="text-xs text-gray-400 mt-1">{item.time}</p>
@@ -105,7 +104,7 @@ export function ResponsiveDashboardHeader({
         {!isMobile && (
           <h1 className="text-lg font-semibold text-gray-900">{title}</h1>
         )}
-        
+
         {/* Search - Desktop */}
         {showSearch && !isMobile && (
           <div className="relative">
@@ -167,10 +166,12 @@ export function ResponsiveDashboardHeader({
           placement="bottomRight"
           trigger={['click']}
         >
-          <button className={cn(
-            'flex items-center gap-2 p-1.5 sm:pr-3',
-            'hover:bg-gray-100 rounded-lg transition-colors'
-          )}>
+          <button
+            className={cn(
+              'flex items-center gap-2 p-1.5 sm:pr-3',
+              'hover:bg-gray-100 rounded-lg transition-colors'
+            )}
+          >
             <Avatar size={isMobile ? 32 : 36} className="bg-blue-500">
               {user.email?.[0]?.toUpperCase()}
             </Avatar>

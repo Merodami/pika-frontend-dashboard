@@ -21,22 +21,24 @@ export function ResponsiveForm({
   ...props
 }: ResponsiveFormProps) {
   const { isMobile } = useResponsive()
-  
+
   // Force vertical layout on mobile
   const layout = isMobile ? 'vertical' : layoutProp || 'horizontal'
-  
+
   const variantClasses = {
     default: '',
     inline: 'sm:flex sm:flex-wrap sm:gap-4',
     floating: 'space-y-6',
   }
-  
+
   return (
     <Form
       layout={layout}
       className={cn(variantClasses[variant], className)}
       labelCol={!isMobile && layout === 'horizontal' ? { span: 6 } : undefined}
-      wrapperCol={!isMobile && layout === 'horizontal' ? { span: 18 } : undefined}
+      wrapperCol={
+        !isMobile && layout === 'horizontal' ? { span: 18 } : undefined
+      }
       {...props}
     >
       {children}
@@ -61,20 +63,21 @@ export function ResponsiveFormItem({
   ...props
 }: ResponsiveFormItemProps) {
   const { isMobile, isTablet } = useResponsive()
-  
+
   // Calculate responsive classes
-  const responsiveClasses = responsive ? [
-    responsive.xs && `col-span-${responsive.xs.span}`,
-    responsive.sm && !isMobile && `sm:col-span-${responsive.sm.span}`,
-    responsive.md && !isTablet && `md:col-span-${responsive.md.span}`,
-    responsive.lg && `lg:col-span-${responsive.lg.span}`,
-  ].filter(Boolean).join(' ') : ''
-  
+  const responsiveClasses = responsive
+    ? [
+        responsive.xs && `col-span-${responsive.xs.span}`,
+        responsive.sm && !isMobile && `sm:col-span-${responsive.sm.span}`,
+        responsive.md && !isTablet && `md:col-span-${responsive.md.span}`,
+        responsive.lg && `lg:col-span-${responsive.lg.span}`,
+      ]
+        .filter(Boolean)
+        .join(' ')
+    : ''
+
   return (
-    <Form.Item
-      className={cn(responsiveClasses, className)}
-      {...props}
-    >
+    <Form.Item className={cn(responsiveClasses, className)} {...props}>
       {children}
     </Form.Item>
   )
@@ -104,10 +107,12 @@ export function FormGrid({
     columns.sm && `sm:grid-cols-${columns.sm}`,
     columns.md && `md:grid-cols-${columns.md}`,
     columns.lg && `lg:grid-cols-${columns.lg}`,
-  ].filter(Boolean).join(' ')
-  
+  ]
+    .filter(Boolean)
+    .join(' ')
+
   return (
-    <div 
+    <div
       className={cn('grid', gridClasses, className)}
       style={{ gap: `${gap}px` }}
     >
@@ -139,7 +144,7 @@ export function ResponsiveModal({
   className,
 }: ResponsiveModalProps) {
   const { isMobile } = useResponsive()
-  
+
   return (
     <div
       className={cn(
@@ -157,7 +162,7 @@ export function ResponsiveModal({
         )}
         onClick={onCancel}
       />
-      
+
       {/* Modal Content */}
       <div
         className={cn(
@@ -165,8 +170,8 @@ export function ResponsiveModal({
           'w-full sm:max-w-lg md:max-w-xl lg:max-w-2xl',
           'max-h-[90vh] sm:max-h-[80vh] overflow-hidden',
           'transform transition-transform duration-300',
-          visible 
-            ? 'translate-y-0 sm:scale-100' 
+          visible
+            ? 'translate-y-0 sm:scale-100'
             : 'translate-y-full sm:scale-95',
           isMobile && 'pb-safe' // Account for mobile safe area
         )}
@@ -182,12 +187,12 @@ export function ResponsiveModal({
             ×
           </button>
         </div>
-        
+
         {/* Body */}
         <div className="px-4 sm:px-6 py-4 overflow-y-auto max-h-[60vh]">
           {children}
         </div>
-        
+
         {/* Footer */}
         {onOk && (
           <div className="sticky bottom-0 bg-white border-t px-4 sm:px-6 py-4 flex gap-3 justify-end">
@@ -219,26 +224,18 @@ export function FieldGroup({
   collapsible = false,
 }: FieldGroupProps) {
   const [collapsed, setCollapsed] = React.useState(false)
-  
+
   return (
-    <div className={cn(
-      'bg-gray-50 rounded-lg p-4 sm:p-6',
-      className
-    )}>
+    <div className={cn('bg-gray-50 rounded-lg p-4 sm:p-6', className)}>
       {title && (
-        <div 
-          className={cn(
-            'mb-4',
-            collapsible && 'cursor-pointer select-none'
-          )}
+        <div
+          className={cn('mb-4', collapsible && 'cursor-pointer select-none')}
           onClick={() => collapsible && setCollapsed(!collapsed)}
         >
           <h3 className="text-base font-medium text-gray-900 flex items-center justify-between">
             {title}
             {collapsible && (
-              <span className="text-gray-400">
-                {collapsed ? '▶' : '▼'}
-              </span>
+              <span className="text-gray-400">{collapsed ? '▶' : '▼'}</span>
             )}
           </h3>
           {description && !collapsed && (
@@ -246,12 +243,8 @@ export function FieldGroup({
           )}
         </div>
       )}
-      
-      {!collapsed && (
-        <div className="space-y-4">
-          {children}
-        </div>
-      )}
+
+      {!collapsed && <div className="space-y-4">{children}</div>}
     </div>
   )
 }
@@ -269,19 +262,28 @@ export function InputGroup({
   compact = false,
 }: InputGroupProps) {
   return (
-    <div className={cn(
-      'flex flex-col sm:flex-row',
-      compact ? 'gap-0' : 'gap-2 sm:gap-4',
-      className
-    )}>
+    <div
+      className={cn(
+        'flex flex-col sm:flex-row',
+        compact ? 'gap-0' : 'gap-2 sm:gap-4',
+        className
+      )}
+    >
       {React.Children.map(children, (child, index) => (
-        <div className={cn(
-          'flex-1',
-          compact && index > 0 && 'sm:-ml-px',
-          compact && index === 0 && 'sm:rounded-r-none',
-          compact && index === React.Children.count(children) - 1 && 'sm:rounded-l-none',
-          compact && index > 0 && index < React.Children.count(children) - 1 && 'sm:rounded-none'
-        )}>
+        <div
+          className={cn(
+            'flex-1',
+            compact && index > 0 && 'sm:-ml-px',
+            compact && index === 0 && 'sm:rounded-r-none',
+            compact &&
+              index === React.Children.count(children) - 1 &&
+              'sm:rounded-l-none',
+            compact &&
+              index > 0 &&
+              index < React.Children.count(children) - 1 &&
+              'sm:rounded-none'
+          )}
+        >
           {child}
         </div>
       ))}
@@ -318,14 +320,17 @@ export function FormActions({
     center: 'justify-center',
     right: 'justify-end',
   }
-  
+
   return (
-    <div className={cn(
-      'flex flex-col sm:flex-row gap-3',
-      alignClasses[align],
-      sticky && 'sticky bottom-0 bg-white border-t pt-4 -mx-4 px-4 sm:-mx-6 sm:px-6',
-      className
-    )}>
+    <div
+      className={cn(
+        'flex flex-col sm:flex-row gap-3',
+        alignClasses[align],
+        sticky &&
+          'sticky bottom-0 bg-white border-t pt-4 -mx-4 px-4 sm:-mx-6 sm:px-6',
+        className
+      )}
+    >
       {onReset && (
         <Button onClick={onReset} className="sm:mr-auto">
           Reset
@@ -337,9 +342,9 @@ export function FormActions({
         </Button>
       )}
       {onSave && (
-        <Button 
-          type="primary" 
-          onClick={onSave} 
+        <Button
+          type="primary"
+          onClick={onSave}
           loading={loading}
           className="order-1 sm:order-2"
         >

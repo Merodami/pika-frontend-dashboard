@@ -42,7 +42,7 @@ export function ResponsiveDataTable<T extends Record<string, any>>({
 }: ResponsiveDataTableProps<T>) {
   const { isMobile, isTablet } = useResponsive()
   const [searchValue, setSearchValue] = useState('')
-  
+
   // Mobile view - Card layout
   if (isMobile && mobileCardRender) {
     return (
@@ -57,7 +57,7 @@ export function ResponsiveDataTable<T extends Record<string, any>>({
               <p className="text-sm text-gray-500 mt-1">{description}</p>
             )}
           </div>
-          
+
           {/* Mobile Actions */}
           <div className="flex flex-wrap gap-2">
             {searchable && (
@@ -86,14 +86,14 @@ export function ResponsiveDataTable<T extends Record<string, any>>({
             )}
           </div>
         </div>
-        
+
         {/* Bulk Actions */}
         {bulkActions && (
           <div className="sticky top-16 z-10 bg-white p-2 border rounded-lg shadow-sm">
             {bulkActions}
           </div>
         )}
-        
+
         {/* Cards */}
         <div className="space-y-3">
           {loading ? (
@@ -108,7 +108,13 @@ export function ResponsiveDataTable<T extends Record<string, any>>({
           ) : (
             dataSource.map((record, index) => (
               <Card
-                key={typeof tableProps.rowKey === 'function' ? tableProps.rowKey(record) : (tableProps.rowKey ? record[tableProps.rowKey as keyof T] : index)}
+                key={
+                  typeof tableProps.rowKey === 'function'
+                    ? tableProps.rowKey(record)
+                    : tableProps.rowKey
+                      ? record[tableProps.rowKey as keyof T]
+                      : index
+                }
                 className={cn(
                   'transition-all duration-200',
                   'hover:shadow-md hover:border-blue-200'
@@ -119,7 +125,7 @@ export function ResponsiveDataTable<T extends Record<string, any>>({
             ))
           )}
         </div>
-        
+
         {/* Mobile Pagination */}
         {tableProps.pagination && (
           <div className="flex justify-center">
@@ -135,20 +141,22 @@ export function ResponsiveDataTable<T extends Record<string, any>>({
       </div>
     )
   }
-  
+
   // Tablet view - Simplified columns
-  const responsiveColumns = isTablet 
+  const responsiveColumns = isTablet
     ? columns.filter((col: any) => !col.hideOnTablet)
     : columns
-  
+
   // Desktop and Tablet view - Table layout
   return (
     <div className="space-y-4">
       {/* Header */}
-      <div className={cn(
-        'flex flex-col gap-4',
-        'sm:flex-row sm:items-center sm:justify-between'
-      )}>
+      <div
+        className={cn(
+          'flex flex-col gap-4',
+          'sm:flex-row sm:items-center sm:justify-between'
+        )}
+      >
         <div>
           {title && (
             <h2 className="text-xl font-semibold text-gray-900">{title}</h2>
@@ -157,7 +165,7 @@ export function ResponsiveDataTable<T extends Record<string, any>>({
             <p className="text-sm text-gray-500 mt-1">{description}</p>
           )}
         </div>
-        
+
         {/* Desktop Actions */}
         <Space wrap>
           {searchable && (
@@ -179,10 +187,7 @@ export function ResponsiveDataTable<T extends Record<string, any>>({
           )}
           {actions}
           {exportable && (
-            <Button
-              icon={<Download className="w-4 h-4" />}
-              onClick={onExport}
-            >
+            <Button icon={<Download className="w-4 h-4" />} onClick={onExport}>
               Export
             </Button>
           )}
@@ -194,28 +199,27 @@ export function ResponsiveDataTable<T extends Record<string, any>>({
           )}
         </Space>
       </div>
-      
+
       {/* Bulk Actions */}
       {bulkActions && (
         <div className="bg-gray-50 p-3 rounded-lg border border-gray-200">
           {bulkActions}
         </div>
       )}
-      
+
       {/* Table */}
-      <div className={cn(
-        'overflow-x-auto',
-        isTablet && 'scrollbar-thin scrollbar-thumb-gray-300'
-      )}>
+      <div
+        className={cn(
+          'overflow-x-auto',
+          isTablet && 'scrollbar-thin scrollbar-thumb-gray-300'
+        )}
+      >
         <Table
           {...tableProps}
           columns={responsiveColumns}
           dataSource={dataSource}
           loading={loading}
-          className={cn(
-            'whitespace-nowrap',
-            isTablet && 'min-w-[600px]'
-          )}
+          className={cn('whitespace-nowrap', isTablet && 'min-w-[600px]')}
         />
       </div>
     </div>
@@ -231,7 +235,7 @@ export function MobileCardActions({
   className?: string
 }) {
   const [open, setOpen] = useState(false)
-  
+
   return (
     <div className={cn('relative', className)}>
       <Button
@@ -241,11 +245,13 @@ export function MobileCardActions({
         className="p-1"
       />
       {open && (
-        <div className={cn(
-          'absolute right-0 top-8 z-10',
-          'bg-white rounded-lg shadow-lg border',
-          'py-1 min-w-[150px]'
-        )}>
+        <div
+          className={cn(
+            'absolute right-0 top-8 z-10',
+            'bg-white rounded-lg shadow-lg border',
+            'py-1 min-w-[150px]'
+          )}
+        >
           {children}
         </div>
       )}
@@ -269,23 +275,19 @@ export function createMobileCard<T extends Record<string, any>>(
               <div key={col.key || String(dataIndex)}>
                 <span className="text-xs text-gray-500">{col.title}: </span>
                 <span className="text-sm font-medium">
-                  {col.render 
-                    ? col.render(record[dataIndex], record, 0) 
+                  {col.render
+                    ? col.render(record[dataIndex], record, 0)
                     : record[dataIndex]}
                 </span>
               </div>
             )
           })}
         </div>
-        
+
         {/* Actions */}
-        {actions && (
-          <MobileCardActions>
-            {actions(record)}
-          </MobileCardActions>
-        )}
+        {actions && <MobileCardActions>{actions(record)}</MobileCardActions>}
       </div>
-      
+
       {/* Secondary info - remaining columns */}
       {columns.length > 3 && (
         <div className="pt-3 border-t border-gray-100 grid grid-cols-2 gap-2">
@@ -295,8 +297,8 @@ export function createMobileCard<T extends Record<string, any>>(
               <div key={col.key || String(dataIndex)} className="text-sm">
                 <span className="text-gray-500">{col.title}: </span>
                 <span>
-                  {col.render 
-                    ? col.render(record[dataIndex], record, 0) 
+                  {col.render
+                    ? col.render(record[dataIndex], record, 0)
                     : record[dataIndex]}
                 </span>
               </div>

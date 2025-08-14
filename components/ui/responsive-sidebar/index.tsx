@@ -7,10 +7,10 @@ import Link from 'next/link'
 import { cn } from '@/lib/utils/cn'
 import { useSidebarState } from '@/lib/stores/ui-store'
 import { useResponsive } from '@/lib/hooks/useResponsive'
-import { 
-  sidebarVariants, 
-  sidebarItemVariants, 
-  sidebarOverlayVariants 
+import {
+  sidebarVariants,
+  sidebarItemVariants,
+  sidebarOverlayVariants,
 } from './sidebar-variants'
 import type { VariantProps } from 'class-variance-authority'
 
@@ -49,9 +49,7 @@ interface SidebarItemProps extends VariantProps<typeof sidebarItemVariants> {
 }
 
 // Main Sidebar Provider Component
-export function SidebarProvider({ 
-  children,
-}: SidebarProviderProps) {
+export function SidebarProvider({ children }: SidebarProviderProps) {
   const sidebar = useSidebarState()
   const { isMobile } = useResponsive()
   const pathname = usePathname()
@@ -103,7 +101,7 @@ export function SidebarProvider({
 // Sidebar Trigger Button
 export function SidebarTrigger({ className }: { className?: string }) {
   const { isOpen, toggle } = useSidebarContext()
-  
+
   return (
     <button
       onClick={toggle}
@@ -123,9 +121,9 @@ export function SidebarTrigger({ className }: { className?: string }) {
 export function SidebarCollapseToggle({ className }: { className?: string }) {
   const sidebar = useSidebarState()
   const { isMobile } = useSidebarContext()
-  
+
   if (isMobile) return null
-  
+
   return (
     <button
       onClick={() => sidebar.collapse(!sidebar.isCollapsed)}
@@ -147,15 +145,12 @@ export function SidebarCollapseToggle({ className }: { className?: string }) {
 // Sidebar Overlay (for mobile)
 export function SidebarOverlay() {
   const { isOpen, isMobile, close } = useSidebarContext()
-  
+
   if (!isMobile) return null
-  
+
   return (
     <div
-      className={cn(
-        sidebarOverlayVariants({ visible: isOpen }),
-        'lg:hidden'
-      )}
+      className={cn(sidebarOverlayVariants({ visible: isOpen }), 'lg:hidden')}
       onClick={close}
       aria-hidden="true"
     />
@@ -163,26 +158,20 @@ export function SidebarOverlay() {
 }
 
 // Main Sidebar Component
-export function Sidebar({ 
-  children, 
-  className,
-  position = 'left',
-  variant = 'default',
-  size = 'md',
-}: SidebarProviderProps) {
+export function Sidebar({ children, className }: SidebarProviderProps) {
   const { isOpen, isCollapsed, isMobile } = useSidebarContext()
-  
+
   return (
     <aside
       className={cn(
         // Base styles
         'flex flex-col bg-white border-r border-gray-200 transition-all duration-300',
         // Width
-        isMobile ? 'w-64' : (isCollapsed ? 'w-16' : 'w-64'),
+        isMobile ? 'w-64' : isCollapsed ? 'w-16' : 'w-64',
         // Position for mobile
         isMobile && [
           'fixed inset-y-0 left-0 z-50',
-          isOpen ? 'translate-x-0' : '-translate-x-full'
+          isOpen ? 'translate-x-0' : '-translate-x-full',
         ],
         // Position for desktop
         !isMobile && 'relative translate-x-0',
@@ -195,21 +184,38 @@ export function Sidebar({
   )
 }
 
+// Sidebar Logo
+export function SidebarLogo({ className }: { className?: string }) {
+  const { isCollapsed } = useSidebarContext()
+
+  // Hide logo completely when collapsed
+  if (isCollapsed) return null
+
+  return (
+    <div className={cn('flex items-center gap-2', className)}>
+      <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center flex-shrink-0">
+        <span className="text-white font-bold">P</span>
+      </div>
+      <span className="font-semibold text-gray-900">Pika</span>
+    </div>
+  )
+}
+
 // Sidebar Header
-export function SidebarHeader({ 
-  children, 
-  className 
-}: { 
+export function SidebarHeader({
+  children,
+  className,
+}: {
   children: React.ReactNode
-  className?: string 
+  className?: string
 }) {
   const { isCollapsed } = useSidebarContext()
-  
+
   return (
-    <div 
+    <div
       className={cn(
-        'flex items-center justify-between h-16 px-4 border-b border-gray-200',
-        isCollapsed && 'px-2',
+        'relative flex items-center h-16 border-b border-gray-200',
+        isCollapsed ? 'justify-center px-2' : 'justify-between px-4',
         className
       )}
     >
@@ -219,32 +225,34 @@ export function SidebarHeader({
 }
 
 // Sidebar Content
-export function SidebarContent({ 
-  children, 
-  className 
-}: { 
+export function SidebarContent({
+  children,
+  className,
+}: {
   children: React.ReactNode
-  className?: string 
+  className?: string
 }) {
   return (
-    <nav className={cn('flex-1 overflow-y-auto px-4 py-4 space-y-1', className)}>
+    <nav
+      className={cn('flex-1 overflow-y-auto px-4 py-4 space-y-1', className)}
+    >
       {children}
     </nav>
   )
 }
 
 // Sidebar Footer
-export function SidebarFooter({ 
-  children, 
-  className 
-}: { 
+export function SidebarFooter({
+  children,
+  className,
+}: {
   children: React.ReactNode
-  className?: string 
+  className?: string
 }) {
   const { isCollapsed } = useSidebarContext()
-  
+
   return (
-    <div 
+    <div
       className={cn(
         'border-t border-gray-200 px-4 py-4',
         isCollapsed && 'px-2',
@@ -270,14 +278,21 @@ export function SidebarItem({
 }: SidebarItemProps) {
   const pathname = usePathname()
   const { isCollapsed, close } = useSidebarContext()
-  const isActive = pathname === href || pathname.startsWith(`${href}/`)
+
+  // Check if this is the exact path or a subpath (but not a parent path)
+  // For dashboard routes, only match exact path to prevent false positives
+  const isDashboard = href.endsWith('/admin') || href.endsWith('/business')
+  const isActive = isDashboard
+    ? pathname === href
+    : pathname === href || pathname.startsWith(`${href}/`)
+
   const state = stateProp || (isActive ? 'active' : 'inactive')
-  
+
   const handleClick = () => {
     onClick?.()
     close() // Close mobile sidebar after navigation
   }
-  
+
   return (
     <Link
       href={href}
@@ -290,19 +305,23 @@ export function SidebarItem({
       title={isCollapsed ? label : undefined}
     >
       {icon && (
-        <span className={cn(
-          'flex-shrink-0',
-          isCollapsed && 'mx-auto'
-        )}>
+        <span className={cn('flex-shrink-0', isCollapsed && 'mx-auto')}>
           {icon}
         </span>
       )}
-      
+
       {!isCollapsed && (
         <>
           <span className="flex-1 truncate">{label}</span>
           {badge && (
-            <span className="ml-auto bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-full">
+            <span
+              className={cn(
+                'ml-auto text-xs font-medium px-2 py-0.5 rounded-full',
+                state === 'active'
+                  ? 'bg-gray-200 text-gray-700'
+                  : 'bg-gray-100 text-gray-600'
+              )}
+            >
               {badge}
             </span>
           )}
@@ -313,17 +332,17 @@ export function SidebarItem({
 }
 
 // Sidebar Section (for grouping items)
-export function SidebarSection({ 
-  title, 
-  children, 
-  className 
-}: { 
+export function SidebarSection({
+  title,
+  children,
+  className,
+}: {
   title?: string
   children: React.ReactNode
-  className?: string 
+  className?: string
 }) {
   const { isCollapsed } = useSidebarContext()
-  
+
   return (
     <div className={cn('space-y-1', className)}>
       {title && !isCollapsed && (
@@ -344,6 +363,7 @@ const SidebarComponents = {
   Trigger: SidebarTrigger,
   CollapseToggle: SidebarCollapseToggle,
   Overlay: SidebarOverlay,
+  Logo: SidebarLogo,
   Header: SidebarHeader,
   Content: SidebarContent,
   Footer: SidebarFooter,

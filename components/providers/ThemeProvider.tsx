@@ -5,7 +5,7 @@ import { useAppStore } from '@/store/app.store'
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const theme = useAppStore((state) => state.theme)
-  
+
   useEffect(() => {
     const root = document.documentElement
     if (theme === 'dark') {

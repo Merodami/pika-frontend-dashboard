@@ -25,12 +25,12 @@ export function responsive(
   }
 ): string {
   const classes = [base]
-  
+
   if (variants.sm) classes.push(`sm:${variants.sm}`)
   if (variants.md) classes.push(`md:${variants.md}`)
   if (variants.lg) classes.push(`lg:${variants.lg}`)
   if (variants.xl) classes.push(`xl:${variants.xl}`)
   if (variants['2xl']) classes.push(`2xl:${variants['2xl']}`)
-  
+
   return classes.join(' ')
 }

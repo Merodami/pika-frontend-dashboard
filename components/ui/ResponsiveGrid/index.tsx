@@ -5,50 +5,47 @@ import { cn } from '@/lib/utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 // Grid Container Variants
-const gridVariants = cva(
-  'grid gap-4',
-  {
-    variants: {
-      cols: {
-        1: 'grid-cols-1',
-        2: 'grid-cols-1 sm:grid-cols-2',
-        3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
-        4: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4',
-        5: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5',
-        6: 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6',
-        auto: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-[repeat(auto-fit,minmax(250px,1fr))]',
-      },
-      gap: {
-        none: 'gap-0',
-        xs: 'gap-2',
-        sm: 'gap-4',
-        md: 'gap-6',
-        lg: 'gap-8',
-        xl: 'gap-10',
-      },
-      align: {
-        start: 'items-start',
-        center: 'items-center',
-        end: 'items-end',
-        stretch: 'items-stretch',
-      },
-      justify: {
-        start: 'justify-start',
-        center: 'justify-center',
-        end: 'justify-end',
-        between: 'justify-between',
-        around: 'justify-around',
-        evenly: 'justify-evenly',
-      },
+const gridVariants = cva('grid gap-4', {
+  variants: {
+    cols: {
+      1: 'grid-cols-1',
+      2: 'grid-cols-1 sm:grid-cols-2',
+      3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
+      4: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4',
+      5: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5',
+      6: 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6',
+      auto: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-[repeat(auto-fit,minmax(250px,1fr))]',
     },
-    defaultVariants: {
-      cols: 3,
-      gap: 'sm',
-      align: 'stretch',
-      justify: 'start',
+    gap: {
+      none: 'gap-0',
+      xs: 'gap-2',
+      sm: 'gap-4',
+      md: 'gap-6',
+      lg: 'gap-8',
+      xl: 'gap-10',
     },
-  }
-)
+    align: {
+      start: 'items-start',
+      center: 'items-center',
+      end: 'items-end',
+      stretch: 'items-stretch',
+    },
+    justify: {
+      start: 'justify-start',
+      center: 'justify-center',
+      end: 'justify-end',
+      between: 'justify-between',
+      around: 'justify-around',
+      evenly: 'justify-evenly',
+    },
+  },
+  defaultVariants: {
+    cols: 3,
+    gap: 'sm',
+    align: 'stretch',
+    justify: 'start',
+  },
+})
 
 // Responsive Grid Component
 interface ResponsiveGridProps extends VariantProps<typeof gridVariants> {
@@ -99,7 +96,9 @@ export function FlexGrid({
       style={{
         gridTemplateColumns: `repeat(auto-fit, minmax(min(${minWidth}, 100%), 1fr))`,
         gap: typeof gap === 'number' ? `${gap}px` : gap,
-        maxWidth: maxCols ? `calc(${maxCols} * ${minWidth} + ${maxCols - 1} * ${gap})` : undefined,
+        maxWidth: maxCols
+          ? `calc(${maxCols} * ${minWidth} + ${maxCols - 1} * ${gap})`
+          : undefined,
       }}
     >
       {children}
@@ -133,7 +132,9 @@ export function MasonryGrid({
     columns.md && `md:columns-${columns.md}`,
     columns.lg && `lg:columns-${columns.lg}`,
     columns.xl && `xl:columns-${columns.xl}`,
-  ].filter(Boolean).join(' ')
+  ]
+    .filter(Boolean)
+    .join(' ')
 
   return (
     <div
@@ -175,11 +176,13 @@ export function StatCard({
   className,
 }: StatCardProps) {
   return (
-    <div className={cn(
-      'bg-white rounded-lg border border-gray-200 p-4 sm:p-6',
-      'hover:shadow-md transition-shadow duration-200',
-      className
-    )}>
+    <div
+      className={cn(
+        'bg-white rounded-lg border border-gray-200 p-4 sm:p-6',
+        'hover:shadow-md transition-shadow duration-200',
+        className
+      )}
+    >
       <div className="flex items-start justify-between">
         <div className="flex-1">
           <p className="text-sm font-medium text-gray-600">{title}</p>
@@ -191,10 +194,12 @@ export function StatCard({
           )}
           {trend && (
             <div className="mt-2 flex items-center text-sm">
-              <span className={cn(
-                'font-medium',
-                trend.isPositive ? 'text-green-600' : 'text-red-600'
-              )}>
+              <span
+                className={cn(
+                  'font-medium',
+                  trend.isPositive ? 'text-green-600' : 'text-red-600'
+                )}
+              >
                 {trend.isPositive ? '↑' : '↓'} {Math.abs(trend.value)}%
               </span>
               <span className="ml-2 text-gray-500">vs last period</span>
@@ -203,9 +208,7 @@ export function StatCard({
         </div>
         {icon && (
           <div className="ml-4 flex-shrink-0">
-            <div className="p-3 bg-gray-50 rounded-lg">
-              {icon}
-            </div>
+            <div className="p-3 bg-gray-50 rounded-lg">{icon}</div>
           </div>
         )}
       </div>
@@ -232,14 +235,16 @@ export function CardGrid({
   }
 
   return (
-    <div className={cn(
-      'grid grid-cols-1',
-      'sm:grid-cols-2',
-      'lg:grid-cols-3',
-      'xl:grid-cols-4',
-      variantClasses[variant],
-      className
-    )}>
+    <div
+      className={cn(
+        'grid grid-cols-1',
+        'sm:grid-cols-2',
+        'lg:grid-cols-3',
+        'xl:grid-cols-4',
+        variantClasses[variant],
+        className
+      )}
+    >
       {children}
     </div>
   )
@@ -262,12 +267,14 @@ export function FeatureCard({
   className,
 }: FeatureCardProps) {
   return (
-    <div className={cn(
-      'relative bg-white rounded-lg border border-gray-200',
-      'p-6 hover:shadow-lg transition-all duration-200',
-      'group hover:border-blue-200',
-      className
-    )}>
+    <div
+      className={cn(
+        'relative bg-white rounded-lg border border-gray-200',
+        'p-6 hover:shadow-lg transition-all duration-200',
+        'group hover:border-blue-200',
+        className
+      )}
+    >
       {icon && (
         <div className="mb-4 inline-flex p-3 bg-blue-50 rounded-lg group-hover:bg-blue-100 transition-colors">
           {icon}
@@ -275,9 +282,7 @@ export function FeatureCard({
       )}
       <h3 className="text-lg font-semibold text-gray-900 mb-2">{title}</h3>
       <p className="text-gray-600 mb-4">{description}</p>
-      {action && (
-        <div className="mt-auto">{action}</div>
-      )}
+      {action && <div className="mt-auto">{action}</div>}
     </div>
   )
 }
@@ -306,12 +311,14 @@ export function ResponsiveContainer({
   }
 
   return (
-    <div className={cn(
-      'mx-auto',
-      maxWidthClasses[maxWidth],
-      padding && 'px-4 sm:px-6 lg:px-8',
-      className
-    )}>
+    <div
+      className={cn(
+        'mx-auto',
+        maxWidthClasses[maxWidth],
+        padding && 'px-4 sm:px-6 lg:px-8',
+        className
+      )}
+    >
       {children}
     </div>
   )

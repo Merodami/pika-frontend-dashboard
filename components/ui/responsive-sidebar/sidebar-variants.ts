@@ -47,7 +47,7 @@ export const sidebarItemVariants = cva(
   {
     variants: {
       state: {
-        active: 'bg-primary/10 text-primary font-medium',
+        active: 'bg-gray-100 text-gray-900 font-medium hover:bg-gray-200',
         inactive: 'text-gray-700 hover:bg-gray-50 hover:text-gray-900',
         disabled: 'opacity-50 cursor-not-allowed',
       },
