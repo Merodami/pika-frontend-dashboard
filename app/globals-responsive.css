@@ -1,0 +1,337 @@
+/* Mobile-First Responsive Utilities */
+
+/* Hide scrollbar but keep functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Thin scrollbar */
+.scrollbar-thin {
+  scrollbar-width: thin;
+}
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded-full;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400;
+}
+
+/* Safe area padding for mobile devices */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.pt-safe {
+  padding-top: env(safe-area-inset-top);
+}
+
+/* Responsive Text Utilities */
+@layer utilities {
+  .text-responsive-xs {
+    @apply text-xs sm:text-sm;
+  }
+  .text-responsive-sm {
+    @apply text-sm sm:text-base;
+  }
+  .text-responsive-base {
+    @apply text-base sm:text-lg;
+  }
+  .text-responsive-lg {
+    @apply text-lg sm:text-xl lg:text-2xl;
+  }
+  .text-responsive-xl {
+    @apply text-xl sm:text-2xl lg:text-3xl;
+  }
+  .text-responsive-2xl {
+    @apply text-2xl sm:text-3xl lg:text-4xl;
+  }
+  .text-responsive-3xl {
+    @apply text-3xl sm:text-4xl lg:text-5xl;
+  }
+}
+
+/* Responsive Spacing Utilities */
+@layer utilities {
+  .p-responsive {
+    @apply p-4 sm:p-6 lg:p-8;
+  }
+  .px-responsive {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+  .py-responsive {
+    @apply py-4 sm:py-6 lg:py-8;
+  }
+  .gap-responsive {
+    @apply gap-4 sm:gap-6 lg:gap-8;
+  }
+}
+
+/* Container Queries Support */
+@container {
+  .container-responsive {
+    @apply px-4;
+  }
+  
+  @container (min-width: 640px) {
+    .container-responsive {
+      @apply px-6;
+    }
+  }
+  
+  @container (min-width: 1024px) {
+    .container-responsive {
+      @apply px-8;
+    }
+  }
+}
+
+/* Mobile-only and Desktop-only utilities */
+@layer utilities {
+  .mobile-only {
+    @apply block sm:hidden;
+  }
+  .tablet-only {
+    @apply hidden sm:block lg:hidden;
+  }
+  .desktop-only {
+    @apply hidden lg:block;
+  }
+  .mobile-hidden {
+    @apply hidden sm:block;
+  }
+  .tablet-hidden {
+    @apply block sm:hidden lg:block;
+  }
+  .desktop-hidden {
+    @apply block lg:hidden;
+  }
+}
+
+/* Responsive Grid Templates */
+@layer utilities {
+  .grid-responsive-auto {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+    gap: 1rem;
+  }
+  
+  @screen sm {
+    .grid-responsive-auto {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+  }
+  
+  @screen lg {
+    .grid-responsive-auto {
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+  }
+}
+
+/* Touch-friendly tap targets */
+@layer utilities {
+  .tap-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+  
+  .tap-target-sm {
+    @apply min-h-[36px] min-w-[36px];
+  }
+  
+  .tap-target-lg {
+    @apply min-h-[48px] min-w-[48px];
+  }
+}
+
+/* Responsive Table Utilities */
+@layer components {
+  .table-responsive {
+    @apply block overflow-x-auto;
+  }
+  
+  .table-responsive table {
+    @apply min-w-full;
+  }
+  
+  /* Stack table on mobile */
+  @screen max-sm {
+    .table-stack thead {
+      @apply hidden;
+    }
+    
+    .table-stack tr {
+      @apply block border-b border-gray-200 py-3;
+    }
+    
+    .table-stack td {
+      @apply block text-right pl-[50%] relative;
+    }
+    
+    .table-stack td:before {
+      @apply content-[attr(data-label)] absolute left-0 w-[45%] text-left font-medium;
+    }
+  }
+}
+
+/* Responsive Card Layouts */
+@layer components {
+  .card-grid-responsive {
+    @apply grid grid-cols-1 gap-4;
+  }
+  
+  @screen sm {
+    .card-grid-responsive {
+      @apply grid-cols-2 gap-6;
+    }
+  }
+  
+  @screen lg {
+    .card-grid-responsive {
+      @apply grid-cols-3;
+    }
+  }
+  
+  @screen xl {
+    .card-grid-responsive {
+      @apply grid-cols-4 gap-8;
+    }
+  }
+}
+
+/* Responsive Navigation */
+@layer components {
+  .nav-responsive {
+    @apply flex flex-col space-y-2;
+  }
+  
+  @screen sm {
+    .nav-responsive {
+      @apply flex-row space-y-0 space-x-4;
+    }
+  }
+  
+  @screen lg {
+    .nav-responsive {
+      @apply space-x-6;
+    }
+  }
+}
+
+/* Responsive Modals */
+@layer components {
+  .modal-responsive {
+    @apply w-full max-w-lg;
+  }
+  
+  @screen sm {
+    .modal-responsive {
+      @apply max-w-xl;
+    }
+  }
+  
+  @screen lg {
+    .modal-responsive {
+      @apply max-w-2xl;
+    }
+  }
+  
+  @screen xl {
+    .modal-responsive {
+      @apply max-w-4xl;
+    }
+  }
+}
+
+/* Print Styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-only {
+    display: block !important;
+  }
+  
+  /* Ensure content fits on page */
+  body {
+    font-size: 12pt;
+  }
+  
+  /* Remove backgrounds and shadows */
+  * {
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+}
+
+/* Animations for mobile */
+@layer utilities {
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+  
+  .animate-slide-down {
+    animation: slideDown 0.3s ease-out;
+  }
+  
+  .animate-slide-left {
+    animation: slideLeft 0.3s ease-out;
+  }
+  
+  .animate-slide-right {
+    animation: slideRight 0.3s ease-out;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideLeft {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideRight {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

@@ -3,7 +3,7 @@ import { getTranslations } from 'next-intl/server'
 import { Suspense } from 'react'
 
 import { requireDashboardAccess } from '@/app/services/authService'
-import { ResponsiveDashboardWrapper } from '@/components/layouts/ResponsiveDashboardWrapper'
+import { ResponsiveDashboardLayout } from '@/components/layouts/ResponsiveDashboardLayout'
 import { ModernSidebarNav } from '@/components/layouts/modernSidebarNav'
 import { DashboardHeader } from '@/components/layouts/dashboardHeader'
 import { LoadingSkeleton } from '@/components/ui/loadingSkeleton'
@@ -12,16 +12,15 @@ import type { Locale } from '@/i18n/config'
 // Force dynamic rendering for authenticated routes
 export const dynamic = 'force-dynamic'
 
-interface DashboardLayoutProps {
+interface ModernDashboardLayoutProps {
   children: React.ReactNode
   params: Promise<{ locale: Locale }>
 }
 
-export default async function DashboardLayout({
+export default async function ModernDashboardLayout({
   children,
   params,
-}: DashboardLayoutProps) {
-  // Ensure user has dashboard access (admin or business only)
+}: ModernDashboardLayoutProps) {
   const user = await requireDashboardAccess()
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'navigation' })
@@ -38,13 +37,13 @@ export default async function DashboardLayout({
       label: t('vouchers'), 
       href: `/${locale}/admin/vouchers`, 
       icon: 'Ticket',
-      section: 'Management'
+      section: t('management') || 'Management'
     },
     { 
       label: t('voucherBooks'), 
       href: `/${locale}/admin/voucher-books`, 
       icon: 'BookOpen',
-      section: 'Management'
+      section: t('management') || 'Management'
     },
     
     // Analytics Section
@@ -52,13 +51,13 @@ export default async function DashboardLayout({
       label: t('analytics'), 
       href: `/${locale}/admin/analytics`, 
       icon: 'BarChart3',
-      section: 'Analytics'
+      section: t('analytics') || 'Analytics'
     },
     { 
       label: t('reports'), 
       href: `/${locale}/admin/reports`, 
       icon: 'FileText',
-      section: 'Analytics'
+      section: t('analytics') || 'Analytics'
     },
     
     // System Section
@@ -66,19 +65,19 @@ export default async function DashboardLayout({
       label: t('payments'), 
       href: `/${locale}/admin/payments`, 
       icon: 'CreditCard',
-      section: 'System'
+      section: t('system') || 'System'
     },
     { 
       label: t('support'), 
       href: `/${locale}/admin/support`, 
       icon: 'MessageSquare',
-      section: 'System'
+      section: t('system') || 'System'
     },
     { 
       label: t('settings'), 
       href: `/${locale}/admin/settings`, 
       icon: 'Settings',
-      section: 'System'
+      section: t('system') || 'System'
     },
   ] : [
     // Business Owner Items
@@ -94,7 +93,7 @@ export default async function DashboardLayout({
     <ModernSidebarNav 
       navItems={navItems}
       footer={
-        <div className="text-xs text-gray-500 text-center">
+        <div className="text-xs text-gray-500">
           © 2024 Pika
         </div>
       }
@@ -106,19 +105,19 @@ export default async function DashboardLayout({
   )
 
   return (
-    <ResponsiveDashboardWrapper
+    <ResponsiveDashboardLayout
       sidebar={sidebarContent}
       header={headerContent}
     >
       <Suspense fallback={<LoadingSkeleton />}>
         {children}
       </Suspense>
-    </ResponsiveDashboardWrapper>
+    </ResponsiveDashboardLayout>
   )
 }
 
-// Parallel route for role-specific dashboards
-export async function generateMetadata({ params }: DashboardLayoutProps) {
+// Metadata generation
+export async function generateMetadata({ params }: ModernDashboardLayoutProps) {
   const { locale } = await params
   const t = await getTranslations({ locale })
 
