@@ -167,7 +167,7 @@ export function Sidebar({ children, className }: SidebarProviderProps) {
         // Base styles
         'flex flex-col bg-white border-r border-gray-200 transition-all duration-300',
         // Width
-        isMobile ? 'w-64' : isCollapsed ? 'w-16' : 'w-64',
+        isMobile ? 'w-64' : isCollapsed ? 'w-14' : 'w-48',
         // Position for mobile
         isMobile && [
           'fixed inset-y-0 left-0 z-50',
@@ -214,8 +214,8 @@ export function SidebarHeader({
   return (
     <div
       className={cn(
-        'relative flex items-center h-16 border-b border-gray-200',
-        isCollapsed ? 'justify-center px-2' : 'justify-between px-4',
+        'relative flex items-center h-12 border-b border-gray-200',
+        isCollapsed ? 'justify-center px-2' : 'justify-between px-3',
         className
       )}
     >
@@ -234,7 +234,7 @@ export function SidebarContent({
 }) {
   return (
     <nav
-      className={cn('flex-1 overflow-y-auto px-4 py-4 space-y-1', className)}
+      className={cn('flex-1 overflow-y-auto px-2 py-2 space-y-0.5', className)}
     >
       {children}
     </nav>
@@ -254,8 +254,8 @@ export function SidebarFooter({
   return (
     <div
       className={cn(
-        'border-t border-gray-200 px-4 py-4',
-        isCollapsed && 'px-2',
+        'border-t border-gray-200 px-3 py-2',
+        isCollapsed && 'px-1',
         className
       )}
     >
@@ -344,9 +344,9 @@ export function SidebarSection({
   const { isCollapsed } = useSidebarContext()
 
   return (
-    <div className={cn('space-y-1', className)}>
+    <div className={cn('space-y-0.5 mb-2', className)}>
       {title && !isCollapsed && (
-        <h3 className="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+        <h3 className="px-2 py-1 text-xs font-semibold text-gray-500 uppercase tracking-wider">
           {title}
         </h3>
       )}

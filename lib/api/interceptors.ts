@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios'
+import { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse, AxiosError } from 'axios'
 import { apiDebugger } from './debug-helpers'
 
 // Store for tracking request times
@@ -15,7 +15,7 @@ const generateRequestId = (): string => {
  * Format headers for logging (hide sensitive data)
  */
 const formatHeaders = (headers: any): any => {
-  const sensitive = ['authorization', 'cookie', 'x-api-key', 'x-auth-token']
+  const sensitive = ['authorization', 'cookie', 'x-api-key', 'x-auth-token', 'set-cookie']
   const formatted: any = {}
   
   Object.keys(headers || {}).forEach(key => {
@@ -24,6 +24,45 @@ const formatHeaders = (headers: any): any => {
   })
   
   return formatted
+}
+
+/**
+ * Format body for logging (hide sensitive fields)
+ */
+const formatBody = (body: any): any => {
+  if (!body) return body
+  if (typeof body === 'string') return body
+  
+  // List of sensitive field names to redact
+  const sensitiveFields = ['password', 'token', 'secret', 'apiKey', 'accessToken', 'refreshToken', 'creditCard', 'ssn', 'email', 'phone']
+  
+  const redact = (obj: any): any => {
+    if (Array.isArray(obj)) {
+      return obj.map(item => redact(item))
+    }
+    
+    if (obj && typeof obj === 'object') {
+      const cleaned: any = {}
+      Object.keys(obj).forEach(key => {
+        const lowerKey = key.toLowerCase()
+        // Check if field name contains any sensitive keywords
+        const isSensitive = sensitiveFields.some(field => lowerKey.includes(field.toLowerCase()))
+        
+        if (isSensitive) {
+          cleaned[key] = '[REDACTED]'
+        } else if (typeof obj[key] === 'object') {
+          cleaned[key] = redact(obj[key])
+        } else {
+          cleaned[key] = obj[key]
+        }
+      })
+      return cleaned
+    }
+    
+    return obj
+  }
+  
+  return redact(body)
 }
 
 /**
@@ -39,11 +78,10 @@ const formatDuration = (ms: number): string => {
  */
 export const setupRequestInterceptor = (axiosInstance: AxiosInstance) => {
   axiosInstance.interceptors.request.use(
-    (config: AxiosRequestConfig) => {
+    (config: InternalAxiosRequestConfig) => {
       const requestId = generateRequestId()
       
       // Add request ID to headers
-      if (!config.headers) config.headers = {}
       config.headers['x-request-id'] = requestId
       
       // Store request start time
@@ -72,7 +110,7 @@ export const setupRequestInterceptor = (axiosInstance: AxiosInstance) => {
         console.log('%cHeaders:', 'color: #64748b;', formatHeaders(config.headers))
         
         if (config.data) {
-          console.log('%cBody:', 'color: #64748b;', config.data)
+          console.log('%cBody:', 'color: #64748b;', formatBody(config.data))
         }
         
         console.groupEnd()
@@ -142,7 +180,7 @@ export const setupResponseInterceptor = (axiosInstance: AxiosInstance) => {
         console.log('%cHeaders:', 'color: #64748b;', formatHeaders(response.headers))
         
         if (response.data) {
-          console.log('%cData:', 'color: #64748b;', response.data)
+          console.log('%cData:', 'color: #64748b;', formatBody(response.data))
         }
         
         console.groupEnd()
@@ -191,7 +229,7 @@ export const setupResponseInterceptor = (axiosInstance: AxiosInstance) => {
         console.log('%cError:', 'color: #ef4444;', statusText)
         
         if (error.response?.data) {
-          console.log('%cResponse Data:', 'color: #ef4444;', error.response.data)
+          console.log('%cResponse Data:', 'color: #ef4444;', formatBody(error.response.data))
         }
         
         if (error.response?.headers) {
@@ -212,28 +250,6 @@ export const setupResponseInterceptor = (axiosInstance: AxiosInstance) => {
 export const setupInterceptors = (axiosInstance: AxiosInstance) => {
   setupRequestInterceptor(axiosInstance)
   setupResponseInterceptor(axiosInstance)
-  
-  // In development, also enable axios debug logging
-  if (process.env.NODE_ENV === 'development') {
-    // @ts-ignore
-    if (typeof window !== 'undefined' && window.localStorage) {
-      // Enable axios debug logging via localStorage flag
-      const debugEnabled = localStorage.getItem('DEBUG_API') === 'true'
-      if (debugEnabled) {
-        require('axios-debug-log')({
-          request: (debug: any, config: AxiosRequestConfig) => {
-            debug(`Request to ${config.url}`)
-          },
-          response: (debug: any, response: AxiosResponse) => {
-            debug(`Response from ${response.config.url}`, response.status)
-          },
-          error: (debug: any, error: AxiosError) => {
-            debug('Error', error.message)
-          },
-        })
-      }
-    }
-  }
   
   return axiosInstance
 }

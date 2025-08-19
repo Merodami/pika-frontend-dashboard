@@ -276,5 +276,44 @@
       "title": "Profile Information",
       "description": "Your account details and information"
     }
+  },
+  "users": {
+    "title": "Users",
+    "subtitle": "Manage user accounts",
+    "addUser": "Add User",
+    "table": {
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
+      "status": "Status",
+      "createdAt": "Created At",
+      "actions": "Actions"
+    },
+    "actions": {
+      "view": "View",
+      "edit": "Edit",
+      "deactivate": "Deactivate",
+      "activate": "Activate",
+      "delete": "Delete"
+    },
+    "filters": {
+      "search": "Search users...",
+      "role": "Role",
+      "status": "Status",
+      "allRoles": "All roles",
+      "allStatuses": "All statuses"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive",
+      "suspended": "Suspended",
+      "pending": "Pending"
+    },
+    "role": {
+      "admin": "Admin",
+      "business": "Business",
+      "customer": "Customer",
+      "user": "User"
+    }
   }
 }

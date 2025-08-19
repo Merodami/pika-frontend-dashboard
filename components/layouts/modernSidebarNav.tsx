@@ -91,7 +91,7 @@ export function ModernSidebarNav({ navItems, footer }: ModernSidebarNavProps) {
                 <Sidebar.Item
                   key={item.href}
                   href={item.href}
-                  icon={Icon && <Icon className="w-5 h-5" />}
+                  icon={Icon && <Icon className="w-4 h-4" />}
                   label={item.label}
                   badge={item.badge}
                 />

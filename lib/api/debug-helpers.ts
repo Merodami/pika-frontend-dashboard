@@ -11,6 +11,8 @@ interface ApiLog {
   duration?: string
   correlationId?: string
   error?: string
+  body?: any
+  response?: any
 }
 
 class ApiDebugger {

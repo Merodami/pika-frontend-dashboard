@@ -60,7 +60,10 @@ async function handleRequest(
 
   // Construct the backend URL
   const path = params.path.join('/')
-  const url = new URL(path, API_BASE_URL)
+  // API_BASE_URL already includes /api/v1, so we just append the path
+  // Remove any leading slashes from path to avoid double slashes
+  const cleanPath = path.startsWith('/') ? path.slice(1) : path
+  const url = new URL(`${API_BASE_URL}/${cleanPath}`)
 
   // Copy query parameters
   request.nextUrl.searchParams.forEach((value, key) => {
@@ -71,8 +74,8 @@ async function handleRequest(
   const headers = new Headers({
     'Content-Type': 'application/json',
     'x-correlation-id': correlationId,
-    'x-forwarded-for': request.headers.get('x-forwarded-for') || request.ip || 'unknown',
-    'x-real-ip': request.headers.get('x-real-ip') || request.ip || 'unknown',
+    'x-forwarded-for': request.headers.get('x-forwarded-for') || 'unknown',
+    'x-real-ip': request.headers.get('x-real-ip') || 'unknown',
   })
 
   if (accessToken) {
@@ -101,7 +104,7 @@ async function handleRequest(
   logger.logRequest({
     method,
     url: url.toString(),
-    path: `/${path}`,
+    path: `/${cleanPath}`,
     query: Object.fromEntries(url.searchParams.entries()),
     headers: Object.fromEntries(headers.entries()),
     body: requestBody,
@@ -154,7 +157,7 @@ async function handleRequest(
     logger.logError(error, {
       method,
       url: url.toString(),
-      path: `/${path}`,
+      path: `/${cleanPath}`,
       query: Object.fromEntries(url.searchParams.entries()),
       headers: Object.fromEntries(headers.entries()),
       body: requestBody,

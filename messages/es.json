@@ -276,5 +276,44 @@
       "title": "Información del Perfil",
       "description": "Los detalles e información de tu cuenta"
     }
+  },
+  "users": {
+    "title": "Usuarios",
+    "subtitle": "Administrar cuentas de usuario",
+    "addUser": "Agregar Usuario",
+    "table": {
+      "name": "Nombre",
+      "email": "Correo Electrónico",
+      "role": "Rol",
+      "status": "Estado",
+      "createdAt": "Fecha de Creación",
+      "actions": "Acciones"
+    },
+    "actions": {
+      "view": "Ver",
+      "edit": "Editar",
+      "deactivate": "Desactivar",
+      "activate": "Activar",
+      "delete": "Eliminar"
+    },
+    "filters": {
+      "search": "Buscar usuarios...",
+      "role": "Rol",
+      "status": "Estado",
+      "allRoles": "Todos los roles",
+      "allStatuses": "Todos los estados"
+    },
+    "status": {
+      "active": "Activo",
+      "inactive": "Inactivo",
+      "suspended": "Suspendido",
+      "pending": "Pendiente"
+    },
+    "role": {
+      "admin": "Administrador",
+      "business": "Negocio",
+      "customer": "Cliente",
+      "user": "Usuario"
+    }
   }
 }

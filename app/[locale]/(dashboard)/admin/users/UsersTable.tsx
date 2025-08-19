@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { Button, Tag, Avatar, message } from 'antd'
 import { Plus, Mail, Shield, UserCheck } from 'lucide-react'
 import { useTranslations } from 'next-intl'
@@ -19,6 +20,9 @@ import {
   TableActions,
   commonActions,
 } from '@/components/ui/DataTable'
+import { ContextActionBar } from '@/components/ui/ContextActionBar'
+import type { ActionItem } from '@/components/ui/ContextActionBar'
+import AddUserDrawer from './AddUserDrawer'
 import { useServerDataTable } from '@/hooks/useDataTable'
 import { UserStatus, UserRole } from '@merodami/pika-types'
 import {
@@ -43,6 +47,7 @@ export default function UsersTable({ locale }: UsersTableProps) {
   const router = useRouter()
   const t = useTranslations()
   const queryClient = useQueryClient()
+  const [isAddUserDrawerOpen, setIsAddUserDrawerOpen] = useState(false)
 
   // Data table state management
   const dataTable = useServerDataTable<GetAdminUserList200DataItem>({
@@ -341,9 +346,29 @@ export default function UsersTable({ locale }: UsersTableProps) {
     // TODO: Implement export
   }
 
+  // Context action bar actions - only essential actions
+  const contextActions: ActionItem[] = [
+    {
+      key: 'add',
+      label: t('common.button.create'),
+      icon: <Plus className="w-4 h-4" />,
+      type: 'primary',
+      onClick: () => setIsAddUserDrawerOpen(true),
+    },
+  ]
+
   return (
-    <div className="space-y-4">
-      <TableFilters
+    <div className="space-y-0">
+      <ContextActionBar
+        breadcrumbs={[
+          { label: t('navigation.dashboard'), onClick: () => router.push(`/${locale}/admin`) },
+          { label: t('navigation.users') },
+        ]}
+        actions={contextActions}
+      />
+      
+      <div className="space-y-3 p-4">
+        <TableFilters
         fields={filterFields}
         values={dataTable.state.filters}
         onChange={(filters) => {
@@ -374,15 +399,6 @@ export default function UsersTable({ locale }: UsersTableProps) {
         }}
         pagination={dataTable.serverPagination(data?.pagination)}
         onChange={dataTable.handleTableChange}
-        actions={
-          <Button
-            type="primary"
-            icon={<Plus className="w-4 h-4" />}
-            onClick={() => router.push(`/${locale}/users/create`)}
-          >
-            Add User
-          </Button>
-        }
         bulkActions={
           <BulkActions
             selectedKeys={dataTable.state.selectedRowKeys}
@@ -402,6 +418,13 @@ export default function UsersTable({ locale }: UsersTableProps) {
         onRefresh={() => refetch()}
         exportable
         onExport={handleExport}
+      />
+      </div>
+
+      <AddUserDrawer
+        open={isAddUserDrawerOpen}
+        onClose={() => setIsAddUserDrawerOpen(false)}
+        locale={locale}
       />
     </div>
   )

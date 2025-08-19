@@ -27,8 +27,8 @@ export function ResponsiveDashboardWrapper({
         <Sidebar.Overlay />
 
         {/* Header with Mobile Menu Toggle */}
-        <header className="sticky top-0 z-30 h-16 bg-white border-b border-gray-200">
-          <div className="flex items-center h-full px-4 sm:px-6 lg:px-8">
+        <header className="sticky top-0 z-30 h-12 bg-white border-b border-gray-200">
+          <div className="flex items-center h-full px-3 sm:px-4 lg:px-6">
             {/* Mobile Menu Toggle - Dark color for visibility */}
             <Sidebar.Trigger />
 
@@ -38,13 +38,13 @@ export function ResponsiveDashboardWrapper({
         </header>
 
         {/* Main Layout */}
-        <div className="flex h-[calc(100vh-4rem)]">
+        <div className="flex h-[calc(100vh-3rem)]">
           {/* Sidebar */}
           <Sidebar.Root>{sidebar}</Sidebar.Root>
 
           {/* Main Content */}
           <main className="flex-1 overflow-y-auto">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 max-w-7xl">
+            <div className="w-full">
               {children}
             </div>
           </main>
