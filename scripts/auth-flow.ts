@@ -98,14 +98,14 @@ api.interceptors.request.use(
     logRequest(
       config.method?.toUpperCase() || 'GET',
       config.url || '',
-      config.data,
+      config.data
     )
 
     return config
   },
   (error) => {
     return Promise.reject(error)
-  },
+  }
 )
 
 // Response interceptor
@@ -131,7 +131,7 @@ api.interceptors.response.use(
     log(`⏱️  Duration: ${duration.toFixed(2)}ms`, colors.dim)
 
     return Promise.reject(error)
-  },
+  }
 )
 
 // Test functions
@@ -160,7 +160,7 @@ async function testRegistration(): Promise<string> {
 
     if (response.data.userId) {
       logSuccess(
-        `User registered successfully with ID: ${response.data.userId}`,
+        `User registered successfully with ID: ${response.data.userId}`
       )
       logInfo(`Email sent: ${response.data.emailSent}`)
 
@@ -170,7 +170,7 @@ async function testRegistration(): Promise<string> {
     }
   } catch (error: any) {
     logError(
-      `Registration failed: ${error.response?.data?.message || error.message}`,
+      `Registration failed: ${error.response?.data?.message || error.message}`
     )
     throw error
   }
@@ -219,14 +219,14 @@ async function testLogin(): Promise<AuthTokens> {
 
     if (response.data.user) {
       logInfo(
-        `User: ${response.data.user.firstName} ${response.data.user.lastName} (${response.data.user.role})`,
+        `User: ${response.data.user.firstName} ${response.data.user.lastName} (${response.data.user.role})`
       )
     }
 
     return tokens
   } catch (error: any) {
     logError(
-      `Login failed: ${error.response?.data?.errorDescription || error.message}`,
+      `Login failed: ${error.response?.data?.errorDescription || error.message}`
     )
     throw error
   }
@@ -251,7 +251,7 @@ async function testTokenIntrospection(token: string): Promise<void> {
     }
   } catch (error: any) {
     logError(
-      `Token introspection failed: ${error.response?.data?.message || error.message}`,
+      `Token introspection failed: ${error.response?.data?.message || error.message}`
     )
     throw error
   }
@@ -270,7 +270,7 @@ async function testUserInfo(accessToken: string): Promise<void> {
     logSuccess('User info retrieved successfully')
     logInfo(`User ID: ${response.data.id}`)
     logInfo(
-      `Email: ${response.data.email} (verified: ${response.data.emailVerified})`,
+      `Email: ${response.data.email} (verified: ${response.data.emailVerified})`
     )
 
     const displayName =
@@ -281,7 +281,7 @@ async function testUserInfo(accessToken: string): Promise<void> {
     logInfo(`Role: ${response.data.role}`)
   } catch (error: any) {
     logError(
-      `Failed to get user info: ${error.response?.data?.message || error.message}`,
+      `Failed to get user info: ${error.response?.data?.message || error.message}`
     )
     throw error
   }
@@ -309,7 +309,7 @@ async function testGetProfile(accessToken: string): Promise<UserProfile> {
     return profile
   } catch (error: any) {
     logError(
-      `Failed to get profile: ${error.response?.data?.message || error.message}`,
+      `Failed to get profile: ${error.response?.data?.message || error.message}`
     )
     throw error
   }
@@ -333,7 +333,7 @@ async function testUpdateProfile(accessToken: string): Promise<void> {
     logInfo(`Preferred language: ${response.data.preferredLanguage}`)
   } catch (error: any) {
     logError(
-      `Failed to update profile: ${error.response?.data?.message || error.message}`,
+      `Failed to update profile: ${error.response?.data?.message || error.message}`
     )
     throw error
   }
@@ -361,7 +361,7 @@ async function testRefreshToken(refreshToken: string): Promise<AuthTokens> {
     return tokens
   } catch (error: any) {
     logError(
-      `Token refresh failed: ${error.response?.data?.errorDescription || error.message}`,
+      `Token refresh failed: ${error.response?.data?.errorDescription || error.message}`
     )
     throw error
   }
@@ -383,7 +383,7 @@ async function testChangePassword(accessToken: string): Promise<void> {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
-      },
+      }
     )
 
     logSuccess('Password changed successfully')
@@ -392,7 +392,7 @@ async function testChangePassword(accessToken: string): Promise<void> {
     testUser.password = newPassword
   } catch (error: any) {
     logError(
-      `Failed to change password: ${error.response?.data?.message || error.message}`,
+      `Failed to change password: ${error.response?.data?.message || error.message}`
     )
     throw error
   }
@@ -400,7 +400,7 @@ async function testChangePassword(accessToken: string): Promise<void> {
 
 async function testLogout(
   accessToken: string,
-  refreshToken: string,
+  refreshToken: string
 ): Promise<void> {
   logStep(9, 'Logout (Revoke Tokens)')
 
@@ -439,7 +439,7 @@ async function testLogout(
     }
   } catch (error: any) {
     logError(
-      `Failed to logout: ${error.response?.data?.message || error.message}`,
+      `Failed to logout: ${error.response?.data?.message || error.message}`
     )
     throw error
   }
@@ -467,7 +467,7 @@ async function testPasswordReset(): Promise<void> {
     logInfo('Note: Complete password reset requires email verification')
   } catch (error: any) {
     logError(
-      `Password reset failed: ${error.response?.data?.message || error.message}`,
+      `Password reset failed: ${error.response?.data?.message || error.message}`
     )
     throw error
   }
@@ -485,7 +485,7 @@ async function testResendVerification(): Promise<void> {
     logInfo(response.data.message)
   } catch (error: any) {
     logError(
-      `Failed to resend verification: ${error.response?.data?.message || error.message}`,
+      `Failed to resend verification: ${error.response?.data?.message || error.message}`
     )
     throw error
   }
@@ -511,7 +511,7 @@ async function testExistingAdminLogin(): Promise<void> {
 
     logSuccess('Admin login successful!')
     logInfo(
-      `Access token received: ${response.data.accessToken ? 'Yes' : 'No'}`,
+      `Access token received: ${response.data.accessToken ? 'Yes' : 'No'}`
     )
     logInfo(`Token type: ${response.data.tokenType}`)
     logInfo(`Expires in: ${response.data.expiresIn} seconds`)
@@ -534,7 +534,7 @@ async function testExistingAdminLogin(): Promise<void> {
 
       logSuccess('Token validation successful!')
       logInfo(
-        `Profile - Name: ${profileResponse.data.firstName} ${profileResponse.data.lastName}`,
+        `Profile - Name: ${profileResponse.data.firstName} ${profileResponse.data.lastName}`
       )
       logInfo(`Profile - Email: ${profileResponse.data.email}`)
       logInfo(`Profile - Role: ${profileResponse.data.role}`)
@@ -556,11 +556,11 @@ async function testExistingAdminLogin(): Promise<void> {
     }
   } catch (error: any) {
     logError(
-      `Admin login failed: ${error.response?.data?.error?.message || error.message}`,
+      `Admin login failed: ${error.response?.data?.error?.message || error.message}`
     )
     if (error.response?.status === 401) {
       logInfo(
-        'This might indicate the admin user needs to be created or verified first',
+        'This might indicate the admin user needs to be created or verified first'
       )
       logInfo('Run: npx tsx scripts/flows/setup-test-users.ts')
     }
@@ -571,7 +571,7 @@ async function testExistingAdminLogin(): Promise<void> {
 // Main test flow
 async function runTests() {
   log(
-    `\n${colors.bright}🚀 Starting Comprehensive Authentication Flow Test${colors.reset}`,
+    `\n${colors.bright}🚀 Starting Comprehensive Authentication Flow Test${colors.reset}`
   )
   log(`API Gateway URL: ${API_GATEWAY_URL}`)
   log(`Test user email: ${testUser.email}\n`)
@@ -584,11 +584,11 @@ async function runTests() {
     try {
       await testExistingAdminLogin()
       log(
-        `\n${colors.bright}${colors.green}✅ Pre-created admin user test passed!${colors.reset}\n`,
+        `\n${colors.bright}${colors.green}✅ Pre-created admin user test passed!${colors.reset}\n`
       )
     } catch {
       log(
-        `\n${colors.bright}${colors.yellow}⚠️  Admin user test failed - continuing with new user registration${colors.reset}\n`,
+        `\n${colors.bright}${colors.yellow}⚠️  Admin user test failed - continuing with new user registration${colors.reset}\n`
       )
     }
 
@@ -614,7 +614,7 @@ async function runTests() {
         await testResendVerification()
 
         log(
-          `\n${colors.bright}${colors.yellow}⚠️  Email Verification Demo Complete${colors.reset}`,
+          `\n${colors.bright}${colors.yellow}⚠️  Email Verification Demo Complete${colors.reset}`
         )
         log(`\nNote: Full authentication flow requires email verification.`)
         log(`In production:`)
@@ -624,7 +624,7 @@ async function runTests() {
         log(`\nCurrent implementation correctly:`)
         log(`✅ Registers user with email verification requirement`)
         log(
-          `✅ Sends verification email (emailSent: ${userId ? 'true' : 'false'})`,
+          `✅ Sends verification email (emailSent: ${userId ? 'true' : 'false'})`
         )
         log(`✅ Blocks login until email is verified`)
         log(`✅ Supports resending verification emails`)
@@ -671,7 +671,7 @@ async function runTests() {
     await testLogout(tokens.accessToken, tokens.refreshToken)
 
     log(
-      `\n${colors.bright}${colors.green}✅ All tests passed successfully!${colors.reset}`,
+      `\n${colors.bright}${colors.green}✅ All tests passed successfully!${colors.reset}`
     )
     log(`\nTest Summary:`)
     log(`- User ID: ${userId}`)

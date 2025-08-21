@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import {
   Drawer,
   Form,
@@ -9,21 +8,50 @@ import {
   DatePicker,
   Switch,
   Button,
-  Space,
-  message,
-  Divider,
   Alert,
+  Divider,
+  message,
 } from 'antd'
-import { X, Save, User, Mail, Phone, Calendar, Shield, Globe } from 'lucide-react'
+import { X, Save, User, Mail, Phone, Globe, Lock, Calendar } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useForm, Controller } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
 import dayjs from 'dayjs'
-import { omitBy, isUndefined } from 'lodash-es'
 
 import { createAdminUser } from '@/lib/api/orval-client'
-import type { CreateAdminUserBody } from '@/lib/api/orval-client'
 import { UserRole, UserStatus } from '@merodami/pika-types'
 import { getSupportedLanguages, getLanguageLabel } from '@/lib/config/languages'
+import { userAdmin } from '@merodami/pika-api'
+
+// Use the backend schema directly from userAdmin - this is the single source of truth
+const { AdminCreateUserRequest } = userAdmin
+
+// Extend the backend schema with UI-only fields for form handling
+const CreateUserFormSchema = AdminCreateUserRequest.extend({
+  // UI-specific field for password handling
+  autoGeneratePassword: z.boolean().default(true),
+  confirmPassword: z.string().optional(),
+}).refine(
+  (data) => {
+    // If not auto-generating, password is required
+    if (!data.autoGeneratePassword && !data.password) {
+      return false
+    }
+    // If password is provided, confirm password must match
+    if (data.password && data.password !== data.confirmPassword) {
+      return false
+    }
+    return true
+  },
+  {
+    message: 'Passwords must match',
+    path: ['confirmPassword'],
+  }
+)
+
+type CreateUserFormData = z.infer<typeof CreateUserFormSchema>
 
 interface AddUserDrawerProps {
   open: boolean
@@ -31,56 +59,89 @@ interface AddUserDrawerProps {
   locale: string
 }
 
-export default function AddUserDrawer({ open, onClose, locale }: AddUserDrawerProps) {
+export default function AddUserDrawer({
+  open,
+  onClose,
+  locale,
+}: AddUserDrawerProps) {
   const t = useTranslations()
-  const [form] = Form.useForm()
   const queryClient = useQueryClient()
-  const [autoGeneratePassword, setAutoGeneratePassword] = useState(true)
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+    watch,
+  } = useForm({
+    resolver: zodResolver(CreateUserFormSchema),
+    defaultValues: {
+      // Required fields
+      email: '',
+      firstName: '',
+      lastName: '',
+      // Optional fields from schema
+      phoneNumber: '',
+      dateOfBirth: undefined,
+      password: undefined,
+      // Admin-settable fields with defaults
+      role: UserRole.BUSINESS,
+      status: UserStatus.ACTIVE,
+      emailVerified: false,
+      phoneVerified: false,
+      preferredLanguage: locale.substring(0, 2),
+      // UI-only fields
+      autoGeneratePassword: true,
+      confirmPassword: '',
+    },
+  })
+
+  const watchAutoGenerate = watch('autoGeneratePassword')
 
   const createUserMutation = useMutation({
-    mutationFn: (data: CreateAdminUserBody) => createAdminUser(data),
+    mutationFn: async (data: CreateUserFormData) => {
+      // Build the request data conforming to AdminCreateUserRequest schema
+      const requestData: z.infer<typeof AdminCreateUserRequest> = {
+        email: data.email,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        phoneNumber: data.phoneNumber || undefined,
+        dateOfBirth: data.dateOfBirth || undefined,
+        password: !data.autoGeneratePassword ? data.password : undefined,
+        role: data.role || UserRole.BUSINESS,
+        status: data.status || UserStatus.ACTIVE,
+        emailVerified: data.emailVerified,
+        phoneVerified: data.phoneVerified,
+        preferredLanguage: data.preferredLanguage,
+      }
+
+      // Remove undefined values to avoid sending empty fields
+      const cleanedData = Object.fromEntries(
+        Object.entries(requestData).filter(
+          ([_, v]) => v !== undefined && v !== ''
+        )
+      )
+
+      return createAdminUser(cleanedData as any)
+    },
     onSuccess: () => {
       message.success(t('common.message.changesSaved'))
       queryClient.invalidateQueries({ queryKey: ['admin-users'] })
-      form.resetFields()
-      onClose()
+      handleClose()
     },
     onError: (error: any) => {
-      const errorMessage = error?.response?.data?.message || t('common.message.errorOccurred')
+      const errorMessage =
+        error?.response?.data?.message || t('common.message.errorOccurred')
       message.error(errorMessage)
     },
   })
 
-  const handleSubmit = async (values: any) => {
-    try {
-      const userData: CreateAdminUserBody = omitBy(
-        {
-          email: values.email,
-          firstName: values.firstName,
-          lastName: values.lastName,
-          phoneNumber: values.phoneNumber || undefined,
-          dateOfBirth: values.dateOfBirth
-            ? dayjs(values.dateOfBirth).format('YYYY-MM-DD')
-            : undefined,
-          password: !autoGeneratePassword ? values.password : undefined,
-          role: values.role || UserRole.BUSINESS,
-          status: values.status || UserStatus.ACTIVE,
-          emailVerified: values.emailVerified || false,
-          phoneVerified: values.phoneVerified || false,
-          preferredLanguage: values.preferredLanguage || locale.substring(0, 2),
-        },
-        isUndefined
-      )
-
-      await createUserMutation.mutateAsync(userData)
-    } catch (error) {
-      console.error('Failed to create user:', error)
-    }
+  const onSubmit = async (data: CreateUserFormData) => {
+    await createUserMutation.mutateAsync(data)
   }
 
   const handleClose = () => {
-    form.resetFields()
-    setAutoGeneratePassword(true)
+    reset()
     onClose()
   }
 
@@ -89,7 +150,9 @@ export default function AddUserDrawer({ open, onClose, locale }: AddUserDrawerPr
       title={
         <div className="flex items-center gap-2">
           <User className="w-5 h-5" />
-          <span>{t('common.button.add')} {t('navigation.users')}</span>
+          <span>
+            {t('common.button.create')} {t('navigation.users')}
+          </span>
         </div>
       }
       placement="right"
@@ -99,224 +162,256 @@ export default function AddUserDrawer({ open, onClose, locale }: AddUserDrawerPr
       closeIcon={<X className="w-4 h-4" />}
       footer={
         <div className="flex justify-end gap-2">
-          <Button onClick={handleClose}>
+          <Button onClick={handleClose} disabled={isSubmitting}>
             {t('common.button.cancel')}
           </Button>
           <Button
             type="primary"
             icon={<Save className="w-4 h-4" />}
-            onClick={() => form.submit()}
-            loading={createUserMutation.isPending}
+            onClick={handleSubmit(onSubmit)}
+            loading={isSubmitting}
           >
             {t('common.button.save')}
           </Button>
         </div>
       }
     >
-      <Form
-        form={form}
-        layout="vertical"
-        onFinish={handleSubmit}
-        initialValues={{
-          role: UserRole.BUSINESS,
-          status: UserStatus.ACTIVE,
-          emailVerified: false,
-          phoneVerified: false,
-          preferredLanguage: locale.substring(0, 2),
-        }}
-      >
-        <div className="space-y-4">
-          <div className="text-sm font-medium text-gray-700 mb-2">
-            {t('profile.personalInfo.title')}
-          </div>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <div className="text-sm font-medium text-gray-700 mb-2">
+          {t('profile.personalInfo.title')}
+        </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <Form.Item
+        <div className="grid grid-cols-2 gap-4">
+          <Form.Item
+            label={t('profile.personalInfo.firstName')}
+            validateStatus={errors.firstName ? 'error' : ''}
+            help={errors.firstName?.message}
+          >
+            <Controller
               name="firstName"
-              label={t('profile.personalInfo.firstName')}
-              rules={[
-                { required: true, message: t('validation.required') },
-                { max: 50, message: t('validation.maxLength', { max: 50 }) },
-              ]}
-            >
-              <Input
-                prefix={<User className="w-4 h-4 text-gray-400" />}
-                placeholder={t('profile.personalInfo.firstName')}
-              />
-            </Form.Item>
+              control={control}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  prefix={<User className="w-4 h-4 text-gray-400" />}
+                  placeholder={t('profile.personalInfo.firstName')}
+                />
+              )}
+            />
+          </Form.Item>
 
-            <Form.Item
+          <Form.Item
+            label={t('profile.personalInfo.lastName')}
+            validateStatus={errors.lastName ? 'error' : ''}
+            help={errors.lastName?.message}
+          >
+            <Controller
               name="lastName"
-              label={t('profile.personalInfo.lastName')}
-              rules={[
-                { required: true, message: t('validation.required') },
-                { max: 50, message: t('validation.maxLength', { max: 50 }) },
-              ]}
-            >
-              <Input placeholder={t('profile.personalInfo.lastName')} />
-            </Form.Item>
-          </div>
-
-          <Form.Item
-            name="email"
-            label={t('profile.contactInfo.email')}
-            rules={[
-              { required: true, message: t('validation.required') },
-              { type: 'email', message: t('validation.email') },
-            ]}
-          >
-            <Input
-              prefix={<Mail className="w-4 h-4 text-gray-400" />}
-              placeholder="user@example.com"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  placeholder={t('profile.personalInfo.lastName')}
+                />
+              )}
             />
-          </Form.Item>
-
-          <Form.Item
-            name="phoneNumber"
-            label={t('profile.contactInfo.phone')}
-            rules={[
-              {
-                pattern: /^\+[1-9]\d{1,14}$/,
-                message: t('validation.phoneFormat'),
-              },
-            ]}
-          >
-            <Input
-              prefix={<Phone className="w-4 h-4 text-gray-400" />}
-              placeholder="+1234567890"
-            />
-          </Form.Item>
-
-          <Form.Item
-            name="dateOfBirth"
-            label={t('profile.personalInfo.dateOfBirth')}
-          >
-            <DatePicker
-              className="w-full"
-              format="YYYY-MM-DD"
-              disabledDate={(current) =>
-                current && current > dayjs().subtract(18, 'year')
-              }
-              placeholder={t('profile.personalInfo.dateOfBirth')}
-              suffixIcon={<Calendar className="w-4 h-4 text-gray-400" />}
-            />
-          </Form.Item>
-
-          <Divider />
-
-          <div className="text-sm font-medium text-gray-700 mb-2">
-            {t('profile.security.title')}
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <Form.Item
-              name="role"
-              label={t('profile.security.role')}
-              rules={[{ required: true, message: t('validation.required') }]}
-            >
-              <Select
-                placeholder={t('common.button.select')}
-                suffixIcon={<Shield className="w-4 h-4 text-gray-400" />}
-              >
-                <Select.Option value={UserRole.ADMIN}>
-                  {t('profile.role.admin')}
-                </Select.Option>
-                <Select.Option value={UserRole.BUSINESS}>
-                  {t('profile.role.business')}
-                </Select.Option>
-              </Select>
-            </Form.Item>
-
-            <Form.Item
-              name="status"
-              label={t('businesses.fields.status')}
-              rules={[{ required: true, message: t('validation.required') }]}
-            >
-              <Select placeholder={t('common.button.select')}>
-                <Select.Option value={UserStatus.ACTIVE}>
-                  {t('profile.status.active')}
-                </Select.Option>
-                <Select.Option value={UserStatus.UNCONFIRMED}>
-                  {t('profile.status.unconfirmed')}
-                </Select.Option>
-                <Select.Option value={UserStatus.SUSPENDED}>
-                  {t('profile.status.suspended')}
-                </Select.Option>
-              </Select>
-            </Form.Item>
-          </div>
-
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-sm">{t('profile.security.emailVerified')}</span>
-              <Form.Item name="emailVerified" valuePropName="checked" className="mb-0">
-                <Switch />
-              </Form.Item>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <span className="text-sm">{t('profile.security.phoneVerified')}</span>
-              <Form.Item name="phoneVerified" valuePropName="checked" className="mb-0">
-                <Switch />
-              </Form.Item>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <span className="text-sm">Auto-generate password</span>
-              <Switch
-                checked={autoGeneratePassword}
-                onChange={setAutoGeneratePassword}
-              />
-            </div>
-          </div>
-
-          {!autoGeneratePassword && (
-            <Form.Item
-              name="password"
-              label={t('profile.security.password')}
-              rules={[
-                { required: true, message: t('validation.required') },
-                { min: 8, message: t('validation.minLength', { min: 8 }) },
-                { max: 128, message: t('validation.maxLength', { max: 128 }) },
-              ]}
-            >
-              <Input.Password placeholder={t('profile.security.password')} />
-            </Form.Item>
-          )}
-
-          {autoGeneratePassword && (
-            <Alert
-              message="Password will be auto-generated"
-              description="The user will receive an email to set their password on first login."
-              type="info"
-              showIcon
-              className="mt-2"
-            />
-          )}
-
-          <Divider />
-
-          <div className="text-sm font-medium text-gray-700 mb-2">
-            {t('profile.preferences.title')}
-          </div>
-
-          <Form.Item
-            name="preferredLanguage"
-            label={t('profile.preferences.language')}
-          >
-            <Select
-              placeholder={t('common.button.select')}
-              suffixIcon={<Globe className="w-4 h-4 text-gray-400" />}
-            >
-              {getSupportedLanguages().map((langCode) => (
-                <Select.Option key={langCode} value={langCode}>
-                  {getLanguageLabel(langCode, t)}
-                </Select.Option>
-              ))}
-            </Select>
           </Form.Item>
         </div>
-      </Form>
+
+        <Form.Item
+          label={t('profile.contactInfo.email')}
+          validateStatus={errors.email ? 'error' : ''}
+          help={errors.email?.message}
+        >
+          <Controller
+            name="email"
+            control={control}
+            render={({ field }) => (
+              <Input
+                {...field}
+                prefix={<Mail className="w-4 h-4 text-gray-400" />}
+                placeholder="user@example.com"
+              />
+            )}
+          />
+        </Form.Item>
+
+        <Form.Item
+          label={t('profile.contactInfo.phone')}
+          validateStatus={errors.phoneNumber ? 'error' : ''}
+          help={errors.phoneNumber?.message}
+        >
+          <Controller
+            name="phoneNumber"
+            control={control}
+            render={({ field }) => (
+              <Input
+                {...field}
+                prefix={<Phone className="w-4 h-4 text-gray-400" />}
+                placeholder="+1234567890"
+              />
+            )}
+          />
+        </Form.Item>
+
+        <Form.Item
+          label={t('profile.personalInfo.dateOfBirth')}
+          validateStatus={errors.dateOfBirth ? 'error' : ''}
+          help={errors.dateOfBirth?.message}
+        >
+          <Controller
+            name="dateOfBirth"
+            control={control}
+            render={({ field }) => (
+              <DatePicker
+                {...field}
+                value={field.value ? dayjs(field.value) : null}
+                onChange={(date) => field.onChange(date?.toISOString())}
+                className="w-full"
+                format="YYYY-MM-DD"
+                disabledDate={(current) =>
+                  current && current > dayjs().endOf('day')
+                }
+                placeholder={t('profile.personalInfo.dateOfBirth')}
+                suffixIcon={<Calendar className="w-4 h-4 text-gray-400" />}
+              />
+            )}
+          />
+        </Form.Item>
+
+        <Divider />
+
+        <div className="text-sm font-medium text-gray-700 mb-2">
+          {t('profile.security.title')}
+        </div>
+
+        <Alert
+          message="User will be created as Business User with Active status"
+          description="The user will automatically be assigned the Business role and Active status as per the business registration flow."
+          type="info"
+          showIcon
+          className="mb-4"
+        />
+
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-sm">
+              {t('profile.security.emailVerified')}
+            </span>
+            <Controller
+              name="emailVerified"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <Switch checked={value} onChange={onChange} />
+              )}
+            />
+          </div>
+
+          <div className="flex items-center justify-between">
+            <span className="text-sm">
+              {t('profile.security.phoneVerified')}
+            </span>
+            <Controller
+              name="phoneVerified"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <Switch checked={value} onChange={onChange} />
+              )}
+            />
+          </div>
+
+          <div className="flex items-center justify-between">
+            <span className="text-sm">Auto-generate password</span>
+            <Controller
+              name="autoGeneratePassword"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <Switch checked={value} onChange={onChange} />
+              )}
+            />
+          </div>
+        </div>
+
+        {!watchAutoGenerate && (
+          <>
+            <Form.Item
+              label={t('profile.security.password')}
+              validateStatus={errors.password ? 'error' : ''}
+              help={errors.password?.message}
+            >
+              <Controller
+                name="password"
+                control={control}
+                render={({ field }) => (
+                  <Input.Password
+                    {...field}
+                    prefix={<Lock className="w-4 h-4 text-gray-400" />}
+                    placeholder={t('profile.security.password')}
+                  />
+                )}
+              />
+            </Form.Item>
+
+            <Form.Item
+              label="Confirm Password"
+              validateStatus={errors.confirmPassword ? 'error' : ''}
+              help={errors.confirmPassword?.message}
+            >
+              <Controller
+                name="confirmPassword"
+                control={control}
+                render={({ field }) => (
+                  <Input.Password
+                    {...field}
+                    prefix={<Lock className="w-4 h-4 text-gray-400" />}
+                    placeholder="Confirm password"
+                  />
+                )}
+              />
+            </Form.Item>
+          </>
+        )}
+
+        {watchAutoGenerate && (
+          <Alert
+            message="Password will be auto-generated"
+            description="The user will receive an email to set their password on first login."
+            type="info"
+            showIcon
+            className="mt-2"
+          />
+        )}
+
+        <Divider />
+
+        <div className="text-sm font-medium text-gray-700 mb-2">
+          {t('profile.preferences.title')}
+        </div>
+
+        <Form.Item
+          label={t('profile.preferences.language')}
+          validateStatus={errors.preferredLanguage ? 'error' : ''}
+          help={errors.preferredLanguage?.message}
+        >
+          <Controller
+            name="preferredLanguage"
+            control={control}
+            render={({ field }) => (
+              <Select
+                {...field}
+                placeholder={t('common.button.select')}
+                suffixIcon={<Globe className="w-4 h-4 text-gray-400" />}
+              >
+                {getSupportedLanguages().map((langCode) => (
+                  <Select.Option key={langCode} value={langCode}>
+                    {getLanguageLabel(langCode, t)}
+                  </Select.Option>
+                ))}
+              </Select>
+            )}
+          />
+        </Form.Item>
+      </form>
     </Drawer>
   )
 }

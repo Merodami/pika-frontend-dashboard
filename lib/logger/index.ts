@@ -27,14 +27,17 @@ export const generateCorrelationId = (): string => {
 }
 
 // Helper to extract correlation ID from headers
-export const getCorrelationId = (headers: Headers | Record<string, string>): string => {
+export const getCorrelationId = (
+  headers: Headers | Record<string, string>
+): string => {
   let correlationId: string | null = null
-  
+
   if (headers instanceof Headers) {
-    correlationId = headers.get('x-correlation-id') || headers.get('x-request-id')
+    correlationId =
+      headers.get('x-correlation-id') || headers.get('x-request-id')
   } else {
     correlationId = headers['x-correlation-id'] || headers['x-request-id']
   }
-  
+
   return correlationId || generateCorrelationId()
 }

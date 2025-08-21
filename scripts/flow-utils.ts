@@ -98,14 +98,14 @@ export function createApiClient(baseURL: string = API_BASE_URL): AxiosInstance {
       logRequest(
         config.method?.toUpperCase() || 'GET',
         config.url || '',
-        config.data,
+        config.data
       )
 
       return config
     },
     (error) => {
       return Promise.reject(error)
-    },
+    }
   )
 
   // Response interceptor
@@ -134,7 +134,7 @@ export function createApiClient(baseURL: string = API_BASE_URL): AxiosInstance {
       }
 
       return Promise.reject(error)
-    },
+    }
   )
 
   return api
@@ -144,7 +144,7 @@ export function createApiClient(baseURL: string = API_BASE_URL): AxiosInstance {
 export async function authenticateUser(
   api: AxiosInstance,
   email: string,
-  password: string,
+  password: string
 ): Promise<{ accessToken: string; refreshToken: string }> {
   logInfo(`Authenticating as ${email}`)
 
@@ -189,7 +189,7 @@ export interface FlowOptions {
 
 export async function executeFlow(
   flowFn: () => Promise<void>,
-  options: FlowOptions,
+  options: FlowOptions
 ): Promise<void> {
   logSection(`🚀 Starting ${options.title}`)
 
@@ -211,7 +211,7 @@ export async function executeFlow(
       if (axiosError.response) {
         logError(`Error Status: ${axiosError.response.status}`)
         logError(
-          `Error Data: ${JSON.stringify(axiosError.response.data, null, 2)}`,
+          `Error Data: ${JSON.stringify(axiosError.response.data, null, 2)}`
         )
       } else if (axiosError.request) {
         logError('No response received from server')

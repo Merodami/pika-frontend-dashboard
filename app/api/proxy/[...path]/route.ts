@@ -2,7 +2,10 @@ import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 import { ApiLogger, getCorrelationId } from '@/lib/logger/server-logger'
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || process.env.API_URL || 'http://localhost:5500/api/v1'
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL ||
+  process.env.API_URL ||
+  'http://localhost:5500/api/v1'
 
 // Proxy all API requests through Next.js
 export async function GET(
@@ -49,8 +52,10 @@ async function handleRequest(
   const accessToken = (await cookieStore).get('pika-access-token')?.value
 
   // Get or create correlation ID
-  const correlationId = getCorrelationId(Object.fromEntries(request.headers.entries()))
-  
+  const correlationId = getCorrelationId(
+    Object.fromEntries(request.headers.entries())
+  )
+
   // Create logger for this request
   const logger = new ApiLogger({
     correlationId,
@@ -99,7 +104,7 @@ async function handleRequest(
       requestBody = bodyText
     }
   }
-  
+
   // Log the outgoing request to backend
   logger.logRequest({
     method,
@@ -111,7 +116,7 @@ async function handleRequest(
   })
 
   const startTime = Date.now()
-  
+
   try {
     const response = await fetch(url.toString(), options)
     const duration = Date.now() - startTime
@@ -130,7 +135,7 @@ async function handleRequest(
     } catch {
       responseBody = data
     }
-    
+
     // Log the backend response
     logger.logResponse({
       statusCode: response.status,
@@ -143,16 +148,17 @@ async function handleRequest(
     const nextResponse = new NextResponse(data, {
       status: response.status,
       headers: {
-        'Content-Type': response.headers.get('Content-Type') || 'application/json',
+        'Content-Type':
+          response.headers.get('Content-Type') || 'application/json',
         'x-correlation-id': correlationId,
         'x-response-time': `${duration}ms`,
       },
     })
-    
+
     return nextResponse
   } catch (error) {
     const duration = Date.now() - startTime
-    
+
     // Log the error
     logger.logError(error, {
       method,
@@ -162,19 +168,19 @@ async function handleRequest(
       headers: Object.fromEntries(headers.entries()),
       body: requestBody,
     })
-    
+
     return NextResponse.json(
-      { 
+      {
         error: 'Internal Server Error',
         message: error instanceof Error ? error.message : 'Unknown error',
         correlationId,
       },
-      { 
+      {
         status: 500,
         headers: {
           'x-correlation-id': correlationId,
           'x-response-time': `${duration}ms`,
-        }
+        },
       }
     )
   }

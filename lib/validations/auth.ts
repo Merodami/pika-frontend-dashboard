@@ -18,25 +18,28 @@ import type {
 
 // ============= Direct exports from frontend schemas =============
 
-// All form schemas and transforms
+// Form schemas from authFrontend
 export const {
-  // Form schemas
   LoginFormSchema,
   RegisterFormSchema,
   ForgotPasswordFormSchema,
   ResetPasswordFormSchema,
-
-  // Multi-step registration
+  AdminCreateBusinessUserSchema,
+  AdminBusinessChangePasswordSchema,
+  // Multi-step registration schemas
   RegistrationStep1Schema,
   RegistrationStep2Schema,
   RegistrationStep3Schema,
+} = authFrontend
 
-  // Transform functions
+// Import transform functions from separate file
+export {
   transformLoginToTokenRequest,
   transformRegisterToAPI,
   transformResetPasswordToAPI,
   combineRegistrationSteps,
-} = authFrontend
+  extractUserPreferences,
+} from './transforms'
 
 // ============= Type exports =============
 

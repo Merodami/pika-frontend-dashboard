@@ -1,4 +1,9 @@
-import { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse, AxiosError } from 'axios'
+import {
+  AxiosInstance,
+  InternalAxiosRequestConfig,
+  AxiosResponse,
+  AxiosError,
+} from 'axios'
 import { apiDebugger } from './debug-helpers'
 
 // Store for tracking request times
@@ -15,14 +20,20 @@ const generateRequestId = (): string => {
  * Format headers for logging (hide sensitive data)
  */
 const formatHeaders = (headers: any): any => {
-  const sensitive = ['authorization', 'cookie', 'x-api-key', 'x-auth-token', 'set-cookie']
+  const sensitive = [
+    'authorization',
+    'cookie',
+    'x-api-key',
+    'x-auth-token',
+    'set-cookie',
+  ]
   const formatted: any = {}
-  
-  Object.keys(headers || {}).forEach(key => {
+
+  Object.keys(headers || {}).forEach((key) => {
     const lowerKey = key.toLowerCase()
     formatted[key] = sensitive.includes(lowerKey) ? '[REDACTED]' : headers[key]
   })
-  
+
   return formatted
 }
 
@@ -32,22 +43,35 @@ const formatHeaders = (headers: any): any => {
 const formatBody = (body: any): any => {
   if (!body) return body
   if (typeof body === 'string') return body
-  
+
   // List of sensitive field names to redact
-  const sensitiveFields = ['password', 'token', 'secret', 'apiKey', 'accessToken', 'refreshToken', 'creditCard', 'ssn', 'email', 'phone']
-  
+  const sensitiveFields = [
+    'password',
+    'token',
+    'secret',
+    'apiKey',
+    'accessToken',
+    'refreshToken',
+    'creditCard',
+    'ssn',
+    'email',
+    'phone',
+  ]
+
   const redact = (obj: any): any => {
     if (Array.isArray(obj)) {
-      return obj.map(item => redact(item))
+      return obj.map((item) => redact(item))
     }
-    
+
     if (obj && typeof obj === 'object') {
       const cleaned: any = {}
-      Object.keys(obj).forEach(key => {
+      Object.keys(obj).forEach((key) => {
         const lowerKey = key.toLowerCase()
         // Check if field name contains any sensitive keywords
-        const isSensitive = sensitiveFields.some(field => lowerKey.includes(field.toLowerCase()))
-        
+        const isSensitive = sensitiveFields.some((field) =>
+          lowerKey.includes(field.toLowerCase())
+        )
+
         if (isSensitive) {
           cleaned[key] = '[REDACTED]'
         } else if (typeof obj[key] === 'object') {
@@ -58,10 +82,10 @@ const formatBody = (body: any): any => {
       })
       return cleaned
     }
-    
+
     return obj
   }
-  
+
   return redact(body)
 }
 
@@ -80,19 +104,19 @@ export const setupRequestInterceptor = (axiosInstance: AxiosInstance) => {
   axiosInstance.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
       const requestId = generateRequestId()
-      
+
       // Add request ID to headers
       config.headers['x-request-id'] = requestId
-      
+
       // Store request start time
       requestTimings.set(requestId, Date.now())
-      
+
       // Log request in development
       if (process.env.NODE_ENV === 'development') {
         const method = config.method?.toUpperCase() || 'GET'
         const url = config.url || ''
         const fullUrl = config.baseURL ? `${config.baseURL}${url}` : url
-        
+
         // Create formatted log
         console.group(
           `%c🔄 API Request %c${method} %c${url}`,
@@ -102,28 +126,35 @@ export const setupRequestInterceptor = (axiosInstance: AxiosInstance) => {
         )
         console.log('%cRequest ID:', 'color: #64748b;', requestId)
         console.log('%cFull URL:', 'color: #64748b;', fullUrl)
-        
+
         if (config.params && Object.keys(config.params).length > 0) {
           console.log('%cQuery Params:', 'color: #64748b;', config.params)
         }
-        
-        console.log('%cHeaders:', 'color: #64748b;', formatHeaders(config.headers))
-        
+
+        console.log(
+          '%cHeaders:',
+          'color: #64748b;',
+          formatHeaders(config.headers)
+        )
+
         if (config.data) {
           console.log('%cBody:', 'color: #64748b;', formatBody(config.data))
         }
-        
+
         console.groupEnd()
       }
-      
+
       return config
     },
     (error: AxiosError) => {
-      
       if (process.env.NODE_ENV === 'development') {
-        console.error('%c❌ Request Error:', 'color: #ef4444; font-weight: bold;', error.message)
+        console.error(
+          '%c❌ Request Error:',
+          'color: #ef4444; font-weight: bold;',
+          error.message
+        )
       }
-      
+
       return Promise.reject(error)
     }
   )
@@ -138,12 +169,12 @@ export const setupResponseInterceptor = (axiosInstance: AxiosInstance) => {
       const requestId = response.config.headers?.['x-request-id']
       const startTime = requestTimings.get(requestId)
       const duration = startTime ? Date.now() - startTime : 0
-      
+
       // Clean up timing
       if (requestId) {
         requestTimings.delete(requestId)
       }
-      
+
       // Add to debug helper
       apiDebugger.addLog({
         timestamp: new Date().toISOString(),
@@ -153,20 +184,22 @@ export const setupResponseInterceptor = (axiosInstance: AxiosInstance) => {
         duration: duration.toString(),
         correlationId: response.headers['x-correlation-id'] || requestId,
       })
-      
+
       // Log response in development
       if (process.env.NODE_ENV === 'development') {
         const method = response.config.method?.toUpperCase() || 'GET'
         const url = response.config.url || ''
         const status = response.status
         const statusText = response.statusText
-        
+
         // Determine status color
         let statusColor = '#10b981' // green for 2xx
-        if (status >= 300 && status < 400) statusColor = '#3b82f6' // blue for 3xx
-        else if (status >= 400 && status < 500) statusColor = '#f59e0b' // yellow for 4xx
+        if (status >= 300 && status < 400)
+          statusColor = '#3b82f6' // blue for 3xx
+        else if (status >= 400 && status < 500)
+          statusColor = '#f59e0b' // yellow for 4xx
         else if (status >= 500) statusColor = '#ef4444' // red for 5xx
-        
+
         console.group(
           `%c✅ API Response %c${status} ${statusText} %c(${formatDuration(duration)})`,
           'color: #10b981; font-weight: bold;',
@@ -177,27 +210,31 @@ export const setupResponseInterceptor = (axiosInstance: AxiosInstance) => {
         console.log('%cMethod:', 'color: #64748b;', method)
         console.log('%cURL:', 'color: #64748b;', url)
         console.log('%cDuration:', 'color: #64748b;', formatDuration(duration))
-        console.log('%cHeaders:', 'color: #64748b;', formatHeaders(response.headers))
-        
+        console.log(
+          '%cHeaders:',
+          'color: #64748b;',
+          formatHeaders(response.headers)
+        )
+
         if (response.data) {
           console.log('%cData:', 'color: #64748b;', formatBody(response.data))
         }
-        
+
         console.groupEnd()
       }
-      
+
       return response
     },
     (error: AxiosError) => {
       const requestId = error.config?.headers?.['x-request-id']
       const startTime = requestTimings.get(requestId)
       const duration = startTime ? Date.now() - startTime : 0
-      
+
       // Clean up timing
       if (requestId) {
         requestTimings.delete(requestId)
       }
-      
+
       // Add to debug helper
       apiDebugger.addLog({
         timestamp: new Date().toISOString(),
@@ -205,17 +242,18 @@ export const setupResponseInterceptor = (axiosInstance: AxiosInstance) => {
         url: error.config?.url || '',
         status: error.response?.status,
         duration: duration.toString(),
-        correlationId: error.response?.headers?.['x-correlation-id'] || requestId,
+        correlationId:
+          error.response?.headers?.['x-correlation-id'] || requestId,
         error: error.message,
       })
-      
+
       // Log error in development
       if (process.env.NODE_ENV === 'development') {
         const method = error.config?.method?.toUpperCase() || 'GET'
         const url = error.config?.url || ''
         const status = error.response?.status || 0
         const statusText = error.response?.statusText || error.message
-        
+
         console.group(
           `%c❌ API Error %c${status || 'Network Error'} %c(${formatDuration(duration)})`,
           'color: #ef4444; font-weight: bold;',
@@ -227,18 +265,26 @@ export const setupResponseInterceptor = (axiosInstance: AxiosInstance) => {
         console.log('%cURL:', 'color: #64748b;', url)
         console.log('%cDuration:', 'color: #64748b;', formatDuration(duration))
         console.log('%cError:', 'color: #ef4444;', statusText)
-        
+
         if (error.response?.data) {
-          console.log('%cResponse Data:', 'color: #ef4444;', formatBody(error.response.data))
+          console.log(
+            '%cResponse Data:',
+            'color: #ef4444;',
+            formatBody(error.response.data)
+          )
         }
-        
+
         if (error.response?.headers) {
-          console.log('%cResponse Headers:', 'color: #64748b;', formatHeaders(error.response.headers))
+          console.log(
+            '%cResponse Headers:',
+            'color: #64748b;',
+            formatHeaders(error.response.headers)
+          )
         }
-        
+
         console.groupEnd()
       }
-      
+
       return Promise.reject(error)
     }
   )
@@ -250,6 +296,6 @@ export const setupResponseInterceptor = (axiosInstance: AxiosInstance) => {
 export const setupInterceptors = (axiosInstance: AxiosInstance) => {
   setupRequestInterceptor(axiosInstance)
   setupResponseInterceptor(axiosInstance)
-  
+
   return axiosInstance
 }

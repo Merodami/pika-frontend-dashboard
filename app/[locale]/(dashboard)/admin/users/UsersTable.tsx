@@ -361,64 +361,67 @@ export default function UsersTable({ locale }: UsersTableProps) {
     <div className="space-y-0">
       <ContextActionBar
         breadcrumbs={[
-          { label: t('navigation.dashboard'), onClick: () => router.push(`/${locale}/admin`) },
+          {
+            label: t('navigation.dashboard'),
+            onClick: () => router.push(`/${locale}/admin`),
+          },
           { label: t('navigation.users') },
         ]}
         actions={contextActions}
       />
-      
+
       <div className="space-y-3 p-4">
         <TableFilters
-        fields={filterFields}
-        values={dataTable.state.filters}
-        onChange={(filters) => {
-          // Map daterange to API format
-          const processedFilters = { ...filters }
-          if (filters.registeredFrom || filters.registeredTo) {
-            processedFilters.registeredFrom = filters.registeredFrom
-            processedFilters.registeredTo = filters.registeredTo
-          }
-          dataTable.setFilters(processedFilters)
-        }}
-        onReset={dataTable.clearFilters}
-      />
+          fields={filterFields}
+          values={dataTable.state.filters}
+          onChange={(filters) => {
+            // Map daterange to API format
+            const processedFilters = { ...filters }
+            if (filters.registeredFrom || filters.registeredTo) {
+              processedFilters.registeredFrom = filters.registeredFrom
+              processedFilters.registeredTo = filters.registeredTo
+            }
+            dataTable.setFilters(processedFilters)
+          }}
+          onReset={dataTable.clearFilters}
+        />
 
-      <DataTable
-        title={t('navigation.users')}
-        description="Manage user accounts and permissions"
-        columns={columns}
-        data={data?.data || []}
-        loading={isLoading}
-        searchable
-        searchPlaceholder={t('common.button.search')}
-        onSearch={dataTable.handleSearch}
-        rowKey="id"
-        rowSelection={{
-          selectedRowKeys: dataTable.state.selectedRowKeys,
-          onChange: dataTable.handleSelectionChange,
-        }}
-        pagination={dataTable.serverPagination(data?.pagination)}
-        onChange={dataTable.handleTableChange}
-        bulkActions={
-          <BulkActions
-            selectedKeys={dataTable.state.selectedRowKeys}
-            onClear={dataTable.clearSelection}
-            actions={[
-              commonBulkActions.deleteMultiple(handleBulkDelete),
-              commonBulkActions.activateMultiple((keys) =>
-                handleBulkStatusChange(keys, UserStatus.ACTIVE)
-              ),
-              commonBulkActions.deactivateMultiple((keys) =>
-                handleBulkStatusChange(keys, UserStatus.SUSPENDED)
-              ),
-            ]}
-          />
-        }
-        showRefresh
-        onRefresh={() => refetch()}
-        exportable
-        onExport={handleExport}
-      />
+        <DataTable
+          title={t('navigation.users')}
+          description="Manage user accounts and permissions"
+          columns={columns}
+          data={data?.data || []}
+          loading={isLoading}
+          searchable
+          searchPlaceholder={t('common.button.search')}
+          onSearch={dataTable.handleSearch}
+          rowKey="id"
+          rowSelection={{
+            selectedRowKeys: dataTable.state.selectedRowKeys,
+            onChange: dataTable.handleSelectionChange,
+          }}
+          pagination={dataTable.serverPagination(data?.pagination)}
+          onChange={dataTable.handleTableChange}
+          bulkActions={
+            <BulkActions
+              selectedKeys={dataTable.state.selectedRowKeys}
+              onClear={dataTable.clearSelection}
+              actions={[
+                commonBulkActions.deleteMultiple(handleBulkDelete),
+                commonBulkActions.activateMultiple((keys) =>
+                  handleBulkStatusChange(keys, UserStatus.ACTIVE)
+                ),
+                commonBulkActions.deactivateMultiple((keys) =>
+                  handleBulkStatusChange(keys, UserStatus.SUSPENDED)
+                ),
+              ]}
+            />
+          }
+          showRefresh
+          onRefresh={() => refetch()}
+          exportable
+          onExport={handleExport}
+        />
       </div>
 
       <AddUserDrawer

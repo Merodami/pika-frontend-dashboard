@@ -26,18 +26,19 @@ AXIOS_INSTANCE.interceptors.request.use(
   (config) => {
     // Generate simple correlation ID
     if (!config.headers['x-correlation-id']) {
-      config.headers['x-correlation-id'] = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`
+      config.headers['x-correlation-id'] =
+        `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`
     }
-    
+
     // Add user context if available (from localStorage/sessionStorage)
     if (typeof window !== 'undefined') {
       const userId = sessionStorage.getItem('userId')
       const sessionId = sessionStorage.getItem('sessionId')
-      
+
       if (userId) config.headers['x-user-id'] = userId
       if (sessionId) config.headers['x-session-id'] = sessionId
     }
-    
+
     return config
   },
   (error) => {

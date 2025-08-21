@@ -61,7 +61,9 @@ export function ContextActionBar({
                     {item.label}
                   </button>
                 ) : (
-                  <span className="text-sm text-gray-900 font-medium py-1">{item.label}</span>
+                  <span className="text-sm text-gray-900 font-medium py-1">
+                    {item.label}
+                  </span>
                 )}
               </div>
             ))}

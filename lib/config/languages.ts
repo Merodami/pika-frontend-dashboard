@@ -17,12 +17,16 @@ export const getLanguageLabel = (code: string, t: any): string => {
   // Try to get translation first
   const translationKey = `common.languages.${code}`
   const translated = t(translationKey)
-  
+
   // If translation exists and is not the key itself, use it
-  if (translated && translated !== translationKey && !translated.includes('common.languages')) {
+  if (
+    translated &&
+    translated !== translationKey &&
+    !translated.includes('common.languages')
+  ) {
     return translated
   }
-  
+
   // Fallback to hardcoded label or uppercase code
   return LANGUAGE_LABELS[code] || code.toUpperCase()
 }

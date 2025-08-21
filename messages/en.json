@@ -315,5 +315,190 @@
       "customer": "Customer",
       "user": "User"
     }
+  },
+  "businessSelector": {
+    "title": {
+      "select": "Select Your Business",
+      "create": "Create Your First Business"
+    },
+    "subtitle": {
+      "select": "Choose a business to manage or create a new one",
+      "create": "Get started by creating your first business"
+    },
+    "createNew": {
+      "title": "Create New Business",
+      "description": "Add a new business to your account"
+    },
+    "status": {
+      "active": "Active",
+      "pending": "Pending",
+      "suspended": "Suspended"
+    },
+    "lastActivity": "Last activity",
+    "info": {
+      "multipleBusinesses": "You can manage multiple businesses from one account"
+    }
+  },
+  "businessRegistration": {
+    "title": "Complete Your Business Registration",
+    "subtitle": "Please provide information about your business to get started",
+    "progress": "Step {{current}} of {{total}}",
+    "mandatory": "This registration is mandatory to access your dashboard",
+    "cannotSkip": "You must complete all steps before accessing the dashboard",
+    "steps": {
+      "businessInfo": {
+        "title": "Business Information",
+        "description": "Basic details about your business",
+        "fields": {
+          "businessName": {
+            "label": "Business Name",
+            "placeholder": "Enter your business name",
+            "hint": "This is how customers will see your business"
+          },
+          "businessType": {
+            "label": "Business Type",
+            "placeholder": "Select business type",
+            "options": {
+              "retail": "Retail",
+              "service": "Service",
+              "restaurant": "Restaurant",
+              "healthcare": "Healthcare",
+              "fitness": "Fitness",
+              "education": "Education",
+              "entertainment": "Entertainment",
+              "other": "Other"
+            }
+          },
+          "category": {
+            "label": "Business Category",
+            "placeholder": "Select a category",
+            "loading": "Loading categories..."
+          },
+          "primaryLanguage": {
+            "label": "Primary Language",
+            "placeholder": "Select primary language",
+            "hint": "The main language for your business operations"
+          }
+        }
+      },
+      "contactDetails": {
+        "title": "Contact & Location",
+        "description": "How customers can reach you",
+        "fields": {
+          "description": {
+            "label": "Business Description",
+            "placeholder": "Describe your business...",
+            "hint": "Tell customers what you offer (minimum 50 characters)"
+          },
+          "address": {
+            "label": "Business Address",
+            "street": {
+              "label": "Street Address",
+              "placeholder": "123 Main Street"
+            },
+            "city": {
+              "label": "City",
+              "placeholder": "New York"
+            },
+            "state": {
+              "label": "State/Province",
+              "placeholder": "NY"
+            },
+            "postalCode": {
+              "label": "Postal Code",
+              "placeholder": "10001"
+            },
+            "country": {
+              "label": "Country",
+              "placeholder": "Select country"
+            }
+          },
+          "phone": {
+            "label": "Business Phone",
+            "placeholder": "+1 (555) 123-4567",
+            "hint": "Include country code"
+          },
+          "email": {
+            "label": "Business Email",
+            "placeholder": "contact@business.com",
+            "hint": "Optional - for customer inquiries"
+          },
+          "website": {
+            "label": "Website",
+            "placeholder": "https://www.yourbusiness.com",
+            "hint": "Optional - your business website"
+          }
+        }
+      },
+      "additionalInfo": {
+        "title": "Additional Information",
+        "description": "Optional details to enhance your profile",
+        "fields": {
+          "operatingHours": {
+            "label": "Operating Hours",
+            "addHours": "Add Operating Hours",
+            "closed": "Closed",
+            "open24h": "Open 24 hours",
+            "days": {
+              "monday": "Monday",
+              "tuesday": "Tuesday",
+              "wednesday": "Wednesday",
+              "thursday": "Thursday",
+              "friday": "Friday",
+              "saturday": "Saturday",
+              "sunday": "Sunday"
+            }
+          },
+          "socialMedia": {
+            "label": "Social Media",
+            "addLink": "Add Social Media Link",
+            "platforms": {
+              "facebook": "Facebook",
+              "instagram": "Instagram",
+              "twitter": "Twitter",
+              "linkedin": "LinkedIn",
+              "youtube": "YouTube",
+              "tiktok": "TikTok"
+            }
+          },
+          "additionalInfo": {
+            "label": "Additional Information",
+            "placeholder": "Any other information you'd like to add...",
+            "hint": "Optional - special services, parking info, etc."
+          }
+        }
+      },
+      "review": {
+        "title": "Review & Submit",
+        "description": "Review your information before submitting",
+        "checkInfo": "Please review all information carefully",
+        "editSection": "Edit {{section}}",
+        "sections": {
+          "businessInfo": "Business Information",
+          "contactDetails": "Contact & Location",
+          "additionalInfo": "Additional Information"
+        },
+        "confirmation": {
+          "title": "Ready to Submit?",
+          "message": "By submitting, you confirm that all information provided is accurate and up to date.",
+          "checkbox": "I confirm that all information is correct"
+        }
+      }
+    },
+    "messages": {
+      "savingProgress": "Saving your progress...",
+      "progressSaved": "Progress saved successfully",
+      "stepCompleted": "Step {{step}} completed successfully",
+      "registrationComplete": "Registration submitted successfully!",
+      "redirecting": "Redirecting to dashboard...",
+      "errorSaving": "Failed to save progress. Please try again.",
+      "errorSubmitting": "Failed to submit registration. Please try again.",
+      "sessionExpired": "Your session has expired. Please log in again.",
+      "networkError": "Network error. Please check your connection."
+    },
+    "warnings": {
+      "unsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
+      "incompleteStep": "Please complete all required fields before proceeding"
+    }
   }
 }

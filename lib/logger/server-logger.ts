@@ -42,9 +42,9 @@ export class ApiLogger {
 
   logRequest(request: ApiRequestLog): void {
     if (!this.isDevelopment) return
-    
+
     const sanitizedHeaders = this.sanitizeHeaders(request.headers)
-    
+
     console.log(
       `🔄 [${this.context.correlationId}] → ${request.method} ${request.path}`,
       {
@@ -57,10 +57,11 @@ export class ApiLogger {
 
   logResponse(response: ApiResponseLog): void {
     if (!this.isDevelopment) return
-    
-    const duration = response.duration || (Date.now() - this.startTime)
-    const emoji = response.statusCode < 400 ? '✅' : response.statusCode < 500 ? '⚠️' : '❌'
-    
+
+    const duration = response.duration || Date.now() - this.startTime
+    const emoji =
+      response.statusCode < 400 ? '✅' : response.statusCode < 500 ? '⚠️' : '❌'
+
     console.log(
       `${emoji} [${this.context.correlationId}] ← ${response.statusCode} (${duration}ms)`,
       {
@@ -72,29 +73,33 @@ export class ApiLogger {
 
   logError(error: any, request?: ApiRequestLog): void {
     if (!this.isDevelopment) return
-    
+
     const duration = Date.now() - this.startTime
-    
+
     console.error(
       `❌ [${this.context.correlationId}] Error (${duration}ms):`,
       error.message,
       {
         stack: error.stack,
-        request: request ? {
-          method: request.method,
-          url: request.url,
-          path: request.path,
-        } : undefined,
+        request: request
+          ? {
+              method: request.method,
+              url: request.url,
+              path: request.path,
+            }
+          : undefined,
       }
     )
   }
 
-  private sanitizeHeaders(headers?: Record<string, string>): Record<string, string> | undefined {
+  private sanitizeHeaders(
+    headers?: Record<string, string>
+  ): Record<string, string> | undefined {
     if (!headers) return undefined
-    
+
     const sensitive = ['authorization', 'cookie', 'x-api-key', 'x-auth-token']
     const sanitized: Record<string, string> = {}
-    
+
     Object.entries(headers).forEach(([key, value]) => {
       const lowerKey = key.toLowerCase()
       if (sensitive.includes(lowerKey)) {
@@ -103,34 +108,44 @@ export class ApiLogger {
         sanitized[key] = value
       }
     })
-    
+
     return sanitized
   }
 
   private sanitizeBody(body?: any): any {
     if (!body) return undefined
-    
+
     try {
       // Deep clone to avoid mutating original
       const cloned = JSON.parse(JSON.stringify(body))
-      
+
       // List of sensitive field names to redact
-      const sensitiveFields = ['password', 'token', 'secret', 'apiKey', 'creditCard']
-      
+      const sensitiveFields = [
+        'password',
+        'token',
+        'secret',
+        'apiKey',
+        'creditCard',
+      ]
+
       const sanitize = (obj: any): any => {
         if (typeof obj !== 'object' || obj === null) return obj
-        
-        Object.keys(obj).forEach(key => {
-          if (sensitiveFields.some(field => key.toLowerCase().includes(field.toLowerCase()))) {
+
+        Object.keys(obj).forEach((key) => {
+          if (
+            sensitiveFields.some((field) =>
+              key.toLowerCase().includes(field.toLowerCase())
+            )
+          ) {
             obj[key] = '[REDACTED]'
           } else if (typeof obj[key] === 'object') {
             sanitize(obj[key])
           }
         })
-        
+
         return obj
       }
-      
+
       return sanitize(cloned)
     } catch {
       return body
@@ -144,14 +159,17 @@ export const generateCorrelationId = (): string => {
 }
 
 // Helper to extract correlation ID from headers
-export const getCorrelationId = (headers: Headers | Record<string, string>): string => {
+export const getCorrelationId = (
+  headers: Headers | Record<string, string>
+): string => {
   let correlationId: string | null = null
-  
+
   if (headers instanceof Headers) {
-    correlationId = headers.get('x-correlation-id') || headers.get('x-request-id')
+    correlationId =
+      headers.get('x-correlation-id') || headers.get('x-request-id')
   } else {
     correlationId = headers['x-correlation-id'] || headers['x-request-id']
   }
-  
+
   return correlationId || generateCorrelationId()
 }
