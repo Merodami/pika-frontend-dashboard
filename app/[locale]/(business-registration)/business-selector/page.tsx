@@ -1,14 +1,16 @@
 'use client'
 
 import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import { Spin, Alert } from 'antd'
+import { useRouter, useParams } from 'next/navigation'
+import { Spin, Alert, Button, Dropdown } from 'antd'
 import { useTranslations } from 'next-intl'
-import { Building2, AlertCircle } from 'lucide-react'
+import { Building2, AlertCircle, LogOut } from 'lucide-react'
+import type { MenuProps } from 'antd'
 import { useMyBusiness } from '@/hooks/api/businesses/useMyBusiness'
 import { BusinessCard } from './components/BusinessCard'
 import { CreateBusinessCard } from './components/CreateBusinessCard'
 import { EmptySlot } from './components/EmptySlot'
+import { useCurrentUser } from '@/hooks/api/users/useCurrentUser'
 
 interface Business {
   id: string
@@ -21,9 +23,40 @@ interface Business {
 export default function BusinessSelectorPage() {
   const t = useTranslations()
   const router = useRouter()
+  const params = useParams()
+  const locale = params.locale as string
 
   // Use React Query hook for data fetching
   const { data: business, isLoading, error } = useMyBusiness()
+  const { data: currentUser } = useCurrentUser()
+
+  const handleLogout = () => {
+    router.push(`/${locale}/logout`)
+  }
+
+  // User menu items
+  const userMenuItems: MenuProps['items'] = [
+    {
+      key: 'user-info',
+      label: (
+        <div className="py-2 px-2">
+          <p className="font-medium text-gray-900">{currentUser?.email}</p>
+          <p className="text-sm text-gray-500 capitalize">
+            {currentUser?.role} Account
+          </p>
+        </div>
+      ),
+      disabled: true,
+    },
+    { type: 'divider' },
+    {
+      key: 'logout',
+      icon: <LogOut className="w-4 h-4" />,
+      label: 'Logout',
+      danger: true,
+      onClick: handleLogout,
+    },
+  ]
 
   // Redirect to registration if no business exists
   useEffect(() => {
@@ -101,6 +134,28 @@ export default function BusinessSelectorPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* User Menu - Top Right */}
+        <div className="absolute top-4 right-4">
+          <Dropdown
+            menu={{ items: userMenuItems }}
+            placement="bottomRight"
+            trigger={['click']}
+          >
+            <Button
+              type="text"
+              className="flex items-center gap-2 hover:bg-gray-100"
+            >
+              <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-medium text-sm">
+                {currentUser?.firstName?.[0] || 'U'}
+                {currentUser?.lastName?.[0] || ''}
+              </div>
+              <span className="text-sm font-medium text-gray-700 hidden sm:block">
+                {currentUser?.firstName} {currentUser?.lastName}
+              </span>
+            </Button>
+          </Dropdown>
+        </div>
+
         {/* Header */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-full mb-4">

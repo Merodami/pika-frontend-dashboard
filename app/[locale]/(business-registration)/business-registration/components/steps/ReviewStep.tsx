@@ -10,6 +10,7 @@ import { isEmpty } from 'lodash'
 
 interface ReviewStepProps {
   onSubmit: () => void
+  onPrevious?: () => void
 }
 
 export function ReviewStep({ onSubmit }: ReviewStepProps) {

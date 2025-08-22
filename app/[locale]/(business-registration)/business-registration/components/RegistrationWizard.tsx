@@ -1,10 +1,8 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { Button, message } from 'antd'
-import { ArrowLeft, ArrowRight, Check, Loader2 } from 'lucide-react'
+import { useEffect } from 'react'
+import { message } from 'antd'
 import { useTranslations } from 'next-intl'
-import { useRouter } from 'next/navigation'
 
 import { useRegistrationStore } from '../store/registrationStore'
 import {
@@ -20,8 +18,6 @@ import { ReviewStep } from './steps/ReviewStep'
 
 export function RegistrationWizard() {
   const t = useTranslations()
-  const router = useRouter()
-  const [isSubmitting] = useState(false)
 
   const {
     currentStep,
@@ -155,10 +151,6 @@ export function RegistrationWizard() {
         return null
     }
   }
-
-  // Check if current step is complete
-  const isCurrentStepComplete = completedSteps.includes(currentStep)
-  const canProceed = currentStep === 4 ? true : isCurrentStepComplete
 
   console.log('RegistrationWizard render - currentStep:', currentStep, 'completedSteps:', completedSteps)
 
