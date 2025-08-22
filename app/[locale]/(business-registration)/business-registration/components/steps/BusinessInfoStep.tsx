@@ -5,7 +5,8 @@ import { Form, Input, Select, Button, message } from 'antd'
 import { Building2 } from 'lucide-react'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
+import { useRouter, usePathname } from 'next/navigation'
 import { businessPublic } from '@merodami/pika-api'
 import { BusinessType } from '@merodami/pika-types'
 import type { z } from 'zod'
@@ -13,6 +14,8 @@ import { useCategoryTree } from '@/hooks/api/categories/useCategories'
 import { useSubmitStep1 } from '@/hooks/api/businesses/useBusinessRegistration'
 import { useRegistrationStore } from '../../store/registrationStore'
 import { debounce } from 'lodash'
+import { locales, type Locale } from '@/i18n/config'
+import { useAppStore } from '@/store/app.store'
 
 interface BusinessInfoStepProps {
   onComplete: () => void
@@ -32,6 +35,15 @@ type CategoryTreeNode = {
 
 export function BusinessInfoStep({ onComplete }: BusinessInfoStepProps) {
   const t = useTranslations('businessRegistration.steps.businessInfo')
+  const tCommon = useTranslations('common')
+  const tMessages = useTranslations('businessRegistration.messages')
+  const router = useRouter()
+  const pathname = usePathname()
+  const currentLocale = useLocale()
+  const { setLocale } = useAppStore()
+  
+  // Extract actual locale from pathname as fallback
+  const actualLocale = pathname.split('/')[1] as Locale
 
   // Use React Query hook for categories
   const {
@@ -51,13 +63,19 @@ export function BusinessInfoStep({ onComplete }: BusinessInfoStepProps) {
       businessPublic.BusinessRegistrationStep1RequestSchema
     ),
     mode: 'onChange',
-    defaultValues: step1Data || {
-      businessName: '',
-      businessType: BusinessType.OTHER,
-      categoryId: '',
-      primaryLanguage: 'en',
+    defaultValues: {
+      businessName: step1Data?.businessName || '',
+      businessType: step1Data?.businessType || BusinessType.OTHER,
+      categoryId: step1Data?.categoryId || '',
+      // Always use actual locale from URL, not saved value
+      primaryLanguage: actualLocale,
     },
   })
+
+  // Update primaryLanguage field when locale changes (use actual locale from URL)
+  useEffect(() => {
+    form.setValue('primaryLanguage', actualLocale)
+  }, [actualLocale, form])
 
   // Show error if categories fail to load
   useEffect(() => {
@@ -90,18 +108,38 @@ export function BusinessInfoStep({ onComplete }: BusinessInfoStepProps) {
         businessPublic.BusinessRegistrationStep1Request.parse(data)
 
       // Submit via React Query
+      console.log('Submitting step 1 with data:', validated)
       submitStep1Mutation.mutate(validated, {
         onSuccess: () => {
+          console.log('Step 1 submission successful!')
           // Save to store
+          console.log('Saving step1 data to store...')
           saveStep1Data(validated)
+          console.log('Marking step 1 as completed...')
           markStepCompleted(1)
-
-          message.success(t('messages.stepCompleted', { step: 1 }))
+          
+          // Call onComplete first to ensure navigation happens
+          console.log('Calling onComplete to navigate to next step...')
           onComplete()
+          console.log('onComplete called successfully')
+          
+          // Then show success message (if this fails, navigation still happened)
+          try {
+            message.success(tMessages('stepCompleted', { step: 1 }))
+          } catch (e) {
+            console.log('Message notification failed:', e)
+          }
         },
         onError: (error) => {
           console.error('Step 1 submission failed:', error)
-          message.error('Failed to save step 1. Please try again.')
+          // Handle 409 conflict (step already submitted)
+          if (error?.response?.status === 409) {
+            // Step already completed on server, mark it locally and move forward
+            markStepCompleted(1)
+            onComplete()
+          } else {
+            message.error('Failed to save step 1. Please try again.')
+          }
         },
       })
     } catch (error) {
@@ -280,6 +318,40 @@ export function BusinessInfoStep({ onComplete }: BusinessInfoStepProps) {
                   { value: 'es', label: 'Español' },
                   { value: 'gn', label: 'Guaraní' },
                 ]}
+                onChange={(value) => {
+                  console.log('Language dropdown changed to:', value)
+                  console.log('Current locale from hook:', currentLocale)
+                  console.log('Actual locale from URL:', actualLocale)
+                  console.log('Current pathname:', pathname)
+                  
+                  // Update form field
+                  field.onChange(value)
+                  
+                  // Only change app language if different from actual current locale (from URL)
+                  if (value !== actualLocale && locales.includes(value as Locale)) {
+                    console.log('Changing language from', actualLocale, 'to', value)
+                    
+                    // Save ALL current form data to store before switching
+                    const currentData = form.getValues()
+                    saveStep1Data({
+                      ...currentData,
+                      primaryLanguage: value, // Ensure the new language is saved
+                    })
+                    
+                    // Build new path with new locale
+                    const newPath = pathname.replace(/^\/[^/]+/, `/${value}`)
+                    console.log('Navigating to:', newPath)
+                    
+                    // Update locale in store
+                    setLocale(value as Locale)
+                    
+                    // Use router.replace for immediate navigation
+                    // This ensures the page reloads with new locale
+                    router.replace(newPath)
+                  } else {
+                    console.log('Not changing language - same as current or not in locales')
+                  }
+                }}
               />
               <div className="text-xs text-gray-500 mt-1">
                 {t('fields.primaryLanguage.hint')}
@@ -296,7 +368,7 @@ export function BusinessInfoStep({ onComplete }: BusinessInfoStepProps) {
             className="w-full"
             loading={form.formState.isSubmitting}
           >
-            {t('common.button.next')}
+            {tCommon('button.next')}
           </Button>
         </div>
       </Form>

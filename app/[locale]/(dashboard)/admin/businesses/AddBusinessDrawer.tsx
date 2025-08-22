@@ -12,36 +12,29 @@ import {
 } from 'antd'
 import { X, Save, Store, User, FileText, Tag } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { useForm, Controller } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
 import { useState, useEffect } from 'react'
 
 import { useCreateBusiness } from '@/hooks/api/businesses/useBusinesses'
 import { getAdminUserList, getAdminCategoryTree } from '@/lib/api/orval-client'
-import { businessAdmin } from '@merodami/pika-api'
+import type { CreateAdminBusinessBody } from '@/lib/api/orval-client'
 import { UserRole } from '@merodami/pika-types'
 
-// Use the backend schema directly - this is the single source of truth
-const { AdminCreateBusinessRequest } = businessAdmin
-
-// Use the schema as-is from the backend
-type CreateBusinessFormData = z.infer<typeof AdminCreateBusinessRequest>
+// Use the orval-generated type for form data
+type CreateBusinessFormData = CreateAdminBusinessBody
 
 interface AddBusinessDrawerProps {
   open: boolean
   onClose: () => void
-  locale: string
+  locale?: string
 }
 
 export default function AddBusinessDrawer({
   open,
   onClose,
-  locale,
 }: AddBusinessDrawerProps) {
   const t = useTranslations()
-  const queryClient = useQueryClient()
   const [searchingUser, setSearchingUser] = useState('')
 
   const {
@@ -50,7 +43,6 @@ export default function AddBusinessDrawer({
     formState: { errors, isSubmitting },
     reset,
   } = useForm<CreateBusinessFormData>({
-    resolver: zodResolver(AdminCreateBusinessRequest),
     defaultValues: {
       userId: '',
       businessName: '',
@@ -85,6 +77,7 @@ export default function AddBusinessDrawer({
 
   const onSubmit = async (data: CreateBusinessFormData) => {
     try {
+      // Data matches CreateAdminBusinessBody type from orval
       await createBusinessMutation.mutateAsync(data)
       message.success(t('businesses.message.created'))
       reset()
@@ -244,11 +237,11 @@ export default function AddBusinessDrawer({
                   loadingCategories ? 'Loading...' : 'No categories found'
                 }
                 options={
-                  categoriesData?.map((category: any) => ({
-                    label: category.nameKey,
+                  categoriesData?.categories?.map((category) => ({
+                    label: category.name,
                     value: category.id,
-                    children: category.children?.map((child: any) => ({
-                      label: child.nameKey,
+                    children: category.children?.map((child) => ({
+                      label: child.name,
                       value: child.id,
                     })),
                   })) || []

@@ -15,7 +15,8 @@
       "filter": "Filter",
       "refresh": "Refresh",
       "export": "Export",
-      "import": "Import"
+      "import": "Import",
+      "submit": "Submit"
     },
     "status": {
       "loading": "Loading...",
@@ -149,19 +150,43 @@
   },
   "businesses": {
     "title": "Businesses",
+    "action": {
+      "addNew": "Add New Business"
+    },
+    "info": {
+      "adminCreate": "You are creating a business on behalf of a user. Make sure you have their permission."
+    },
     "fields": {
       "name": "Business name",
       "email": "Email",
       "phone": "Phone",
       "address": "Address",
       "category": "Category",
-      "status": "Status"
+      "status": "Status",
+      "createdAt": "Created",
+      "owner": "Owner",
+      "rating": "Rating"
     },
     "status": {
       "active": "Active",
+      "inactive": "Inactive",
       "pending": "Pending",
       "suspended": "Suspended",
-      "verified": "Verified"
+      "verified": "Verified",
+      "verifiedApproved": "Verified & Approved",
+      "verifiedPending": "Verified (Pending Approval)",
+      "approvedNotVerified": "Approved (Not Verified)"
+    },
+    "resetRegistration": {
+      "action": "Reset Registration",
+      "title": "Reset Business Registration",
+      "confirmMessage": "Are you sure you want to reset the registration for {name}? This will allow the business owner to restart the registration process.",
+      "success": "Registration reset successfully"
+    },
+    "message": {
+      "registrationReset": "Business registration has been reset successfully",
+      "bulkVerified": "{count} businesses {status}",
+      "featureComingSoon": "This feature is coming soon"
     }
   },
   "language": {
@@ -352,7 +377,7 @@
   "businessRegistration": {
     "title": "Complete Your Business Registration",
     "subtitle": "Please provide information about your business to get started",
-    "progress": "Step {{current}} of {{total}}",
+    "progress": "Step {current} of {total}",
     "mandatory": "This registration is mandatory to access your dashboard",
     "cannotSkip": "You must complete all steps before accessing the dashboard",
     "steps": {
@@ -482,7 +507,7 @@
         "title": "Review & Submit",
         "description": "Review your information before submitting",
         "checkInfo": "Please review all information carefully",
-        "editSection": "Edit {{section}}",
+        "editSection": "Edit {section}",
         "sections": {
           "businessInfo": "Business Information",
           "contactDetails": "Contact & Location",
@@ -499,11 +524,12 @@
       "loading": "Loading...",
       "savingProgress": "Saving your progress...",
       "progressSaved": "Progress saved successfully",
-      "stepCompleted": "Step {{step}} completed successfully",
+      "stepCompleted": "Step {step} completed successfully",
       "registrationComplete": "Registration submitted successfully!",
       "redirecting": "Redirecting to dashboard...",
       "errorSaving": "Failed to save progress. Please try again.",
       "errorSubmitting": "Failed to submit registration. Please try again.",
+      "errorStarting": "Failed to start registration. Please try again.",
       "sessionExpired": "Your session has expired. Please log in again.",
       "networkError": "Network error. Please check your connection."
     },

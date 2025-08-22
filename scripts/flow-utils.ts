@@ -112,7 +112,8 @@ export function createApiClient(baseURL: string = API_BASE_URL): AxiosInstance {
   api.interceptors.response.use(
     (response) => {
       const endTime = performance.now()
-      const duration = endTime - (response.config.metadata?.startTime || endTime)
+      const duration =
+        endTime - (response.config.metadata?.startTime || endTime)
 
       logResponse(response.status, response.data)
       log(`⏱️  Duration: ${duration.toFixed(2)}ms`, colors.dim)

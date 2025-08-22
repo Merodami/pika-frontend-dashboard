@@ -7,16 +7,9 @@
  */
 
 /**
- * Internal category data for services
+ * Business Registration ID path parameter
  */
-export interface InternalCategoryData {
+export interface BusinessRegistrationIdParam {
   /** Universally Unique Identifier */
-  id: string
-  name: string
-  description?: string
-  icon?: string
-  /** Universally Unique Identifier */
-  parentId?: string
-  isActive: boolean
-  sortOrder: number
+  registration_id: string
 }

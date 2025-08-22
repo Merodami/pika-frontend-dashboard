@@ -11,6 +11,7 @@ import type { UpdateAdminBusinessRating200ApprovedAt } from './updateAdminBusine
 import type { UpdateAdminBusinessRating200DeletedAt } from './updateAdminBusinessRating200DeletedAt'
 import type { UpdateAdminBusinessRating200User } from './updateAdminBusinessRating200User'
 import type { UpdateAdminBusinessRating200Category } from './updateAdminBusinessRating200Category'
+import type { UpdateAdminBusinessRating200BusinessRegistration } from './updateAdminBusinessRating200BusinessRegistration'
 
 export type UpdateAdminBusinessRating200 = {
   /** Universally Unique Identifier */
@@ -18,15 +19,15 @@ export type UpdateAdminBusinessRating200 = {
   /** User who owns this business */
   userId: string
   /**
-   * Translation key for business name
+   * Business name (resolved translation)
    * @maxLength 255
    */
-  businessNameKey: string
+  businessName: string
   /**
-   * Translation key for business description
+   * Business description (resolved translation)
    * @maxLength 255
    */
-  businessDescriptionKey?: string
+  businessDescription?: string
   /** Category this business belongs to */
   categoryId: UpdateAdminBusinessRating200CategoryId
   /** Whether business is verified */
@@ -51,6 +52,8 @@ export type UpdateAdminBusinessRating200 = {
   user?: UpdateAdminBusinessRating200User
   /** Category information when ?include=category */
   category?: UpdateAdminBusinessRating200Category
+  /** Business registration info when ?include=businessRegistration */
+  businessRegistration?: UpdateAdminBusinessRating200BusinessRegistration
   /** When the record was created */
   createdAt: string
   /** When the record was last updated */

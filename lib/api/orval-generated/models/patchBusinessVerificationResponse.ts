@@ -11,6 +11,7 @@ import type { PatchBusinessVerificationResponseApprovedAt } from './patchBusines
 import type { PatchBusinessVerificationResponseDeletedAt } from './patchBusinessVerificationResponseDeletedAt'
 import type { PatchBusinessVerificationResponseUser } from './patchBusinessVerificationResponseUser'
 import type { PatchBusinessVerificationResponseCategory } from './patchBusinessVerificationResponseCategory'
+import type { PatchBusinessVerificationResponseBusinessRegistration } from './patchBusinessVerificationResponseBusinessRegistration'
 
 export interface PatchBusinessVerificationResponse {
   /** Universally Unique Identifier */
@@ -18,15 +19,15 @@ export interface PatchBusinessVerificationResponse {
   /** User who owns this business */
   userId: string
   /**
-   * Translation key for business name
+   * Business name (resolved translation)
    * @maxLength 255
    */
-  businessNameKey: string
+  businessName: string
   /**
-   * Translation key for business description
+   * Business description (resolved translation)
    * @maxLength 255
    */
-  businessDescriptionKey?: string
+  businessDescription?: string
   /** Category this business belongs to */
   categoryId: PatchBusinessVerificationResponseCategoryId
   /** Whether business is verified */
@@ -51,6 +52,8 @@ export interface PatchBusinessVerificationResponse {
   user?: PatchBusinessVerificationResponseUser
   /** Category information when ?include=category */
   category?: PatchBusinessVerificationResponseCategory
+  /** Business registration info when ?include=businessRegistration */
+  businessRegistration?: PatchBusinessVerificationResponseBusinessRegistration
   /** When the record was created */
   createdAt: string
   /** When the record was last updated */

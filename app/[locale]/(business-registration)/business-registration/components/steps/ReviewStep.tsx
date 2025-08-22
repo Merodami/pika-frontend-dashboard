@@ -88,7 +88,7 @@ export function ReviewStep({ onSubmit }: ReviewStepProps) {
           </div>
         }
       >
-        <Descriptions column={1} labelStyle={{ fontWeight: 500 }}>
+        <Descriptions column={1} styles={{ label: { fontWeight: 500 } }}>
           <Descriptions.Item
             label={tBusiness('businessInfo.fields.businessName.label')}
           >
@@ -136,7 +136,7 @@ export function ReviewStep({ onSubmit }: ReviewStepProps) {
           </div>
         }
       >
-        <Descriptions column={1} labelStyle={{ fontWeight: 500 }}>
+        <Descriptions column={1} styles={{ label: { fontWeight: 500 } }}>
           <Descriptions.Item
             label={tBusiness('contactDetails.fields.description.label')}
           >
@@ -210,7 +210,7 @@ export function ReviewStep({ onSubmit }: ReviewStepProps) {
             </div>
           }
         >
-          <Descriptions column={1} labelStyle={{ fontWeight: 500 }}>
+          <Descriptions column={1} styles={{ label: { fontWeight: 500 } }}>
             {!isEmpty(step3Data?.operatingHours) && (
               <Descriptions.Item
                 label={tBusiness('additionalInfo.fields.operatingHours.label')}

@@ -68,7 +68,7 @@ export default function BusinessRegistrationPage() {
   if (statusLoading || status === 'loading') {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <Spin size="large" tip={t('messages.loading')} />
+        <Spin size="large" />
       </div>
     )
   }
@@ -92,7 +92,7 @@ export default function BusinessRegistrationPage() {
   if (!needsRegistration) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <Spin size="large" tip={t('messages.redirecting')} />
+        <Spin size="large" />
       </div>
     )
   }

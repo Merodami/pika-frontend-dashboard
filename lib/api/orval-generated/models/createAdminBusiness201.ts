@@ -11,6 +11,7 @@ import type { CreateAdminBusiness201ApprovedAt } from './createAdminBusiness201A
 import type { CreateAdminBusiness201DeletedAt } from './createAdminBusiness201DeletedAt'
 import type { CreateAdminBusiness201User } from './createAdminBusiness201User'
 import type { CreateAdminBusiness201Category } from './createAdminBusiness201Category'
+import type { CreateAdminBusiness201BusinessRegistration } from './createAdminBusiness201BusinessRegistration'
 
 export type CreateAdminBusiness201 = {
   /** Universally Unique Identifier */
@@ -18,15 +19,15 @@ export type CreateAdminBusiness201 = {
   /** User who owns this business */
   userId: string
   /**
-   * Translation key for business name
+   * Business name (resolved translation)
    * @maxLength 255
    */
-  businessNameKey: string
+  businessName: string
   /**
-   * Translation key for business description
+   * Business description (resolved translation)
    * @maxLength 255
    */
-  businessDescriptionKey?: string
+  businessDescription?: string
   /** Category this business belongs to */
   categoryId: CreateAdminBusiness201CategoryId
   /** Whether business is verified */
@@ -51,6 +52,8 @@ export type CreateAdminBusiness201 = {
   user?: CreateAdminBusiness201User
   /** Category information when ?include=category */
   category?: CreateAdminBusiness201Category
+  /** Business registration info when ?include=businessRegistration */
+  businessRegistration?: CreateAdminBusiness201BusinessRegistration
   /** When the record was created */
   createdAt: string
   /** When the record was last updated */

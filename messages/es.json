@@ -15,7 +15,8 @@
       "filter": "Filtrar",
       "refresh": "Actualizar",
       "export": "Exportar",
-      "import": "Importar"
+      "import": "Importar",
+      "submit": "Enviar"
     },
     "status": {
       "loading": "Cargando...",
@@ -149,19 +150,43 @@
   },
   "businesses": {
     "title": "Negocios",
+    "action": {
+      "addNew": "Agregar Nuevo Negocio"
+    },
+    "info": {
+      "adminCreate": "Estás creando un negocio en nombre de un usuario. Asegúrate de tener su permiso."
+    },
     "fields": {
       "name": "Nombre del negocio",
       "email": "Correo electrónico",
       "phone": "Teléfono",
       "address": "Dirección",
       "category": "Categoría",
-      "status": "Estado"
+      "status": "Estado",
+      "createdAt": "Creado",
+      "owner": "Propietario",
+      "rating": "Calificación"
     },
     "status": {
       "active": "Activo",
+      "inactive": "Inactivo",
       "pending": "Pendiente",
       "suspended": "Suspendido",
-      "verified": "Verificado"
+      "verified": "Verificado",
+      "verifiedApproved": "Verificado y Aprobado",
+      "verifiedPending": "Verificado (Pendiente de Aprobación)",
+      "approvedNotVerified": "Aprobado (No Verificado)"
+    },
+    "resetRegistration": {
+      "action": "Reiniciar Registro",
+      "title": "Reiniciar Registro de Negocio",
+      "confirmMessage": "¿Está seguro de que desea reiniciar el registro de {name}? Esto permitirá al propietario del negocio reiniciar el proceso de registro.",
+      "success": "Registro reiniciado exitosamente"
+    },
+    "message": {
+      "registrationReset": "El registro del negocio se ha reiniciado exitosamente",
+      "bulkVerified": "{count} negocios {status}",
+      "featureComingSoon": "Esta función estará disponible pronto"
     }
   },
   "language": {
@@ -482,7 +507,7 @@
         "title": "Revisar y Enviar",
         "description": "Revisa tu información antes de enviar",
         "checkInfo": "Por favor revisa toda la información cuidadosamente",
-        "editSection": "Editar {{section}}",
+        "editSection": "Editar {section}",
         "sections": {
           "businessInfo": "Información del Negocio",
           "contactDetails": "Contacto y Ubicación",
@@ -499,11 +524,12 @@
       "loading": "Cargando...",
       "savingProgress": "Guardando tu progreso...",
       "progressSaved": "Progreso guardado exitosamente",
-      "stepCompleted": "Paso {{step}} completado exitosamente",
+      "stepCompleted": "Paso {step} completado exitosamente",
       "registrationComplete": "¡Registro enviado exitosamente!",
       "redirecting": "Redirigiendo al panel...",
       "errorSaving": "Error al guardar progreso. Por favor intenta de nuevo.",
       "errorSubmitting": "Error al enviar registro. Por favor intenta de nuevo.",
+      "errorStarting": "Error al iniciar el registro. Por favor intenta de nuevo.",
       "sessionExpired": "Tu sesión ha expirado. Por favor inicia sesión de nuevo.",
       "networkError": "Error de red. Por favor revisa tu conexión."
     },

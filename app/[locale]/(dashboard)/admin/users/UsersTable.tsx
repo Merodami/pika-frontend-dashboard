@@ -1,8 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { Tag, Avatar, message } from 'antd'
-import { Plus, Mail, Shield, UserCheck } from 'lucide-react'
+import { Tag, Avatar, message, Modal } from 'antd'
+import { Plus, Mail, Shield, UserCheck, RotateCcw } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
@@ -31,6 +31,7 @@ import {
   banAdminUser,
   unbanAdminUser,
   deleteAdminUser,
+  resetBusinessRegistration,
 } from '@/lib/api/orval-client'
 import type {
   GetAdminUserList200DataItem,
@@ -117,6 +118,18 @@ export default function UsersTable({ locale }: UsersTableProps) {
     mutationFn: (userId: string) => deleteAdminUser(userId),
     onSuccess: () => {
       message.success('User deleted successfully')
+      queryClient.invalidateQueries({ queryKey: ['admin-users'] })
+    },
+    onError: () => {
+      message.error(t('common.message.errorOccurred'))
+    },
+  })
+
+  const resetRegistrationMutation = useMutation({
+    mutationFn: ({ userId, reason }: { userId: string; reason: string }) =>
+      resetBusinessRegistration(userId, { reason, notifyUser: true }),
+    onSuccess: () => {
+      message.success(t('businesses.message.registrationReset'))
       queryClient.invalidateQueries({ queryKey: ['admin-users'] })
     },
     onError: () => {

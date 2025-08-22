@@ -15,7 +15,8 @@
       "filter": "Mbogua",
       "refresh": "Mbopyahu",
       "export": "Gueraha",
-      "import": "Gueru"
+      "import": "Gueru",
+      "submit": "Mondo"
     },
     "status": {
       "loading": "Henyhẽhína...",
@@ -131,19 +132,43 @@
   },
   "businesses": {
     "title": "Negósio",
+    "action": {
+      "addNew": "Embojuaju Negósio Pyahu"
+    },
+    "info": {
+      "adminCreate": "Rembojuaju peteĩ negósio peteĩ puruhára rehe. Ikatu hag̃ua reguereko iñangaite."
+    },
     "fields": {
       "name": "Negósio réra",
       "email": "Ñanduti veve",
       "phone": "Pumbyry",
       "address": "Kundahápe",
       "category": "Jehechaukaha",
-      "status": "Tekove"
+      "status": "Tekove",
+      "createdAt": "Ojejapo ára",
+      "owner": "Ijára",
+      "rating": "Mbohepy"
     },
     "status": {
       "active": "Hendy",
+      "inactive": "Ndohendýi",
       "pending": "Oha'arõ",
       "suspended": "Ojejoko",
-      "verified": "Ojehechapyréva"
+      "verified": "Ojehechapyréva",
+      "verifiedApproved": "Ojehechapyre ha Oñemoneĩ",
+      "verifiedPending": "Ojehechapyre (Oha'arõ Ñemoneĩ)",
+      "approvedNotVerified": "Oñemoneĩ (Ndojehechapyre)"
+    },
+    "resetRegistration": {
+      "action": "Emoñepyrũ jey Ñemboguapy",
+      "title": "Emoñepyrũ jey Negósio Ñemboguapy",
+      "confirmMessage": "Añetehápe emoñepyrũ jeysépa {name} ñemboguapy? Kóva omoneĩta negósio járape oñepyrũ jey hag̃ua ñemboguapy rape.",
+      "success": "Ñemboguapy oñepyrũ jey porã"
+    },
+    "message": {
+      "registrationReset": "Negósio ñemboguapy oñepyrũ jey porã",
+      "bulkVerified": "{count} negósio {status}",
+      "featureComingSoon": "Ko tembiapo oúta pya'e"
     }
   },
   "language": {
@@ -283,7 +308,7 @@
   "businessRegistration": {
     "title": "Emyenyhẽ Ne Negósio Ñemboguapy",
     "subtitle": "Eikuaauka marandu ne negósio rehegua eñepyrũ hag̃ua",
-    "progress": "{{current}}-ha paso {{total}}-gui",
+    "progress": "{current}-ha paso {total}-gui",
     "mandatory": "Ko ñemboguapy oñeikotevẽ eike hag̃ua ne panel-pe",
     "cannotSkip": "Erembotýva'erã opaite paso eike mboyve panel-pe",
     "steps": {
@@ -413,7 +438,7 @@
         "title": "Ehecha ha Emondo",
         "description": "Ehecha ne marandu emondo mboyve",
         "checkInfo": "Ehecha porãite opaite marandu",
-        "editSection": "Embosakói {{section}}",
+        "editSection": "Embosakói {section}",
         "sections": {
           "businessInfo": "Negósio Marandu",
           "contactDetails": "Ñe'ẽjoaju ha Kundahápe",
@@ -430,11 +455,12 @@
       "loading": "Henyhẽhína...",
       "savingProgress": "Oñeñongatúhina ne progreso...",
       "progressSaved": "Progreso oñeñongatu porã",
-      "stepCompleted": "{{step}}-ha paso oñemba'apo porã",
+      "stepCompleted": "{step}-ha paso oñemba'apo porã",
       "registrationComplete": "¡Ñemboguapy oñemondo porã!",
       "redirecting": "Ojerahátahína panel-pe...",
       "errorSaving": "Ojavy oñongatu progreso. Eha'ã jey.",
       "errorSubmitting": "Ojavy oñemondo ñemboguapy. Eha'ã jey.",
+      "errorStarting": "Ojavy oñepyrũ ñemboguapy. Eha'ã jey.",
       "sessionExpired": "Ne sesión opáma. Eike jey.",
       "networkError": "Ñanduti jejavy. Ehecha ne jeike."
     },

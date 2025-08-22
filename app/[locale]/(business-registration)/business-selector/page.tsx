@@ -59,7 +59,7 @@ export default function BusinessSelectorPage() {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <Spin size="large" tip={t('businessSelector.loading')} />
+        <Spin size="large" />
       </div>
     )
   }

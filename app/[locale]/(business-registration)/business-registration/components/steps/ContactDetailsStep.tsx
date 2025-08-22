@@ -43,6 +43,7 @@ const COUNTRIES = [
 export function ContactDetailsStep({ onComplete }: ContactDetailsStepProps) {
   const t = useTranslations('businessRegistration.steps.contactDetails')
   const tCommon = useTranslations('common')
+  const tMessages = useTranslations('businessRegistration.messages')
 
   const { step2Data, saveStep2Data, markStepCompleted } = useRegistrationStore()
   const submitStep2Mutation = useSubmitStep2()
@@ -98,12 +99,27 @@ export function ContactDetailsStep({ onComplete }: ContactDetailsStepProps) {
         onSuccess: () => {
           // Only mark as completed after successful API call
           markStepCompleted(2)
-          message.success(t('messages.stepCompleted', { step: 2 }))
+          
+          // Call onComplete first to ensure navigation happens
           onComplete()
+          
+          // Then show success message (if this fails, navigation still happened)
+          try {
+            message.success(tMessages('stepCompleted', { step: 2 }))
+          } catch (e) {
+            console.log('Message notification failed:', e)
+          }
         },
         onError: (error) => {
           console.error('Failed to submit step 2:', error)
-          message.error('Failed to save step 2. Please try again.')
+          // Handle 409 conflict (step already submitted)
+          if (error?.response?.status === 409) {
+            // Step already completed, just move forward
+            markStepCompleted(2)
+            onComplete()
+          } else {
+            message.error('Failed to save step 2. Please try again.')
+          }
         },
       })
     } catch (error) {

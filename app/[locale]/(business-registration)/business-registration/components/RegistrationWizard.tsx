@@ -46,9 +46,11 @@ export function RegistrationWizard() {
     if (!statusLoading && registrationStatus) {
       if (
         registrationStatus.needsRegistration &&
-        registrationStatus.currentStep === 0
+        registrationStatus.currentStep === 0 &&
+        !startRegistrationMutation.isPending &&
+        !startRegistrationMutation.isSuccess
       ) {
-        // Reset store for fresh registration
+        // Reset store for fresh registration only once
         const { reset } = useRegistrationStore.getState()
         reset()
 
@@ -64,15 +66,18 @@ export function RegistrationWizard() {
         })
       } else if (
         registrationStatus.needsRegistration &&
-        registrationStatus.currentStep > 0
+        registrationStatus.currentStep > 0 &&
+        currentStep !== registrationStatus.currentStep
       ) {
         // If registration is in progress, sync with backend's current step
+        // Only update if different to avoid infinite loops
         setCurrentStep(registrationStatus.currentStep)
       }
     }
   }, [
     registrationStatus,
     statusLoading,
+    currentStep,
     setCurrentStep,
     t,
     startRegistrationMutation,
@@ -94,8 +99,13 @@ export function RegistrationWizard() {
 
   // Handle step submission
   const handleStepComplete = async () => {
+    console.log('handleStepComplete called! Current step:', currentStep)
     if (currentStep < 4) {
+      console.log('Calling goToNextStep...')
       goToNextStep()
+      console.log('goToNextStep called')
+    } else {
+      console.log('Already at step 4, not advancing')
     }
   }
 

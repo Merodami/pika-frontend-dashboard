@@ -13,8 +13,8 @@ export type GetInternalBusinessesByUser200DataItem = {
   /** Universally Unique Identifier */
   id: string
   userId: string
-  businessNameKey: string
-  businessDescriptionKey?: string
+  businessName: string
+  businessDescription?: string
   /** Universally Unique Identifier */
   categoryId: string
   verified: boolean

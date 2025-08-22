@@ -185,6 +185,8 @@ import type {
   ResendAdminUserVerificationBody,
   ResendVerification200,
   ResendVerificationBody,
+  ResetBusinessRegistration200,
+  ResetBusinessRegistrationBody,
   ResetPassword200,
   ResetPasswordBody,
   ScanVoucher200,
@@ -1218,6 +1220,22 @@ export const bulkDeleteAdminBusinesses = (
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json' },
     data: bulkDeleteAdminBusinessesBody,
+  })
+}
+
+/**
+ * Reset a business registration to allow the user to restart the registration process
+ * @summary Reset a business registration by user ID
+ */
+export const resetBusinessRegistration = (
+  id: string,
+  resetBusinessRegistrationBody: ResetBusinessRegistrationBody
+) => {
+  return customInstance<ResetBusinessRegistration200>({
+    url: `/admin/businesses/users/${id}/registration/reset`,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    data: resetBusinessRegistrationBody,
   })
 }
 
@@ -2500,6 +2518,9 @@ export type BulkUpdateAdminBusinessesResult = NonNullable<
 >
 export type BulkDeleteAdminBusinessesResult = NonNullable<
   Awaited<ReturnType<typeof bulkDeleteAdminBusinesses>>
+>
+export type ResetBusinessRegistrationResult = NonNullable<
+  Awaited<ReturnType<typeof resetBusinessRegistration>>
 >
 export type GetAdminFileListResult = NonNullable<
   Awaited<ReturnType<typeof getAdminFileList>>

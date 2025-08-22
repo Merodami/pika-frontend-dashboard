@@ -61,6 +61,8 @@ const WEEKDAYS = [
 
 export function AdditionalInfoStep({ onComplete }: AdditionalInfoStepProps) {
   const t = useTranslations('businessRegistration.steps.additionalInfo')
+  const tCommon = useTranslations('common')
+  const tMessages = useTranslations('businessRegistration.messages')
   const [showOperatingHours, setShowOperatingHours] = useState(false)
   const [showSocialMedia, setShowSocialMedia] = useState(false)
 
@@ -118,12 +120,27 @@ export function AdditionalInfoStep({ onComplete }: AdditionalInfoStepProps) {
         onSuccess: () => {
           // Only mark as completed after successful API call
           markStepCompleted(3)
-          message.success(t('messages.stepCompleted', { step: 3 }))
+          
+          // Call onComplete first to ensure navigation happens
           onComplete()
+          
+          // Then show success message (if this fails, navigation still happened)
+          try {
+            message.success(tMessages('stepCompleted', { step: 3 }))
+          } catch (e) {
+            console.log('Message notification failed:', e)
+          }
         },
         onError: (error) => {
           console.error('Failed to submit step 3:', error)
-          message.error('Failed to save step 3. Please try again.')
+          // Handle 409 conflict (step already submitted)
+          if (error?.response?.status === 409) {
+            // Step already completed, just move forward
+            markStepCompleted(3)
+            onComplete()
+          } else {
+            message.error('Failed to save step 3. Please try again.')
+          }
         },
       })
     } catch (error) {
@@ -351,7 +368,7 @@ export function AdditionalInfoStep({ onComplete }: AdditionalInfoStepProps) {
             className="w-full"
             loading={form.formState.isSubmitting}
           >
-            {t('common.button.next')}
+            {tCommon('button.next')}
           </Button>
         </div>
       </Form>

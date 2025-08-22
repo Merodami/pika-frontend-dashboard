@@ -11,6 +11,7 @@ import type { GetAdminBusinessById200ApprovedAt } from './getAdminBusinessById20
 import type { GetAdminBusinessById200DeletedAt } from './getAdminBusinessById200DeletedAt'
 import type { GetAdminBusinessById200User } from './getAdminBusinessById200User'
 import type { GetAdminBusinessById200Category } from './getAdminBusinessById200Category'
+import type { GetAdminBusinessById200BusinessRegistration } from './getAdminBusinessById200BusinessRegistration'
 
 export type GetAdminBusinessById200 = {
   /** Universally Unique Identifier */
@@ -18,15 +19,15 @@ export type GetAdminBusinessById200 = {
   /** User who owns this business */
   userId: string
   /**
-   * Translation key for business name
+   * Business name (resolved translation)
    * @maxLength 255
    */
-  businessNameKey: string
+  businessName: string
   /**
-   * Translation key for business description
+   * Business description (resolved translation)
    * @maxLength 255
    */
-  businessDescriptionKey?: string
+  businessDescription?: string
   /** Category this business belongs to */
   categoryId: GetAdminBusinessById200CategoryId
   /** Whether business is verified */
@@ -51,6 +52,8 @@ export type GetAdminBusinessById200 = {
   user?: GetAdminBusinessById200User
   /** Category information when ?include=category */
   category?: GetAdminBusinessById200Category
+  /** Business registration info when ?include=businessRegistration */
+  businessRegistration?: GetAdminBusinessById200BusinessRegistration
   /** When the record was created */
   createdAt: string
   /** When the record was last updated */

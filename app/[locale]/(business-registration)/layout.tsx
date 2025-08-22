@@ -8,10 +8,13 @@ import { antdTheme } from '@/lib/theme/antd-theme'
 
 export default async function BusinessRegistrationLayout({
   children,
+  params,
 }: {
   children: React.ReactNode
+  params: Promise<{ locale: string }>
 }) {
-  const messages = await getMessages()
+  const { locale } = await params
+  const messages = await getMessages({ locale })
 
   return (
     <NextIntlClientProvider messages={messages}>

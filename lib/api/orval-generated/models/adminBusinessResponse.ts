@@ -11,6 +11,7 @@ import type { AdminBusinessResponseApprovedAt } from './adminBusinessResponseApp
 import type { AdminBusinessResponseDeletedAt } from './adminBusinessResponseDeletedAt'
 import type { AdminBusinessResponseUser } from './adminBusinessResponseUser'
 import type { AdminBusinessResponseCategory } from './adminBusinessResponseCategory'
+import type { AdminBusinessResponseBusinessRegistration } from './adminBusinessResponseBusinessRegistration'
 
 export interface AdminBusinessResponse {
   /** Universally Unique Identifier */
@@ -18,15 +19,15 @@ export interface AdminBusinessResponse {
   /** User who owns this business */
   userId: string
   /**
-   * Translation key for business name
+   * Business name (resolved translation)
    * @maxLength 255
    */
-  businessNameKey: string
+  businessName: string
   /**
-   * Translation key for business description
+   * Business description (resolved translation)
    * @maxLength 255
    */
-  businessDescriptionKey?: string
+  businessDescription?: string
   /** Category this business belongs to */
   categoryId: AdminBusinessResponseCategoryId
   /** Whether business is verified */
@@ -51,6 +52,8 @@ export interface AdminBusinessResponse {
   user?: AdminBusinessResponseUser
   /** Category information when ?include=category */
   category?: AdminBusinessResponseCategory
+  /** Business registration info when ?include=businessRegistration */
+  businessRegistration?: AdminBusinessResponseBusinessRegistration
   /** When the record was created */
   createdAt: string
   /** When the record was last updated */

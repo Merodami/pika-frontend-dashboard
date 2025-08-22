@@ -11,6 +11,7 @@ import type { GetAdminBusinessList200DataItemApprovedAt } from './getAdminBusine
 import type { GetAdminBusinessList200DataItemDeletedAt } from './getAdminBusinessList200DataItemDeletedAt'
 import type { GetAdminBusinessList200DataItemUser } from './getAdminBusinessList200DataItemUser'
 import type { GetAdminBusinessList200DataItemCategory } from './getAdminBusinessList200DataItemCategory'
+import type { GetAdminBusinessList200DataItemBusinessRegistration } from './getAdminBusinessList200DataItemBusinessRegistration'
 
 export type GetAdminBusinessList200DataItem = {
   /** Universally Unique Identifier */
@@ -18,15 +19,15 @@ export type GetAdminBusinessList200DataItem = {
   /** User who owns this business */
   userId: string
   /**
-   * Translation key for business name
+   * Business name (resolved translation)
    * @maxLength 255
    */
-  businessNameKey: string
+  businessName: string
   /**
-   * Translation key for business description
+   * Business description (resolved translation)
    * @maxLength 255
    */
-  businessDescriptionKey?: string
+  businessDescription?: string
   /** Category this business belongs to */
   categoryId: GetAdminBusinessList200DataItemCategoryId
   /** Whether business is verified */
@@ -51,6 +52,8 @@ export type GetAdminBusinessList200DataItem = {
   user?: GetAdminBusinessList200DataItemUser
   /** Category information when ?include=category */
   category?: GetAdminBusinessList200DataItemCategory
+  /** Business registration info when ?include=businessRegistration */
+  businessRegistration?: GetAdminBusinessList200DataItemBusinessRegistration
   /** When the record was created */
   createdAt: string
   /** When the record was last updated */

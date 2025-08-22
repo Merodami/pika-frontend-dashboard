@@ -11,6 +11,7 @@ import type { AdminBusinessListResponseDataItemApprovedAt } from './adminBusines
 import type { AdminBusinessListResponseDataItemDeletedAt } from './adminBusinessListResponseDataItemDeletedAt'
 import type { AdminBusinessListResponseDataItemUser } from './adminBusinessListResponseDataItemUser'
 import type { AdminBusinessListResponseDataItemCategory } from './adminBusinessListResponseDataItemCategory'
+import type { AdminBusinessListResponseDataItemBusinessRegistration } from './adminBusinessListResponseDataItemBusinessRegistration'
 
 export type AdminBusinessListResponseDataItem = {
   /** Universally Unique Identifier */
@@ -18,15 +19,15 @@ export type AdminBusinessListResponseDataItem = {
   /** User who owns this business */
   userId: string
   /**
-   * Translation key for business name
+   * Business name (resolved translation)
    * @maxLength 255
    */
-  businessNameKey: string
+  businessName: string
   /**
-   * Translation key for business description
+   * Business description (resolved translation)
    * @maxLength 255
    */
-  businessDescriptionKey?: string
+  businessDescription?: string
   /** Category this business belongs to */
   categoryId: AdminBusinessListResponseDataItemCategoryId
   /** Whether business is verified */
@@ -51,6 +52,8 @@ export type AdminBusinessListResponseDataItem = {
   user?: AdminBusinessListResponseDataItemUser
   /** Category information when ?include=category */
   category?: AdminBusinessListResponseDataItemCategory
+  /** Business registration info when ?include=businessRegistration */
+  businessRegistration?: AdminBusinessListResponseDataItemBusinessRegistration
   /** When the record was created */
   createdAt: string
   /** When the record was last updated */
