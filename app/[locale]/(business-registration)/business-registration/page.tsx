@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 
 import { useCurrentUser } from '@/hooks/api/users/useCurrentUser'
-import { useNeedsRegistration } from './hooks/useRegistrationStatus'
+import { useRegistrationStatus } from '@/hooks/api/businesses/useBusinessRegistration'
 import { useRegistrationStore } from './store/registrationStore'
 import { StepIndicator } from './components/StepIndicator'
 import { RegistrationWizard } from './components/RegistrationWizard'
@@ -21,11 +21,13 @@ export default function BusinessRegistrationPage() {
 
   // Check registration status
   const {
-    needsRegistration,
-    canAccessDashboard,
+    data: registrationStatus,
     isLoading: statusLoading,
     error: statusError,
-  } = useNeedsRegistration()
+  } = useRegistrationStatus()
+  
+  const needsRegistration = registrationStatus?.needsRegistration ?? false
+  const canAccessDashboard = registrationStatus?.canAccessDashboard ?? false
 
   // Get registration store
   const { currentStep, completedSteps, status, checkAndResetForUser, reset } =

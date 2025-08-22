@@ -6,7 +6,6 @@ import { Plus, Store, CheckCircle, XCircle, Star, User } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { debounce } from 'lodash-es'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import {
   DataTable,
@@ -74,7 +73,7 @@ export default function BusinessesTable({ locale }: BusinessesTableProps) {
     sortOrder: dataTable.state.sortOrder as any,
     createdFrom: dataTable.state.filters.createdFrom,
     createdTo: dataTable.state.filters.createdTo,
-    include: ['user', 'category', 'businessRegistration'],
+    include: 'user,category,businessRegistration',
   }
 
   // Use custom hook for fetching businesses
@@ -89,7 +88,7 @@ export default function BusinessesTable({ locale }: BusinessesTableProps) {
     totalBusinesses: data?.data?.length,
     businessRegistrationExists: data?.data?.map(b => ({ 
       id: b.id, 
-      businessName: b.businessName || b.businessNameKey,
+      businessName: b.businessName,
       hasRegistration: !!b.businessRegistration,
       registrationId: b.businessRegistration?.id,
       registrationStatus: b.businessRegistration?.registrationStatus,
@@ -98,24 +97,11 @@ export default function BusinessesTable({ locale }: BusinessesTableProps) {
   })
 
   // Use custom hooks for mutations
-  const queryClient = useQueryClient()
   const verifyBusinessMutation = useVerifyBusiness()
   const toggleBusinessActiveMutation = useToggleBusinessActive()
   const deleteBusinessMutation = useDeleteBusiness()
   const bulkUpdateBusinessesMutation = useBulkUpdateBusinesses()
 
-  // Reset registration mutation
-  const resetRegistrationMutation = useMutation({
-    mutationFn: ({ registrationId, reason }: { registrationId: string; reason: string }) =>
-      resetBusinessRegistration(registrationId, { reason, notifyUser: true }),
-    onSuccess: () => {
-      message.success(t('businesses.message.registrationReset'))
-      queryClient.invalidateQueries({ queryKey: ['admin-businesses'] })
-    },
-    onError: () => {
-      message.error(t('common.message.errorOccurred'))
-    },
-  })
 
   // Status helpers using proper types
   const getVerificationStatus = (
@@ -141,16 +127,16 @@ export default function BusinessesTable({ locale }: BusinessesTableProps) {
   const columns = createColumns<GetAdminBusinessList200DataItem>([
     {
       title: t('businesses.fields.name'),
-      dataIndex: 'businessNameKey',
-      key: 'businessNameKey',
+      dataIndex: 'businessName',
+      key: 'businessName',
       render: (_, record) => (
         <div className="flex items-center gap-3">
           <Avatar size="small" icon={<Store />} />
           <div>
-            <div className="font-medium">{record.businessNameKey}</div>
-            {record.businessDescriptionKey && (
+            <div className="font-medium">{record.businessName}</div>
+            {record.businessDescription && (
               <div className="text-xs text-gray-500 truncate max-w-xs">
-                {record.businessDescriptionKey}
+                {record.businessDescription}
               </div>
             )}
           </div>
@@ -269,7 +255,7 @@ export default function BusinessesTable({ locale }: BusinessesTableProps) {
       // Debug log for each business record
       console.log('🔧 Action column for business:', {
         businessId: record.id,
-        businessName: record.businessNameKey,
+        businessName: record.businessName,
         hasRegistration: !!record.businessRegistration,
         registration: record.businessRegistration,
         willShowResetButton: !!record.businessRegistration
@@ -305,22 +291,9 @@ export default function BusinessesTable({ locale }: BusinessesTableProps) {
                   handleToggleActive(record.id, false)
                 )
               : commonActions.activate(() => handleToggleActive(record.id, true)),
-            ...(record.businessRegistration ? [{
-              key: 'resetRegistration',
-              label: t('businesses.resetRegistration.action'),
-              icon: <RotateCcw className="w-4 h-4" />,
-              onClick: () => {
-                console.log('🔄 Reset registration clicked:', {
-                  registrationId: record.businessRegistration!.id,
-                  businessName: record.businessNameKey
-                })
-                handleResetRegistration(record.businessRegistration!.id, record.businessNameKey)
-              },
-              danger: true,
-            }] : []),
             commonActions.delete(
               () => handleDelete(record.id),
-              record.businessNameKey
+              record.businessName
             ),
           ]}
         />
@@ -383,34 +356,6 @@ export default function BusinessesTable({ locale }: BusinessesTableProps) {
     [deleteBusinessMutation]
   )
 
-  const handleResetRegistration = useCallback(
-    (registrationId: string, businessName: string) => {
-      console.log('🚀 handleResetRegistration called:', {
-        registrationId,
-        businessName,
-        resetRegistrationMutation: !!resetRegistrationMutation
-      })
-
-      Modal.confirm({
-        title: t('businesses.resetRegistration.title'),
-        content: t('businesses.resetRegistration.confirmMessage', { name: businessName }),
-        okText: t('common.button.confirm'),
-        cancelText: t('common.button.cancel'),
-        okButtonProps: { danger: true },
-        onOk: () => {
-          console.log('💥 Mutation called with:', {
-            registrationId,
-            reason: 'Admin initiated reset for business registration process',
-          })
-          resetRegistrationMutation.mutate({
-            registrationId,
-            reason: 'Admin initiated reset for business registration process',
-          })
-        },
-      })
-    },
-    [resetRegistrationMutation, t]
-  )
 
   const handleBulkDelete = useCallback(
     async (selectedKeys: React.Key[]) => {

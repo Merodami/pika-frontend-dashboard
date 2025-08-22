@@ -66,6 +66,7 @@ export default function AddUserDrawer({
 }: AddUserDrawerProps) {
   const t = useTranslations()
   const queryClient = useQueryClient()
+  const [form] = Form.useForm()
 
   const {
     control,
@@ -176,7 +177,7 @@ export default function AddUserDrawer({
         </div>
       }
     >
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <Form form={form} onFinish={handleSubmit(onSubmit)} layout="vertical" className="space-y-4">
         <div className="text-sm font-medium text-gray-700 mb-2">
           {t('profile.personalInfo.title')}
         </div>
@@ -411,7 +412,7 @@ export default function AddUserDrawer({
             )}
           />
         </Form.Item>
-      </form>
+      </Form>
     </Drawer>
   )
 }

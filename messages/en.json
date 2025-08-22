@@ -16,7 +16,8 @@
       "refresh": "Refresh",
       "export": "Export",
       "import": "Import",
-      "submit": "Submit"
+      "submit": "Submit",
+      "email": "Send Email"
     },
     "status": {
       "loading": "Loading...",
@@ -33,6 +34,13 @@
       "errorOccurred": "An error occurred",
       "noData": "No data available",
       "required": "This field is required"
+    }
+  },
+  "users": {
+    "resetRegistration": {
+      "action": "Reset Registration",
+      "title": "Reset Business Registration",
+      "confirmMessage": "Are you sure you want to reset this user's business registration? This will allow them to start the registration process again."
     }
   },
   "auth": {

@@ -6,6 +6,7 @@ import { Plus, Mail, Shield, UserCheck, RotateCcw } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { useResetBusinessRegistration } from '@/hooks/api/users/useUsers'
 
 import {
   DataTable,
@@ -31,7 +32,6 @@ import {
   banAdminUser,
   unbanAdminUser,
   deleteAdminUser,
-  resetBusinessRegistration,
 } from '@/lib/api/orval-client'
 import type {
   GetAdminUserList200DataItem,
@@ -125,17 +125,7 @@ export default function UsersTable({ locale }: UsersTableProps) {
     },
   })
 
-  const resetRegistrationMutation = useMutation({
-    mutationFn: ({ userId, reason }: { userId: string; reason: string }) =>
-      resetBusinessRegistration(userId, { reason, notifyUser: true }),
-    onSuccess: () => {
-      message.success(t('businesses.message.registrationReset'))
-      queryClient.invalidateQueries({ queryKey: ['admin-users'] })
-    },
-    onError: () => {
-      message.error(t('common.message.errorOccurred'))
-    },
-  })
+  const resetRegistrationMutation = useResetBusinessRegistration()
 
   // Status color mapping
   const getStatusColor = (status: string) => {
@@ -282,6 +272,14 @@ export default function UsersTable({ locale }: UsersTableProps) {
                 : handleBanUser(record.id, 'Banned by admin'),
             danger: record.status !== UserStatus.BANNED,
           },
+          // Only show reset registration for business users
+          ...(record.role === UserRole.BUSINESS ? [{
+            key: 'resetRegistration',
+            label: t('users.resetRegistration.action', { defaultValue: 'Reset Registration' }),
+            icon: <RotateCcw className="w-4 h-4" />,
+            onClick: () => handleResetRegistration(record.id),
+            danger: true,
+          }] : []),
           commonActions.delete(() => handleDelete(record.id), record.email),
         ]}
       />
@@ -331,6 +329,25 @@ export default function UsersTable({ locale }: UsersTableProps) {
 
   const handleDelete = async (userId: string) => {
     deleteUserMutation.mutate(userId)
+  }
+
+  const handleResetRegistration = async (userId: string) => {
+    Modal.confirm({
+      title: t('users.resetRegistration.title'),
+      content: t('users.resetRegistration.confirmMessage'),
+      okText: t('common.button.confirm'),
+      cancelText: t('common.button.cancel'),
+      okType: 'danger',
+      onOk: () => {
+        resetRegistrationMutation.mutate({
+          userId,
+          data: {
+            reason: 'Reset by admin',
+            notifyUser: true
+          }
+        })
+      },
+    })
   }
 
   const handleBulkDelete = async (selectedKeys: React.Key[]) => {

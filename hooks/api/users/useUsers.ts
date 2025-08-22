@@ -7,11 +7,13 @@ import {
   createAdminUser,
   updateAdminUser,
   deleteAdminUser,
+  resetBusinessRegistration,
   type GetAdminUserListParams,
   type GetAdminUserList200,
   type GetAdminUserById200,
   type CreateAdminUserBody,
   type UpdateAdminUserBody,
+  type ResetBusinessRegistrationBody,
 } from '@/lib/api/orval-client'
 import { queryKeys } from '@/lib/api/queryKeys'
 
@@ -118,6 +120,25 @@ export function useDeleteUser() {
         queryKey: queryKeys.users.lists(),
       })
     },
+  })
+}
+
+/**
+ * Hook to reset user's business registration
+ */
+export function useResetBusinessRegistration() {
+  const queryClient = useQueryClient()
+
+  return useApiMutation<
+    any, // ResetBusinessRegistration200 type
+    Error,
+    { userId: string; data: ResetBusinessRegistrationBody }
+  >({
+    mutationFn: ({ userId, data }) => resetBusinessRegistration(userId, data),
+    successMessage: 'Business registration reset successfully',
+    onSuccess: (_, { userId }) => {
+      invalidateUserQueries(queryClient, userId)
+    }
   })
 }
 

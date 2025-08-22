@@ -19,6 +19,7 @@ import { useAppStore } from '@/store/app.store'
 
 interface BusinessInfoStepProps {
   onComplete: () => void
+  onPrevious?: () => void
 }
 
 type BusinessRegistrationStep1Data = z.infer<
@@ -133,7 +134,7 @@ export function BusinessInfoStep({ onComplete }: BusinessInfoStepProps) {
         onError: (error) => {
           console.error('Step 1 submission failed:', error)
           // Handle 409 conflict (step already submitted)
-          if (error?.response?.status === 409) {
+          if ((error as any)?.response?.status === 409) {
             // Step already completed on server, mark it locally and move forward
             markStepCompleted(1)
             onComplete()

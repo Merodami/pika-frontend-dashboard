@@ -195,7 +195,17 @@ export function useCompleteRegistration() {
         queryKey: registrationKeys.all(),
       })
       queryClient.invalidateQueries({
+        queryKey: registrationKeys.status(),
+      })
+      queryClient.invalidateQueries({
+        queryKey: registrationKeys.progress(),
+      })
+      queryClient.invalidateQueries({
         queryKey: queryKeys.businesses.all(),
+      })
+      // Also invalidate the old query key used by the page
+      queryClient.invalidateQueries({
+        queryKey: ['business-registration-status'],
       })
       // The backend will handle setting any necessary cookies/session data
       // The registration status will be updated via the API

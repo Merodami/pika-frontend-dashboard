@@ -67,10 +67,13 @@ export function RegistrationWizard() {
       } else if (
         registrationStatus.needsRegistration &&
         registrationStatus.currentStep > 0 &&
-        currentStep !== registrationStatus.currentStep
+        registrationStatus.currentStep > currentStep &&
+        !completeRegistrationMutation.isSuccess
       ) {
         // If registration is in progress, sync with backend's current step
-        // Only update if different to avoid infinite loops
+        // Only sync if backend is AHEAD of local step (not behind)
+        // Don't sync if registration was just completed
+        console.log('Syncing currentStep from backend:', registrationStatus.currentStep)
         setCurrentStep(registrationStatus.currentStep)
       }
     }
@@ -111,22 +114,23 @@ export function RegistrationWizard() {
 
   // Handle final submission
   const handleFinalSubmit = async () => {
+    console.log('handleFinalSubmit called')
     completeRegistrationMutation.mutate(
       { confirmAllDataAccurate: true, agreedToTerms: true }, // Add required fields for final submit
       {
         onSuccess: () => {
-          message.success(
-            t('businessRegistration.messages.registrationComplete')
-          )
-
-          // Reset the store after successful registration
-          const { reset } = useRegistrationStore.getState()
-          reset()
-
-          // Redirect to status page to wait for approval
-          setTimeout(() => {
-            router.push('/business-registration/status')
-          }, 2000)
+          console.log('Final submission successful!')
+          try {
+            message.success(
+              t('businessRegistration.messages.registrationComplete')
+            )
+          } catch (e) {
+            console.log('Message notification failed:', e)
+          }
+          
+          // Don't manually redirect - let the page-level logic handle it
+          // when needsRegistration becomes false
+          console.log('Registration completed, page will handle redirect')
         },
         onError: (error) => {
           console.error('Failed to complete registration:', error)
@@ -142,11 +146,11 @@ export function RegistrationWizard() {
       case 1:
         return <BusinessInfoStep onComplete={handleStepComplete} />
       case 2:
-        return <ContactDetailsStep onComplete={handleStepComplete} />
+        return <ContactDetailsStep onComplete={handleStepComplete} onPrevious={goToPreviousStep} />
       case 3:
-        return <AdditionalInfoStep onComplete={handleStepComplete} />
+        return <AdditionalInfoStep onComplete={handleStepComplete} onPrevious={goToPreviousStep} />
       case 4:
-        return <ReviewStep onSubmit={handleFinalSubmit} />
+        return <ReviewStep onSubmit={handleFinalSubmit} onPrevious={goToPreviousStep} />
       default:
         return null
     }
@@ -155,6 +159,8 @@ export function RegistrationWizard() {
   // Check if current step is complete
   const isCurrentStepComplete = completedSteps.includes(currentStep)
   const canProceed = currentStep === 4 ? true : isCurrentStepComplete
+
+  console.log('RegistrationWizard render - currentStep:', currentStep, 'completedSteps:', completedSteps)
 
   return (
     <div className="space-y-6">
@@ -170,53 +176,14 @@ export function RegistrationWizard() {
       {/* Step content */}
       <div className="min-h-[400px]">{renderStep()}</div>
 
-      {/* Navigation buttons */}
-      <div className="flex justify-between items-center pt-6 border-t">
-        <Button
-          size="large"
-          icon={<ArrowLeft className="w-4 h-4" />}
-          onClick={goToPreviousStep}
-          disabled={currentStep === 1 || status === 'submitting'}
-        >
-          {t('common.button.previous')}
-        </Button>
-
+      {/* Progress indicator only */}
+      <div className="flex justify-center items-center pt-6 border-t">
         <div className="text-sm text-gray-500">
           {t('businessRegistration.progress', {
             current: currentStep,
             total: 4,
           })}
         </div>
-
-        {currentStep < 4 ? (
-          <Button
-            type="primary"
-            size="large"
-            icon={<ArrowRight className="w-4 h-4" />}
-            onClick={handleStepComplete}
-            disabled={!canProceed || status === 'submitting'}
-            loading={status === 'submitting'}
-          >
-            {t('common.button.next')}
-          </Button>
-        ) : (
-          <Button
-            type="primary"
-            size="large"
-            icon={
-              isSubmitting ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
-              ) : (
-                <Check className="w-4 h-4" />
-              )
-            }
-            onClick={handleFinalSubmit}
-            disabled={!canProceed || isSubmitting}
-            loading={isSubmitting}
-          >
-            {t('common.button.submit')}
-          </Button>
-        )}
       </div>
     </div>
   )

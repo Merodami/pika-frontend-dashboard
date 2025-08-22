@@ -16,7 +16,8 @@
       "refresh": "Actualizar",
       "export": "Exportar",
       "import": "Importar",
-      "submit": "Enviar"
+      "submit": "Enviar",
+      "email": "Enviar Email"
     },
     "status": {
       "loading": "Cargando...",
@@ -33,6 +34,13 @@
       "errorOccurred": "Ha ocurrido un error",
       "noData": "No hay datos disponibles",
       "required": "Este campo es obligatorio"
+    }
+  },
+  "users": {
+    "resetRegistration": {
+      "action": "Restablecer Registro",
+      "title": "Restablecer Registro de Negocio",
+      "confirmMessage": "¿Estás seguro de que quieres restablecer el registro de negocio de este usuario? Esto le permitirá comenzar el proceso de registro nuevamente."
     }
   },
   "auth": {

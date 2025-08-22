@@ -2,13 +2,20 @@
 
 import { useEffect } from 'react'
 import { Card, Result, Button, Spin } from 'antd'
-import { Clock, CheckCircle, Building2 } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import { Clock, CheckCircle, Building2, LogOut } from 'lucide-react'
+import { useRouter, useParams } from 'next/navigation'
 
 import { useNeedsRegistration } from '../hooks/useRegistrationStatus'
 
 export default function RegistrationStatusPage() {
   const router = useRouter()
+  const params = useParams()
+  const locale = params.locale as string
+  
+  const handleLogout = () => {
+    // Navigate to logout page which will handle the server action
+    router.push(`/${locale}/logout`)
+  }
 
   const {
     needsRegistration,
@@ -85,13 +92,26 @@ export default function RegistrationStatusPage() {
                   </div>
                 </div>
 
-                <Button
-                  type="primary"
-                  size="large"
-                  onClick={() => router.push('/business-selector')}
-                >
-                  Return to Dashboard
-                </Button>
+                <div className="space-y-3">
+                  <Button
+                    type="primary"
+                    size="large"
+                    onClick={() => router.push('/business-selector')}
+                    className="w-full"
+                  >
+                    Return to Dashboard
+                  </Button>
+                  
+                  <Button
+                    type="default"
+                    size="large"
+                    icon={<LogOut className="w-4 h-4" />}
+                    onClick={handleLogout}
+                    className="w-full"
+                  >
+                    Logout
+                  </Button>
+                </div>
               </div>,
             ]}
           />

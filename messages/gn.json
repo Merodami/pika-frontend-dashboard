@@ -16,7 +16,8 @@
       "refresh": "Mbopyahu",
       "export": "Gueraha",
       "import": "Gueru",
-      "submit": "Mondo"
+      "submit": "Mondo",
+      "email": "Mondo Email"
     },
     "status": {
       "loading": "Henyhẽhína...",
@@ -33,6 +34,13 @@
       "errorOccurred": "Oiko peteĩ jejavy",
       "noData": "Ndaipóri mba'ekuaarã",
       "required": "Ko tenda oñeikotevẽ"
+    }
+  },
+  "users": {
+    "resetRegistration": {
+      "action": "Mbojevyjey Ñemboguataha",
+      "title": "Mbojevyjey Mba'apo Ñemboguataha",
+      "confirmMessage": "Ejerovia piko embojevyjeýta ko yvypóra mba'apo ñemboguataha? Kóva omoneĩta chupekuéra oñepyrũjey hag̃ua ñemboguataha."
     }
   },
   "auth": {

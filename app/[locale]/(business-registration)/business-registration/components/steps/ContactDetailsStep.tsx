@@ -14,6 +14,7 @@ import { debounce } from 'lodash'
 
 interface ContactDetailsStepProps {
   onComplete: () => void
+  onPrevious?: () => void
 }
 
 type BusinessRegistrationStep2Data = z.infer<
@@ -40,7 +41,7 @@ const COUNTRIES = [
   { value: 'PT', label: 'Portugal' },
 ]
 
-export function ContactDetailsStep({ onComplete }: ContactDetailsStepProps) {
+export function ContactDetailsStep({ onComplete, onPrevious }: ContactDetailsStepProps) {
   const t = useTranslations('businessRegistration.steps.contactDetails')
   const tCommon = useTranslations('common')
   const tMessages = useTranslations('businessRegistration.messages')
@@ -113,7 +114,7 @@ export function ContactDetailsStep({ onComplete }: ContactDetailsStepProps) {
         onError: (error) => {
           console.error('Failed to submit step 2:', error)
           // Handle 409 conflict (step already submitted)
-          if (error?.response?.status === 409) {
+          if ((error as any)?.response?.status === 409) {
             // Step already completed, just move forward
             markStepCompleted(2)
             onComplete()
@@ -358,12 +359,22 @@ export function ContactDetailsStep({ onComplete }: ContactDetailsStepProps) {
           />
         </div>
 
-        <div className="pt-4">
+        <div className="pt-4 flex gap-4">
+          {onPrevious && (
+            <Button
+              size="large"
+              onClick={onPrevious}
+              disabled={form.formState.isSubmitting}
+              className="flex-1"
+            >
+              {tCommon('button.previous')}
+            </Button>
+          )}
           <Button
             type="primary"
             htmlType="submit"
             size="large"
-            className="w-full"
+            className="flex-1"
             loading={form.formState.isSubmitting}
           >
             {tCommon('button.next')}

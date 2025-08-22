@@ -14,6 +14,7 @@ import dayjs from 'dayjs'
 
 interface AdditionalInfoStepProps {
   onComplete: () => void
+  onPrevious?: () => void
 }
 
 const SOCIAL_PLATFORMS = [
@@ -134,7 +135,7 @@ export function AdditionalInfoStep({ onComplete }: AdditionalInfoStepProps) {
         onError: (error) => {
           console.error('Failed to submit step 3:', error)
           // Handle 409 conflict (step already submitted)
-          if (error?.response?.status === 409) {
+          if ((error as any)?.response?.status === 409) {
             // Step already completed, just move forward
             markStepCompleted(3)
             onComplete()
