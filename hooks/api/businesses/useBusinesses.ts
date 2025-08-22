@@ -10,12 +10,14 @@ import {
   activateAdminBusiness,
   deactivateAdminBusiness,
   updateAdminBusinessVerification,
+  approveAdminBusiness,
   type GetAdminBusinessListParams,
   type GetAdminBusinessList200,
   type GetAdminBusinessById200,
   type CreateAdminBusinessBody,
   type UpdateAdminBusinessBody,
   type UpdateAdminBusinessVerificationBody,
+  type ApproveAdminBusiness200,
 } from '@/lib/api/orval-client'
 import { queryKeys } from '@/lib/api/queryKeys'
 
@@ -144,19 +146,20 @@ export function useToggleBusinessActive() {
 
 /**
  * Hook to approve/unapprove a business
- * Uses the updateAdminBusiness endpoint to set the approved field
+ * Uses the dedicated approval endpoint
  */
 export function useApproveBusiness() {
   const queryClient = useQueryClient()
 
   return useApiMutation<
-    GetAdminBusinessById200,
+    ApproveAdminBusiness200,
     Error,
-    { id: string; approved: boolean }
+    { id: string; approved: boolean; reason?: string }
   >({
-    mutationFn: ({ id, approved }) =>
-      updateAdminBusiness(id, { approved } as any), // The API should accept this field
-    successMessage: 'Business approval status updated',
+    mutationFn: ({ id, approved, reason }) =>
+      approveAdminBusiness(id, { approved, reason }),
+    successMessage: (data) =>
+      data.approved ? 'Business approved successfully' : 'Business rejected',
     onSuccess: (_, { id }) => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.businesses.detail(id),

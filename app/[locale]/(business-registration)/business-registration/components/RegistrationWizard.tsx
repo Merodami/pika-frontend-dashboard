@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { message } from 'antd'
 import { useTranslations } from 'next-intl'
 
@@ -37,6 +37,9 @@ export function RegistrationWizard() {
   const startRegistrationMutation = useStartRegistration()
   const completeRegistrationMutation = useCompleteRegistration()
 
+  // Track if we've already attempted to start registration
+  const [hasAttemptedStart, setHasAttemptedStart] = useState(false)
+
   // Sync frontend state with backend state
   useEffect(() => {
     if (!statusLoading && registrationStatus) {
@@ -44,8 +47,12 @@ export function RegistrationWizard() {
         registrationStatus.needsRegistration &&
         registrationStatus.currentStep === 0 &&
         !startRegistrationMutation.isPending &&
-        !startRegistrationMutation.isSuccess
+        !startRegistrationMutation.isSuccess &&
+        !hasAttemptedStart
       ) {
+        // Mark that we've attempted to start
+        setHasAttemptedStart(true)
+        
         // Reset store for fresh registration only once
         const { reset } = useRegistrationStore.getState()
         reset()
@@ -55,9 +62,12 @@ export function RegistrationWizard() {
           onSuccess: () => {
             setCurrentStep(1)
           },
-          onError: (error) => {
+          onError: (error: any) => {
             console.error('Failed to start registration:', error)
-            message.error(t('businessRegistration.messages.errorStarting'))
+            // Don't show error message for 422 as it might be a duplicate attempt
+            if (error?.response?.status !== 422) {
+              message.error(t('businessRegistration.messages.errorStarting'))
+            }
           },
         })
       } else if (

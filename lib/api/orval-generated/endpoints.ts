@@ -144,7 +144,8 @@ import type {
   GetInternalUserFileSummary200,
   GetInternalUserFiles200Item,
   GetInternalUserFilesBody,
-  GetMyBusiness200,
+  GetMyBusinesses200,
+  GetMyBusinessesParams,
   GetProblemComments200,
   GetPromoCodes200,
   GetPromoCodesParams,
@@ -318,12 +319,13 @@ export const createMyBusiness = (
 }
 
 /**
- * @summary Get my business details
+ * @summary Get my businesses with pagination and filters
  */
-export const getMyBusiness = () => {
-  return customInstance<GetMyBusiness200>({
+export const getMyBusinesses = (params?: GetMyBusinessesParams) => {
+  return customInstance<GetMyBusinesses200>({
     url: `/businesses/me`,
     method: 'GET',
+    params,
   })
 }
 
@@ -2319,8 +2321,8 @@ export type GetInternalBusinessesByCategoryResult = NonNullable<
 export type CreateMyBusinessResult = NonNullable<
   Awaited<ReturnType<typeof createMyBusiness>>
 >
-export type GetMyBusinessResult = NonNullable<
-  Awaited<ReturnType<typeof getMyBusiness>>
+export type GetMyBusinessesResult = NonNullable<
+  Awaited<ReturnType<typeof getMyBusinesses>>
 >
 export type UpdateMyBusinessResult = NonNullable<
   Awaited<ReturnType<typeof updateMyBusiness>>

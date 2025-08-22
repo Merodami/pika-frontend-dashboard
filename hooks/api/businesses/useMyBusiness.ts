@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
 import {
-  getMyBusiness,
+  getMyBusinesses,
   createMyBusiness,
   updateMyBusiness,
   deleteMyBusiness,
@@ -15,7 +15,7 @@ import { useApiMutation } from '../base/useApiMutation'
 export function useMyBusiness(options?: { enabled?: boolean }) {
   return useApiQuery({
     queryKey: [...queryKeys.businesses.all(), 'my'] as const,
-    queryFn: () => getMyBusiness(),
+    queryFn: () => getMyBusinesses(),
     enabled: options?.enabled ?? true,
     retry: (failureCount, error: any) => {
       // Don't retry on 404 (no business exists)

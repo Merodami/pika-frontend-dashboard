@@ -40,8 +40,9 @@ export default function RegistrationStatusPage() {
   // Loading state
   if (statusLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Spin size="large" tip="Checking registration status..." />
+      <div className="flex flex-col items-center justify-center min-h-screen gap-4">
+        <Spin size="large" />
+        <p className="text-gray-600">Checking registration status...</p>
       </div>
     )
   }

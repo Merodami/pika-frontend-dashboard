@@ -27,8 +27,11 @@ export default function BusinessSelectorPage() {
   const locale = params.locale as string
 
   // Use React Query hook for data fetching
-  const { data: business, isLoading, error } = useMyBusiness()
+  const { data: businessResponse, isLoading, error } = useMyBusiness()
   const { data: currentUser } = useCurrentUser()
+  
+  // Extract the first business from the paginated response
+  const business = businessResponse?.data?.[0] || null
 
   const handleLogout = () => {
     router.push(`/${locale}/logout`)
@@ -48,7 +51,10 @@ export default function BusinessSelectorPage() {
       ),
       disabled: true,
     },
-    { key: 'divider-1', type: 'divider' },
+    { 
+      key: 'divider-1', 
+      type: 'divider' 
+    },
     {
       key: 'logout',
       icon: <LogOut className="w-4 h-4" />,
@@ -58,29 +64,39 @@ export default function BusinessSelectorPage() {
     },
   ]
 
-  // Redirect to registration if no business exists
+  // Redirect based on business status
   useEffect(() => {
-    if (!isLoading && !business && error?.response?.status === 404) {
-      router.push('/business-registration')
+    if (!isLoading) {
+      console.log('Business data:', business)
+      console.log('Business approved status:', business?.approved)
+      console.log('Business active status:', business?.active)
+      
+      // No business exists - go to registration
+      if (!business && error?.response?.status === 404) {
+        router.push('/business-registration')
+      }
+      // Removed automatic redirect for approved businesses to prevent loop
+      // User must click on the business card to navigate
     }
   }, [isLoading, business, error, router])
 
   const handleSelectBusiness = (businessId: string) => {
+    console.log('Business clicked:', businessId)
+    console.log('Business data in handler:', business)
+    console.log('Business approved:', business?.approved)
+    
     // Store selected business in session/cookie
     localStorage.setItem('selectedBusinessId', businessId)
 
-    // Find the selected business to check its status
-    const selectedBusiness = businesses.find((b) => b.id === businessId)
-
-    if (selectedBusiness?.status === 'active') {
-      // Active business - go to business dashboard
+    // Check if business is approved (from the original business data, not the transformed one)
+    if (business && business.approved) {
+      console.log('Business is approved - navigating to dashboard')
+      // Approved business - go to dashboard (even if not active)
       router.push('/business')
-    } else if (selectedBusiness?.status === 'pending') {
-      // Pending business - go to waiting status page
-      router.push('/business-registration/status')
     } else {
-      // Fallback for other statuses
-      router.push('/business')
+      console.log('Business not approved - navigating to status page')
+      // Not approved - go to waiting status page
+      router.push('/business-registration/status')
     }
   }
 
@@ -118,10 +134,11 @@ export default function BusinessSelectorPage() {
         {
           id: business.id,
           name: business.businessName, // Now using resolved business name
-          status:
-            business.approved && business.active
+          status: business.approved
+            ? business.active
               ? 'active'
-              : ('pending' as const),
+              : 'suspended' // Approved but not active
+            : 'pending', // Not approved yet
           lastActivity: business.updatedAt,
         },
       ]
@@ -186,7 +203,7 @@ export default function BusinessSelectorPage() {
           ))}
 
           {/* Create new business card */}
-          <CreateBusinessCard onClick={handleCreateNew} />
+          <CreateBusinessCard key="create-new" onClick={handleCreateNew} />
 
           {/* Empty slots for visual balance */}
           {Array.from({ length: emptySlots }).map((_, index) => (
