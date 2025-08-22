@@ -39,7 +39,7 @@ export function BusinessInfoStep({ onComplete }: BusinessInfoStepProps) {
     isLoading: loadingCategories,
     error: categoryError,
   } = useCategoryTree()
-  const categories = categoryData?.categories || []
+  const categories = categoryData?.data || []
 
   const { step1Data, saveStep1Data, markStepCompleted } = useRegistrationStore()
 

@@ -9,6 +9,7 @@ import { useTranslations } from 'next-intl'
 import { businessPublic } from '@merodami/pika-api'
 import type { z } from 'zod'
 import { useRegistrationStore } from '../../store/registrationStore'
+import { useSubmitStep2 } from '@/hooks/api/businesses/useBusinessRegistration'
 import { debounce } from 'lodash'
 
 interface ContactDetailsStepProps {
@@ -44,6 +45,7 @@ export function ContactDetailsStep({ onComplete }: ContactDetailsStepProps) {
   const tCommon = useTranslations('common')
 
   const { step2Data, saveStep2Data, markStepCompleted } = useRegistrationStore()
+  const submitStep2Mutation = useSubmitStep2()
 
   const form = useForm<BusinessRegistrationStep2Data>({
     resolver: zodResolver(
@@ -88,14 +90,22 @@ export function ContactDetailsStep({ onComplete }: ContactDetailsStepProps) {
       const validated =
         businessPublic.BusinessRegistrationStep2RequestSchema.parse(data)
 
-      // Save to store
+      // Save to store first
       saveStep2Data(validated)
-      markStepCompleted(2)
-
-      // Data saved to store
-
-      message.success(t('messages.stepCompleted', { step: 2 }))
-      onComplete()
+      
+      // Submit to backend
+      submitStep2Mutation.mutate(validated, {
+        onSuccess: () => {
+          // Only mark as completed after successful API call
+          markStepCompleted(2)
+          message.success(t('messages.stepCompleted', { step: 2 }))
+          onComplete()
+        },
+        onError: (error) => {
+          console.error('Failed to submit step 2:', error)
+          message.error('Failed to save step 2. Please try again.')
+        },
+      })
     } catch (error) {
       message.error('Please complete all required fields')
     }

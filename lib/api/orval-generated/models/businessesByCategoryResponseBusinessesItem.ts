@@ -14,21 +14,23 @@ export type BusinessesByCategoryResponseBusinessesItem = {
   /** User who owns this business */
   userId: string
   /**
-   * Translation key for business name
-   * @maxLength 255
+   * Business name in requested language
+   * @maxLength 200
    */
-  businessNameKey: string
+  businessName: string
   /**
-   * Translation key for business description
-   * @maxLength 255
+   * Business description in requested language
+   * @maxLength 2000
    */
-  businessDescriptionKey?: string
+  businessDescription?: string
   /** Category this business belongs to */
   categoryId: string
   /** Whether business is verified */
   verified?: boolean
   /** Whether business is active */
   active?: boolean
+  /** Whether business is approved by admin */
+  approved?: boolean
   /**
    * Average rating of the business
    * @minimum 0

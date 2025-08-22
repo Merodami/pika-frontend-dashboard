@@ -5,13 +5,14 @@
  * Complete API documentation including public, admin, and internal endpoints
  * OpenAPI spec version: 1.0.0
  */
-import type { GetBusinessesByUserResponseBusinessesItem } from './getBusinessesByUserResponseBusinessesItem'
+import type { GetBusinessesByUserResponseDataItem } from './getBusinessesByUserResponseDataItem'
+import type { PaginationMetadata } from './paginationMetadata'
 
 /**
- * User businesses data
+ * Paginated response
  */
 export interface GetBusinessesByUserResponse {
-  businesses: GetBusinessesByUserResponseBusinessesItem[]
-  /** @minimum 0 */
-  totalCount: number
+  /** Page items */
+  data: GetBusinessesByUserResponseDataItem[]
+  pagination: PaginationMetadata
 }

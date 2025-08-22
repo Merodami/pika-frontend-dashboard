@@ -352,7 +352,7 @@
   "businessRegistration": {
     "title": "Completa el Registro de Tu Negocio",
     "subtitle": "Por favor proporciona información sobre tu negocio para comenzar",
-    "progress": "Paso {{current}} de {{total}}",
+    "progress": "Paso {current} de {total}",
     "mandatory": "Este registro es obligatorio para acceder a tu panel",
     "cannotSkip": "Debes completar todos los pasos antes de acceder al panel",
     "steps": {

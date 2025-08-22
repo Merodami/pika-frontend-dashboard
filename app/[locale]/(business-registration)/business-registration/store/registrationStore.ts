@@ -19,6 +19,7 @@ interface RegistrationState {
   registrationId: string | null
   status: 'idle' | 'loading' | 'error' | 'success' | 'submitting'
   error: string | null
+  userId: string | null // Track which user owns this data
 
   // Form data for each step
   step1Data: Partial<Step1Data> | null
@@ -33,6 +34,7 @@ interface RegistrationState {
   setRegistrationId: (id: string) => void
   setStatus: (status: RegistrationState['status']) => void
   setError: (error: string | null) => void
+  setUserId: (userId: string | null) => void
 
   // Save step data
   saveStep1Data: (data: Partial<Step1Data>) => void
@@ -41,6 +43,9 @@ interface RegistrationState {
 
   // Mark step as completed
   markStepCompleted: (step: number) => void
+  
+  // Set completed steps from backend
+  setCompletedSteps: (steps: number[]) => void
 
   // Navigation helpers
   canGoToStep: (step: number) => boolean
@@ -49,6 +54,12 @@ interface RegistrationState {
 
   // Reset store
   reset: () => void
+  
+  // Initialize store based on persisted data
+  initializeStep: () => void
+  
+  // Check and reset if different user
+  checkAndResetForUser: (currentUserId: string) => void
 }
 
 const initialState = {
@@ -56,6 +67,7 @@ const initialState = {
   registrationId: null,
   status: 'idle' as const,
   error: null,
+  userId: null,
   step1Data: null,
   step2Data: null,
   step3Data: null,
@@ -73,6 +85,7 @@ export const useRegistrationStore = create<RegistrationState>()(
         setRegistrationId: (id) => set({ registrationId: id }),
         setStatus: (status) => set({ status }),
         setError: (error) => set({ error, status: error ? 'error' : 'idle' }),
+        setUserId: (userId) => set({ userId }),
 
         // Save step data
         saveStep1Data: (data) => set({ step1Data: data }),
@@ -86,6 +99,9 @@ export const useRegistrationStore = create<RegistrationState>()(
               ...new Set([...state.completedSteps, step]),
             ].sort(),
           })),
+
+        // Set completed steps from backend
+        setCompletedSteps: (steps) => set({ completedSteps: steps.sort() }),
 
         // Navigation
         canGoToStep: (step) => {
@@ -111,16 +127,53 @@ export const useRegistrationStore = create<RegistrationState>()(
 
         // Reset store
         reset: () => set(initialState),
+
+        // Initialize step based on completed steps
+        initializeStep: () => {
+          const state = get()
+          // If all 3 steps are completed, go to review step (4)
+          if (state.completedSteps.includes(1) && 
+              state.completedSteps.includes(2) && 
+              state.completedSteps.includes(3)) {
+            set({ currentStep: 4 })
+          }
+          // If steps 1 and 2 are completed, go to step 3
+          else if (state.completedSteps.includes(1) && 
+                   state.completedSteps.includes(2)) {
+            set({ currentStep: 3 })
+          }
+          // If step 1 is completed, go to step 2
+          else if (state.completedSteps.includes(1)) {
+            set({ currentStep: 2 })
+          }
+          // Otherwise stay on step 1
+          else {
+            set({ currentStep: 1 })
+          }
+        },
+        
+        // Check and reset if different user
+        checkAndResetForUser: (currentUserId) => {
+          const state = get()
+          // If the userId in the store doesn't match the current user, reset everything
+          if (state.userId && state.userId !== currentUserId) {
+            set(initialState)
+          }
+          // Update the userId to the current user
+          set({ userId: currentUserId })
+        },
       }),
       {
         name: 'business-registration-store',
-        // Only persist form data, not status
+        // Persist form data, completed steps, and current step
         partialize: (state) => ({
+          currentStep: state.currentStep,
           step1Data: state.step1Data,
           step2Data: state.step2Data,
           step3Data: state.step3Data,
           completedSteps: state.completedSteps,
           registrationId: state.registrationId,
+          userId: state.userId, // Also persist userId to detect user changes
         }),
       }
     )

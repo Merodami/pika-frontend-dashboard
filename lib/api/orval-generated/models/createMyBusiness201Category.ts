@@ -13,16 +13,10 @@ import type { CreateMyBusiness201CategoryChildrenItem } from './createMyBusiness
 export type CreateMyBusiness201Category = {
   /** Universally Unique Identifier */
   id: string
-  /**
-   * Translation key for category name
-   * @maxLength 255
-   */
-  nameKey: string
-  /**
-   * Translation key for category description
-   * @maxLength 255
-   */
-  descriptionKey?: string
+  /** Category name in requested language */
+  name: string
+  /** Category description in requested language */
+  description?: string
   /**
    * Category icon identifier
    * @maxLength 255

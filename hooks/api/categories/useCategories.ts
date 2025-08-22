@@ -1,5 +1,5 @@
 import {
-  getAdminCategoryTree,
+  getInternalCategoryHierarchy,
   getAdminCategoryById,
 } from '@/lib/api/orval-client'
 import { queryKeys } from '@/lib/api/queryKeys'
@@ -18,7 +18,7 @@ const categoryKeys = {
 export function useCategoryTree(options?: { enabled?: boolean }) {
   return useApiQuery({
     queryKey: categoryKeys.tree(),
-    queryFn: () => getAdminCategoryTree(),
+    queryFn: () => getInternalCategoryHierarchy(),
     enabled: options?.enabled ?? true,
     staleTime: 30 * 60 * 1000, // 30 minutes - categories don't change often
     gcTime: 60 * 60 * 1000, // 1 hour

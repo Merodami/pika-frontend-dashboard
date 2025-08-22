@@ -10,16 +10,10 @@ import type { GetCategoryPath200DataItemChildrenItem } from './getCategoryPath20
 export type GetCategoryPath200DataItem = {
   /** Universally Unique Identifier */
   id: string
-  /**
-   * Translation key for category name
-   * @maxLength 255
-   */
-  nameKey: string
-  /**
-   * Translation key for category description
-   * @maxLength 255
-   */
-  descriptionKey?: string
+  /** Category name in requested language */
+  name: string
+  /** Category description in requested language */
+  description?: string
   /**
    * Category icon identifier
    * @maxLength 255

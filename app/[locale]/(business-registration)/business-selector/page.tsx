@@ -35,7 +35,20 @@ export default function BusinessSelectorPage() {
   const handleSelectBusiness = (businessId: string) => {
     // Store selected business in session/cookie
     localStorage.setItem('selectedBusinessId', businessId)
-    router.push('/dashboard')
+    
+    // Find the selected business to check its status
+    const selectedBusiness = businesses.find(b => b.id === businessId)
+    
+    if (selectedBusiness?.status === 'active') {
+      // Active business - go to business dashboard
+      router.push('/business')
+    } else if (selectedBusiness?.status === 'pending') {
+      // Pending business - go to waiting status page
+      router.push('/business-registration/status')
+    } else {
+      // Fallback for other statuses
+      router.push('/business')
+    }
   }
 
   const handleCreateNew = () => {
@@ -71,8 +84,8 @@ export default function BusinessSelectorPage() {
     ? [
         {
           id: business.id,
-          name: business.businessNameKey, // This might need translation
-          status: business.active ? 'active' : ('pending' as const),
+          name: business.businessName, // Now using resolved business name
+          status: business.approved && business.active ? 'active' : ('pending' as const),
           lastActivity: business.updatedAt,
         },
       ]

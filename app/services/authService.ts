@@ -51,17 +51,21 @@ export const getCurrentUser = cache(async (): Promise<User | null> => {
 })
 
 // Protect server actions and pages
-export async function requireAuth() {
+export async function requireAuth(): Promise<User> {
   const user = await getCurrentUser()
 
   if (!user) {
+    // Redirect to login when token is expired or user is not authenticated
+    const { redirect } = await import('next/navigation')
+    redirect('/login')
+    // TypeScript doesn't know redirect never returns
     throw new Error('Unauthorized')
   }
 
   return user
 }
 
-export async function requireRole(role: UserRoleType | UserRoleType[]) {
+export async function requireRole(role: UserRoleType | UserRoleType[]): Promise<User> {
   const user = await requireAuth()
   const roles = Array.isArray(role) ? role : [role]
 
@@ -72,7 +76,7 @@ export async function requireRole(role: UserRoleType | UserRoleType[]) {
   return user
 }
 
-export async function requireBusiness() {
+export async function requireBusiness(): Promise<User> {
   const user = await requireAuth()
 
   if (user.role !== UserRole.BUSINESS) {
@@ -82,12 +86,12 @@ export async function requireBusiness() {
   return user
 }
 
-export async function requireAdmin() {
+export async function requireAdmin(): Promise<User> {
   return requireRole(UserRole.ADMIN)
 }
 
 // Ensure user is either admin or business (dashboard access)
-export async function requireDashboardAccess() {
+export async function requireDashboardAccess(): Promise<User> {
   const user = await requireAuth()
 
   if (user.role !== UserRole.ADMIN && user.role !== UserRole.BUSINESS) {

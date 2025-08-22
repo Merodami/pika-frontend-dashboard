@@ -30,7 +30,7 @@ export const ADMIN_ROUTES = [
 
 // Business owner routes
 export const BUSINESS_ROUTES = [
-  '/dashboard',
+  '/business',
   '/vouchers',
   '/customers',
   '/analytics',

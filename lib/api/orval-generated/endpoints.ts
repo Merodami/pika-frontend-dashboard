@@ -54,6 +54,8 @@ import type {
   ClaimVoucher200,
   CleanupInternalOrphanedFiles200,
   CleanupInternalOrphanedFilesBody,
+  CompleteBusinessRegistration200,
+  CompleteBusinessRegistrationBody,
   CreateAdminBusiness201,
   CreateAdminBusinessBody,
   CreateAdminCategoryBody,
@@ -73,8 +75,6 @@ import type {
   CreateSupportCommentBody,
   CreateSupportProblem201,
   CreateSupportProblemBody,
-  DeregisterInternalService200,
-  DeregisterInternalServiceBody,
   DownloadVoucherBookPdf200,
   ForgotPassword200,
   ForgotPasswordBody,
@@ -117,6 +117,8 @@ import type {
   GetAdminVoucherListParams,
   GetBusinessList200,
   GetBusinessListParams,
+  GetBusinessRegistrationProgress200,
+  GetBusinessRegistrationStatus200,
   GetCategoryPath200,
   GetFileHistory200,
   GetFileHistoryParams,
@@ -133,13 +135,6 @@ import type {
   GetInternalCategoryList200,
   GetInternalCategoryListParams,
   GetInternalFileById200,
-  GetInternalServiceConfig200,
-  GetInternalServiceConfigParams,
-  GetInternalServiceEndpoints200,
-  GetInternalServiceEndpointsParams,
-  GetInternalServiceHealth200,
-  GetInternalServiceRegistry200,
-  GetInternalServiceRegistryParams,
   GetInternalStorageHealth200,
   GetInternalUserByEmail200,
   GetInternalUserByEmailBody,
@@ -186,8 +181,6 @@ import type {
   RedeemVoucher200,
   RefundAdminTransaction200,
   RefundAdminTransactionBody,
-  RegisterInternalService201,
-  RegisterInternalServiceBody,
   ResendAdminUserVerification200,
   ResendAdminUserVerificationBody,
   ResendVerification200,
@@ -199,6 +192,13 @@ import type {
   SendInternalSystemNotificationBody,
   SendInternalTransactionalEmail200,
   SendInternalTransactionalEmailBody,
+  StartBusinessRegistration200,
+  SubmitBusinessRegistrationStep1200,
+  SubmitBusinessRegistrationStep1Body,
+  SubmitBusinessRegistrationStep2200,
+  SubmitBusinessRegistrationStep2Body,
+  SubmitBusinessRegistrationStep3200,
+  SubmitBusinessRegistrationStep3Body,
   ToggleAdminCategoryActivationBody,
   UnbanAdminUserBody,
   UpdateAdminBusiness200,
@@ -306,7 +306,7 @@ export const createMyBusiness = (
   createMyBusinessBody: CreateMyBusinessBody
 ) => {
   return customInstance<CreateMyBusiness201>({
-    url: `/my/business`,
+    url: `/businesses/me`,
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     data: createMyBusinessBody,
@@ -318,7 +318,7 @@ export const createMyBusiness = (
  */
 export const getMyBusiness = () => {
   return customInstance<GetMyBusiness200>({
-    url: `/my/business`,
+    url: `/businesses/me`,
     method: 'GET',
   })
 }
@@ -330,7 +330,7 @@ export const updateMyBusiness = (
   updateMyBusinessBody: UpdateMyBusinessBody
 ) => {
   return customInstance<UpdateMyBusiness200>({
-    url: `/my/business`,
+    url: `/businesses/me`,
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     data: updateMyBusinessBody,
@@ -341,7 +341,93 @@ export const updateMyBusiness = (
  * @summary Delete my business
  */
 export const deleteMyBusiness = () => {
-  return customInstance<null>({ url: `/my/business`, method: 'DELETE' })
+  return customInstance<null>({ url: `/businesses/me`, method: 'DELETE' })
+}
+
+/**
+ * @summary Start business registration process
+ */
+export const startBusinessRegistration = () => {
+  return customInstance<StartBusinessRegistration200>({
+    url: `/businesses/registration/start`,
+    method: 'POST',
+  })
+}
+
+/**
+ * @summary Get current business registration status
+ */
+export const getBusinessRegistrationStatus = () => {
+  return customInstance<GetBusinessRegistrationStatus200>({
+    url: `/businesses/registration/status`,
+    method: 'GET',
+  })
+}
+
+/**
+ * @summary Get detailed registration progress with all step data
+ */
+export const getBusinessRegistrationProgress = () => {
+  return customInstance<GetBusinessRegistrationProgress200>({
+    url: `/businesses/registration/progress`,
+    method: 'GET',
+  })
+}
+
+/**
+ * @summary Submit business registration step 1 (basic info)
+ */
+export const submitBusinessRegistrationStep1 = (
+  submitBusinessRegistrationStep1Body: SubmitBusinessRegistrationStep1Body
+) => {
+  return customInstance<SubmitBusinessRegistrationStep1200>({
+    url: `/businesses/registration/step1`,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    data: submitBusinessRegistrationStep1Body,
+  })
+}
+
+/**
+ * @summary Submit business registration step 2 (details)
+ */
+export const submitBusinessRegistrationStep2 = (
+  submitBusinessRegistrationStep2Body: SubmitBusinessRegistrationStep2Body
+) => {
+  return customInstance<SubmitBusinessRegistrationStep2200>({
+    url: `/businesses/registration/step2`,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    data: submitBusinessRegistrationStep2Body,
+  })
+}
+
+/**
+ * @summary Submit business registration step 3 (additional info)
+ */
+export const submitBusinessRegistrationStep3 = (
+  submitBusinessRegistrationStep3Body: SubmitBusinessRegistrationStep3Body
+) => {
+  return customInstance<SubmitBusinessRegistrationStep3200>({
+    url: `/businesses/registration/step3`,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    data: submitBusinessRegistrationStep3Body,
+  })
+}
+
+/**
+ * @summary Complete business registration with user consent
+ */
+export const completeBusinessRegistration = (
+  completeBusinessRegistrationBody: CompleteBusinessRegistrationBody
+) => {
+  return customInstance<CompleteBusinessRegistration200>({
+    url: `/businesses/registration/complete`,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    data: completeBusinessRegistrationBody,
+  })
 }
 
 /**
@@ -2065,86 +2151,6 @@ export const validateInternalVoucher = (
 }
 
 /**
- * @summary Service health check
- */
-export const getInternalServiceHealth = () => {
-  return customInstance<GetInternalServiceHealth200>({
-    url: `/health`,
-    method: 'GET',
-  })
-}
-
-/**
- * @summary Get service registry
- */
-export const getInternalServiceRegistry = (
-  params?: GetInternalServiceRegistryParams
-) => {
-  return customInstance<GetInternalServiceRegistry200>({
-    url: `/services/registry`,
-    method: 'GET',
-    params,
-  })
-}
-
-/**
- * @summary Register service instance
- */
-export const registerInternalService = (
-  registerInternalServiceBody: RegisterInternalServiceBody
-) => {
-  return customInstance<RegisterInternalService201>({
-    url: `/services/register`,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    data: registerInternalServiceBody,
-  })
-}
-
-/**
- * @summary Deregister service instance
- */
-export const deregisterInternalService = (
-  instanceId: string,
-  deregisterInternalServiceBody: DeregisterInternalServiceBody
-) => {
-  return customInstance<DeregisterInternalService200>({
-    url: `/services/${instanceId}/deregister`,
-    method: 'DELETE',
-    headers: { 'Content-Type': 'application/json' },
-    data: deregisterInternalServiceBody,
-  })
-}
-
-/**
- * @summary Get service endpoints
- */
-export const getInternalServiceEndpoints = (
-  serviceName: string,
-  params?: GetInternalServiceEndpointsParams
-) => {
-  return customInstance<GetInternalServiceEndpoints200>({
-    url: `/services/${serviceName}/endpoints`,
-    method: 'GET',
-    params,
-  })
-}
-
-/**
- * @summary Get service configuration
- */
-export const getInternalServiceConfig = (
-  serviceName: string,
-  params?: GetInternalServiceConfigParams
-) => {
-  return customInstance<GetInternalServiceConfig200>({
-    url: `/config/${serviceName}`,
-    method: 'GET',
-    params,
-  })
-}
-
-/**
  * @summary Validate JWT token
  */
 export const validateInternalToken = (
@@ -2286,6 +2292,27 @@ export type UpdateMyBusinessResult = NonNullable<
 >
 export type DeleteMyBusinessResult = NonNullable<
   Awaited<ReturnType<typeof deleteMyBusiness>>
+>
+export type StartBusinessRegistrationResult = NonNullable<
+  Awaited<ReturnType<typeof startBusinessRegistration>>
+>
+export type GetBusinessRegistrationStatusResult = NonNullable<
+  Awaited<ReturnType<typeof getBusinessRegistrationStatus>>
+>
+export type GetBusinessRegistrationProgressResult = NonNullable<
+  Awaited<ReturnType<typeof getBusinessRegistrationProgress>>
+>
+export type SubmitBusinessRegistrationStep1Result = NonNullable<
+  Awaited<ReturnType<typeof submitBusinessRegistrationStep1>>
+>
+export type SubmitBusinessRegistrationStep2Result = NonNullable<
+  Awaited<ReturnType<typeof submitBusinessRegistrationStep2>>
+>
+export type SubmitBusinessRegistrationStep3Result = NonNullable<
+  Awaited<ReturnType<typeof submitBusinessRegistrationStep3>>
+>
+export type CompleteBusinessRegistrationResult = NonNullable<
+  Awaited<ReturnType<typeof completeBusinessRegistration>>
 >
 export type GetInternalCategoryListResult = NonNullable<
   Awaited<ReturnType<typeof getInternalCategoryList>>
@@ -2692,24 +2719,6 @@ export type BulkGetInternalVouchersResult = NonNullable<
 >
 export type ValidateInternalVoucherResult = NonNullable<
   Awaited<ReturnType<typeof validateInternalVoucher>>
->
-export type GetInternalServiceHealthResult = NonNullable<
-  Awaited<ReturnType<typeof getInternalServiceHealth>>
->
-export type GetInternalServiceRegistryResult = NonNullable<
-  Awaited<ReturnType<typeof getInternalServiceRegistry>>
->
-export type RegisterInternalServiceResult = NonNullable<
-  Awaited<ReturnType<typeof registerInternalService>>
->
-export type DeregisterInternalServiceResult = NonNullable<
-  Awaited<ReturnType<typeof deregisterInternalService>>
->
-export type GetInternalServiceEndpointsResult = NonNullable<
-  Awaited<ReturnType<typeof getInternalServiceEndpoints>>
->
-export type GetInternalServiceConfigResult = NonNullable<
-  Awaited<ReturnType<typeof getInternalServiceConfig>>
 >
 export type ValidateInternalTokenResult = NonNullable<
   Awaited<ReturnType<typeof validateInternalToken>>

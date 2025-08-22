@@ -346,7 +346,8 @@
     "lastActivity": "Last activity",
     "info": {
       "multipleBusinesses": "You can manage multiple businesses from one account"
-    }
+    },
+    "loading": "Loading..."
   },
   "businessRegistration": {
     "title": "Complete Your Business Registration",

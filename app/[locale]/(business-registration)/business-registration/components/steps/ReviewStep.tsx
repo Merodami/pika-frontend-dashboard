@@ -23,7 +23,7 @@ export function ReviewStep({ onSubmit }: ReviewStepProps) {
   // Get category name for display
   const { data: categoryData } = useCategoryTree()
   const findCategoryName = (categoryId: string): string => {
-    if (!categoryData?.categories) return categoryId
+    if (!categoryData?.data) return categoryId
 
     const findInTree = (nodes: any[]): string | null => {
       for (const node of nodes) {
@@ -36,7 +36,7 @@ export function ReviewStep({ onSubmit }: ReviewStepProps) {
       return null
     }
 
-    return findInTree(categoryData.categories) || categoryId
+    return findInTree(categoryData.data) || categoryId
   }
 
   const handleEdit = (step: number) => {
@@ -221,11 +221,11 @@ export function ReviewStep({ onSubmit }: ReviewStepProps) {
                       ([day, hours]: [string, any]) => (
                         <div key={day} className="text-sm">
                           <span className="font-medium capitalize">{day}:</span>{' '}
-                          {hours.closed
+                          {hours?.closed
                             ? 'Closed'
-                            : hours['24hours']
+                            : hours?.['24hours']
                               ? 'Open 24 hours'
-                              : `${hours.open || 'N/A'} - ${hours.close || 'N/A'}`}
+                              : `${hours?.open || 'N/A'} - ${hours?.close || 'N/A'}`}
                         </div>
                       )
                     )}

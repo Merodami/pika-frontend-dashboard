@@ -10,6 +10,8 @@ import { useRegistrationStore } from '../store/registrationStore'
 import {
   useStartRegistration,
   useCompleteRegistration,
+  useRegistrationStatus,
+  useRegistrationProgress,
 } from '@/hooks/api/businesses/useBusinessRegistration'
 import { BusinessInfoStep } from './steps/BusinessInfoStep'
 import { ContactDetailsStep } from './steps/ContactDetailsStep'
@@ -27,26 +29,54 @@ export function RegistrationWizard() {
     goToNextStep,
     goToPreviousStep,
     setCurrentStep,
+    initializeStep,
+    setCompletedSteps,
   } = useRegistrationStore()
 
   // React Query hooks for API calls
+  const { data: registrationStatus, isLoading: statusLoading } = useRegistrationStatus()
+  const { data: registrationProgress, isLoading: progressLoading } = useRegistrationProgress()
   const startRegistrationMutation = useStartRegistration()
   const completeRegistrationMutation = useCompleteRegistration()
 
-  // Start registration if not started
+  // Sync frontend state with backend state
   useEffect(() => {
-    if (currentStep === 0 || currentStep === 1) {
-      startRegistrationMutation.mutate(undefined, {
-        onSuccess: () => {
-          setCurrentStep(1)
-        },
-        onError: (error) => {
-          console.error('Failed to start registration:', error)
-          message.error(t('businessRegistration.messages.errorStarting'))
-        },
-      })
+    if (!statusLoading && registrationStatus) {
+      if (registrationStatus.needsRegistration && registrationStatus.currentStep === 0) {
+        // Reset store for fresh registration
+        const { reset } = useRegistrationStore.getState()
+        reset()
+        
+        // If registration needs to be started, start it
+        startRegistrationMutation.mutate(undefined, {
+          onSuccess: () => {
+            setCurrentStep(1)
+          },
+          onError: (error) => {
+            console.error('Failed to start registration:', error)
+            message.error(t('businessRegistration.messages.errorStarting'))
+          },
+        })
+      } else if (registrationStatus.needsRegistration && registrationStatus.currentStep > 0) {
+        // If registration is in progress, sync with backend's current step
+        setCurrentStep(registrationStatus.currentStep)
+      }
     }
-  }, [])
+  }, [registrationStatus, statusLoading, setCurrentStep, t, startRegistrationMutation])
+
+  // Sync completed steps with backend progress
+  useEffect(() => {
+    if (!progressLoading && registrationProgress) {
+      setCompletedSteps(registrationProgress.stepsCompleted)
+    }
+  }, [registrationProgress, progressLoading, setCompletedSteps])
+
+  // Initialize step based on persisted data only if we don't have backend status yet
+  useEffect(() => {
+    if (statusLoading) {
+      initializeStep()
+    }
+  }, [initializeStep, statusLoading])
 
   // Handle step submission
   const handleStepComplete = async () => {
@@ -65,9 +95,13 @@ export function RegistrationWizard() {
             t('businessRegistration.messages.registrationComplete')
           )
 
-          // Redirect to dashboard after successful registration
+          // Reset the store after successful registration
+          const { reset } = useRegistrationStore.getState()
+          reset()
+
+          // Redirect to status page to wait for approval
           setTimeout(() => {
-            router.push('/dashboard')
+            router.push('/business-registration/status')
           }, 2000)
         },
         onError: (error) => {

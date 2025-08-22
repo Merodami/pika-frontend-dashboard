@@ -6,6 +6,7 @@ import { AlertCircle, Building2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 
+import { useCurrentUser } from '@/hooks/api/users/useCurrentUser'
 import { useNeedsRegistration } from './hooks/useRegistrationStatus'
 import { useRegistrationStore } from './store/registrationStore'
 import { StepIndicator } from './components/StepIndicator'
@@ -14,6 +15,9 @@ import { RegistrationWizard } from './components/RegistrationWizard'
 export default function BusinessRegistrationPage() {
   const t = useTranslations('businessRegistration')
   const router = useRouter()
+
+  // Get current user to check for user changes
+  const { data: currentUser } = useCurrentUser()
 
   // Check registration status
   const {
@@ -24,14 +28,38 @@ export default function BusinessRegistrationPage() {
   } = useNeedsRegistration()
 
   // Get registration store
-  const { currentStep, completedSteps, status } = useRegistrationStore()
+  const { currentStep, completedSteps, status, checkAndResetForUser, reset } = useRegistrationStore()
+
+  // Check if user has changed and reset store if needed
+  useEffect(() => {
+    if (currentUser?.id) {
+      checkAndResetForUser(currentUser.id)
+    }
+  }, [currentUser?.id, checkAndResetForUser])
+  
+  // Reset store when starting fresh registration
+  useEffect(() => {
+    if (needsRegistration && statusLoading === false) {
+      // If backend says we need registration but we have old data, clear it
+      const state = useRegistrationStore.getState()
+      if (state.registrationId && !currentUser?.id) {
+        reset()
+      }
+    }
+  }, [needsRegistration, statusLoading, currentUser?.id, reset])
 
   // Progress loading is now handled by React Query hooks in components
 
   // Redirect if registration not needed
   useEffect(() => {
-    if (!statusLoading && !needsRegistration && canAccessDashboard) {
-      router.push('/dashboard')
+    if (!statusLoading && !needsRegistration) {
+      if (canAccessDashboard) {
+        // Registration approved - go to business dashboard
+        router.push('/business')
+      } else {
+        // Registration submitted but not approved - show waiting page
+        router.push('/business-registration/status')
+      }
     }
   }, [needsRegistration, canAccessDashboard, statusLoading, router])
 

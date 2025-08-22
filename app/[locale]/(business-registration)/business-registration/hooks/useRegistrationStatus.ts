@@ -5,7 +5,7 @@ import { businessPublic } from '@merodami/pika-api'
 
 // API function to get registration status
 async function getRegistrationStatus() {
-  const response = await fetch('/api/businesses/registration/status', {
+  const response = await fetch('/api/proxy/businesses/registration/status', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

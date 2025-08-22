@@ -8,6 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslations } from 'next-intl'
 import { businessPublic } from '@merodami/pika-api'
 import { useRegistrationStore } from '../../store/registrationStore'
+import { useSubmitStep3 } from '@/hooks/api/businesses/useBusinessRegistration'
 import { debounce } from 'lodash'
 import dayjs from 'dayjs'
 
@@ -64,6 +65,7 @@ export function AdditionalInfoStep({ onComplete }: AdditionalInfoStepProps) {
   const [showSocialMedia, setShowSocialMedia] = useState(false)
 
   const { step3Data, saveStep3Data, markStepCompleted } = useRegistrationStore()
+  const submitStep3Mutation = useSubmitStep3()
 
   const form = useForm({
     resolver: zodResolver(
@@ -108,14 +110,22 @@ export function AdditionalInfoStep({ onComplete }: AdditionalInfoStepProps) {
       const validated =
         businessPublic.BusinessRegistrationStep3RequestSchema.parse(data)
 
-      // Save to store
+      // Save to store first
       saveStep3Data(validated)
-      markStepCompleted(3)
-
-      // Data saved to store
-
-      message.success(t('messages.stepCompleted', { step: 3 }))
-      onComplete()
+      
+      // Submit to backend
+      submitStep3Mutation.mutate(validated, {
+        onSuccess: () => {
+          // Only mark as completed after successful API call
+          markStepCompleted(3)
+          message.success(t('messages.stepCompleted', { step: 3 }))
+          onComplete()
+        },
+        onError: (error) => {
+          console.error('Failed to submit step 3:', error)
+          message.error('Failed to save step 3. Please try again.')
+        },
+      })
     } catch (error) {
       message.error('Please check your information')
     }

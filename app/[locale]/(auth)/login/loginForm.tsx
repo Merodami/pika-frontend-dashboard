@@ -18,6 +18,7 @@ import {
   transformLoginToTokenRequest,
   type LoginFormData,
 } from '@/lib/validations/auth'
+import { getCurrentLocale } from '@/lib/utils/locale'
 
 // Extract input and output types for proper branded type handling
 type LoginFormInput = z.input<typeof LoginFormSchema>
@@ -26,10 +27,13 @@ type LoginFormOutput = z.output<typeof LoginFormSchema>
 export function LoginForm() {
   const t = useTranslations('auth.login')
   const tErrors = useTranslations('errors')
-  const router = useLocalizedRouter()
+  const localizedRouter = useLocalizedRouter()
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const { formDrafts, saveFormDraft, clearFormDraft } = useAppStore()
+
+  // Get locale from URL, router, or system preference
+  const currentLocale = localizedRouter.locale || getCurrentLocale()
 
   const isDevelopment = process.env.NODE_ENV === 'development'
 
@@ -73,41 +77,60 @@ export function LoginForm() {
 
         // For business users, check if they need registration
         if (result.user?.role === 'business') {
+          console.log('Business user detected, checking registration status...')
+          console.log('User data:', result.user)
+          console.log('Access token available:', !!result.accessToken)
+          
           // First, hit the registration status endpoint to set cookies
           try {
             const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5500/api/v1'
-            // The auth cookies should already be set from the login response
-            // We need to pass the access token in the Authorization header
+            console.log('Making request to:', `${apiUrl}/businesses/registration/status`)
+            
+            // We pass the access token in the Authorization header
             const statusResponse = await fetch(`${apiUrl}/businesses/registration/status`, {
               method: 'GET',
-              credentials: 'include',
               headers: {
                 'Authorization': `Bearer ${result.accessToken}`,
                 'Content-Type': 'application/json',
               },
             })
             
+            console.log('Registration status response status:', statusResponse.status)
+            console.log('Registration status response headers:', Object.fromEntries(statusResponse.headers.entries()))
+            
             if (statusResponse.ok) {
               const statusData = await statusResponse.json()
+              console.log('Registration status data (full):', JSON.stringify(statusData, null, 2))
+              console.log('needsRegistration value:', statusData.needsRegistration)
+              console.log('needsRegistration type:', typeof statusData.needsRegistration)
               
               // Redirect based on registration status
               const redirectPath = statusData.needsRegistration
-                ? `/${router.locale}/business-selector`
-                : `/${router.locale}/business`
+                ? `/${currentLocale}/business-selector`
+                : `/${currentLocale}/business`
+              
+              console.log('Will redirect to:', redirectPath)
+              console.log('Condition: needsRegistration =', statusData.needsRegistration)
               
               // Force page reload to ensure cookies are properly set and middleware runs
               window.location.href = redirectPath
             } else {
+              const errorText = await statusResponse.text()
+              console.error('Failed to check registration status:', statusResponse.status, statusResponse.statusText)
+              console.error('Error response body:', errorText)
+              
               // If status check fails, redirect to business dashboard anyway
-              window.location.href = `/${router.locale}/business`
+              window.location.href = `/${currentLocale}/business`
             }
-          } catch {
+          } catch (error) {
+            console.error('Error checking registration status:', error)
+            
             // If status check fails, redirect to business dashboard anyway
-            window.location.href = `/${router.locale}/business`
+            window.location.href = `/${currentLocale}/business`
           }
         } else {
           // Admin users go directly to admin dashboard
-          const redirectPath = `/${router.locale}/admin`
+          const redirectPath = `/${currentLocale}/admin`
           // Force page reload to ensure cookies are properly set and middleware runs
           window.location.href = redirectPath
         }
