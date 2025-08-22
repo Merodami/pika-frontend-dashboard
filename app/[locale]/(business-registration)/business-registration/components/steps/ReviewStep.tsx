@@ -17,7 +17,7 @@ export function ReviewStep({ onSubmit }: ReviewStepProps) {
   const tBusiness = useTranslations('businessRegistration.steps')
   const [confirmed, setConfirmed] = useState(false)
 
-  const { step1Data, step2Data, step3Data, currentStep, setCurrentStep } =
+  const { step1Data, step2Data, step3Data, setCurrentStep } =
     useRegistrationStore()
 
   // Get category name for display
@@ -216,18 +216,19 @@ export function ReviewStep({ onSubmit }: ReviewStepProps) {
                 label={tBusiness('additionalInfo.fields.operatingHours.label')}
               >
                 <div className="space-y-1">
-                  {Object.entries(step3Data.operatingHours).map(
-                    ([day, hours]: [string, any]) => (
-                      <div key={day} className="text-sm">
-                        <span className="font-medium capitalize">{day}:</span>{' '}
-                        {hours.closed
-                          ? 'Closed'
-                          : hours['24hours']
-                            ? 'Open 24 hours'
-                            : `${hours.open || 'N/A'} - ${hours.close || 'N/A'}`}
-                      </div>
-                    )
-                  )}
+                  {step3Data &&
+                    Object.entries(step3Data.operatingHours || {}).map(
+                      ([day, hours]: [string, any]) => (
+                        <div key={day} className="text-sm">
+                          <span className="font-medium capitalize">{day}:</span>{' '}
+                          {hours.closed
+                            ? 'Closed'
+                            : hours['24hours']
+                              ? 'Open 24 hours'
+                              : `${hours.open || 'N/A'} - ${hours.close || 'N/A'}`}
+                        </div>
+                      )
+                    )}
                 </div>
               </Descriptions.Item>
             )}

@@ -76,6 +76,7 @@
     "settings": "Configuración",
     "profile": "Mi Perfil",
     "myBusiness": "Mi Negocio",
+    "schedule": "Horario",
     "payments": "Pagos",
     "support": "Soporte",
     "reports": "Informes",
@@ -236,7 +237,15 @@
       "lastLogin": "Último Acceso",
       "changePassword": "Cambiar Contraseña",
       "twoFactor": "Autenticación de Dos Factores",
-      "verifyEmail": "Verificar Correo"
+      "verifyEmail": "Verificar Correo",
+      "emailVerified": "Correo Verificado",
+      "phoneVerified": "Teléfono Verificado"
+    },
+    "preferences": {
+      "title": "Preferencias",
+      "language": "Idioma Preferido",
+      "timezone": "Zona Horaria",
+      "notifications": "Notificaciones"
     },
     "status": {
       "active": "Activo",
@@ -314,6 +323,193 @@
       "business": "Negocio",
       "customer": "Cliente",
       "user": "Usuario"
+    }
+  },
+  "businessSelector": {
+    "title": {
+      "select": "Selecciona Tu Negocio",
+      "create": "Crea Tu Primer Negocio"
+    },
+    "subtitle": {
+      "select": "Elige un negocio para administrar o crea uno nuevo",
+      "create": "Comienza creando tu primer negocio"
+    },
+    "createNew": {
+      "title": "Crear Nuevo Negocio",
+      "description": "Agregar un nuevo negocio a tu cuenta"
+    },
+    "status": {
+      "active": "Activo",
+      "pending": "Pendiente",
+      "suspended": "Suspendido"
+    },
+    "lastActivity": "Última actividad",
+    "loading": "Cargando...",
+    "info": {
+      "multipleBusinesses": "Puedes administrar múltiples negocios desde una cuenta"
+    }
+  },
+  "businessRegistration": {
+    "title": "Completa el Registro de Tu Negocio",
+    "subtitle": "Por favor proporciona información sobre tu negocio para comenzar",
+    "progress": "Paso {{current}} de {{total}}",
+    "mandatory": "Este registro es obligatorio para acceder a tu panel",
+    "cannotSkip": "Debes completar todos los pasos antes de acceder al panel",
+    "steps": {
+      "businessInfo": {
+        "title": "Información del Negocio",
+        "description": "Detalles básicos sobre tu negocio",
+        "fields": {
+          "businessName": {
+            "label": "Nombre del Negocio",
+            "placeholder": "Ingresa el nombre de tu negocio",
+            "hint": "Así es como los clientes verán tu negocio"
+          },
+          "businessType": {
+            "label": "Tipo de Negocio",
+            "placeholder": "Selecciona el tipo de negocio",
+            "options": {
+              "retail": "Venta al por menor",
+              "service": "Servicio",
+              "restaurant": "Restaurante",
+              "healthcare": "Salud",
+              "fitness": "Fitness",
+              "education": "Educación",
+              "entertainment": "Entretenimiento",
+              "other": "Otro"
+            }
+          },
+          "category": {
+            "label": "Categoría del Negocio",
+            "placeholder": "Selecciona una categoría",
+            "loading": "Cargando categorías..."
+          },
+          "primaryLanguage": {
+            "label": "Idioma Principal",
+            "placeholder": "Selecciona idioma principal",
+            "hint": "El idioma principal para las operaciones de tu negocio"
+          }
+        }
+      },
+      "contactDetails": {
+        "title": "Contacto y Ubicación",
+        "description": "Cómo los clientes pueden contactarte",
+        "fields": {
+          "description": {
+            "label": "Descripción del Negocio",
+            "placeholder": "Describe tu negocio...",
+            "hint": "Cuéntales a los clientes qué ofreces (mínimo 50 caracteres)"
+          },
+          "address": {
+            "label": "Dirección del Negocio",
+            "street": {
+              "label": "Dirección",
+              "placeholder": "Calle Principal 123"
+            },
+            "city": {
+              "label": "Ciudad",
+              "placeholder": "Asunción"
+            },
+            "state": {
+              "label": "Estado/Provincia",
+              "placeholder": "Central"
+            },
+            "postalCode": {
+              "label": "Código Postal",
+              "placeholder": "1001"
+            },
+            "country": {
+              "label": "País",
+              "placeholder": "Selecciona país"
+            }
+          },
+          "phone": {
+            "label": "Teléfono del Negocio",
+            "placeholder": "+595 (21) 123-4567",
+            "hint": "Incluye código de país"
+          },
+          "email": {
+            "label": "Correo del Negocio",
+            "placeholder": "contacto@negocio.com",
+            "hint": "Opcional - para consultas de clientes"
+          },
+          "website": {
+            "label": "Sitio Web",
+            "placeholder": "https://www.tunegocio.com",
+            "hint": "Opcional - sitio web de tu negocio"
+          }
+        }
+      },
+      "additionalInfo": {
+        "title": "Información Adicional",
+        "description": "Detalles opcionales para mejorar tu perfil",
+        "fields": {
+          "operatingHours": {
+            "label": "Horarios de Operación",
+            "addHours": "Agregar Horarios de Operación",
+            "closed": "Cerrado",
+            "open24h": "Abierto 24 horas",
+            "days": {
+              "monday": "Lunes",
+              "tuesday": "Martes",
+              "wednesday": "Miércoles",
+              "thursday": "Jueves",
+              "friday": "Viernes",
+              "saturday": "Sábado",
+              "sunday": "Domingo"
+            }
+          },
+          "socialMedia": {
+            "label": "Redes Sociales",
+            "addLink": "Agregar Enlace de Redes Sociales",
+            "platforms": {
+              "facebook": "Facebook",
+              "instagram": "Instagram",
+              "twitter": "Twitter",
+              "linkedin": "LinkedIn",
+              "youtube": "YouTube",
+              "tiktok": "TikTok"
+            }
+          },
+          "additionalInfo": {
+            "label": "Información Adicional",
+            "placeholder": "Cualquier otra información que quieras agregar...",
+            "hint": "Opcional - servicios especiales, información de estacionamiento, etc."
+          }
+        }
+      },
+      "review": {
+        "title": "Revisar y Enviar",
+        "description": "Revisa tu información antes de enviar",
+        "checkInfo": "Por favor revisa toda la información cuidadosamente",
+        "editSection": "Editar {{section}}",
+        "sections": {
+          "businessInfo": "Información del Negocio",
+          "contactDetails": "Contacto y Ubicación",
+          "additionalInfo": "Información Adicional"
+        },
+        "confirmation": {
+          "title": "¿Listo para Enviar?",
+          "message": "Al enviar, confirmas que toda la información proporcionada es precisa y está actualizada.",
+          "checkbox": "Confirmo que toda la información es correcta"
+        }
+      }
+    },
+    "messages": {
+      "loading": "Cargando...",
+      "savingProgress": "Guardando tu progreso...",
+      "progressSaved": "Progreso guardado exitosamente",
+      "stepCompleted": "Paso {{step}} completado exitosamente",
+      "registrationComplete": "¡Registro enviado exitosamente!",
+      "redirecting": "Redirigiendo al panel...",
+      "errorSaving": "Error al guardar progreso. Por favor intenta de nuevo.",
+      "errorSubmitting": "Error al enviar registro. Por favor intenta de nuevo.",
+      "sessionExpired": "Tu sesión ha expirado. Por favor inicia sesión de nuevo.",
+      "networkError": "Error de red. Por favor revisa tu conexión."
+    },
+    "warnings": {
+      "unsavedChanges": "Tienes cambios sin guardar. ¿Estás seguro de que quieres salir?",
+      "incompleteStep": "Por favor completa todos los campos requeridos antes de continuar"
     }
   }
 }

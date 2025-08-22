@@ -7,12 +7,17 @@ import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslations } from 'next-intl'
 import { businessPublic } from '@merodami/pika-api'
+import type { z } from 'zod'
 import { useRegistrationStore } from '../../store/registrationStore'
 import { debounce } from 'lodash'
 
 interface ContactDetailsStepProps {
   onComplete: () => void
 }
+
+type BusinessRegistrationStep2Data = z.infer<
+  typeof businessPublic.BusinessRegistrationStep2RequestSchema
+>
 
 const COUNTRIES = [
   { value: 'US', label: 'United States' },
@@ -38,11 +43,13 @@ export function ContactDetailsStep({ onComplete }: ContactDetailsStepProps) {
   const t = useTranslations('businessRegistration.steps.contactDetails')
   const tCommon = useTranslations('common')
 
-  const { step2Data, saveStep2Data, markStepCompleted, saveProgress } =
-    useRegistrationStore()
+  const { step2Data, saveStep2Data, markStepCompleted } = useRegistrationStore()
 
-  const form = useForm({
-    resolver: zodResolver(businessPublic.CreateBusinessStep2Request),
+  const form = useForm<BusinessRegistrationStep2Data>({
+    resolver: zodResolver(
+      businessPublic.BusinessRegistrationStep2RequestSchema
+    ),
+    mode: 'onChange',
     defaultValues: step2Data || {
       description: '',
       address: {
@@ -62,7 +69,6 @@ export function ContactDetailsStep({ onComplete }: ContactDetailsStepProps) {
   const autoSave = debounce(async (data: any) => {
     try {
       saveStep2Data(data)
-      await saveProgress()
     } catch (error) {
       console.error('Auto-save failed:', error)
     }
@@ -79,14 +85,14 @@ export function ContactDetailsStep({ onComplete }: ContactDetailsStepProps) {
   const onSubmit = async (data: any) => {
     try {
       // Validate data
-      const validated = businessPublic.CreateBusinessStep2Request.parse(data)
+      const validated =
+        businessPublic.BusinessRegistrationStep2RequestSchema.parse(data)
 
       // Save to store
       saveStep2Data(validated)
       markStepCompleted(2)
 
-      // Save progress to backend
-      await saveProgress()
+      // Data saved to store
 
       message.success(t('messages.stepCompleted', { step: 2 }))
       onComplete()

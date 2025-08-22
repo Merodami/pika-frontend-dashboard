@@ -7,6 +7,8 @@ import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslations } from 'next-intl'
 import { businessPublic } from '@merodami/pika-api'
+import { BusinessType } from '@merodami/pika-types'
+import type { z } from 'zod'
 import { useCategoryTree } from '@/hooks/api/categories/useCategories'
 import { useSubmitStep1 } from '@/hooks/api/businesses/useBusinessRegistration'
 import { useRegistrationStore } from '../../store/registrationStore'
@@ -15,6 +17,10 @@ import { debounce } from 'lodash'
 interface BusinessInfoStepProps {
   onComplete: () => void
 }
+
+type BusinessRegistrationStep1Data = z.infer<
+  typeof businessPublic.BusinessRegistrationStep1RequestSchema
+>
 
 type CategoryTreeNode = {
   id: string
@@ -40,12 +46,15 @@ export function BusinessInfoStep({ onComplete }: BusinessInfoStepProps) {
   // React Query mutation for submitting step 1
   const submitStep1Mutation = useSubmitStep1()
 
-  const form = useForm({
-    resolver: zodResolver(businessPublic.BusinessRegistrationStep1Request),
+  const form = useForm<BusinessRegistrationStep1Data>({
+    resolver: zodResolver(
+      businessPublic.BusinessRegistrationStep1RequestSchema
+    ),
+    mode: 'onChange',
     defaultValues: step1Data || {
       businessName: '',
-      businessType: undefined,
-      categoryId: undefined,
+      businessType: BusinessType.OTHER,
+      categoryId: '',
       primaryLanguage: 'en',
     },
   })
@@ -232,7 +241,15 @@ export function BusinessInfoStep({ onComplete }: BusinessInfoStepProps) {
                     ? t('fields.category.loading')
                     : 'No categories available'
                 }
-                options={flattenCategories(categories)}
+                options={flattenCategories(
+                  categories.map((cat: any) => ({
+                    id: cat.id,
+                    name: cat.name || cat.title,
+                    slug: cat.slug,
+                    parentId: cat.parentId,
+                    children: cat.children,
+                  }))
+                )}
                 showSearch
                 filterOption={(input, option) =>
                   (option?.label ?? '')

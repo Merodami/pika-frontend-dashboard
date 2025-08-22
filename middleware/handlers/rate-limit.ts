@@ -1,4 +1,3 @@
-import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
 /**
@@ -17,7 +16,7 @@ import { NextResponse } from 'next/server'
  * @see /RATE_LIMITING_STRATEGY.md for detailed analysis
  */
 export async function withRateLimit(
-  request: NextRequest,
+  _request: any,
   response?: NextResponse
 ): Promise<NextResponse> {
   // Rate limiting is handled by backend

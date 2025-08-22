@@ -75,7 +75,14 @@
     "analytics": "Jehechaukaha",
     "settings": "Ñemboheko",
     "profile": "Che Perfil",
-    "myBusiness": "Che Negósio"
+    "myBusiness": "Che Negósio",
+    "schedule": "Arange",
+    "payments": "Jehepyme'ẽ",
+    "support": "Pytyvõ",
+    "reports": "Marandu",
+    "customers": "Joguaha",
+    "bookings": "Ñemboguapy",
+    "messages": "Marandu"
   },
   "dashboard": {
     "title": "Panel Ñangarekoha",
@@ -200,7 +207,15 @@
       "lastLogin": "Jeike Paha",
       "changePassword": "Emoambue Ñe'ẽñemi",
       "twoFactor": "Mokõi Factor Ñemoneĩ",
-      "verifyEmail": "Ehechajey Correo"
+      "verifyEmail": "Ehechajey Correo",
+      "emailVerified": "Correo Ojehechajey",
+      "phoneVerified": "Teléfono Ojehechajey"
+    },
+    "preferences": {
+      "title": "Mba'e Reipotáva",
+      "language": "Ñe'ẽ Reipotáva",
+      "timezone": "Aravo Zona",
+      "notifications": "Marandu"
     },
     "status": {
       "active": "Oĩva",
@@ -239,6 +254,193 @@
     "profile": {
       "title": "Marandu Personal",
       "description": "Ne cuenta marandu ha detalle"
+    }
+  },
+  "businessSelector": {
+    "title": {
+      "select": "Eiporavo Ne Negósio",
+      "create": "Emoheñói Ne Peteĩha Negósio"
+    },
+    "subtitle": {
+      "select": "Eiporavo peteĩ negósio emohenda hag̃ua térã emoheñói pyahu",
+      "create": "Ñepyrũ emoheñóivo ne peteĩha negósio"
+    },
+    "createNew": {
+      "title": "Emoheñói Negósio Pyahu",
+      "description": "Embojuaju peteĩ negósio pyahu ne cuenta-pe"
+    },
+    "status": {
+      "active": "Hendýva",
+      "pending": "Oha'arõva",
+      "suspended": "Ojejokóva"
+    },
+    "lastActivity": "Tembiapokue paha",
+    "loading": "Henyhẽhína...",
+    "info": {
+      "multipleBusinesses": "Ikatu emohenda heta negósio peteĩ cuenta-gui"
+    }
+  },
+  "businessRegistration": {
+    "title": "Emyenyhẽ Ne Negósio Ñemboguapy",
+    "subtitle": "Eikuaauka marandu ne negósio rehegua eñepyrũ hag̃ua",
+    "progress": "{{current}}-ha paso {{total}}-gui",
+    "mandatory": "Ko ñemboguapy oñeikotevẽ eike hag̃ua ne panel-pe",
+    "cannotSkip": "Erembotýva'erã opaite paso eike mboyve panel-pe",
+    "steps": {
+      "businessInfo": {
+        "title": "Negósio Marandu",
+        "description": "Marandu ypykuéva ne negósio rehegua",
+        "fields": {
+          "businessName": {
+            "label": "Negósio Réra",
+            "placeholder": "Emoinge ne negósio réra",
+            "hint": "Péicha ohecha ne joguarãnguéra ne negósio"
+          },
+          "businessType": {
+            "label": "Negósio Tipo",
+            "placeholder": "Eiporavo negósio tipo",
+            "options": {
+              "retail": "Ñemuha",
+              "service": "Servísio",
+              "restaurant": "Tembi'u róga",
+              "healthcare": "Tesãi",
+              "fitness": "Ñemopu'ã",
+              "education": "Tekombo'e",
+              "entertainment": "Ñembosarái",
+              "other": "Ambue"
+            }
+          },
+          "category": {
+            "label": "Negósio Aty",
+            "placeholder": "Eiporavo peteĩ aty",
+            "loading": "Oñehenyhẽhína aty..."
+          },
+          "primaryLanguage": {
+            "label": "Ñe'ẽ Tenondegua",
+            "placeholder": "Eiporavo ñe'ẽ tenondegua",
+            "hint": "Ñe'ẽ tenondegua ne negósio rembiapo-pe g̃uarã"
+          }
+        }
+      },
+      "contactDetails": {
+        "title": "Ñe'ẽjoaju ha Kundahápe",
+        "description": "Mba'éichapa joguarãnguéra ikatu oñe'ẽ nendive",
+        "fields": {
+          "description": {
+            "label": "Negósio Ñemombe'u",
+            "placeholder": "Emombe'u ne negósio...",
+            "hint": "Ere joguarãnguérape mba'épa ome'ẽ (sa'ive 50 tai)"
+          },
+          "address": {
+            "label": "Negósio Kundahápe",
+            "street": {
+              "label": "Tape",
+              "placeholder": "Tape Tenondegua 123"
+            },
+            "city": {
+              "label": "Táva",
+              "placeholder": "Asunción"
+            },
+            "state": {
+              "label": "Tetã/Provincia",
+              "placeholder": "Central"
+            },
+            "postalCode": {
+              "label": "Código Postal",
+              "placeholder": "1001"
+            },
+            "country": {
+              "label": "Tetã",
+              "placeholder": "Eiporavo tetã"
+            }
+          },
+          "phone": {
+            "label": "Negósio Pumbyry",
+            "placeholder": "+595 (21) 123-4567",
+            "hint": "Emoinge tetã código"
+          },
+          "email": {
+            "label": "Negósio Ñanduti Veve",
+            "placeholder": "ñe'ẽjoaju@negósio.com",
+            "hint": "Oikeséva - joguarãnguéra porandu rã"
+          },
+          "website": {
+            "label": "Ñanduti Renda",
+            "placeholder": "https://www.nenegósio.com",
+            "hint": "Oikeséva - ne negósio ñanduti renda"
+          }
+        }
+      },
+      "additionalInfo": {
+        "title": "Marandu Mboyve",
+        "description": "Mba'e oikeséva omyasãi hag̃ua ne perfil",
+        "fields": {
+          "operatingHours": {
+            "label": "Mba'eapo Aravo",
+            "addHours": "Embojuaju Mba'eapo Aravo",
+            "closed": "Hendy'ỹva",
+            "open24h": "Ijuruja 24 aravo",
+            "days": {
+              "monday": "Mande",
+              "tuesday": "Ara'apy",
+              "wednesday": "Ara'aro",
+              "thursday": "Ara'apo",
+              "friday": "Ara'aime",
+              "saturday": "Ara'apy",
+              "sunday": "Ara'are"
+            }
+          },
+          "socialMedia": {
+            "label": "Ñanduti Social",
+            "addLink": "Embojuaju Ñanduti Social Joaju",
+            "platforms": {
+              "facebook": "Facebook",
+              "instagram": "Instagram",
+              "twitter": "Twitter",
+              "linkedin": "LinkedIn",
+              "youtube": "YouTube",
+              "tiktok": "TikTok"
+            }
+          },
+          "additionalInfo": {
+            "label": "Marandu Mboyve",
+            "placeholder": "Oimeraẽ ambue marandu reipotáva remoinge...",
+            "hint": "Oikeséva - servísio especial, auto ñongatu marandu, ha'eñóva"
+          }
+        }
+      },
+      "review": {
+        "title": "Ehecha ha Emondo",
+        "description": "Ehecha ne marandu emondo mboyve",
+        "checkInfo": "Ehecha porãite opaite marandu",
+        "editSection": "Embosakói {{section}}",
+        "sections": {
+          "businessInfo": "Negósio Marandu",
+          "contactDetails": "Ñe'ẽjoaju ha Kundahápe",
+          "additionalInfo": "Marandu Mboyve"
+        },
+        "confirmation": {
+          "title": "¿Oĩmápa Emondo hag̃ua?",
+          "message": "Emondóvo, emoneĩ opaite marandu ome'ẽva ha'eha añetéva ha oñembopyahúva.",
+          "checkbox": "Amoneĩ opaite marandu añetéva"
+        }
+      }
+    },
+    "messages": {
+      "loading": "Henyhẽhína...",
+      "savingProgress": "Oñeñongatúhina ne progreso...",
+      "progressSaved": "Progreso oñeñongatu porã",
+      "stepCompleted": "{{step}}-ha paso oñemba'apo porã",
+      "registrationComplete": "¡Ñemboguapy oñemondo porã!",
+      "redirecting": "Ojerahátahína panel-pe...",
+      "errorSaving": "Ojavy oñongatu progreso. Eha'ã jey.",
+      "errorSubmitting": "Ojavy oñemondo ñemboguapy. Eha'ã jey.",
+      "sessionExpired": "Ne sesión opáma. Eike jey.",
+      "networkError": "Ñanduti jejavy. Ehecha ne jeike."
+    },
+    "warnings": {
+      "unsavedChanges": "Oguereko ñemoambue noñeñongatúiva. ¿Añetehápe resẽsépa?",
+      "incompleteStep": "Emyenyhẽ opaite tenda oñeikotevẽva eku'e mboyve"
     }
   }
 }

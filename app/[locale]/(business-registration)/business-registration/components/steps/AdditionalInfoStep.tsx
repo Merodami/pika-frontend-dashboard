@@ -1,15 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import {
-  Form,
-  Input,
-  Select,
-  Button,
-  TimePicker,
-  Card,
-  message,
-} from 'antd'
+import { Form, Input, Select, Button, TimePicker, Card, message } from 'antd'
 import { Clock, Globe, Info, Plus, X } from 'lucide-react'
 import { useForm, Controller, useFieldArray } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -71,11 +63,12 @@ export function AdditionalInfoStep({ onComplete }: AdditionalInfoStepProps) {
   const [showOperatingHours, setShowOperatingHours] = useState(false)
   const [showSocialMedia, setShowSocialMedia] = useState(false)
 
-  const { step3Data, saveStep3Data, markStepCompleted } =
-    useRegistrationStore()
+  const { step3Data, saveStep3Data, markStepCompleted } = useRegistrationStore()
 
   const form = useForm({
-    resolver: zodResolver(businessPublic.BusinessRegistrationStep3RequestSchema),
+    resolver: zodResolver(
+      businessPublic.BusinessRegistrationStep3RequestSchema
+    ),
     defaultValues: step3Data || {
       operatingHours: {},
       socialMedia: {},
@@ -96,7 +89,6 @@ export function AdditionalInfoStep({ onComplete }: AdditionalInfoStepProps) {
   const autoSave = debounce(async (data: any) => {
     try {
       saveStep3Data(data)
-      await saveProgress()
     } catch (error) {
       console.error('Auto-save failed:', error)
     }
@@ -113,14 +105,14 @@ export function AdditionalInfoStep({ onComplete }: AdditionalInfoStepProps) {
   const onSubmit = async (data: any) => {
     try {
       // Validate data
-      const validated = businessPublic.BusinessRegistrationStep3RequestSchema.parse(data)
+      const validated =
+        businessPublic.BusinessRegistrationStep3RequestSchema.parse(data)
 
       // Save to store
       saveStep3Data(validated)
       markStepCompleted(3)
 
-      // Save progress to backend
-      await saveProgress()
+      // Data saved to store
 
       message.success(t('messages.stepCompleted', { step: 3 }))
       onComplete()

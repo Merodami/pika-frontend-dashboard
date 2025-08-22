@@ -9,7 +9,8 @@ export const antdTheme: ThemeConfig = {
     colorInfo: '#0891b2', // Cyan-600
     borderRadius: 8,
     fontSize: 14,
-    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+    fontFamily:
+      '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
   },
   components: {
     Button: {

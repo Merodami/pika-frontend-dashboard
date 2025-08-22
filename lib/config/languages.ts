@@ -1,4 +1,4 @@
-import { SupportedLanguage, LanguageCode } from '@merodami/pika-types'
+import { SupportedLanguage } from '@merodami/pika-types'
 
 // Map language codes to their display labels (fallback if translation not found)
 export const LANGUAGE_LABELS: Record<string, string> = {
@@ -31,4 +31,5 @@ export const getLanguageLabel = (code: string, t: any): string => {
   return LANGUAGE_LABELS[code] || code.toUpperCase()
 }
 
-export { SupportedLanguage, LanguageCode } from '@merodami/pika-types'
+export type { LanguageCode } from '@merodami/pika-types'
+export { SupportedLanguage } from '@merodami/pika-types'

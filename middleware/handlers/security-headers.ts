@@ -13,7 +13,7 @@ export async function withSecurityHeaders(
 
   // Apply security headers based on environment
   if (process.env.NODE_ENV === 'production') {
-    applyProductionHeaders(headers, request)
+    applyProductionHeaders(headers)
   } else {
     applyDevelopmentHeaders(headers)
   }
@@ -55,7 +55,7 @@ function applyCommonHeaders(headers: Headers) {
 /**
  * Production-specific security headers
  */
-function applyProductionHeaders(headers: Headers, request: NextRequest) {
+function applyProductionHeaders(headers: Headers) {
   // Strict Transport Security (HSTS)
   headers.set(
     'Strict-Transport-Security',

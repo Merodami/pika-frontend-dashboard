@@ -101,9 +101,11 @@ export function RegistrationWizard() {
   return (
     <div className="space-y-6">
       {/* Error display */}
-      {(startRegistrationMutation.error || completeRegistrationMutation.error) && (
+      {(startRegistrationMutation.error ||
+        completeRegistrationMutation.error) && (
         <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-          {startRegistrationMutation.error?.message || completeRegistrationMutation.error?.message}
+          {startRegistrationMutation.error?.message ||
+            completeRegistrationMutation.error?.message}
         </div>
       )}
 

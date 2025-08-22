@@ -71,14 +71,46 @@ export function LoginForm() {
         // Clear form draft on success
         clearFormDraft('login')
 
-        // Redirect based on user role
-        const redirectPath =
-          result.user?.role === 'admin'
-            ? `/${router.locale}/admin`
-            : `/${router.locale}/business`
-
-        // Force page reload to ensure cookies are properly set and middleware runs
-        window.location.href = redirectPath
+        // For business users, check if they need registration
+        if (result.user?.role === 'business') {
+          // First, hit the registration status endpoint to set cookies
+          try {
+            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5500/api/v1'
+            // The auth cookies should already be set from the login response
+            // We need to pass the access token in the Authorization header
+            const statusResponse = await fetch(`${apiUrl}/businesses/registration/status`, {
+              method: 'GET',
+              credentials: 'include',
+              headers: {
+                'Authorization': `Bearer ${result.accessToken}`,
+                'Content-Type': 'application/json',
+              },
+            })
+            
+            if (statusResponse.ok) {
+              const statusData = await statusResponse.json()
+              
+              // Redirect based on registration status
+              const redirectPath = statusData.needsRegistration
+                ? `/${router.locale}/business-selector`
+                : `/${router.locale}/business`
+              
+              // Force page reload to ensure cookies are properly set and middleware runs
+              window.location.href = redirectPath
+            } else {
+              // If status check fails, redirect to business dashboard anyway
+              window.location.href = `/${router.locale}/business`
+            }
+          } catch {
+            // If status check fails, redirect to business dashboard anyway
+            window.location.href = `/${router.locale}/business`
+          }
+        } else {
+          // Admin users go directly to admin dashboard
+          const redirectPath = `/${router.locale}/admin`
+          // Force page reload to ensure cookies are properly set and middleware runs
+          window.location.href = redirectPath
+        }
       }
     } catch {
       setError(tErrors('invalidCredentials'))

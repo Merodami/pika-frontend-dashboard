@@ -112,7 +112,7 @@ export function createApiClient(baseURL: string = API_BASE_URL): AxiosInstance {
   api.interceptors.response.use(
     (response) => {
       const endTime = performance.now()
-      const duration = endTime - response.config.metadata?.startTime
+      const duration = endTime - (response.config.metadata?.startTime || endTime)
 
       logResponse(response.status, response.data)
       log(`⏱️  Duration: ${duration.toFixed(2)}ms`, colors.dim)
@@ -121,7 +121,7 @@ export function createApiClient(baseURL: string = API_BASE_URL): AxiosInstance {
     },
     (error: AxiosError) => {
       const endTime = performance.now()
-      const duration = endTime - error.config?.metadata?.startTime
+      const duration = endTime - (error.config?.metadata?.startTime || endTime)
 
       if (error.response) {
         logResponse(error.response.status, error.response.data)

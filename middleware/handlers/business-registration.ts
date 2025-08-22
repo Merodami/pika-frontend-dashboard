@@ -67,31 +67,3 @@ export async function withBusinessRegistration(
   return response || NextResponse.next()
 }
 
-/**
- * Check registration status via API
- * @param accessToken - User's access token
- */
-async function checkRegistrationStatus(accessToken: string | undefined) {
-  if (!accessToken) return { needsRegistration: false }
-
-  try {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5500'
-    const response = await fetch(`${apiUrl}/businesses/registration/status`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    })
-
-    if (response.ok) {
-      const data = await response.json()
-      return {
-        needsRegistration: data.needsRegistration,
-        canAccessDashboard: data.canAccessDashboard,
-      }
-    }
-  } catch (error) {
-    console.error('Failed to check registration status:', error)
-  }
-
-  return { needsRegistration: false }
-}

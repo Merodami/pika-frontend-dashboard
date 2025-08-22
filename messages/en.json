@@ -76,6 +76,7 @@
     "settings": "Settings",
     "profile": "My Profile",
     "myBusiness": "My Business",
+    "schedule": "Schedule",
     "payments": "Payments",
     "support": "Support",
     "reports": "Reports",
@@ -236,7 +237,15 @@
       "lastLogin": "Last Login",
       "changePassword": "Change Password",
       "twoFactor": "Two-Factor Authentication",
-      "verifyEmail": "Verify Email"
+      "verifyEmail": "Verify Email",
+      "emailVerified": "Email Verified",
+      "phoneVerified": "Phone Verified"
+    },
+    "preferences": {
+      "title": "Preferences",
+      "language": "Preferred Language",
+      "timezone": "Timezone",
+      "notifications": "Notifications"
     },
     "status": {
       "active": "Active",
@@ -486,6 +495,7 @@
       }
     },
     "messages": {
+      "loading": "Loading...",
       "savingProgress": "Saving your progress...",
       "progressSaved": "Progress saved successfully",
       "stepCompleted": "Step {{step}} completed successfully",

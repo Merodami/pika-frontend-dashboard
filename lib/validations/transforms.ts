@@ -1,6 +1,6 @@
 /**
  * Frontend Transform Functions
- * 
+ *
  * Transform frontend form data to backend API requests
  * These functions handle the conversion between UI forms and API schemas
  */
@@ -11,10 +11,18 @@ import type { z } from 'zod'
 // Type imports
 type LoginFormData = z.infer<typeof authFrontend.LoginFormSchema>
 type RegisterFormData = z.infer<typeof authFrontend.RegisterFormSchema>
-type ResetPasswordFormData = z.infer<typeof authFrontend.ResetPasswordFormSchema>
-type RegistrationStep1Data = z.infer<typeof authFrontend.RegistrationStep1Schema>
-type RegistrationStep2Data = z.infer<typeof authFrontend.RegistrationStep2Schema>
-type RegistrationStep3Data = z.infer<typeof authFrontend.RegistrationStep3Schema>
+type ResetPasswordFormData = z.infer<
+  typeof authFrontend.ResetPasswordFormSchema
+>
+type RegistrationStep1Data = z.infer<
+  typeof authFrontend.RegistrationStep1Schema
+>
+type RegistrationStep2Data = z.infer<
+  typeof authFrontend.RegistrationStep2Schema
+>
+type RegistrationStep3Data = z.infer<
+  typeof authFrontend.RegistrationStep3Schema
+>
 
 type TokenRequest = z.infer<typeof authPublic.TokenRequest>
 type RegisterRequest = z.infer<typeof authPublic.RegisterRequest>
@@ -23,7 +31,9 @@ type ResetPasswordRequest = z.infer<typeof authPublic.ResetPasswordRequest>
 /**
  * Transform login form data to OAuth token request
  */
-export function transformLoginToTokenRequest(formData: LoginFormData): TokenRequest {
+export function transformLoginToTokenRequest(
+  formData: LoginFormData
+): TokenRequest {
   return {
     grantType: 'password',
     username: formData.email,
@@ -36,9 +46,11 @@ export function transformLoginToTokenRequest(formData: LoginFormData): TokenRequ
 /**
  * Transform registration form data to backend register request
  */
-export function transformRegisterToAPI(formData: RegisterFormData): RegisterRequest {
+export function transformRegisterToAPI(
+  formData: RegisterFormData
+): RegisterRequest {
   const { confirmPassword, agreedToMarketing, ...apiData } = formData
-  
+
   return {
     ...apiData,
     // Map frontend field to backend field
@@ -49,7 +61,9 @@ export function transformRegisterToAPI(formData: RegisterFormData): RegisterRequ
 /**
  * Transform reset password form data to backend request
  */
-export function transformResetPasswordToAPI(formData: ResetPasswordFormData): ResetPasswordRequest {
+export function transformResetPasswordToAPI(
+  formData: ResetPasswordFormData
+): ResetPasswordRequest {
   return {
     token: formData.token,
     newPassword: formData.newPassword,
@@ -71,13 +85,13 @@ export function combineRegistrationSteps(
     password: step1.password,
     firstName: step1.firstName,
     lastName: step1.lastName,
-    
+
     // From step 2
     phoneNumber: step2.phoneNumber,
     dateOfBirth: step2.dateOfBirth,
     acceptTerms: step2.acceptTerms,
     marketingConsent: step2.marketingConsent,
-    
+
     // From step 3
     registrationSource: step3.registrationSource,
     // Note: preferredLanguage, timezone, notifications are handled separately

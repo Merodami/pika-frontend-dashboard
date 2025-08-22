@@ -33,9 +33,10 @@ export async function login(data: z.infer<typeof authPublic.TokenRequest>) {
     if (tokenData?.accessToken && tokenData?.refreshToken) {
       await setTokens(tokenData.accessToken, tokenData.refreshToken)
 
-      // Return user info from the token response
+      // Return user info and access token from the token response
       return {
         success: true,
+        accessToken: tokenData.accessToken,
         user: tokenData.user
           ? {
               role: tokenData.user.role,
