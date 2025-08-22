@@ -112,7 +112,7 @@ export function AdditionalInfoStep({ onComplete }: AdditionalInfoStepProps) {
 
       // Save to store first
       saveStep3Data(validated)
-      
+
       // Submit to backend
       submitStep3Mutation.mutate(validated, {
         onSuccess: () => {

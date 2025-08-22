@@ -66,4 +66,3 @@ export async function withBusinessRegistration(
 
   return response || NextResponse.next()
 }
-

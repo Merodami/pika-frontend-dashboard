@@ -80,53 +80,84 @@ export function LoginForm() {
           console.log('Business user detected, checking registration status...')
           console.log('User data:', result.user)
           console.log('Access token available:', !!result.accessToken)
-          
+
           // First, hit the registration status endpoint to set cookies
           try {
-            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5500/api/v1'
-            console.log('Making request to:', `${apiUrl}/businesses/registration/status`)
-            
+            const apiUrl =
+              process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5500/api/v1'
+            console.log(
+              'Making request to:',
+              `${apiUrl}/businesses/registration/status`
+            )
+
             // We pass the access token in the Authorization header
-            const statusResponse = await fetch(`${apiUrl}/businesses/registration/status`, {
-              method: 'GET',
-              headers: {
-                'Authorization': `Bearer ${result.accessToken}`,
-                'Content-Type': 'application/json',
-              },
-            })
-            
-            console.log('Registration status response status:', statusResponse.status)
-            console.log('Registration status response headers:', Object.fromEntries(statusResponse.headers.entries()))
-            
+            const statusResponse = await fetch(
+              `${apiUrl}/businesses/registration/status`,
+              {
+                method: 'GET',
+                headers: {
+                  Authorization: `Bearer ${result.accessToken}`,
+                  'Content-Type': 'application/json',
+                },
+              }
+            )
+
+            console.log(
+              'Registration status response status:',
+              statusResponse.status
+            )
+            console.log(
+              'Registration status response headers:',
+              Object.fromEntries(statusResponse.headers.entries())
+            )
+
             if (statusResponse.ok) {
               const statusData = await statusResponse.json()
-              console.log('Registration status data (full):', JSON.stringify(statusData, null, 2))
-              console.log('needsRegistration value:', statusData.needsRegistration)
-              console.log('needsRegistration type:', typeof statusData.needsRegistration)
-              
+              console.log(
+                'Registration status data (full):',
+                JSON.stringify(statusData, null, 2)
+              )
+              console.log(
+                'needsRegistration value:',
+                statusData.needsRegistration
+              )
+              console.log(
+                'needsRegistration type:',
+                typeof statusData.needsRegistration
+              )
+
               // Redirect based on registration status
               const redirectPath = statusData.needsRegistration
                 ? `/${currentLocale}/business-selector`
                 : `/${currentLocale}/business`
-              
+
               console.log('Will redirect to:', redirectPath)
-              console.log('Condition: needsRegistration =', statusData.needsRegistration)
-              
+              console.log(
+                'Condition: needsRegistration =',
+                statusData.needsRegistration
+              )
+
               // Force page reload to ensure cookies are properly set and middleware runs
               window.location.href = redirectPath
             } else {
               const errorText = await statusResponse.text()
-              console.error('Failed to check registration status:', statusResponse.status, statusResponse.statusText)
+              console.error(
+                'Failed to check registration status:',
+                statusResponse.status,
+                statusResponse.statusText
+              )
               console.error('Error response body:', errorText)
-              
-              // If status check fails, redirect to business dashboard anyway
-              window.location.href = `/${currentLocale}/business`
+
+              // If status check fails, redirect to business selector to ensure registration is completed
+              // This is safer than assuming they can access the dashboard
+              window.location.href = `/${currentLocale}/business-selector`
             }
           } catch (error) {
             console.error('Error checking registration status:', error)
-            
-            // If status check fails, redirect to business dashboard anyway
-            window.location.href = `/${currentLocale}/business`
+
+            // If status check fails, redirect to business selector to ensure registration is completed
+            // This is safer than assuming they can access the dashboard
+            window.location.href = `/${currentLocale}/business-selector`
           }
         } else {
           // Admin users go directly to admin dashboard

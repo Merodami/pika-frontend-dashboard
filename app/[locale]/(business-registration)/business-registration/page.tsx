@@ -28,7 +28,8 @@ export default function BusinessRegistrationPage() {
   } = useNeedsRegistration()
 
   // Get registration store
-  const { currentStep, completedSteps, status, checkAndResetForUser, reset } = useRegistrationStore()
+  const { currentStep, completedSteps, status, checkAndResetForUser, reset } =
+    useRegistrationStore()
 
   // Check if user has changed and reset store if needed
   useEffect(() => {
@@ -36,7 +37,7 @@ export default function BusinessRegistrationPage() {
       checkAndResetForUser(currentUser.id)
     }
   }, [currentUser?.id, checkAndResetForUser])
-  
+
   // Reset store when starting fresh registration
   useEffect(() => {
     if (needsRegistration && statusLoading === false) {

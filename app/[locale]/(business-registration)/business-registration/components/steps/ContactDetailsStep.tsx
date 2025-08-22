@@ -92,7 +92,7 @@ export function ContactDetailsStep({ onComplete }: ContactDetailsStepProps) {
 
       // Save to store first
       saveStep2Data(validated)
-      
+
       // Submit to backend
       submitStep2Mutation.mutate(validated, {
         onSuccess: () => {

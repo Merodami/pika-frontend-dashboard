@@ -15,9 +15,7 @@ const intlMiddleware = createIntlMiddleware({
  * Internationalization middleware handler
  * Ensures locale is present in the URL and handles locale detection
  */
-export async function withI18n(
-  request: NextRequest
-): Promise<NextResponse> {
+export async function withI18n(request: NextRequest): Promise<NextResponse> {
   // Apply intl middleware to ensure locale is present
   return intlMiddleware(request)
 }

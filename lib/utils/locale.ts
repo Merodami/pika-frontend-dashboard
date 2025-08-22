@@ -1,4 +1,9 @@
-import { locales, defaultLocale, getDefaultLocale, type Locale } from '@/i18n/edge-config'
+import {
+  locales,
+  defaultLocale,
+  getDefaultLocale,
+  type Locale,
+} from '@/i18n/edge-config'
 
 /**
  * Get the user's preferred locale from browser/system settings

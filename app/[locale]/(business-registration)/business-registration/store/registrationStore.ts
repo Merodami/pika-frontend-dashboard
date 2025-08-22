@@ -43,7 +43,7 @@ interface RegistrationState {
 
   // Mark step as completed
   markStepCompleted: (step: number) => void
-  
+
   // Set completed steps from backend
   setCompletedSteps: (steps: number[]) => void
 
@@ -54,10 +54,10 @@ interface RegistrationState {
 
   // Reset store
   reset: () => void
-  
+
   // Initialize store based on persisted data
   initializeStep: () => void
-  
+
   // Check and reset if different user
   checkAndResetForUser: (currentUserId: string) => void
 }
@@ -132,14 +132,18 @@ export const useRegistrationStore = create<RegistrationState>()(
         initializeStep: () => {
           const state = get()
           // If all 3 steps are completed, go to review step (4)
-          if (state.completedSteps.includes(1) && 
-              state.completedSteps.includes(2) && 
-              state.completedSteps.includes(3)) {
+          if (
+            state.completedSteps.includes(1) &&
+            state.completedSteps.includes(2) &&
+            state.completedSteps.includes(3)
+          ) {
             set({ currentStep: 4 })
           }
           // If steps 1 and 2 are completed, go to step 3
-          else if (state.completedSteps.includes(1) && 
-                   state.completedSteps.includes(2)) {
+          else if (
+            state.completedSteps.includes(1) &&
+            state.completedSteps.includes(2)
+          ) {
             set({ currentStep: 3 })
           }
           // If step 1 is completed, go to step 2
@@ -151,7 +155,7 @@ export const useRegistrationStore = create<RegistrationState>()(
             set({ currentStep: 1 })
           }
         },
-        
+
         // Check and reset if different user
         checkAndResetForUser: (currentUserId) => {
           const state = get()

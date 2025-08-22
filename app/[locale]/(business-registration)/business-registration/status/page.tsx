@@ -62,9 +62,11 @@ export default function RegistrationStatusPage() {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="space-y-3">
-                  <h4 className="font-medium text-gray-900">What happens next?</h4>
+                  <h4 className="font-medium text-gray-900">
+                    What happens next?
+                  </h4>
                   <div className="space-y-2 text-sm text-gray-600">
                     <div className="flex items-center space-x-2">
                       <CheckCircle className="w-4 h-4 text-green-500" />
@@ -76,19 +78,21 @@ export default function RegistrationStatusPage() {
                     </div>
                     <div className="flex items-center space-x-2">
                       <Clock className="w-4 h-4 text-gray-400" />
-                      <span>You'll receive an email notification once approved</span>
+                      <span>
+                        You'll receive an email notification once approved
+                      </span>
                     </div>
                   </div>
                 </div>
 
-                <Button 
-                  type="primary" 
+                <Button
+                  type="primary"
                   size="large"
                   onClick={() => router.push('/business-selector')}
                 >
                   Return to Dashboard
                 </Button>
-              </div>
+              </div>,
             ]}
           />
         </Card>

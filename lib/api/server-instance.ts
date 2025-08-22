@@ -40,15 +40,15 @@ AXIOS_SERVER.interceptors.response.use(
     if (error.response?.status === 401) {
       const { redirect } = await import('next/navigation')
       const cookieStore = await cookies()
-      
+
       // Clear auth cookies
       cookieStore.delete('pika-access-token')
       cookieStore.delete('pika-refresh-token')
-      
+
       // Redirect to login
       redirect('/login')
     }
-    
+
     return Promise.reject(error)
   }
 )

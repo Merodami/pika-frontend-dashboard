@@ -65,7 +65,9 @@ export async function requireAuth(): Promise<User> {
   return user
 }
 
-export async function requireRole(role: UserRoleType | UserRoleType[]): Promise<User> {
+export async function requireRole(
+  role: UserRoleType | UserRoleType[]
+): Promise<User> {
   const user = await requireAuth()
   const roles = Array.isArray(role) ? role : [role]
 

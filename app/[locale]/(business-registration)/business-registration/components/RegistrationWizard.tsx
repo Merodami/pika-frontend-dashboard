@@ -34,19 +34,24 @@ export function RegistrationWizard() {
   } = useRegistrationStore()
 
   // React Query hooks for API calls
-  const { data: registrationStatus, isLoading: statusLoading } = useRegistrationStatus()
-  const { data: registrationProgress, isLoading: progressLoading } = useRegistrationProgress()
+  const { data: registrationStatus, isLoading: statusLoading } =
+    useRegistrationStatus()
+  const { data: registrationProgress, isLoading: progressLoading } =
+    useRegistrationProgress()
   const startRegistrationMutation = useStartRegistration()
   const completeRegistrationMutation = useCompleteRegistration()
 
   // Sync frontend state with backend state
   useEffect(() => {
     if (!statusLoading && registrationStatus) {
-      if (registrationStatus.needsRegistration && registrationStatus.currentStep === 0) {
+      if (
+        registrationStatus.needsRegistration &&
+        registrationStatus.currentStep === 0
+      ) {
         // Reset store for fresh registration
         const { reset } = useRegistrationStore.getState()
         reset()
-        
+
         // If registration needs to be started, start it
         startRegistrationMutation.mutate(undefined, {
           onSuccess: () => {
@@ -57,12 +62,21 @@ export function RegistrationWizard() {
             message.error(t('businessRegistration.messages.errorStarting'))
           },
         })
-      } else if (registrationStatus.needsRegistration && registrationStatus.currentStep > 0) {
+      } else if (
+        registrationStatus.needsRegistration &&
+        registrationStatus.currentStep > 0
+      ) {
         // If registration is in progress, sync with backend's current step
         setCurrentStep(registrationStatus.currentStep)
       }
     }
-  }, [registrationStatus, statusLoading, setCurrentStep, t, startRegistrationMutation])
+  }, [
+    registrationStatus,
+    statusLoading,
+    setCurrentStep,
+    t,
+    startRegistrationMutation,
+  ])
 
   // Sync completed steps with backend progress
   useEffect(() => {

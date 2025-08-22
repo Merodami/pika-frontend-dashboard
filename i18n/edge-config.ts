@@ -19,12 +19,14 @@ export const getDefaultLocale = (): Locale => {
   if (typeof window === 'undefined' || !navigator.language) {
     return 'es'
   }
-  
+
   // Get browser language preference
   const browserLang = navigator.language.split('-')[0]?.toLowerCase()
-  
+
   // Return if supported, otherwise fallback to 'es'
-  return locales.includes(browserLang as Locale) ? (browserLang as Locale) : 'es'
+  return locales.includes(browserLang as Locale)
+    ? (browserLang as Locale)
+    : 'es'
 }
 
 export const defaultLocale: Locale = 'es' // Static fallback for server-side

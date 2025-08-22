@@ -35,10 +35,10 @@ export default function BusinessSelectorPage() {
   const handleSelectBusiness = (businessId: string) => {
     // Store selected business in session/cookie
     localStorage.setItem('selectedBusinessId', businessId)
-    
+
     // Find the selected business to check its status
-    const selectedBusiness = businesses.find(b => b.id === businessId)
-    
+    const selectedBusiness = businesses.find((b) => b.id === businessId)
+
     if (selectedBusiness?.status === 'active') {
       // Active business - go to business dashboard
       router.push('/business')
@@ -85,7 +85,10 @@ export default function BusinessSelectorPage() {
         {
           id: business.id,
           name: business.businessName, // Now using resolved business name
-          status: business.approved && business.active ? 'active' : ('pending' as const),
+          status:
+            business.approved && business.active
+              ? 'active'
+              : ('pending' as const),
           lastActivity: business.updatedAt,
         },
       ]
