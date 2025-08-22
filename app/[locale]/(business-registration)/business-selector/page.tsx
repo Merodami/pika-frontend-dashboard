@@ -48,7 +48,7 @@ export default function BusinessSelectorPage() {
       ),
       disabled: true,
     },
-    { type: 'divider' },
+    { key: 'divider-1', type: 'divider' },
     {
       key: 'logout',
       icon: <LogOut className="w-4 h-4" />,

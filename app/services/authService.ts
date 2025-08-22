@@ -2,8 +2,9 @@ import 'server-only'
 
 import { UserRole, type UserRoleType } from '@merodami/pika-types'
 import { cache } from 'react'
+import { redirect } from 'next/navigation'
 
-import { getUserProfile } from '@/lib/api/server-client'
+import { getUserProfile, getBusinessRegistrationStatus } from '@/lib/api/server-client'
 import {
   clearTokens,
   getAccessToken,
@@ -56,7 +57,6 @@ export async function requireAuth(): Promise<User> {
 
   if (!user) {
     // Redirect to login when token is expired or user is not authenticated
-    const { redirect } = await import('next/navigation')
     redirect('/login')
     // TypeScript doesn't know redirect never returns
     throw new Error('Unauthorized')
@@ -78,11 +78,32 @@ export async function requireRole(
   return user
 }
 
-export async function requireBusiness(): Promise<User> {
+export async function requireBusiness(checkApproval: boolean = true): Promise<User> {
   const user = await requireAuth()
 
   if (user.role !== UserRole.BUSINESS) {
     throw new Error('Business access required')
+  }
+
+  // Check if business registration is approved
+  if (checkApproval) {
+    try {
+      const registrationStatus = await getBusinessRegistrationStatus()
+      
+      if (registrationStatus.needsRegistration) {
+        // Business needs to complete registration
+        redirect('/business-registration')
+      }
+      
+      if (!registrationStatus.canAccessDashboard) {
+        // Business registration submitted but not approved
+        redirect('/business-registration/status')
+      }
+    } catch (error) {
+      console.error('Failed to check business registration status:', error)
+      // If we can't check status, redirect to business selector as fallback
+      redirect('/business-selector')
+    }
   }
 
   return user

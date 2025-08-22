@@ -143,6 +143,32 @@ export function useToggleBusinessActive() {
 }
 
 /**
+ * Hook to approve/unapprove a business
+ * Uses the updateAdminBusiness endpoint to set the approved field
+ */
+export function useApproveBusiness() {
+  const queryClient = useQueryClient()
+
+  return useApiMutation<
+    GetAdminBusinessById200,
+    Error,
+    { id: string; approved: boolean }
+  >({
+    mutationFn: ({ id, approved }) =>
+      updateAdminBusiness(id, { approved } as any), // The API should accept this field
+    successMessage: 'Business approval status updated',
+    onSuccess: (_, { id }) => {
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.businesses.detail(id),
+      })
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.businesses.lists(),
+      })
+    },
+  })
+}
+
+/**
  * Hook to delete a business
  */
 export function useDeleteBusiness() {

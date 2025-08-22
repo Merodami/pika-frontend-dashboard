@@ -28,6 +28,7 @@ import {
   useBusinesses,
   useVerifyBusiness,
   useToggleBusinessActive,
+  useApproveBusiness,
   useDeleteBusiness,
   useBulkUpdateBusinesses,
 } from '@/hooks/api/businesses/useBusinesses'
@@ -99,6 +100,7 @@ export default function BusinessesTable({ locale }: BusinessesTableProps) {
   // Use custom hooks for mutations
   const verifyBusinessMutation = useVerifyBusiness()
   const toggleBusinessActiveMutation = useToggleBusinessActive()
+  const approveBusinessMutation = useApproveBusiness()
   const deleteBusinessMutation = useDeleteBusiness()
   const bulkUpdateBusinessesMutation = useBulkUpdateBusinesses()
 
@@ -191,7 +193,7 @@ export default function BusinessesTable({ locale }: BusinessesTableProps) {
       ],
     },
     {
-      title: 'Verification',
+      title: t('businesses.fields.verification'),
       key: 'verification',
       render: (_, record) => (
         <div className="flex items-center gap-2">
@@ -201,13 +203,13 @@ export default function BusinessesTable({ locale }: BusinessesTableProps) {
             <XCircle className="w-4 h-4 text-gray-400" />
           )}
           <span className="text-sm">
-            {record.verified ? 'Verified' : 'Not Verified'}
+            {record.verified ? t('businesses.status.verified') : t('businesses.status.notVerified')}
           </span>
         </div>
       ),
     },
     {
-      title: 'Approval',
+      title: t('businesses.fields.approval'),
       key: 'approval',
       render: (_, record) => (
         <div className="flex flex-col">
@@ -218,7 +220,7 @@ export default function BusinessesTable({ locale }: BusinessesTableProps) {
               <XCircle className="w-4 h-4 text-gray-400" />
             )}
             <span className="text-sm">
-              {record.approved ? 'Approved' : 'Not Approved'}
+              {record.approved ? t('businesses.status.approved') : t('businesses.status.notApproved')}
             </span>
           </div>
           {record.approvedBy && record.approvedAt && (
@@ -272,7 +274,7 @@ export default function BusinessesTable({ locale }: BusinessesTableProps) {
             ),
             {
               key: 'toggleVerification',
-              label: record.verified ? 'Unverify' : 'Verify',
+              label: record.verified ? t('businesses.action.unverify') : t('businesses.action.verify'),
               icon: record.verified ? (
                 <XCircle className="w-4 h-4" />
               ) : (
@@ -283,8 +285,13 @@ export default function BusinessesTable({ locale }: BusinessesTableProps) {
             },
             {
               key: 'toggleApproval',
-              label: record.approved ? 'Unapprove' : 'Approve',
-              onClick: () => handleToggleActive(record.id, !record.approved),
+              label: record.approved ? t('businesses.action.unapprove') : t('businesses.action.approve'),
+              icon: record.approved ? (
+                <XCircle className="w-4 h-4" />
+              ) : (
+                <CheckCircle className="w-4 h-4" />
+              ),
+              onClick: () => handleToggleApproval(record.id, !record.approved),
             },
             record.active
               ? commonActions.deactivate(() =>
@@ -306,32 +313,32 @@ export default function BusinessesTable({ locale }: BusinessesTableProps) {
     commonFilters.search('search', t('common.button.search')),
     {
       name: 'verified',
-      label: 'Verification',
+      label: t('businesses.filters.verification'),
       type: 'select' as const,
       options: [
-        { label: 'Verified', value: 'true' },
-        { label: 'Not Verified', value: 'false' },
+        { label: t('businesses.status.verified'), value: 'true' },
+        { label: t('businesses.status.notVerified'), value: 'false' },
       ],
     },
     {
       name: 'approved',
-      label: 'Approval',
+      label: t('businesses.filters.approval'),
       type: 'select' as const,
       options: [
-        { label: 'Approved', value: 'true' },
-        { label: 'Not Approved', value: 'false' },
+        { label: t('businesses.status.approved'), value: 'true' },
+        { label: t('businesses.status.notApproved'), value: 'false' },
       ],
     },
     {
       name: 'active',
-      label: 'Status',
+      label: t('businesses.filters.status'),
       type: 'select' as const,
       options: [
-        { label: 'Active', value: 'true' },
-        { label: 'Inactive', value: 'false' },
+        { label: t('businesses.status.active'), value: 'true' },
+        { label: t('businesses.status.inactive'), value: 'false' },
       ],
     },
-    commonFilters.dateRange('created', 'Created Date'),
+    commonFilters.dateRange('created', t('businesses.filters.createdDate')),
   ]
 
   // Handlers with proper debouncing and error handling
@@ -347,6 +354,13 @@ export default function BusinessesTable({ locale }: BusinessesTableProps) {
       toggleBusinessActiveMutation.mutate({ id: businessId, active })
     },
     [toggleBusinessActiveMutation]
+  )
+
+  const handleToggleApproval = useCallback(
+    (businessId: string, approved: boolean) => {
+      approveBusinessMutation.mutate({ id: businessId, approved })
+    },
+    [approveBusinessMutation]
   )
 
   const handleDelete = useCallback(
@@ -445,7 +459,7 @@ export default function BusinessesTable({ locale }: BusinessesTableProps) {
 
         <DataTable
           title={t('navigation.businesses')}
-          description="Manage business accounts and verifications"
+          description={t('businesses.description')}
           columns={columns}
           data={data?.data || []}
           loading={isLoading}
@@ -467,13 +481,13 @@ export default function BusinessesTable({ locale }: BusinessesTableProps) {
                 commonBulkActions.deleteMultiple(handleBulkDelete),
                 {
                   key: 'verify',
-                  label: 'Verify Selected',
+                  label: t('businesses.action.verifySelected'),
                   icon: <CheckCircle className="w-4 h-4" />,
                   onClick: (keys) => handleBulkVerify(keys, true),
                 },
                 {
                   key: 'unverify',
-                  label: 'Unverify Selected',
+                  label: t('businesses.action.unverifySelected'),
                   icon: <XCircle className="w-4 h-4" />,
                   onClick: (keys) => handleBulkVerify(keys, false),
                 },

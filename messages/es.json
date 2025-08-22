@@ -36,13 +36,6 @@
       "required": "Este campo es obligatorio"
     }
   },
-  "users": {
-    "resetRegistration": {
-      "action": "Restablecer Registro",
-      "title": "Restablecer Registro de Negocio",
-      "confirmMessage": "¿Estás seguro de que quieres restablecer el registro de negocio de este usuario? Esto le permitirá comenzar el proceso de registro nuevamente."
-    }
-  },
   "auth": {
     "login": {
       "title": "Iniciar sesión",
@@ -159,7 +152,15 @@
   "businesses": {
     "title": "Negocios",
     "action": {
-      "addNew": "Agregar Nuevo Negocio"
+      "addNew": "Agregar Nuevo Negocio",
+      "verify": "Verificar",
+      "unverify": "Desverificar",
+      "approve": "Aprobar",
+      "unapprove": "Desaprobar",
+      "activate": "Activar",
+      "deactivate": "Desactivar",
+      "verifySelected": "Verificar Seleccionados",
+      "unverifySelected": "Desverificar Seleccionados"
     },
     "info": {
       "adminCreate": "Estás creando un negocio en nombre de un usuario. Asegúrate de tener su permiso."
@@ -173,7 +174,9 @@
       "status": "Estado",
       "createdAt": "Creado",
       "owner": "Propietario",
-      "rating": "Calificación"
+      "rating": "Calificación",
+      "verification": "Verificación",
+      "approval": "Aprobación"
     },
     "status": {
       "active": "Activo",
@@ -181,6 +184,9 @@
       "pending": "Pendiente",
       "suspended": "Suspendido",
       "verified": "Verificado",
+      "notVerified": "No Verificado",
+      "approved": "Aprobado",
+      "notApproved": "No Aprobado",
       "verifiedApproved": "Verificado y Aprobado",
       "verifiedPending": "Verificado (Pendiente de Aprobación)",
       "approvedNotVerified": "Aprobado (No Verificado)"
@@ -192,10 +198,27 @@
       "success": "Registro reiniciado exitosamente"
     },
     "message": {
+      "created": "Negocio creado exitosamente",
+      "updated": "Negocio actualizado exitosamente",
+      "deleted": "Negocio eliminado exitosamente",
+      "verified": "Estado de verificación del negocio actualizado",
+      "approved": "Negocio aprobado exitosamente",
+      "unapproved": "Aprobación del negocio revocada",
+      "activated": "Negocio activado exitosamente",
+      "deactivated": "Negocio desactivado exitosamente",
       "registrationReset": "El registro del negocio se ha reiniciado exitosamente",
       "bulkVerified": "{count} negocios {status}",
-      "featureComingSoon": "Esta función estará disponible pronto"
-    }
+      "bulkUpdated": "{updated} negocios actualizados exitosamente",
+      "featureComingSoon": "Esta función estará disponible pronto",
+      "errorOccurred": "Ocurrió un error"
+    },
+    "filters": {
+      "verification": "Verificación",
+      "approval": "Aprobación", 
+      "status": "Estado",
+      "createdDate": "Fecha de Creación"
+    },
+    "description": "Gestionar cuentas de negocios y verificaciones"
   },
   "language": {
     "selector": {
@@ -323,6 +346,11 @@
     "title": "Usuarios",
     "subtitle": "Administrar cuentas de usuario",
     "addUser": "Agregar Usuario",
+    "resetRegistration": {
+      "action": "Restablecer Registro",
+      "title": "Restablecer Registro de Negocio",
+      "confirmMessage": "¿Estás seguro de que quieres restablecer el registro de negocio de este usuario? Esto le permitirá comenzar el proceso de registro nuevamente."
+    },
     "table": {
       "name": "Nombre",
       "email": "Correo Electrónico",

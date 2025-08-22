@@ -4,7 +4,7 @@ import { LockOutlined, MailOutlined } from '@ant-design/icons'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Form, Input, Checkbox } from 'antd'
 import { useTranslations } from 'next-intl'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -36,6 +36,15 @@ export function LoginForm() {
   const currentLocale = localizedRouter.locale || getCurrentLocale()
 
   const isDevelopment = process.env.NODE_ENV === 'development'
+  
+  // Clear registration store when login page loads (user has logged out)
+  useEffect(() => {
+    // Only clear if localStorage is available
+    if (typeof window !== 'undefined' && window.localStorage) {
+      // Clear the business registration store
+      window.localStorage.removeItem('business-registration-store')
+    }
+  }, [])
 
   const {
     control,

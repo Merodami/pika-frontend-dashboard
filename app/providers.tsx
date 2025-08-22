@@ -1,7 +1,7 @@
 'use client'
 
 import { AntdRegistry } from '@ant-design/nextjs-registry'
-import { ConfigProvider } from 'antd'
+import { ConfigProvider, App } from 'antd'
 import { Toaster } from 'sonner'
 
 import { ApiErrorBoundary } from '@/components/providers/ApiErrorBoundary'
@@ -27,8 +27,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
               },
             }}
           >
-            <ApiErrorBoundary>{children}</ApiErrorBoundary>
-            <Toaster position="top-right" richColors />
+            <App>
+              <ApiErrorBoundary>{children}</ApiErrorBoundary>
+              <Toaster position="top-right" richColors />
+            </App>
           </ConfigProvider>
         </AntdRegistry>
       </ThemeProvider>

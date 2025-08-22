@@ -37,10 +37,28 @@
     }
   },
   "users": {
+    "title": "Puruhára",
+    "subtitle": "Ñangareko puruhára mba'e'aty",
+    "addUser": "Mbojoapy Puruhára",
     "resetRegistration": {
       "action": "Mbojevyjey Ñemboguataha",
       "title": "Mbojevyjey Mba'apo Ñemboguataha",
       "confirmMessage": "Ejerovia piko embojevyjeýta ko yvypóra mba'apo ñemboguataha? Kóva omoneĩta chupekuéra oñepyrũjey hag̃ua ñemboguataha."
+    },
+    "table": {
+      "name": "Téra",
+      "email": "Ñanduti veve",
+      "role": "Tembiapo",
+      "status": "Tekove",
+      "createdAt": "Moheñoipyre",
+      "actions": "Ñemboguata"
+    },
+    "actions": {
+      "view": "Hecha",
+      "edit": "Moambue",
+      "delete": "Mboguete",
+      "activate": "Myendy",
+      "deactivate": "Mbogue"
     }
   },
   "auth": {
@@ -141,7 +159,15 @@
   "businesses": {
     "title": "Negósio",
     "action": {
-      "addNew": "Embojuaju Negósio Pyahu"
+      "addNew": "Embojuaju Negósio Pyahu",
+      "verify": "Ehechajey",
+      "unverify": "Embojevy jehechajey",
+      "approve": "Emoneĩ",
+      "unapprove": "Embojevy moneĩ",
+      "activate": "Myandy",
+      "deactivate": "Embogue",
+      "verifySelected": "Ehechajey Jeporavopyre",
+      "unverifySelected": "Embojevy jehechajey Jeporavopyre"
     },
     "info": {
       "adminCreate": "Rembojuaju peteĩ negósio peteĩ puruhára rehe. Ikatu hag̃ua reguereko iñangaite."
@@ -155,7 +181,9 @@
       "status": "Tekove",
       "createdAt": "Ojejapo ára",
       "owner": "Ijára",
-      "rating": "Mbohepy"
+      "rating": "Mbohepy",
+      "verification": "Jehechajey",
+      "approval": "Ñemoneĩ"
     },
     "status": {
       "active": "Hendy",
@@ -163,6 +191,9 @@
       "pending": "Oha'arõ",
       "suspended": "Ojejoko",
       "verified": "Ojehechapyréva",
+      "notVerified": "Ndojehechapyréi",
+      "approved": "Oñemoneĩ",
+      "notApproved": "Ndoñemoneĩri",
       "verifiedApproved": "Ojehechapyre ha Oñemoneĩ",
       "verifiedPending": "Ojehechapyre (Oha'arõ Ñemoneĩ)",
       "approvedNotVerified": "Oñemoneĩ (Ndojehechapyre)"
@@ -174,10 +205,27 @@
       "success": "Ñemboguapy oñepyrũ jey porã"
     },
     "message": {
+      "created": "Negósio ojejapo porã",
+      "updated": "Negósio oñembopyahu porã",
+      "deleted": "Negósio oñembogue porã",
+      "verified": "Negósio jehechajey tekove oñembopyahu",
+      "approved": "Negósio oñemoneĩ porã",
+      "unapproved": "Negósio ñemoneĩ oñembogue",
+      "activated": "Negósio omyandy porã",
+      "deactivated": "Negósio oñembogue porã",
       "registrationReset": "Negósio ñemboguapy oñepyrũ jey porã",
       "bulkVerified": "{count} negósio {status}",
-      "featureComingSoon": "Ko tembiapo oúta pya'e"
-    }
+      "bulkUpdated": "{updated} negósio oñembopyahu porã",
+      "featureComingSoon": "Ko tembiapo oúta pya'e",
+      "errorOccurred": "Oiko peteĩ jejavy"
+    },
+    "filters": {
+      "verification": "Jehechajey",
+      "approval": "Ñemoneĩ",
+      "status": "Tekove",
+      "createdDate": "Ojejapo Ára"
+    },
+    "description": "Eñangareko negósio mba'ete ha jehechajey rehe"
   },
   "language": {
     "selector": {

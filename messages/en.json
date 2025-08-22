@@ -36,13 +36,6 @@
       "required": "This field is required"
     }
   },
-  "users": {
-    "resetRegistration": {
-      "action": "Reset Registration",
-      "title": "Reset Business Registration",
-      "confirmMessage": "Are you sure you want to reset this user's business registration? This will allow them to start the registration process again."
-    }
-  },
   "auth": {
     "login": {
       "title": "Sign In",
@@ -159,7 +152,15 @@
   "businesses": {
     "title": "Businesses",
     "action": {
-      "addNew": "Add New Business"
+      "addNew": "Add New Business",
+      "verify": "Verify",
+      "unverify": "Unverify",
+      "approve": "Approve",
+      "unapprove": "Unapprove",
+      "activate": "Activate",
+      "deactivate": "Deactivate",
+      "verifySelected": "Verify Selected",
+      "unverifySelected": "Unverify Selected"
     },
     "info": {
       "adminCreate": "You are creating a business on behalf of a user. Make sure you have their permission."
@@ -173,7 +174,9 @@
       "status": "Status",
       "createdAt": "Created",
       "owner": "Owner",
-      "rating": "Rating"
+      "rating": "Rating",
+      "verification": "Verification",
+      "approval": "Approval"
     },
     "status": {
       "active": "Active",
@@ -181,6 +184,9 @@
       "pending": "Pending",
       "suspended": "Suspended",
       "verified": "Verified",
+      "notVerified": "Not Verified",
+      "approved": "Approved",
+      "notApproved": "Not Approved",
       "verifiedApproved": "Verified & Approved",
       "verifiedPending": "Verified (Pending Approval)",
       "approvedNotVerified": "Approved (Not Verified)"
@@ -192,10 +198,27 @@
       "success": "Registration reset successfully"
     },
     "message": {
+      "created": "Business created successfully",
+      "updated": "Business updated successfully",
+      "deleted": "Business deleted successfully",
+      "verified": "Business verification status updated",
+      "approved": "Business approved successfully",
+      "unapproved": "Business approval revoked",
+      "activated": "Business activated successfully",
+      "deactivated": "Business deactivated successfully",
       "registrationReset": "Business registration has been reset successfully",
       "bulkVerified": "{count} businesses {status}",
-      "featureComingSoon": "This feature is coming soon"
-    }
+      "bulkUpdated": "{updated} businesses updated successfully",
+      "featureComingSoon": "This feature is coming soon",
+      "errorOccurred": "An error occurred"
+    },
+    "filters": {
+      "verification": "Verification",
+      "approval": "Approval",
+      "status": "Status",
+      "createdDate": "Created Date"
+    },
+    "description": "Manage business accounts and verifications"
   },
   "language": {
     "selector": {
@@ -323,6 +346,11 @@
     "title": "Users",
     "subtitle": "Manage user accounts",
     "addUser": "Add User",
+    "resetRegistration": {
+      "action": "Reset Registration",
+      "title": "Reset Business Registration",
+      "confirmMessage": "Are you sure you want to reset this user's business registration? This will allow them to start the registration process again."
+    },
     "table": {
       "name": "Name",
       "email": "Email",

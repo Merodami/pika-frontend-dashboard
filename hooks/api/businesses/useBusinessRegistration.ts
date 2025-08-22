@@ -88,6 +88,7 @@ export function useStartRegistration() {
       const response = await customInstance<StartRegistrationResponse>({
         url: '/businesses/registration/start',
         method: 'POST',
+        data: {}, // Send empty object instead of undefined
       })
       return response
     },

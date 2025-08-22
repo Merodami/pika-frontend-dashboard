@@ -7,6 +7,8 @@
  */
 import type {
   AdminCategoryResponse,
+  ApproveAdminBusiness200,
+  ApproveAdminBusinessBody,
   AssignAdminTicketToAgent200,
   AssignAdminTicketToAgentBody,
   AuthIntrospect200,
@@ -1192,6 +1194,21 @@ export const updateAdminBusinessRating = (
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     data: updateAdminBusinessRatingBody,
+  })
+}
+
+/**
+ * @summary Approve or reject a business
+ */
+export const approveAdminBusiness = (
+  id: string,
+  approveAdminBusinessBody: ApproveAdminBusinessBody
+) => {
+  return customInstance<ApproveAdminBusiness200>({
+    url: `/admin/businesses/${id}/approve`,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    data: approveAdminBusinessBody,
   })
 }
 
@@ -2512,6 +2529,9 @@ export type DeactivateAdminBusinessResult = NonNullable<
 >
 export type UpdateAdminBusinessRatingResult = NonNullable<
   Awaited<ReturnType<typeof updateAdminBusinessRating>>
+>
+export type ApproveAdminBusinessResult = NonNullable<
+  Awaited<ReturnType<typeof approveAdminBusiness>>
 >
 export type BulkUpdateAdminBusinessesResult = NonNullable<
   Awaited<ReturnType<typeof bulkUpdateAdminBusinesses>>

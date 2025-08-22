@@ -13,5 +13,12 @@ export const getUserProfile = () => {
   })
 }
 
+export const getBusinessRegistrationStatus = () => {
+  return serverInstance<any>({
+    url: `/businesses/registration/status`,
+    method: 'GET',
+  })
+}
+
 // Re-export models and types
 export * from './orval-generated/models'
