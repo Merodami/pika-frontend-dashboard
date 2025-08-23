@@ -6,7 +6,7 @@ import { Ticket } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { UserRole } from '@merodami/pika-types'
+import { UserRole } from '@/lib/api/orval-client'
 
 import {
   BulkActions,
@@ -18,7 +18,6 @@ import {
   getAdminVoucherList,
   deleteAdminVoucher,
   publishAdminVoucher,
-  pauseAdminVoucher,
 } from '@/lib/api/orval-client'
 import type { Locale } from '@/i18n/config'
 import { useServerDataTable } from '@/hooks/useDataTable'
@@ -101,17 +100,6 @@ export function VoucherListContainer({
     },
   })
 
-  // Pause mutation
-  const pauseMutation = useMutation({
-    mutationFn: pauseAdminVoucher,
-    onSuccess: () => {
-      message.success(t('voucher.message.pauseSuccess'))
-      queryClient.invalidateQueries({ queryKey: ['admin-vouchers'] })
-    },
-    onError: () => {
-      message.error(t('common.message.errorOccurred'))
-    },
-  })
 
   // Event handlers
   const handleViewVoucher = (id: string) => {
@@ -138,9 +126,6 @@ export function VoucherListContainer({
     publishMutation.mutate(id)
   }
 
-  const handlePauseVoucher = (id: string) => {
-    pauseMutation.mutate(id)
-  }
 
   const handleCreateVoucher = () => {
     const path =
@@ -211,7 +196,6 @@ export function VoucherListContainer({
           onEdit={handleEditVoucher}
           onDelete={handleDeleteVoucher}
           onPublish={handlePublishVoucher}
-          onPause={handlePauseVoucher}
           onQueryChange={setGridQueryParams}
         />
       </div>

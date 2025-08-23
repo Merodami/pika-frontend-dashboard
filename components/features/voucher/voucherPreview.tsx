@@ -8,7 +8,7 @@ import {
   PhoneOutlined,
   ShopOutlined,
 } from '@ant-design/icons'
-import { VoucherDiscountType } from '@merodami/pika-types'
+import { VoucherDiscountType } from '@/lib/api/orval-client'
 import { APP_CONFIG } from '@/lib/constants/app'
 import { Card, Divider, QRCode, Space, Tag, Typography } from 'antd'
 
@@ -30,9 +30,9 @@ export function VoucherPreview({
 }: VoucherPreviewProps) {
   const getDiscountDisplay = () => {
     switch (voucherDesign.discountType) {
-      case VoucherDiscountType.PERCENTAGE:
+      case VoucherDiscountType.percentage:
         return `${voucherDesign.discountValue}% OFF`
-      case VoucherDiscountType.FIXED:
+      case VoucherDiscountType.fixed:
         return `$${voucherDesign.discountValue} OFF`
       default:
         return 'SPECIAL OFFER'

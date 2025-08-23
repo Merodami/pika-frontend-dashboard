@@ -6,7 +6,7 @@ import { Building } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { UserRole } from '@merodami/pika-types'
+import { UserRole } from '@/lib/api/orval-client'
 
 import {
   BulkActions,

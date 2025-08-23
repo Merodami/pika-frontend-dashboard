@@ -260,12 +260,16 @@ import type {
   UpdateUserProfileBody,
   UpdateUserSettings200,
   UpdateUserSettingsBody,
+  UploadAdminBusinessLogo200,
+  UploadAdminBusinessLogoBody,
   UploadAdminUserAvatar200,
   UploadAdminUserAvatarBody,
   UploadAdminVoucherImage200,
   UploadAdminVoucherImageBody,
   UploadAvatarRequest,
   UploadAvatarResponse,
+  UploadBusinessLogo200,
+  UploadBusinessLogoBody,
   UploadFile201,
   UploadFileBody,
   ValidateInternalBusinesses200,
@@ -368,6 +372,23 @@ export const updateMyBusiness = (
  */
 export const deleteMyBusiness = () => {
   return customInstance<null>({ url: `/businesses/me`, method: 'DELETE' })
+}
+
+/**
+ * @summary Upload business logo
+ */
+export const uploadBusinessLogo = (
+  uploadBusinessLogoBody: UploadBusinessLogoBody
+) => {
+  const formData = new FormData()
+  formData.append(`logo`, uploadBusinessLogoBody.logo)
+
+  return customInstance<UploadBusinessLogo200>({
+    url: `/businesses/me/logo`,
+    method: 'POST',
+    headers: { 'Content-Type': 'multipart/form-data' },
+    data: formData,
+  })
 }
 
 /**
@@ -1313,6 +1334,24 @@ export const resetBusinessRegistration = (
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     data: resetBusinessRegistrationBody,
+  })
+}
+
+/**
+ * @summary Admin uploads logo for any business
+ */
+export const uploadAdminBusinessLogo = (
+  id: string,
+  uploadAdminBusinessLogoBody: UploadAdminBusinessLogoBody
+) => {
+  const formData = new FormData()
+  formData.append(`logo`, uploadAdminBusinessLogoBody.logo)
+
+  return customInstance<UploadAdminBusinessLogo200>({
+    url: `/admin/businesses/${id}/logo`,
+    method: 'POST',
+    headers: { 'Content-Type': 'multipart/form-data' },
+    data: formData,
   })
 }
 
@@ -2509,6 +2548,9 @@ export type UpdateMyBusinessResult = NonNullable<
 export type DeleteMyBusinessResult = NonNullable<
   Awaited<ReturnType<typeof deleteMyBusiness>>
 >
+export type UploadBusinessLogoResult = NonNullable<
+  Awaited<ReturnType<typeof uploadBusinessLogo>>
+>
 export type StartBusinessRegistrationResult = NonNullable<
   Awaited<ReturnType<typeof startBusinessRegistration>>
 >
@@ -2731,6 +2773,9 @@ export type BulkDeleteAdminBusinessesResult = NonNullable<
 >
 export type ResetBusinessRegistrationResult = NonNullable<
   Awaited<ReturnType<typeof resetBusinessRegistration>>
+>
+export type UploadAdminBusinessLogoResult = NonNullable<
+  Awaited<ReturnType<typeof uploadAdminBusinessLogo>>
 >
 export type GetAdminFileListResult = NonNullable<
   Awaited<ReturnType<typeof getAdminFileList>>

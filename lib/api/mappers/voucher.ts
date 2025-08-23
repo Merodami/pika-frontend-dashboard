@@ -147,6 +147,7 @@ export const mapAdminVoucherResponseToDomain = (
 ): VoucherDomain => {
   return {
     ...response,
+    categoryId: response.categoryId || '', // Provide default value for required field
     state: mapOrvalVoucherStateToPackage(response.state),
     discountType: mapOrvalVoucherDiscountTypeToPackage(response.discountType),
     maxRedemptions: response.maxRedemptions ?? undefined,

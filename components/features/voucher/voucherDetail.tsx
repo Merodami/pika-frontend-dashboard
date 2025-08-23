@@ -23,11 +23,7 @@ import {
 } from '@ant-design/icons'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
-import {
-  UserRole,
-  VoucherState,
-  VoucherDiscountType,
-} from '@merodami/pika-types'
+import { UserRole, VoucherState, VoucherDiscountType } from '@/lib/api/orval-client'
 
 import { useVoucherQueries } from '@/hooks/api/vouchers/useVoucherQueries'
 import { useVoucherMutations } from '@/hooks/api/vouchers/useVoucherMutations'

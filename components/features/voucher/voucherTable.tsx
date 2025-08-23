@@ -8,7 +8,6 @@ import {
   Edit,
   Trash2,
   Play,
-  Pause,
   Calendar,
   Percent,
   DollarSign,
@@ -20,7 +19,7 @@ import type { MenuProps } from 'antd'
 import { DataGridServer } from '@/components/ui/DataGrid/DataGridServer'
 import { formatDate } from '@/lib/utils/date'
 import type { GetAdminVoucherList200DataItem } from '@/lib/api/orval-client'
-import { VoucherState, VoucherDiscountType } from '@merodami/pika-types'
+import { VoucherState, VoucherDiscountType } from '@/lib/api/orval-client'
 
 interface VoucherTableProps {
   data: GetAdminVoucherList200DataItem[]
@@ -30,7 +29,6 @@ interface VoucherTableProps {
   onEdit: (id: string) => void
   onDelete: (id: string) => void
   onPublish: (id: string) => void
-  onPause: (id: string) => void
   onQueryChange?: (params: any) => void
 }
 
@@ -42,7 +40,6 @@ export function VoucherTable({
   onEdit,
   onDelete,
   onPublish,
-  onPause,
   onQueryChange,
 }: VoucherTableProps) {
   const t = useTranslations()
@@ -50,15 +47,15 @@ export function VoucherTable({
   // Status color mapping
   const getStatusColor = (status: string) => {
     switch (status) {
-      case VoucherState.ACTIVE:
+      case VoucherState.published:
         return 'green'
-      case VoucherState.DRAFT:
+      case VoucherState.draft:
         return 'orange'
-      case VoucherState.PAUSED:
+      case VoucherState.suspended:
         return 'blue'
-      case VoucherState.EXPIRED:
+      case VoucherState.expired:
         return 'red'
-      case VoucherState.ARCHIVED:
+      case VoucherState.claimed:
         return 'default'
       default:
         return 'default'
@@ -68,14 +65,10 @@ export function VoucherTable({
   // Discount type color mapping
   const getDiscountTypeColor = (type: string) => {
     switch (type) {
-      case VoucherDiscountType.PERCENTAGE:
+      case VoucherDiscountType.percentage:
         return 'purple'
-      case VoucherDiscountType.FIXED_AMOUNT:
+      case VoucherDiscountType.fixed:
         return 'blue'
-      case VoucherDiscountType.BUY_ONE_GET_ONE:
-        return 'orange'
-      case VoucherDiscountType.FREE_SHIPPING:
-        return 'green'
       default:
         return 'default'
     }
@@ -84,14 +77,10 @@ export function VoucherTable({
   // Discount type icon mapping
   const getDiscountTypeIcon = (type: string) => {
     switch (type) {
-      case VoucherDiscountType.PERCENTAGE:
+      case VoucherDiscountType.percentage:
         return <Percent className="w-4 h-4" />
-      case VoucherDiscountType.FIXED_AMOUNT:
+      case VoucherDiscountType.fixed:
         return <DollarSign className="w-4 h-4" />
-      case VoucherDiscountType.BUY_ONE_GET_ONE:
-        return <Ticket className="w-4 h-4" />
-      case VoucherDiscountType.FREE_SHIPPING:
-        return <Ticket className="w-4 h-4" />
       default:
         return <Ticket className="w-4 h-4" />
     }
@@ -115,24 +104,14 @@ export function VoucherTable({
     {
       type: 'divider',
     },
-    ...(voucher.state === VoucherState.DRAFT ||
-    voucher.state === VoucherState.PAUSED
+    ...(voucher.state === VoucherState.draft ||
+    voucher.state === VoucherState.suspended
       ? [
           {
             key: 'publish',
             label: t('voucher.action.publish'),
             icon: <Play className="w-4 h-4" />,
             onClick: () => onPublish(voucher.id),
-          },
-        ]
-      : []),
-    ...(voucher.state === VoucherState.ACTIVE
-      ? [
-          {
-            key: 'pause',
-            label: t('voucher.action.pause'),
-            icon: <Pause className="w-4 h-4" />,
-            onClick: () => onPause(voucher.id),
           },
         ]
       : []),
@@ -186,9 +165,9 @@ export function VoucherTable({
             {t(`voucher.discountType.${row.original.discountType}`)}
           </Tag>
           <div className="text-sm font-mono">
-            {row.original.discountType === VoucherDiscountType.PERCENTAGE
+            {row.original.discountType === VoucherDiscountType.percentage
               ? `${row.original.discountValue}%`
-              : row.original.discountType === VoucherDiscountType.FIXED_AMOUNT
+              : row.original.discountType === VoucherDiscountType.fixed
                 ? `$${row.original.discountValue?.toFixed(2)}`
                 : '-'}
           </div>
@@ -209,13 +188,16 @@ export function VoucherTable({
       accessorKey: 'usage',
       header: t('voucher.field.usage'),
       cell: ({ row }) => {
+        const redemptionCount = Array.isArray(row.original.redemptions) 
+          ? row.original.redemptions.length 
+          : (row.original.redemptions || 0)
         const usagePercent = row.original.maxRedemptions
-          ? (row.original.redemptionCount / row.original.maxRedemptions) * 100
+          ? (redemptionCount / row.original.maxRedemptions) * 100
           : 0
         return (
           <div className="space-y-1">
             <div className="text-sm">
-              {row.original.redemptionCount || 0} /{' '}
+              {redemptionCount} /{' '}
               {row.original.maxRedemptions || '∞'}
             </div>
             {row.original.maxRedemptions && (
@@ -236,10 +218,10 @@ export function VoucherTable({
         <div className="space-y-1">
           <div className="text-sm flex items-center gap-1">
             <Calendar className="w-3 h-3" />
-            {formatDate(row.original.startDate)}
+            {formatDate(row.original.validFrom)}
           </div>
           <div className="text-sm text-gray-500">
-            → {formatDate(row.original.expiryDate)}
+            → {formatDate(row.original.expiresAt)}
           </div>
         </div>
       ),

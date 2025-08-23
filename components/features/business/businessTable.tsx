@@ -20,7 +20,6 @@ import type { MenuProps } from 'antd'
 import { DataGridServer } from '@/components/ui/DataGrid/DataGridServer'
 import { formatDate } from '@/lib/utils/date'
 import type { GetAdminBusinessList200DataItem } from '@/lib/api/orval-client'
-import { BusinessVerificationStatus, BusinessType } from '@merodami/pika-types'
 
 interface BusinessTableProps {
   data: GetAdminBusinessList200DataItem[]
@@ -47,45 +46,6 @@ export function BusinessTable({
 }: BusinessTableProps) {
   const t = useTranslations()
 
-  // Status color mapping
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case BusinessVerificationStatus.VERIFIED:
-        return 'green'
-      case BusinessVerificationStatus.PENDING:
-        return 'orange'
-      case BusinessVerificationStatus.REJECTED:
-        return 'red'
-      case BusinessVerificationStatus.EXPIRED:
-        return 'volcano'
-      case BusinessVerificationStatus.UNVERIFIED:
-        return 'default'
-      default:
-        return 'default'
-    }
-  }
-
-  // Type color mapping
-  const getTypeColor = (type: string) => {
-    switch (type) {
-      case BusinessType.RESTAURANT:
-        return 'orange'
-      case BusinessType.RETAIL:
-        return 'blue'
-      case BusinessType.SERVICE:
-        return 'cyan'
-      case BusinessType.HEALTHCARE:
-        return 'red'
-      case BusinessType.FITNESS:
-        return 'green'
-      case BusinessType.EDUCATION:
-        return 'purple'
-      case BusinessType.ENTERTAINMENT:
-        return 'magenta'
-      default:
-        return 'default'
-    }
-  }
 
   const getActions = (
     business: GetAdminBusinessList200DataItem
@@ -139,7 +99,7 @@ export function BusinessTable({
       accessorKey: 'logo',
       header: '',
       size: 60,
-      cell: ({ row }) => (
+      cell: () => (
         <Avatar
           src={undefined} // logoUrl not available in current API response
           icon={<Building className="w-4 h-4" />}

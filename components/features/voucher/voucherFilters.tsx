@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { VoucherState, VoucherDiscountType } from '@merodami/pika-types'
+import { VoucherState, VoucherDiscountType } from '@/lib/api/orval-client'
 import { ResponsiveFilters } from '@/components/ui/filters'
 
 interface VoucherFiltersProps {
@@ -29,21 +29,21 @@ export function VoucherFilters({
   // Quick filter options for common use cases
   const quickFilters = [
     {
-      label: t('voucher.status.active'),
-      value: VoucherState.ACTIVE,
-      isActive: values.state === VoucherState.ACTIVE,
+      label: t('voucher.status.published'),
+      value: VoucherState.published,
+      isActive: values.state === VoucherState.published,
       onClick: (value: any) => handleChange('state', value),
     },
     {
       label: t('voucher.status.draft'),
-      value: VoucherState.DRAFT,
-      isActive: values.state === VoucherState.DRAFT,
+      value: VoucherState.draft,
+      isActive: values.state === VoucherState.draft,
       onClick: (value: any) => handleChange('state', value),
     },
     {
       label: t('voucher.discountType.percentage'),
-      value: VoucherDiscountType.PERCENTAGE,
-      isActive: values.discountType === VoucherDiscountType.PERCENTAGE,
+      value: VoucherDiscountType.percentage,
+      isActive: values.discountType === VoucherDiscountType.percentage,
       onClick: (value: any) => handleChange('discountType', value),
     },
   ]
@@ -90,14 +90,11 @@ export function VoucherFilters({
           onChange={(value) => handleChange('state', value)}
           placeholder={t('voucher.filter.statusPlaceholder')}
           options={[
-            { label: t('voucher.status.active'), value: VoucherState.ACTIVE },
-            { label: t('voucher.status.draft'), value: VoucherState.DRAFT },
-            { label: t('voucher.status.paused'), value: VoucherState.PAUSED },
-            { label: t('voucher.status.expired'), value: VoucherState.EXPIRED },
-            {
-              label: t('voucher.status.archived'),
-              value: VoucherState.ARCHIVED,
-            },
+            { label: t('voucher.status.published'), value: VoucherState.published },
+            { label: t('voucher.status.draft'), value: VoucherState.draft },
+            { label: t('voucher.status.claimed'), value: VoucherState.claimed },
+            { label: t('voucher.status.expired'), value: VoucherState.expired },
+            { label: t('voucher.status.suspended'), value: VoucherState.suspended },
           ]}
         />
 
@@ -110,19 +107,11 @@ export function VoucherFilters({
           options={[
             {
               label: t('voucher.discountType.percentage'),
-              value: VoucherDiscountType.PERCENTAGE,
+              value: VoucherDiscountType.percentage,
             },
             {
               label: t('voucher.discountType.fixedAmount'),
-              value: VoucherDiscountType.FIXED_AMOUNT,
-            },
-            {
-              label: t('voucher.discountType.buyOneGetOne'),
-              value: VoucherDiscountType.BUY_ONE_GET_ONE,
-            },
-            {
-              label: t('voucher.discountType.freeShipping'),
-              value: VoucherDiscountType.FREE_SHIPPING,
+              value: VoucherDiscountType.fixed,
             },
           ]}
         />
@@ -151,7 +140,7 @@ export function VoucherFilters({
       <ResponsiveFilters.Group title={t('voucher.filter.valueAndUsage')}>
         <ResponsiveFilters.Field
           label={t('voucher.field.minDiscount')}
-          type="number"
+          type="input"
           value={values.minDiscountValue}
           onChange={(value) => handleChange('minDiscountValue', value)}
           placeholder={t('voucher.filter.minDiscountPlaceholder')}
@@ -159,7 +148,7 @@ export function VoucherFilters({
 
         <ResponsiveFilters.Field
           label={t('voucher.field.maxDiscount')}
-          type="number"
+          type="input"
           value={values.maxDiscountValue}
           onChange={(value) => handleChange('maxDiscountValue', value)}
           placeholder={t('voucher.filter.maxDiscountPlaceholder')}

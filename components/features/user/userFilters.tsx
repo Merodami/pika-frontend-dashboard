@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { UserStatus, UserRole } from '@merodami/pika-types'
+import { UserStatus, UserRole } from '@/lib/api/orval-client'
 import { ResponsiveFilters } from '@/components/ui/filters'
 
 interface UserFiltersProps {
@@ -26,14 +26,14 @@ export function UserFilters({ values, onChange, onReset }: UserFiltersProps) {
   const quickFilters = [
     {
       label: t('user.status.active'),
-      value: UserStatus.ACTIVE,
-      isActive: values.status === UserStatus.ACTIVE,
+      value: UserStatus.active,
+      isActive: values.status === UserStatus.active,
       onClick: (value: any) => handleChange('status', value),
     },
     {
       label: t('user.role.business'),
-      value: UserRole.BUSINESS,
-      isActive: values.role === UserRole.BUSINESS,
+      value: UserRole.business,
+      isActive: values.role === UserRole.business,
       onClick: (value: any) => handleChange('role', value),
     },
     {
@@ -78,12 +78,12 @@ export function UserFilters({ values, onChange, onReset }: UserFiltersProps) {
           onChange={(value) => handleChange('status', value)}
           placeholder={t('user.filter.statusPlaceholder')}
           options={[
-            { label: t('user.status.active'), value: UserStatus.ACTIVE },
-            { label: t('user.status.suspended'), value: UserStatus.SUSPENDED },
-            { label: t('user.status.banned'), value: UserStatus.BANNED },
+            { label: t('user.status.active'), value: UserStatus.active },
+            { label: t('user.status.suspended'), value: UserStatus.suspended },
+            { label: t('user.status.banned'), value: UserStatus.banned },
             {
               label: t('user.status.unconfirmed'),
-              value: UserStatus.UNCONFIRMED,
+              value: UserStatus.unconfirmed,
             },
           ]}
         />
@@ -95,9 +95,9 @@ export function UserFilters({ values, onChange, onReset }: UserFiltersProps) {
           onChange={(value) => handleChange('role', value)}
           placeholder={t('user.filter.rolePlaceholder')}
           options={[
-            { label: t('user.role.admin'), value: UserRole.ADMIN },
-            { label: t('user.role.customer'), value: UserRole.CUSTOMER },
-            { label: t('user.role.business'), value: UserRole.BUSINESS },
+            { label: t('user.role.admin'), value: UserRole.admin },
+            { label: t('user.role.customer'), value: UserRole.customer },
+            { label: t('user.role.business'), value: UserRole.business },
           ]}
         />
       </ResponsiveFilters.Group>

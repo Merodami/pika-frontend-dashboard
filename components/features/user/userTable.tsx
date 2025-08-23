@@ -18,7 +18,7 @@ import type { MenuProps } from 'antd'
 import { DataGridServer } from '@/components/ui/DataGrid/DataGridServer'
 import { formatDate } from '@/lib/utils/date'
 import type { GetAdminUserList200DataItem } from '@/lib/api/orval-client'
-import { UserStatus, UserRole } from '@merodami/pika-types'
+import { UserStatus, UserRole } from '@/lib/api/orval-client'
 
 interface UserTableProps {
   data: GetAdminUserList200DataItem[]
@@ -46,13 +46,13 @@ export function UserTable({
   // Status color mapping
   const getStatusColor = (status: string) => {
     switch (status) {
-      case UserStatus.ACTIVE:
+      case UserStatus.active:
         return 'green'
-      case UserStatus.SUSPENDED:
+      case UserStatus.suspended:
         return 'red'
-      case UserStatus.BANNED:
+      case UserStatus.banned:
         return 'volcano'
-      case UserStatus.UNCONFIRMED:
+      case UserStatus.unconfirmed:
         return 'orange'
       default:
         return 'default'
@@ -62,11 +62,11 @@ export function UserTable({
   // Role color mapping
   const getRoleColor = (role: string) => {
     switch (role) {
-      case UserRole.ADMIN:
+      case UserRole.admin:
         return 'purple'
-      case UserRole.BUSINESS:
+      case UserRole.business:
         return 'blue'
-      case UserRole.CUSTOMER:
+      case UserRole.customer:
         return 'cyan'
       default:
         return 'default'
@@ -76,11 +76,11 @@ export function UserTable({
   // Role icon mapping
   const getRoleIcon = (role: string) => {
     switch (role) {
-      case UserRole.ADMIN:
+      case UserRole.admin:
         return <Shield className="w-4 h-4" />
-      case UserRole.BUSINESS:
+      case UserRole.business:
         return <User className="w-4 h-4" />
-      case UserRole.CUSTOMER:
+      case UserRole.customer:
         return <User className="w-4 h-4" />
       default:
         return <User className="w-4 h-4" />
