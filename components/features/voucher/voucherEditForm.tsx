@@ -58,7 +58,7 @@ export function VoucherEditForm({
     watch,
   } = useForm<UpdateVoucherFormData>({
     defaultValues: {
-      discountType: VoucherDiscountType.PERCENTAGE,
+      discountType: VoucherDiscountType.percentage,
       currency: Currency.PYG,
     },
   })
@@ -96,7 +96,7 @@ export function VoucherEditForm({
 
   const handleCancel = () => {
     const path =
-      userRole === UserRole.ADMIN
+      userRole === UserRole.admin
         ? `/${locale}/admin/vouchers/${voucherId}`
         : `/${locale}/business/vouchers/${voucherId}`
     router.push(path)
@@ -113,7 +113,7 @@ export function VoucherEditForm({
 
       // Navigate back to detail page
       const redirectPath =
-        userRole === UserRole.ADMIN
+        userRole === UserRole.admin
           ? `/${locale}/admin/vouchers/${voucherId}`
           : `/${locale}/business/vouchers/${voucherId}`
 
@@ -133,7 +133,7 @@ export function VoucherEditForm({
       description:
         watchedValues.description?.es || watchedValues.description?.en || '',
       category: voucher?.categoryId || '',
-      discountType: voucher?.discountType || VoucherDiscountType.PERCENTAGE,
+      discountType: voucher?.discountType || VoucherDiscountType.percentage,
       discountValue: watchedValues.discountValue || 0,
       originalPrice: 0,
       minimumPurchase: 0,
@@ -179,7 +179,7 @@ export function VoucherEditForm({
   }
 
   // Can only edit draft vouchers
-  if (voucher.state !== VoucherState.DRAFT) {
+  if (voucher.state !== VoucherState.draft) {
     return (
       <Alert
         message={t('error.cannotEdit')}
@@ -332,11 +332,11 @@ export function VoucherEditForm({
                         >
                           <Select {...field}>
                             <Select.Option
-                              value={VoucherDiscountType.PERCENTAGE}
+                              value={VoucherDiscountType.percentage}
                             >
                               {t('discountType.percentage')}
                             </Select.Option>
-                            <Select.Option value={VoucherDiscountType.FIXED}>
+                            <Select.Option value={VoucherDiscountType.fixed}>
                               {t('discountType.fixed')}
                             </Select.Option>
                           </Select>
@@ -359,19 +359,19 @@ export function VoucherEditForm({
                             style={{ width: '100%' }}
                             min={
                               watchedValues.discountType ===
-                              VoucherDiscountType.PERCENTAGE
+                              VoucherDiscountType.percentage
                                 ? 1
                                 : 100
                             }
                             max={
                               watchedValues.discountType ===
-                              VoucherDiscountType.PERCENTAGE
+                              VoucherDiscountType.percentage
                                 ? 100
                                 : undefined
                             }
                             addonAfter={
                               watchedValues.discountType ===
-                              VoucherDiscountType.PERCENTAGE
+                              VoucherDiscountType.percentage
                                 ? '%'
                                 : 'Gs.'
                             }

@@ -253,7 +253,212 @@
       "cannotEdit": "Cannot Edit Voucher",
       "onlyDraftEditable": "Only draft vouchers can be edited. Published, expired, or suspended vouchers cannot be modified."
     },
-    "selectCategory": "Select a category"
+    "selectCategory": "Select a category",
+    "field": {
+      "title": "Title",
+      "code": "Code",
+      "status": "Status",
+      "discountType": "Discount Type",
+      "business": "Business",
+      "businessId": "Business ID",
+      "minDiscount": "Minimum Discount",
+      "maxDiscount": "Maximum Discount",
+      "hasUsageLimit": "Has Usage Limit",
+      "createdAt": "Created At",
+      "validityPeriod": "Validity Period",
+      "expiryDate": "Expiry Date"
+    },
+    "filter": {
+      "basic": "Basic Filters",
+      "search": "Search",
+      "statusAndType": "Status & Type",
+      "statusPlaceholder": "Select status",
+      "discountTypePlaceholder": "Select discount type",
+      "business": "Business",
+      "hasUsageLimitPlaceholder": "Has usage limit?",
+      "valueAndUsage": "Value & Usage",
+      "dates": "Date Filters"
+    }
+  },
+  "voucher": {
+    "action": {
+      "create": "Create Voucher",
+      "delete": "Delete Voucher",
+      "edit": "Edit Voucher",
+      "publish": "Publish Voucher",
+      "view": "View Voucher"
+    },
+    "discountType": {
+      "fixedAmount": "Fixed Amount",
+      "percentage": "Percentage"
+    },
+    "field": {
+      "business": "Business",
+      "businessId": "Business ID",
+      "code": "Voucher Code",
+      "createdAt": "Created At",
+      "discount": "Discount",
+      "discountType": "Discount Type",
+      "expiryDate": "Expiry Date",
+      "hasUsageLimit": "Has Usage Limit",
+      "maxDiscount": "Maximum Discount",
+      "minDiscount": "Minimum Discount",
+      "status": "Status",
+      "title": "Title",
+      "usage": "Usage",
+      "validity": "Validity",
+      "validityPeriod": "Validity Period"
+    },
+    "filter": {
+      "basic": "Basic Filters",
+      "business": "Business",
+      "businessIdPlaceholder": "Enter business ID",
+      "businessPlaceholder": "Select business",
+      "codePlaceholder": "Enter voucher code",
+      "createdDatePlaceholder": "Select created date range",
+      "dates": "Date Filters",
+      "discountTypePlaceholder": "Select discount type",
+      "expiryDatePlaceholder": "Select expiry date range",
+      "hasUsageLimitPlaceholder": "Has usage limit?",
+      "maxDiscountPlaceholder": "Enter maximum discount",
+      "minDiscountPlaceholder": "Enter minimum discount",
+      "search": "Search",
+      "searchPlaceholder": "Search vouchers...",
+      "statusAndType": "Status & Type",
+      "statusPlaceholder": "Select status",
+      "titlePlaceholder": "Enter voucher title",
+      "validityPeriodPlaceholder": "Select validity period",
+      "valueAndUsage": "Value & Usage"
+    },
+    "message": {
+      "bulkDeleteSuccess": "Vouchers deleted successfully",
+      "deleteSuccess": "Voucher deleted successfully",
+      "publishSuccess": "Voucher published successfully"
+    },
+    "status": {
+      "claimed": "Claimed",
+      "draft": "Draft",
+      "expired": "Expired",
+      "published": "Published",
+      "suspended": "Suspended"
+    }
+  },
+  "business": {
+    "title": "Business",
+    "subtitle": "Manage business information",
+    "description": "View and manage business details",
+    "action": {
+      "create": "Create Business",
+      "edit": "Edit Business",
+      "delete": "Delete Business",
+      "view": "View Business",
+      "approve": "Approve Business",
+      "reject": "Reject Business"
+    },
+    "field": {
+      "name": "Business Name",
+      "email": "Email",
+      "phone": "Phone",
+      "address": "Address",
+      "category": "Category",
+      "city": "City",
+      "status": "Status",
+      "type": "Business Type",
+      "owner": "Owner",
+      "rating": "Rating",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "phoneVerified": "Phone Verified",
+      "emailVerified": "Email Verified",
+      "minRating": "Minimum Rating",
+      "hasReviews": "Has Reviews",
+      "registrationDate": "Registration Date",
+      "verificationDate": "Verification Date",
+      "description": "Description",
+      "approvedAt": "Approved At",
+      "approvedBy": "Approved By",
+      "userStatus": "Owner Status",
+      "currentStep": "Current Step",
+      "registrationStatus": "Registration Status"
+    },
+    "filter": {
+      "basic": "Basic Filters",
+      "search": "Search",
+      "searchPlaceholder": "Search businesses...",
+      "namePlaceholder": "Enter business name",
+      "cityPlaceholder": "Enter city name",
+      "statusAndType": "Status & Type",
+      "statusPlaceholder": "Select status",
+      "typePlaceholder": "Select business type",
+      "verification": "Verification",
+      "phoneVerifiedPlaceholder": "Phone verified?",
+      "emailVerifiedPlaceholder": "Email verified?",
+      "performance": "Rating & Performance",
+      "minRatingPlaceholder": "Select minimum rating",
+      "hasReviewsPlaceholder": "Has customer reviews?",
+      "dates": "Date Filters",
+      "registrationDatePlaceholder": "Select registration date range",
+      "verificationDatePlaceholder": "Select verification date range"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive",
+      "pending": "Pending",
+      "suspended": "Suspended",
+      "verified": "Verified",
+      "unverified": "Unverified",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "expired": "Expired"
+    },
+    "type": {
+      "restaurant": "Restaurant",
+      "retail": "Retail",
+      "service": "Service",
+      "healthcare": "Healthcare",
+      "fitness": "Fitness",
+      "education": "Education",
+      "entertainment": "Entertainment",
+      "other": "Other"
+    },
+    "message": {
+      "deleteSuccess": "Business deleted successfully",
+      "approveSuccess": "Business approved successfully",
+      "rejectSuccess": "Business rejected successfully",
+      "bulkDeleteSuccess": "Businesses deleted successfully",
+      "createSuccess": "Business created successfully",
+      "updateSuccess": "Business updated successfully"
+    },
+    "create": {
+      "title": "Create New Business",
+      "subtitle": "Add a new business to the platform",
+      "description": "Fill in the business information"
+    },
+    "detail": {
+      "title": "Business Details",
+      "description": "View business information and metrics",
+      "notFound": "Business not found",
+      "tabs": {
+        "overview": "Overview",
+        "metrics": "Metrics",
+        "activity": "Activity"
+      },
+      "sections": {
+        "basicInfo": "Basic Information",
+        "ownerInfo": "Owner Information",
+        "registrationInfo": "Registration Details",
+        "performance": "Performance Metrics",
+        "topVouchers": "Top Performing Vouchers"
+      },
+      "totalVouchers": "Total Vouchers",
+      "totalRedemptions": "Total Redemptions",
+      "redemptions": "Redemptions",
+      "conversionRate": "Conversion Rate",
+      "confirmDelete": {
+        "title": "Delete Business",
+        "message": "Are you sure you want to delete {name}? This action cannot be undone."
+      }
+    }
   },
   "businesses": {
     "title": "Businesses",
@@ -266,7 +471,11 @@
       "activate": "Activate",
       "deactivate": "Deactivate",
       "verifySelected": "Verify Selected",
-      "unverifySelected": "Unverify Selected"
+      "unverifySelected": "Unverify Selected",
+      "view": "View",
+      "edit": "Edit",
+      "delete": "Delete",
+      "reject": "Reject"
     },
     "info": {
       "adminCreate": "You are creating a business on behalf of a user. Make sure you have their permission."
@@ -282,7 +491,15 @@
       "owner": "Owner",
       "rating": "Rating",
       "verification": "Verification",
-      "approval": "Approval"
+      "approval": "Approval",
+      "city": "City",
+      "type": "Type",
+      "phoneVerified": "Phone Verified",
+      "emailVerified": "Email Verified",
+      "minRating": "Minimum Rating",
+      "hasReviews": "Has Reviews",
+      "registrationDate": "Registration Date",
+      "verificationDate": "Verification Date"
     },
     "status": {
       "active": "Active",
@@ -295,7 +512,10 @@
       "notApproved": "Not Approved",
       "verifiedApproved": "Verified & Approved",
       "verifiedPending": "Verified (Pending Approval)",
-      "approvedNotVerified": "Approved (Not Verified)"
+      "approvedNotVerified": "Approved (Not Verified)",
+      "rejected": "Rejected",
+      "unverified": "Unverified",
+      "expired": "Expired"
     },
     "resetRegistration": {
       "action": "Reset Registration",
@@ -323,6 +543,35 @@
       "approval": "Approval",
       "status": "Status",
       "createdDate": "Created Date"
+    },
+    "filter": {
+      "basic": "Basic Filters",
+      "search": "Search",
+      "searchPlaceholder": "Search businesses...",
+      "namePlaceholder": "Enter business name",
+      "cityPlaceholder": "Enter city name",
+      "statusAndType": "Status & Type",
+      "statusPlaceholder": "Select status",
+      "typePlaceholder": "Select business type",
+      "verification": "Verification",
+      "phoneVerifiedPlaceholder": "Phone verified?",
+      "emailVerifiedPlaceholder": "Email verified?",
+      "performance": "Rating & Performance",
+      "minRatingPlaceholder": "Select minimum rating",
+      "hasReviewsPlaceholder": "Has customer reviews?",
+      "dates": "Date Filters",
+      "registrationDatePlaceholder": "Select registration date range",
+      "verificationDatePlaceholder": "Select verification date range"
+    },
+    "type": {
+      "restaurant": "Restaurant",
+      "retail": "Retail",
+      "service": "Service",
+      "healthcare": "Healthcare",
+      "fitness": "Fitness",
+      "education": "Education",
+      "entertainment": "Entertainment",
+      "other": "Other"
     },
     "description": "Manage business accounts and verifications"
   },

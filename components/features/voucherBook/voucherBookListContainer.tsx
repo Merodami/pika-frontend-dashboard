@@ -77,12 +77,12 @@ export function VoucherBookListContainer({
 
   // Handlers
   const handleViewBook = (id: string) => {
-    const basePath = userRole === UserRole.ADMIN ? 'admin' : 'business'
+    const basePath = userRole === UserRole.admin ? 'admin' : 'business'
     router.push(`/${locale}/${basePath}/voucher-books/${id}`)
   }
 
   const handleEditBook = (id: string) => {
-    const basePath = userRole === UserRole.ADMIN ? 'admin' : 'business'
+    const basePath = userRole === UserRole.admin ? 'admin' : 'business'
     router.push(`/${locale}/${basePath}/voucher-books/${id}/edit`)
   }
 
@@ -95,7 +95,7 @@ export function VoucherBookListContainer({
   }
 
   const handleCreateBook = () => {
-    const basePath = userRole === UserRole.ADMIN ? 'admin' : 'business'
+    const basePath = userRole === UserRole.admin ? 'admin' : 'business'
     router.push(`/${locale}/${basePath}/voucher-books/create`)
   }
 

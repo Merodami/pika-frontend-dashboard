@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { UserRole } from '@merodami/pika-types'
+import { UserRole } from '@/lib/api/orval-client'
 import type {
   AdminVoucherQueryParams,
   AdminVoucherAnalyticsResponse,
@@ -23,13 +23,13 @@ import {
 export function useVoucherQueries() {
   const useVouchersList = (
     params?: AdminVoucherQueryParams,
-    userRole: UserRole = UserRole.ADMIN
+    userRole: UserRole = UserRole.admin
   ) => {
     return useQuery<VoucherListDomain>({
       queryKey: ['vouchers', params, userRole],
       queryFn: async () => {
         const response =
-          userRole === UserRole.ADMIN
+          userRole === UserRole.admin
             ? await getAdminVoucherList(params)
             : await getAdminVoucherList({
                 ...params,
@@ -41,7 +41,7 @@ export function useVoucherQueries() {
     })
   }
 
-  const useVoucher = (id: string, userRole: UserRole = UserRole.ADMIN) => {
+  const useVoucher = (id: string, userRole: UserRole = UserRole.admin) => {
     return useQuery<VoucherDomain>({
       queryKey: ['voucher', id, userRole],
       queryFn: async () => {

@@ -251,7 +251,212 @@
       "cannotEdit": "No se Puede Editar el Cupón",
       "onlyDraftEditable": "Solo los cupones en borrador pueden ser editados. Los cupones publicados, expirados o suspendidos no pueden modificarse."
     },
-    "selectCategory": "Seleccionar una categoría"
+    "selectCategory": "Seleccionar una categoría",
+    "field": {
+      "title": "Título",
+      "code": "Código",
+      "status": "Estado",
+      "discountType": "Tipo de Descuento",
+      "business": "Negocio",
+      "businessId": "ID del Negocio",
+      "minDiscount": "Descuento Mínimo",
+      "maxDiscount": "Descuento Máximo",
+      "hasUsageLimit": "Tiene Límite de Uso",
+      "createdAt": "Fecha de Creación",
+      "validityPeriod": "Período de Validez",
+      "expiryDate": "Fecha de Expiración"
+    },
+    "filter": {
+      "basic": "Filtros Básicos",
+      "search": "Buscar",
+      "statusAndType": "Estado y Tipo",
+      "statusPlaceholder": "Seleccionar estado",
+      "discountTypePlaceholder": "Seleccionar tipo de descuento",
+      "business": "Negocio",
+      "hasUsageLimitPlaceholder": "¿Tiene límite de uso?",
+      "valueAndUsage": "Valor y Uso",
+      "dates": "Filtros de Fecha"
+    }
+  },
+  "voucher": {
+    "action": {
+      "create": "Crear Cupón",
+      "delete": "Eliminar Cupón",
+      "edit": "Editar Cupón",
+      "publish": "Publicar Cupón",
+      "view": "Ver Cupón"
+    },
+    "discountType": {
+      "fixedAmount": "Monto Fijo",
+      "percentage": "Porcentaje"
+    },
+    "field": {
+      "business": "Negocio",
+      "businessId": "ID del Negocio",
+      "code": "Código del Cupón",
+      "createdAt": "Creado En",
+      "discount": "Descuento",
+      "discountType": "Tipo de Descuento",
+      "expiryDate": "Fecha de Vencimiento",
+      "hasUsageLimit": "Tiene Límite de Uso",
+      "maxDiscount": "Descuento Máximo",
+      "minDiscount": "Descuento Mínimo",
+      "status": "Estado",
+      "title": "Título",
+      "usage": "Uso",
+      "validity": "Validez",
+      "validityPeriod": "Período de Validez"
+    },
+    "filter": {
+      "basic": "Filtros Básicos",
+      "business": "Negocio",
+      "businessIdPlaceholder": "Ingresa ID del negocio",
+      "businessPlaceholder": "Selecciona negocio",
+      "codePlaceholder": "Ingresa código del cupón",
+      "createdDatePlaceholder": "Selecciona rango de fecha de creación",
+      "dates": "Filtros de Fecha",
+      "discountTypePlaceholder": "Selecciona tipo de descuento",
+      "expiryDatePlaceholder": "Selecciona rango de fecha de vencimiento",
+      "hasUsageLimitPlaceholder": "¿Tiene límite de uso?",
+      "maxDiscountPlaceholder": "Ingresa descuento máximo",
+      "minDiscountPlaceholder": "Ingresa descuento mínimo",
+      "search": "Buscar",
+      "searchPlaceholder": "Buscar cupones...",
+      "statusAndType": "Estado y Tipo",
+      "statusPlaceholder": "Selecciona estado",
+      "titlePlaceholder": "Ingresa título del cupón",
+      "validityPeriodPlaceholder": "Selecciona período de validez",
+      "valueAndUsage": "Valor y Uso"
+    },
+    "message": {
+      "bulkDeleteSuccess": "Cupones eliminados exitosamente",
+      "deleteSuccess": "Cupón eliminado exitosamente",
+      "publishSuccess": "Cupón publicado exitosamente"
+    },
+    "status": {
+      "claimed": "Reclamado",
+      "draft": "Borrador",
+      "expired": "Expirado",
+      "published": "Publicado",
+      "suspended": "Suspendido"
+    }
+  },
+  "business": {
+    "title": "Negocio",
+    "subtitle": "Gestionar información del negocio",
+    "description": "Ver y gestionar detalles del negocio",
+    "action": {
+      "create": "Crear Negocio",
+      "edit": "Editar Negocio",
+      "delete": "Eliminar Negocio",
+      "view": "Ver Negocio",
+      "approve": "Aprobar Negocio",
+      "reject": "Rechazar Negocio"
+    },
+    "field": {
+      "name": "Nombre del Negocio",
+      "email": "Correo Electrónico",
+      "phone": "Teléfono",
+      "address": "Dirección",
+      "category": "Categoría",
+      "city": "Ciudad",
+      "status": "Estado",
+      "type": "Tipo de Negocio",
+      "owner": "Propietario",
+      "rating": "Calificación",
+      "createdAt": "Creado En",
+      "updatedAt": "Actualizado En",
+      "phoneVerified": "Teléfono Verificado",
+      "emailVerified": "Correo Verificado",
+      "minRating": "Calificación Mínima",
+      "hasReviews": "Tiene Reseñas",
+      "registrationDate": "Fecha de Registro",
+      "verificationDate": "Fecha de Verificación",
+      "description": "Descripción",
+      "approvedAt": "Aprobado En",
+      "approvedBy": "Aprobado Por",
+      "userStatus": "Estado del Propietario",
+      "currentStep": "Paso Actual",
+      "registrationStatus": "Estado del Registro"
+    },
+    "filter": {
+      "basic": "Filtros Básicos",
+      "search": "Buscar",
+      "searchPlaceholder": "Buscar negocios...",
+      "namePlaceholder": "Ingresa el nombre del negocio",
+      "cityPlaceholder": "Ingresa el nombre de la ciudad",
+      "statusAndType": "Estado y Tipo",
+      "statusPlaceholder": "Selecciona estado",
+      "typePlaceholder": "Selecciona tipo de negocio",
+      "verification": "Verificación",
+      "phoneVerifiedPlaceholder": "¿Teléfono verificado?",
+      "emailVerifiedPlaceholder": "¿Correo verificado?",
+      "performance": "Calificación y Rendimiento",
+      "minRatingPlaceholder": "Selecciona calificación mínima",
+      "hasReviewsPlaceholder": "¿Tiene reseñas de clientes?",
+      "dates": "Filtros de Fecha",
+      "registrationDatePlaceholder": "Selecciona rango de fecha de registro",
+      "verificationDatePlaceholder": "Selecciona rango de fecha de verificación"
+    },
+    "status": {
+      "active": "Activo",
+      "inactive": "Inactivo",
+      "pending": "Pendiente",
+      "suspended": "Suspendido",
+      "verified": "Verificado",
+      "unverified": "No Verificado",
+      "approved": "Aprobado",
+      "rejected": "Rechazado",
+      "expired": "Expirado"
+    },
+    "type": {
+      "restaurant": "Restaurante",
+      "retail": "Minorista",
+      "service": "Servicio",
+      "healthcare": "Atención Médica",
+      "fitness": "Fitness",
+      "education": "Educación",
+      "entertainment": "Entretenimiento",
+      "other": "Otro"
+    },
+    "message": {
+      "deleteSuccess": "Negocio eliminado exitosamente",
+      "approveSuccess": "Negocio aprobado exitosamente",
+      "rejectSuccess": "Negocio rechazado exitosamente",
+      "bulkDeleteSuccess": "Negocios eliminados exitosamente",
+      "createSuccess": "Negocio creado exitosamente",
+      "updateSuccess": "Negocio actualizado exitosamente"
+    },
+    "create": {
+      "title": "Crear Nuevo Negocio",
+      "subtitle": "Agregar un nuevo negocio a la plataforma",
+      "description": "Complete la información del negocio"
+    },
+    "detail": {
+      "title": "Detalles del Negocio",
+      "description": "Ver información y métricas del negocio",
+      "notFound": "Negocio no encontrado",
+      "tabs": {
+        "overview": "Resumen",
+        "metrics": "Métricas",
+        "activity": "Actividad"
+      },
+      "sections": {
+        "basicInfo": "Información Básica",
+        "ownerInfo": "Información del Propietario",
+        "registrationInfo": "Detalles del Registro",
+        "performance": "Métricas de Rendimiento",
+        "topVouchers": "Cupones Más Exitosos"
+      },
+      "totalVouchers": "Total de Cupones",
+      "totalRedemptions": "Total de Canjes",
+      "redemptions": "Canjes",
+      "conversionRate": "Tasa de Conversión",
+      "confirmDelete": {
+        "title": "Eliminar Negocio",
+        "message": "¿Está seguro de que desea eliminar {name}? Esta acción no se puede deshacer."
+      }
+    }
   },
   "businesses": {
     "title": "Negocios",
@@ -264,7 +469,11 @@
       "activate": "Activar",
       "deactivate": "Desactivar",
       "verifySelected": "Verificar Seleccionados",
-      "unverifySelected": "Desverificar Seleccionados"
+      "unverifySelected": "Desverificar Seleccionados",
+      "view": "Ver",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "reject": "Rechazar"
     },
     "info": {
       "adminCreate": "Estás creando un negocio en nombre de un usuario. Asegúrate de tener su permiso."
@@ -280,7 +489,15 @@
       "owner": "Propietario",
       "rating": "Calificación",
       "verification": "Verificación",
-      "approval": "Aprobación"
+      "approval": "Aprobación",
+      "city": "Ciudad",
+      "type": "Tipo",
+      "phoneVerified": "Teléfono Verificado",
+      "emailVerified": "Correo Verificado",
+      "minRating": "Calificación Mínima",
+      "hasReviews": "Tiene Reseñas",
+      "registrationDate": "Fecha de Registro",
+      "verificationDate": "Fecha de Verificación"
     },
     "status": {
       "active": "Activo",
@@ -293,7 +510,10 @@
       "notApproved": "No Aprobado",
       "verifiedApproved": "Verificado y Aprobado",
       "verifiedPending": "Verificado (Pendiente de Aprobación)",
-      "approvedNotVerified": "Aprobado (No Verificado)"
+      "approvedNotVerified": "Aprobado (No Verificado)",
+      "rejected": "Rechazado",
+      "unverified": "No Verificado",
+      "expired": "Expirado"
     },
     "resetRegistration": {
       "action": "Reiniciar Registro",
@@ -321,6 +541,35 @@
       "approval": "Aprobación",
       "status": "Estado",
       "createdDate": "Fecha de Creación"
+    },
+    "filter": {
+      "basic": "Filtros Básicos",
+      "search": "Buscar",
+      "searchPlaceholder": "Buscar negocios...",
+      "namePlaceholder": "Ingresa el nombre del negocio",
+      "cityPlaceholder": "Ingresa el nombre de la ciudad",
+      "statusAndType": "Estado y Tipo",
+      "statusPlaceholder": "Selecciona estado",
+      "typePlaceholder": "Selecciona tipo de negocio",
+      "verification": "Verificación",
+      "phoneVerifiedPlaceholder": "¿Teléfono verificado?",
+      "emailVerifiedPlaceholder": "¿Correo verificado?",
+      "performance": "Calificación y Rendimiento",
+      "minRatingPlaceholder": "Selecciona calificación mínima",
+      "hasReviewsPlaceholder": "¿Tiene reseñas de clientes?",
+      "dates": "Filtros de Fecha",
+      "registrationDatePlaceholder": "Selecciona rango de fecha de registro",
+      "verificationDatePlaceholder": "Selecciona rango de fecha de verificación"
+    },
+    "type": {
+      "restaurant": "Restaurante",
+      "retail": "Minorista",
+      "service": "Servicio",
+      "healthcare": "Atención Médica",
+      "fitness": "Fitness",
+      "education": "Educación",
+      "entertainment": "Entretenimiento",
+      "other": "Otro"
     },
     "description": "Gestionar cuentas de negocios y verificaciones"
   },

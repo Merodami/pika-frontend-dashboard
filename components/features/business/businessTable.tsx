@@ -10,7 +10,6 @@ import {
   Shield,
   Mail,
   Phone,
-  MapPin,
   Star,
 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
@@ -114,10 +113,11 @@ export function BusinessTable({
       cell: ({ row }) => (
         <div>
           <div className="font-medium">{row.original.businessName}</div>
-          <div className="text-sm text-gray-500 flex items-center gap-1">
-            <MapPin className="w-3 h-3" />
-            {row.original.businessDescription || t('common.na')}
-          </div>
+          {row.original.businessDescription && (
+            <div className="text-sm text-gray-500 truncate max-w-xs">
+              {row.original.businessDescription}
+            </div>
+          )}
         </div>
       ),
     },

@@ -104,7 +104,7 @@ export function VoucherListContainer({
   // Event handlers
   const handleViewVoucher = (id: string) => {
     const path =
-      userRole === UserRole.ADMIN
+      userRole === UserRole.admin
         ? `/${locale}/admin/vouchers/${id}`
         : `/${locale}/business/vouchers/${id}`
     router.push(path)
@@ -112,7 +112,7 @@ export function VoucherListContainer({
 
   const handleEditVoucher = (id: string) => {
     const path =
-      userRole === UserRole.ADMIN
+      userRole === UserRole.admin
         ? `/${locale}/admin/vouchers/${id}/edit`
         : `/${locale}/business/vouchers/${id}/edit`
     router.push(path)
@@ -129,7 +129,7 @@ export function VoucherListContainer({
 
   const handleCreateVoucher = () => {
     const path =
-      userRole === UserRole.ADMIN
+      userRole === UserRole.admin
         ? `/${locale}/admin/vouchers/create`
         : `/${locale}/business/vouchers/create`
     router.push(path)

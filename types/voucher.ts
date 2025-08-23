@@ -1,7 +1,7 @@
 // Frontend-specific voucher UI types
 // These are for the voucher design/preview components
 
-import { VoucherDiscountType } from '@merodami/pika-types'
+import { VoucherDiscountType } from '@/lib/api/orval-client'
 import type {
   AdminVoucherQueryParams,
   AdminCreateVoucherRequest,

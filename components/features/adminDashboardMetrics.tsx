@@ -1,7 +1,7 @@
 import { Ticket, Building2, BookOpen, AlertTriangle } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 
-import { MetricCard } from '@/components/ui/metricCard'
+import { MetricCard } from '@/components/ui/MetricCard'
 import type { LocaleProps } from '@/types/common'
 
 type AdminDashboardMetricsProps = LocaleProps
@@ -24,28 +24,32 @@ export async function AdminDashboardMetrics({
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <MetricCard
-          title={t('totalVouchers')}
+          label={t('totalVouchers')}
           value={metrics.totalVouchers.toLocaleString()}
-          icon={Ticket}
-          trend={{ value: 8.2, isPositive: true }}
+          icon={<Ticket className="w-4 h-4" />}
+          trend={{ value: 8.2, direction: 'up' }}
+          color="blue"
         />
         <MetricCard
-          title={t('activeBusinesses')}
+          label={t('activeBusinesses')}
           value={metrics.activeBusinesses.toLocaleString()}
-          icon={Building2}
-          trend={{ value: 3.4, isPositive: true }}
+          icon={<Building2 className="w-4 h-4" />}
+          trend={{ value: 3.4, direction: 'up' }}
+          color="green"
         />
         <MetricCard
-          title={t('voucherBooks')}
+          label={t('voucherBooks')}
           value={metrics.voucherBooks.toString()}
-          icon={BookOpen}
-          trend={{ value: 1, isPositive: true }}
+          icon={<BookOpen className="w-4 h-4" />}
+          trend={{ value: 1, direction: 'up' }}
+          color="purple"
         />
         <MetricCard
-          title={t('pendingFraudCases')}
+          label={t('pendingFraudCases')}
           value={metrics.pendingFraudCases.toString()}
-          icon={AlertTriangle}
-          trend={{ value: 2, isPositive: false }}
+          icon={<AlertTriangle className="w-4 h-4" />}
+          trend={{ value: 2, direction: 'down' }}
+          color="red"
         />
       </div>
     )

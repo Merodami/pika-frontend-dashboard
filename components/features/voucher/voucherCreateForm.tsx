@@ -9,7 +9,6 @@ import { VoucherDesignForm } from './voucherDesignForm'
 import { VoucherPreview } from './voucherPreview'
 import { useVoucherMutations } from '@/hooks/api/vouchers/useVoucherMutations'
 import type { VoucherDesign, CreateVoucherData } from '@/types/voucher'
-import { mapPackageVoucherDiscountTypeToOrval } from '@/lib/api/mappers/voucher'
 
 interface VoucherCreateFormProps {
   userRole: UserRole
@@ -30,7 +29,7 @@ export function VoucherCreateForm({
     title: '',
     description: '',
     category: '',
-    discountType: VoucherDiscountType.PERCENTAGE,
+    discountType: VoucherDiscountType.percentage,
     discountValue: 0,
     originalPrice: 0,
     minimumPurchase: 0,
@@ -100,9 +99,7 @@ export function VoucherCreateForm({
           en: voucherDesign.terms.join(', '),
           gn: voucherDesign.terms.join(', '),
         },
-        discountType: mapPackageVoucherDiscountTypeToOrval(
-          voucherDesign.discountType
-        ),
+        discountType: voucherDesign.discountType,
         discountValue: voucherDesign.discountValue,
         currency: Currency.PYG,
         validFrom:
@@ -138,7 +135,7 @@ export function VoucherCreateForm({
 
       // Navigate based on user role
       const redirectPath =
-        userRole === UserRole.ADMIN
+        userRole === UserRole.admin
           ? `/admin/vouchers/${result.id}`
           : `/business/vouchers/${result.id}`
 
@@ -179,7 +176,7 @@ export function VoucherCreateForm({
                 </p>
                 <p>
                   <strong>Discount:</strong> {voucherDesign.discountValue}
-                  {voucherDesign.discountType === VoucherDiscountType.PERCENTAGE
+                  {voucherDesign.discountType === VoucherDiscountType.percentage
                     ? '%'
                     : ' Gs.'}
                 </p>

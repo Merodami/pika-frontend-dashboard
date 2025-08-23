@@ -510,7 +510,204 @@
       "cannotEdit": "Ndaikatúi Oñemoambue Kupón",
       "onlyDraftEditable": "Kupón moã'anga añoite ikatu oñemoambue. Kupón ojemuasajepyre, oopapyre térã ojejokopyre ndaikatúi oñemoambue."
     },
-    "selectCategory": "Eiporavo peteĩ aty"
+    "selectCategory": "Eiporavo peteĩ aty",
+    "field": {
+      "title": "Moñe'ẽrã",
+      "code": "Código",
+      "status": "Teko",
+      "discountType": "Ñemboguejy Tipo",
+      "business": "Negósio",
+      "businessId": "Negósio ID",
+      "minDiscount": "Ñemboguejy Michĩvéva",
+      "maxDiscount": "Ñemboguejy Tuichavéva",
+      "hasUsageLimit": "Oguereko Jepuru Jerovia",
+      "createdAt": "Ojejapo Ára",
+      "validityPeriod": "Oikóva Aravo",
+      "expiryDate": "Opáta Ára"
+    },
+    "filter": {
+      "basic": "Mboguaha Tenondeguáva",
+      "search": "Jeheka",
+      "statusAndType": "Teko ha Tipo",
+      "statusPlaceholder": "Eiporavo teko",
+      "discountTypePlaceholder": "Eiporavo ñemboguejy tipo",
+      "business": "Negósio",
+      "hasUsageLimitPlaceholder": "¿Oguereko jepuru jerovia?",
+      "valueAndUsage": "Valor ha Jepuru",
+      "dates": "Ára Mboguaha"
+    }
+  },
+  "voucher": {
+    "action": {
+      "create": "Moheñói Kupón",
+      "delete": "Mbogue Kupón",
+      "edit": "Moambue Kupón",
+      "publish": "Hesakã Kupón",
+      "view": "Hecha Kupón"
+    },
+    "discountType": {
+      "fixedAmount": "Viru Oĩva",
+      "percentage": "Porcentaje"
+    },
+    "field": {
+      "business": "Negósio",
+      "businessId": "Negósio ID",
+      "code": "Kupón Código",
+      "createdAt": "Ojejapo Ára",
+      "discount": "Ñemboguejy",
+      "discountType": "Ñemboguejy Tipo",
+      "expiryDate": "Opáta Ára",
+      "hasUsageLimit": "Oguereko Jepuru Jerovia",
+      "maxDiscount": "Ñemboguejy Tuichavéva",
+      "minDiscount": "Ñemboguejy Michĩvéva",
+      "status": "Tekove",
+      "title": "Moñe'ẽrã",
+      "usage": "Jepuru",
+      "validity": "Oikóva",
+      "validityPeriod": "Oikóva Aravo"
+    },
+    "filter": {
+      "basic": "Mboguaha Tenondeguáva",
+      "business": "Negósio",
+      "businessIdPlaceholder": "Emoinge negósio ID",
+      "businessPlaceholder": "Eiporavo negósio",
+      "codePlaceholder": "Emoinge kupón código",
+      "createdDatePlaceholder": "Eiporavo ojejapo ára intervalo",
+      "dates": "Ára Mboguaha",
+      "discountTypePlaceholder": "Eiporavo ñemboguejy tipo",
+      "expiryDatePlaceholder": "Eiporavo opáta ára intervalo",
+      "hasUsageLimitPlaceholder": "¿Oguereko jepuru jerovia?",
+      "maxDiscountPlaceholder": "Emoinge ñemboguejy tuichavéva",
+      "minDiscountPlaceholder": "Emoinge ñemboguejy michĩvéva",
+      "search": "Jeheka",
+      "searchPlaceholder": "Eheka kupón...",
+      "statusAndType": "Tekove ha Tipo",
+      "statusPlaceholder": "Eiporavo tekove",
+      "titlePlaceholder": "Emoinge kupón moñe'ẽrã",
+      "validityPeriodPlaceholder": "Eiporavo oikóva aravo",
+      "valueAndUsage": "Valor ha Jepuru"
+    },
+    "message": {
+      "bulkDeleteSuccess": "Kupón oñembogue porã",
+      "deleteSuccess": "Kupón oñembogue porã",
+      "publishSuccess": "Kupón ojehechauka porã"
+    },
+    "status": {
+      "claimed": "Ojejerure",
+      "draft": "Moã'anga",
+      "expired": "Opáma",
+      "published": "Ojehechauka",
+      "suspended": "Ojejokóva"
+    }
+  },
+  "business": {
+    "title": "Negósio",
+    "subtitle": "Ñangareko negósio marandu",
+    "description": "Hecha ha ñangareko negósio mba'ekuaa",
+    "action": {
+      "create": "Moheñói Negósio",
+      "edit": "Moambue Negósio",
+      "delete": "Mbogue Negósio",
+      "view": "Hecha Negósio",
+      "approve": "Moneĩ Negósio",
+      "reject": "Hejá Negósio"
+    },
+    "field": {
+      "name": "Negósio Réra",
+      "email": "Ñanduti Veve",
+      "phone": "Pumbyry",
+      "address": "Kundahápe",
+      "category": "Jehechaukaha",
+      "city": "Táva",
+      "status": "Tekove",
+      "type": "Negósio Tipo",
+      "owner": "Ijára",
+      "rating": "Mbohepy",
+      "createdAt": "Ojejapo Ára",
+      "phoneVerified": "Pumbyry Ojehechajey",
+      "emailVerified": "Ñanduti Veve Ojehechajey",
+      "minRating": "Mbohepy Michĩva",
+      "hasReviews": "Oguereko Jechauka",
+      "registrationDate": "Ñemboguapy Ára",
+      "verificationDate": "Jehechajey Ára"
+    },
+    "filter": {
+      "basic": "Mboguaha Básico",
+      "search": "Jeheka",
+      "searchPlaceholder": "Eheka negósio...",
+      "namePlaceholder": "Emoinge negósio réra",
+      "cityPlaceholder": "Emoinge táva réra",
+      "statusAndType": "Tekove ha Tipo",
+      "statusPlaceholder": "Eiporavo tekove",
+      "typePlaceholder": "Eiporavo negósio tipo",
+      "verification": "Jehechajey",
+      "phoneVerifiedPlaceholder": "¿Pumbyry ojehechajey?",
+      "emailVerifiedPlaceholder": "¿Ñanduti veve ojehechajey?",
+      "performance": "Mbohepy ha Rembiapo",
+      "minRatingPlaceholder": "Eiporavo mbohepy michĩva",
+      "hasReviewsPlaceholder": "¿Oguereko cliente jechauka?",
+      "dates": "Ára Mboguaha",
+      "registrationDatePlaceholder": "Eiporavo ñemboguapy ára intervalo",
+      "verificationDatePlaceholder": "Eiporavo jehechajey ára intervalo"
+    },
+    "status": {
+      "active": "Hendy",
+      "inactive": "Ndohendýi",
+      "pending": "Oha'arõ",
+      "suspended": "Ojejoko",
+      "verified": "Ojehechajey",
+      "unverified": "Ndojehechajey",
+      "approved": "Oñemoneĩ",
+      "rejected": "Ojehejáva",
+      "expired": "Opáma"
+    },
+    "type": {
+      "restaurant": "Tembi'uha",
+      "retail": "Ñemuhagũa",
+      "service": "Servicio",
+      "healthcare": "Tesãi Ñangareko",
+      "fitness": "Akãnundu",
+      "education": "Tekombo'e",
+      "entertainment": "Vy'arangy",
+      "other": "Ambue"
+    },
+    "message": {
+      "deleteSuccess": "Negósio oñembogue porã",
+      "approveSuccess": "Negósio oñemoneĩ porã",
+      "bulkDeleteSuccess": "Negósio oñembogue porã",
+      "createSuccess": "Negósio ojejapo porã",
+      "updateSuccess": "Negósio oñembopyahu porã"
+    },
+    "create": {
+      "title": "Moheñói Negósio Pyahu",
+      "subtitle": "Embojuaju negósio pyahu plataforma-pe",
+      "description": "Emyenyhẽ negósio marandu"
+    },
+    "detail": {
+      "title": "Negósio Mba'ekuaa",
+      "description": "Hecha negósio marandu ha métrica",
+      "notFound": "Negósio ndojejuhúi",
+      "tabs": {
+        "overview": "Jehechapa",
+        "metrics": "Métrica",
+        "activity": "Tembiapo"
+      },
+      "sections": {
+        "basicInfo": "Marandu Tenondegua",
+        "ownerInfo": "Ijára Marandu",
+        "registrationInfo": "Ñemboguapy Mba'ekuaa",
+        "performance": "Tembiapo Métrica",
+        "topVouchers": "Kupón Iportãvéva"
+      },
+      "totalVouchers": "Kupón Papapy",
+      "totalRedemptions": "Canje Papapy",
+      "redemptions": "Canje",
+      "conversionRate": "Conversión Tasa",
+      "confirmDelete": {
+        "title": "Mbogue Negósio",
+        "message": "¿Añetehápe remboguésépa {name}? Ko tembiapo ndaikatúi ojejapojey."
+      }
+    }
   },
   "businesses": {
     "title": "Negósio",
@@ -523,7 +720,11 @@
       "activate": "Myandy",
       "deactivate": "Embogue",
       "verifySelected": "Ehechajey Jeporavopyre",
-      "unverifySelected": "Embojevy jehechajey Jeporavopyre"
+      "unverifySelected": "Embojevy jehechajey Jeporavopyre",
+      "view": "Hecha",
+      "edit": "Moambue",
+      "delete": "Mbogue",
+      "reject": "Hejá"
     },
     "info": {
       "adminCreate": "Rembojuaju peteĩ negósio peteĩ puruhára rehe. Ikatu hag̃ua reguereko iñangaite."
@@ -539,7 +740,15 @@
       "owner": "Ijára",
       "rating": "Mbohepy",
       "verification": "Jehechajey",
-      "approval": "Ñemoneĩ"
+      "approval": "Ñemoneĩ",
+      "city": "Táva",
+      "type": "Tipo",
+      "phoneVerified": "Pumbyry Ojehechajey",
+      "emailVerified": "Ñanduti Veve Ojehechajey",
+      "minRating": "Mbohepy Michava",
+      "hasReviews": "Oguereko Jechauka",
+      "registrationDate": "Ñemboguapy Ára",
+      "verificationDate": "Jehechajey Ára"
     },
     "status": {
       "active": "Hendy",
@@ -552,7 +761,10 @@
       "notApproved": "Ndoñemoneĩri",
       "verifiedApproved": "Ojehechapyre ha Oñemoneĩ",
       "verifiedPending": "Ojehechapyre (Oha'arõ Ñemoneĩ)",
-      "approvedNotVerified": "Oñemoneĩ (Ndojehechapyre)"
+      "approvedNotVerified": "Oñemoneĩ (Ndojehechapyre)",
+      "rejected": "Ojehejáva",
+      "unverified": "Ndojehechajey",
+      "expired": "Opáma"
     },
     "resetRegistration": {
       "action": "Emoñepyrũ jey Ñemboguapy",
@@ -580,6 +792,35 @@
       "approval": "Ñemoneĩ",
       "status": "Tekove",
       "createdDate": "Ojejapo Ára"
+    },
+    "filter": {
+      "basic": "Mboguaha Básico",
+      "search": "Jeheka",
+      "searchPlaceholder": "Eheka negósio...",
+      "namePlaceholder": "Emoinge negósio réra",
+      "cityPlaceholder": "Emoinge táva réra",
+      "statusAndType": "Tekove ha Tipo",
+      "statusPlaceholder": "Eiporavo tekove",
+      "typePlaceholder": "Eiporavo negósio tipo",
+      "verification": "Jehechajey",
+      "phoneVerifiedPlaceholder": "¿Pumbyry ojehechajey?",
+      "emailVerifiedPlaceholder": "¿Ñanduti veve ojehechajey?",
+      "performance": "Mbohepy ha Rembiapo",
+      "minRatingPlaceholder": "Eiporavo mbohepy michava",
+      "hasReviewsPlaceholder": "¿Oguereko cliente jechauka?",
+      "dates": "Ára Mboguaha",
+      "registrationDatePlaceholder": "Eiporavo ñemboguapy ára intervalo",
+      "verificationDatePlaceholder": "Eiporavo jehechajey ára intervalo"
+    },
+    "type": {
+      "restaurant": "Tembi'uha",
+      "retail": "Ñemuhagũa",
+      "service": "Servicio",
+      "healthcare": "Tesãi Ñangareko",
+      "fitness": "Akãnundu",
+      "education": "Tekombo'e",
+      "entertainment": "Vy'arangy",
+      "other": "Ambue"
     },
     "description": "Eñangareko negósio mba'ete ha jehechajey rehe"
   },

@@ -1,7 +1,7 @@
 import { defineConfig } from 'orval'
 
 export default defineConfig({
-  pikaApi: {
+  voucherbookApi: {
     input: {
       target: 'http://localhost:5500/api/v1/docs/openapi/all-apis.json',
     },

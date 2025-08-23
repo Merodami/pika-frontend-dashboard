@@ -54,7 +54,7 @@ export function VoucherDetail({
 
   const handleEdit = () => {
     const path =
-      userRole === UserRole.ADMIN
+      userRole === UserRole.admin
         ? `/${locale}/admin/vouchers/${voucherId}/edit`
         : `/${locale}/business/vouchers/${voucherId}/edit`
     router.push(path)
@@ -63,7 +63,7 @@ export function VoucherDetail({
   const handleDelete = async () => {
     await deleteVoucher.mutateAsync(voucherId)
     const path =
-      userRole === UserRole.ADMIN
+      userRole === UserRole.admin
         ? `/${locale}/admin/vouchers`
         : `/${locale}/business/vouchers`
     router.push(path)
@@ -79,13 +79,13 @@ export function VoucherDetail({
 
   const getStateColor = (state: VoucherState) => {
     switch (state) {
-      case VoucherState.DRAFT:
+      case VoucherState.draft:
         return 'default'
-      case VoucherState.PUBLISHED:
+      case VoucherState.published:
         return 'success'
-      case VoucherState.EXPIRED:
+      case VoucherState.expired:
         return 'error'
-      case VoucherState.SUSPENDED:
+      case VoucherState.suspended:
         return 'warning'
       default:
         return 'default'
@@ -94,13 +94,13 @@ export function VoucherDetail({
 
   const getStateLabel = (state: VoucherState) => {
     switch (state) {
-      case VoucherState.DRAFT:
+      case VoucherState.draft:
         return t('status.draft')
-      case VoucherState.PUBLISHED:
+      case VoucherState.published:
         return t('status.published')
-      case VoucherState.EXPIRED:
+      case VoucherState.expired:
         return t('status.expired')
-      case VoucherState.SUSPENDED:
+      case VoucherState.suspended:
         return t('status.suspended')
       default:
         return state
@@ -109,7 +109,7 @@ export function VoucherDetail({
 
   const getDiscountDisplay = () => {
     if (!voucher) return '-'
-    if (voucher.discountType === VoucherDiscountType.PERCENTAGE) {
+    if (voucher.discountType === VoucherDiscountType.percentage) {
       return `${voucher.discountValue}%`
     }
     return `Gs. ${voucher.discountValue?.toLocaleString()}`
@@ -180,7 +180,7 @@ export function VoucherDetail({
           </Space>
 
           <Space>
-            {voucher.state === VoucherState.DRAFT && (
+            {voucher.state === VoucherState.draft && (
               <>
                 <Button
                   type="primary"
@@ -196,7 +196,7 @@ export function VoucherDetail({
               </>
             )}
 
-            {voucher.state === VoucherState.PUBLISHED && (
+            {voucher.state === VoucherState.published && (
               <Button
                 danger
                 icon={<CloseCircleOutlined />}
@@ -207,7 +207,7 @@ export function VoucherDetail({
               </Button>
             )}
 
-            {voucher.state !== VoucherState.PUBLISHED && (
+            {voucher.state !== VoucherState.published && (
               <Button
                 danger
                 icon={<DeleteOutlined />}
