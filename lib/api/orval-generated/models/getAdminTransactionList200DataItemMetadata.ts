@@ -7,5 +7,5 @@
  */
 
 export type GetAdminTransactionList200DataItemMetadata = {
-  [key: string]: unknown
+  [key: string]: string | number | boolean | null | null
 }

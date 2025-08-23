@@ -10,5 +10,5 @@
  * File metadata
  */
 export type BatchUploadFiles200SuccessfulItemMetadata = {
-  [key: string]: unknown
+  [key: string]: string | number | boolean | null | null
 }

@@ -6,4 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type FileHistoryResponseDataItemMetadata = { [key: string]: unknown }
+export type FileHistoryResponseDataItemMetadata = {
+  [key: string]: string | number | boolean | null | null
+}

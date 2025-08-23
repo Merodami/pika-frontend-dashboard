@@ -1,8 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { UserRole } from '@merodami/pika-types'
 import type {
-  AdminVoucherListResponse,
-  AdminVoucherResponse,
   AdminVoucherQueryParams,
   AdminVoucherAnalyticsResponse,
   AdminBusinessVoucherStatsResponse,
@@ -15,25 +13,41 @@ import {
   getAdminBusinessVoucherStats,
 } from '@/lib/api/orval-generated/endpoints'
 
+import {
+  mapAdminVoucherResponseToDomain,
+  mapAdminVoucherListResponseToDomain,
+  type VoucherDomain,
+  type VoucherListDomain,
+} from '@/lib/api/mappers/voucher'
+
 export function useVoucherQueries() {
   const useVouchersList = (
     params?: AdminVoucherQueryParams,
     userRole: UserRole = UserRole.ADMIN
   ) => {
-    return useQuery<AdminVoucherListResponse>({
+    return useQuery<VoucherListDomain>({
       queryKey: ['vouchers', params, userRole],
-      queryFn: () =>
-        userRole === UserRole.ADMIN
-          ? getAdminVoucherList(params)
-          : getAdminVoucherList({ ...params, businessId: params?.businessId }),
+      queryFn: async () => {
+        const response =
+          userRole === UserRole.ADMIN
+            ? await getAdminVoucherList(params)
+            : await getAdminVoucherList({
+                ...params,
+                businessId: params?.businessId,
+              })
+        return mapAdminVoucherListResponseToDomain(response)
+      },
       staleTime: 5 * 60 * 1000, // 5 minutes
     })
   }
 
   const useVoucher = (id: string, userRole: UserRole = UserRole.ADMIN) => {
-    return useQuery<AdminVoucherResponse>({
+    return useQuery<VoucherDomain>({
       queryKey: ['voucher', id, userRole],
-      queryFn: () => getAdminVoucherById(id),
+      queryFn: async () => {
+        const response = await getAdminVoucherById(id)
+        return mapAdminVoucherResponseToDomain(response)
+      },
       enabled: !!id,
     })
   }

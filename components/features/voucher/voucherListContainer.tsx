@@ -29,16 +29,14 @@ import {
   VoucherState,
   VoucherDiscountType,
 } from '@merodami/pika-types'
-import type {
-  AdminVoucherListResponse,
-  AdminVoucherQueryParams,
-} from '@/lib/api/orval-generated/models'
 import type { ColumnsType } from 'antd/es/table'
 
 import { useVoucherQueries } from '@/hooks/api/vouchers/useVoucherQueries'
 import { useVoucherMutations } from '@/hooks/api/vouchers/useVoucherMutations'
 import { formatDate } from '@/lib/utils/date'
 import type { Locale } from '@/i18n/config'
+import type { VoucherSearchParams } from '@/types/voucher'
+import type { VoucherDomain } from '@/lib/api/mappers/voucher'
 
 const { Search } = Input
 
@@ -69,15 +67,27 @@ export function VoucherListContainer({
   const { data, isLoading, refetch } = useVouchersList(searchParams, userRole)
 
   const handleSearch = (value: string) => {
-    setSearchParams((prev) => ({ ...prev, search: value, page: 1 }))
+    setSearchParams((prev: VoucherSearchParams) => ({
+      ...prev,
+      search: value,
+      page: 1,
+    }))
   }
 
   const handleFilterChange = (field: keyof VoucherSearchParams, value: any) => {
-    setSearchParams((prev) => ({ ...prev, [field]: value, page: 1 }))
+    setSearchParams((prev: VoucherSearchParams) => ({
+      ...prev,
+      [field]: value,
+      page: 1,
+    }))
   }
 
   const handlePageChange = (page: number, pageSize: number) => {
-    setSearchParams((prev) => ({ ...prev, page, limit: pageSize }))
+    setSearchParams((prev: VoucherSearchParams) => ({
+      ...prev,
+      page,
+      limit: pageSize,
+    }))
   }
 
   const handleCreateVoucher = () => {
@@ -211,21 +221,20 @@ export function VoucherListContainer({
       title: t('fields.title'),
       dataIndex: 'title',
       key: 'title',
-      render: (title: any) =>
-        title?.es || title?.en || title?.gn || t('untitled'),
+      render: (title: string) => title || t('untitled'),
     },
     {
       title: t('fields.business'),
       dataIndex: 'businessName',
       key: 'businessName',
-      render: (_, record) => record.businessId,
+      render: (_: any, record: VoucherDomain) => record.businessId,
       hidden: userRole === UserRole.BUSINESS,
     },
     {
       title: t('fields.discount'),
       dataIndex: 'discountValue',
       key: 'discountValue',
-      render: (_, record) => getDiscountDisplay(record),
+      render: (_: any, record: VoucherDomain) => getDiscountDisplay(record),
     },
     {
       title: t('fields.state'),
@@ -252,13 +261,13 @@ export function VoucherListContainer({
     {
       title: t('fields.redemptions'),
       key: 'redemptions',
-      render: (_, record) =>
+      render: (_: any, record: VoucherDomain) =>
         `${record.currentRedemptions || 0}/${record.maxRedemptions || '∞'}`,
     },
     {
       title: t('fields.actions'),
       key: 'actions',
-      render: (_, record) => (
+      render: (_: any, record: VoucherDomain) => (
         <Dropdown menu={{ items: getActionItems(record) }} trigger={['click']}>
           <Button icon={<MoreOutlined />} />
         </Dropdown>

@@ -43,6 +43,17 @@ export const queryKeys = {
     stats: (id: string) => [...queryKeys.users.all(), 'stats', id] as const,
   },
 
+  // Voucher Book query keys
+  voucherBooks: {
+    all: () => [...queryKeys.all, 'voucherBooks'] as const,
+    lists: () => [...queryKeys.voucherBooks.all(), 'list'] as const,
+    list: (filters?: Record<string, unknown>) =>
+      [...queryKeys.voucherBooks.lists(), filters] as const,
+    details: () => [...queryKeys.voucherBooks.all(), 'detail'] as const,
+    detail: (id: string) => [...queryKeys.voucherBooks.details(), id] as const,
+    statistics: () => [...queryKeys.voucherBooks.all(), 'statistics'] as const,
+  },
+
   // UNUSED QUERY KEYS - Commented out during cleanup, can be restored if needed
   //
   // // Category query keys

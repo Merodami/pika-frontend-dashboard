@@ -7,5 +7,5 @@
  */
 
 export type UpdateInternalUserMembershipBodyMetadata = {
-  [key: string]: unknown
+  [key: string]: string | number | boolean | null | null
 }

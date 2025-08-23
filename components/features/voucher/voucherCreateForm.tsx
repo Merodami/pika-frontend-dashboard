@@ -3,19 +3,12 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Steps, Card, Button, Space, notification } from 'antd'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { VoucherDiscountType, UserRole, Currency } from '@merodami/pika-types'
-import { voucherAdmin } from '@merodami/pika-api'
-import type { AdminCreateVoucherRequest } from '@/lib/api/orval-generated/models'
-
 import { VoucherDesignForm } from './voucherDesignForm'
 import { VoucherPreview } from './voucherPreview'
 import { useVoucherMutations } from '@/hooks/api/vouchers/useVoucherMutations'
 import type { VoucherDesign, CreateVoucherData } from '@/types/voucher'
 import { mapPackageVoucherDiscountTypeToOrval } from '@/lib/api/mappers/voucher'
-
-const { AdminCreateVoucherRequest } = voucherAdmin
 
 interface VoucherCreateFormProps {
   userRole: UserRole
@@ -55,7 +48,7 @@ export function VoucherCreateForm({
     colors: {
       background: '#ffffff',
       text: '#000000',
-      accent: '#1890ff'
+      accent: '#1890ff',
     },
     template: 'modern',
     terms: [],
@@ -106,11 +99,19 @@ export function VoucherCreateForm({
           en: voucherDesign.terms.join(', '),
           gn: voucherDesign.terms.join(', '),
         },
-        discountType: mapPackageVoucherDiscountTypeToOrval(voucherDesign.discountType),
+        discountType: mapPackageVoucherDiscountTypeToOrval(
+          voucherDesign.discountType
+        ),
         discountValue: voucherDesign.discountValue,
         currency: Currency.PYG,
-        validFrom: new Date(voucherDesign.validFrom),
-        expiresAt: new Date(voucherDesign.validUntil),
+        validFrom:
+          typeof voucherDesign.validFrom === 'string'
+            ? voucherDesign.validFrom
+            : voucherDesign.validFrom.toISOString(),
+        expiresAt:
+          typeof voucherDesign.validUntil === 'string'
+            ? voucherDesign.validUntil
+            : voucherDesign.validUntil.toISOString(),
         maxRedemptions: voucherDesign.maxRedemptions,
         maxRedemptionsPerUser: voucherDesign.maxRedemptionsPerUser,
         metadata: {
@@ -182,10 +183,16 @@ export function VoucherCreateForm({
                     : ' Gs.'}
                 </p>
                 <p>
-                  <strong>Valid From:</strong> {typeof voucherDesign.validFrom === 'string' ? voucherDesign.validFrom : voucherDesign.validFrom?.toString()}
+                  <strong>Valid From:</strong>{' '}
+                  {typeof voucherDesign.validFrom === 'string'
+                    ? voucherDesign.validFrom
+                    : voucherDesign.validFrom?.toString()}
                 </p>
                 <p>
-                  <strong>Valid Until:</strong> {typeof voucherDesign.validUntil === 'string' ? voucherDesign.validUntil : voucherDesign.validUntil?.toString()}
+                  <strong>Valid Until:</strong>{' '}
+                  {typeof voucherDesign.validUntil === 'string'
+                    ? voucherDesign.validUntil
+                    : voucherDesign.validUntil?.toString()}
                 </p>
                 <p>
                   <strong>Max Redemptions:</strong>{' '}

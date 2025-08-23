@@ -15,6 +15,8 @@ import type { UpdateAdminVoucherBodyMaxRedemptions } from './updateAdminVoucherB
 import type { UpdateAdminVoucherBodyMetadata } from './updateAdminVoucherBodyMetadata'
 
 export type UpdateAdminVoucherBody = {
+  /** Universally Unique Identifier */
+  categoryId?: string
   /** Title translations by language code */
   title?: UpdateAdminVoucherBodyTitle
   /** Description translations by language code */

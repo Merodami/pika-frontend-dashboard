@@ -18,7 +18,6 @@ import {
   Col,
 } from 'antd'
 import { Controller, useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslations } from 'next-intl'
 import dayjs from 'dayjs'
 import {
@@ -27,16 +26,11 @@ import {
   UserRole,
   Currency,
 } from '@merodami/pika-types'
-import { voucherAdmin } from '@merodami/pika-api'
-import type {
-  AdminVoucherResponse,
-  AdminUpdateVoucherRequest,
-} from '@/lib/api/orval-generated/models'
 
 import { VoucherPreview } from './voucherPreview'
 import { useVoucherMutations } from '@/hooks/api/vouchers/useVoucherMutations'
 import { useVoucherQueries } from '@/hooks/api/vouchers/useVoucherQueries'
-import type { VoucherDesign } from '@/types/voucher'
+import type { VoucherDesign, UpdateVoucherFormData } from '@/types/voucher'
 import type { Locale } from '@/i18n/config'
 
 interface VoucherEditFormProps {
@@ -67,7 +61,6 @@ export function VoucherEditForm({
     reset,
     watch,
   } = useForm<UpdateVoucherFormData>({
-    resolver: zodResolver(AdminUpdateVoucherRequest),
     defaultValues: {
       discountType: VoucherDiscountType.PERCENTAGE,
       currency: Currency.PYG,
@@ -81,10 +74,17 @@ export function VoucherEditForm({
   useEffect(() => {
     if (voucher) {
       reset({
-        categoryId: voucher.categoryId,
-        title: voucher.title,
-        description: voucher.description,
-        termsAndConditions: voucher.termsAndConditions,
+        title: { es: voucher.title, en: voucher.title, gn: voucher.title },
+        description: {
+          es: voucher.description,
+          en: voucher.description,
+          gn: voucher.description,
+        },
+        termsAndConditions: {
+          es: voucher.terms || '',
+          en: voucher.terms || '',
+          gn: voucher.terms || '',
+        },
         discountType: voucher.discountType,
         discountValue: voucher.discountValue,
         currency: voucher.currency || Currency.PYG,
@@ -136,9 +136,8 @@ export function VoucherEditForm({
       title: watchedValues.title?.es || watchedValues.title?.en || '',
       description:
         watchedValues.description?.es || watchedValues.description?.en || '',
-      category: watchedValues.categoryId || '',
-      discountType:
-        watchedValues.discountType || VoucherDiscountType.PERCENTAGE,
+      category: voucher?.categoryId || '',
+      discountType: voucher?.discountType || VoucherDiscountType.PERCENTAGE,
       discountValue: watchedValues.discountValue || 0,
       originalPrice: 0,
       minimumPurchase: 0,
@@ -151,8 +150,14 @@ export function VoucherEditForm({
       businessPhone: '',
       businessWebsite: '',
       primaryColor: '#1890ff',
+      secondaryColor: '#f0f0f0',
       backgroundColor: '#ffffff',
       textColor: '#000000',
+      colors: {
+        background: '#ffffff',
+        text: '#000000',
+        accent: '#1890ff',
+      },
       template: 'modern',
       terms: watchedValues.termsAndConditions?.es?.split(', ') || [],
     }
@@ -197,7 +202,7 @@ export function VoucherEditForm({
           <div className="lg:col-span-2">
             <Card title={t('edit.title')}>
               <div className="space-y-6">
-                {/* Category Selection */}
+                {/* Category Selection - TODO: Uncomment when API supports categoryId in AdminUpdateVoucherRequest
                 <Controller
                   name="categoryId"
                   control={control}
@@ -207,14 +212,13 @@ export function VoucherEditForm({
                       validateStatus={errors.categoryId ? 'error' : ''}
                       help={errors.categoryId?.message}
                     >
-                      <CategorySelector
-                        value={field.value}
-                        onChange={field.onChange}
-                        placeholder={t('selectCategory')}
-                      />
+                      <Select {...field} placeholder={t('selectCategory')}>
+                        CategorySelector options would be rendered here
+                      </Select>
                     </Form.Item>
                   )}
                 />
+                */}
 
                 {/* Multi-language Titles */}
                 <div>
@@ -419,11 +423,11 @@ export function VoucherEditForm({
                             value={field.value ? dayjs(field.value) : null}
                             onChange={(date) => field.onChange(date?.toDate())}
                             style={{ width: '100%' }}
-                            disabledDate={(current) =>
-                              current &&
-                              watchedValues.validFrom &&
-                              current < dayjs(watchedValues.validFrom)
-                            }
+                            disabledDate={(current) => {
+                              if (!current || !watchedValues.validFrom)
+                                return false
+                              return current < dayjs(watchedValues.validFrom)
+                            }}
                           />
                         </Form.Item>
                       )}

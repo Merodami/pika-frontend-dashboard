@@ -6,4 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type RefundAdminTransaction200Metadata = { [key: string]: unknown }
+export type RefundAdminTransaction200Metadata = {
+  [key: string]: string | number | boolean | null | null
+}

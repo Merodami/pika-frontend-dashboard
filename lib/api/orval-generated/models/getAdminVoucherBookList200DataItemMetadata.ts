@@ -10,5 +10,5 @@
  * Additional book metadata
  */
 export type GetAdminVoucherBookList200DataItemMetadata = {
-  [key: string]: unknown
+  [key: string]: string | number | boolean | null | null
 }

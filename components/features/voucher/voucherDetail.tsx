@@ -35,14 +35,12 @@ import { formatDate } from '@/lib/utils/date'
 import { VoucherPreview } from './voucherPreview'
 import type { Locale } from '@/i18n/config'
 import type { VoucherDesign, VoucherDomain } from '@/types/voucher'
-import { mapAdminVoucherResponseToDomain } from '@/lib/api/mappers/voucher'
 
 interface VoucherDetailProps {
   voucherId: string
   userRole: UserRole
   locale: Locale
 }
-
 
 export function VoucherDetail({
   voucherId,
@@ -56,10 +54,7 @@ export function VoucherDetail({
   const { useVoucher } = useVoucherQueries()
   const { deleteVoucher, publishVoucher, expireVoucher } = useVoucherMutations()
 
-  const { data: rawVoucher, isLoading, error } = useVoucher(voucherId, userRole)
-  
-  // Convert API response to domain object with proper package types
-  const voucher: VoucherDomain | undefined = rawVoucher ? mapAdminVoucherResponseToDomain(rawVoucher) : undefined
+  const { data: voucher, isLoading, error } = useVoucher(voucherId, userRole)
 
   const handleEdit = () => {
     const path =
@@ -126,15 +121,15 @@ export function VoucherDetail({
 
   const convertToVoucherDesign = (voucher: VoucherDomain): VoucherDesign => {
     return {
-      title: voucher.title?.es || voucher.title?.en || '',
-      description: voucher.description?.es || voucher.description?.en || '',
+      title: voucher.title || '',
+      description: voucher.description || '',
       category: voucher.categoryId || '',
       discountType: voucher.discountType,
       discountValue: voucher.discountValue || 0,
       originalPrice: 0,
       minimumPurchase: 0,
-      validFrom: voucher.validFrom?.toString() || '',
-      validUntil: voucher.expiresAt?.toString() || '',
+      validFrom: voucher.validFrom || '',
+      validUntil: voucher.expiresAt || '',
       maxRedemptions: voucher.maxRedemptions || 0,
       maxRedemptionsPerUser: voucher.maxRedemptionsPerUser || 1,
       businessName: voucher.businessId,
@@ -142,10 +137,16 @@ export function VoucherDetail({
       businessPhone: '',
       businessWebsite: '',
       primaryColor: '#1890ff',
+      secondaryColor: '#f0f0f0',
       backgroundColor: '#ffffff',
       textColor: '#000000',
+      colors: {
+        background: '#ffffff',
+        text: '#000000',
+        accent: '#1890ff',
+      },
       template: 'modern',
-      terms: voucher.termsAndConditions?.es?.split(', ') || [],
+      terms: voucher.terms?.split(', ') || [],
     }
   }
 
@@ -175,7 +176,7 @@ export function VoucherDetail({
         <div className="flex justify-between items-center">
           <Space>
             <h2 className="text-xl font-semibold m-0">
-              {voucher.title?.es || voucher.title?.en || t('untitled')}
+              {voucher.title || t('untitled')}
             </h2>
             <Tag color={getStateColor(voucher.state)}>
               {getStateLabel(voucher.state).toUpperCase()}
@@ -278,43 +279,11 @@ export function VoucherDetail({
               </Descriptions.Item>
 
               <Descriptions.Item label={t('fields.title')}>
-                <div>
-                  {voucher.title?.es && (
-                    <div>
-                      <strong>ES:</strong> {voucher.title.es}
-                    </div>
-                  )}
-                  {voucher.title?.en && (
-                    <div>
-                      <strong>EN:</strong> {voucher.title.en}
-                    </div>
-                  )}
-                  {voucher.title?.gn && (
-                    <div>
-                      <strong>GN:</strong> {voucher.title.gn}
-                    </div>
-                  )}
-                </div>
+                {voucher.title}
               </Descriptions.Item>
 
               <Descriptions.Item label={t('fields.description')}>
-                <div>
-                  {voucher.description?.es && (
-                    <div>
-                      <strong>ES:</strong> {voucher.description.es}
-                    </div>
-                  )}
-                  {voucher.description?.en && (
-                    <div>
-                      <strong>EN:</strong> {voucher.description.en}
-                    </div>
-                  )}
-                  {voucher.description?.gn && (
-                    <div>
-                      <strong>GN:</strong> {voucher.description.gn}
-                    </div>
-                  )}
-                </div>
+                {voucher.description}
               </Descriptions.Item>
 
               <Descriptions.Item label={t('fields.discount')}>
@@ -348,28 +317,9 @@ export function VoucherDetail({
           </Card>
 
           {/* Terms & Conditions */}
-          {voucher.termsAndConditions && (
+          {voucher.terms && (
             <Card title={t('fields.termsAndConditions')}>
-              <div className="space-y-2">
-                {voucher.termsAndConditions.es && (
-                  <div>
-                    <strong>ES:</strong>
-                    <p className="mt-1">{voucher.termsAndConditions.es}</p>
-                  </div>
-                )}
-                {voucher.termsAndConditions.en && (
-                  <div>
-                    <strong>EN:</strong>
-                    <p className="mt-1">{voucher.termsAndConditions.en}</p>
-                  </div>
-                )}
-                {voucher.termsAndConditions.gn && (
-                  <div>
-                    <strong>GN:</strong>
-                    <p className="mt-1">{voucher.termsAndConditions.gn}</p>
-                  </div>
-                )}
-              </div>
+              <p>{voucher.terms}</p>
             </Card>
           )}
         </div>

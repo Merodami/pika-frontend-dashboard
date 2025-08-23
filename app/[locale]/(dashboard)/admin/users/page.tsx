@@ -1,7 +1,7 @@
 import { getTranslations } from 'next-intl/server'
 import { requireAdmin } from '@/app/services/authService'
 import { redirect } from 'next/navigation'
-import ModernUsersView from './ModernUsersView'
+import UsersTable from './UsersTable'
 
 export async function generateMetadata({
   params,
@@ -32,5 +32,5 @@ export default async function UsersPage({
     redirect(`/${locale}/dashboard`)
   }
 
-  return <ModernUsersView locale={locale} />
+  return <UsersTable locale={locale} />
 }

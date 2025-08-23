@@ -15,6 +15,8 @@ import type { AdminUpdateVoucherRequestMaxRedemptions } from './adminUpdateVouch
 import type { AdminUpdateVoucherRequestMetadata } from './adminUpdateVoucherRequestMetadata'
 
 export interface AdminUpdateVoucherRequest {
+  /** Universally Unique Identifier */
+  categoryId?: string
   /** Title translations by language code */
   title?: AdminUpdateVoucherRequestTitle
   /** Description translations by language code */

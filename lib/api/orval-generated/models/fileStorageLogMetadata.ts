@@ -6,4 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type FileStorageLogMetadata = { [key: string]: unknown }
+export type FileStorageLogMetadata = {
+  [key: string]: string | number | boolean | null | null
+}

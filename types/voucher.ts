@@ -2,7 +2,11 @@
 // These are for the voucher design/preview components
 
 import { VoucherDiscountType } from '@merodami/pika-types'
-import type { AdminVoucherQueryParams, AdminVoucherResponse, AdminCreateVoucherRequest, AdminUpdateVoucherRequest } from '@/lib/api/orval-generated/models'
+import type {
+  AdminVoucherQueryParams,
+  AdminCreateVoucherRequest,
+  AdminUpdateVoucherRequest,
+} from '@/lib/api/orval-generated/models'
 
 export interface VoucherDesign {
   // Basic info
