@@ -13,11 +13,11 @@ interface MobileFilterDrawerProps {
   className?: string
 }
 
-export function MobileFilterDrawer({ 
-  children, 
-  activeFiltersCount = 0, 
+export function MobileFilterDrawer({
+  children,
+  activeFiltersCount = 0,
   onReset,
-  className 
+  className,
 }: MobileFilterDrawerProps) {
   const [isOpen, setIsOpen] = useState(false)
   const { isMobile } = useResponsive()
@@ -26,10 +26,15 @@ export function MobileFilterDrawer({
   // On desktop, render filters directly without drawer
   if (!isMobile) {
     return (
-      <div className={cn('bg-white rounded-lg border border-gray-200 p-4 mb-4', className)}>
+      <div
+        className={cn(
+          'bg-white rounded-lg border border-gray-200 p-4 mb-4',
+          className
+        )}
+      >
         <div className="flex items-center justify-between mb-4">
           <h3 className="font-semibold text-gray-900">
-            {t('common.filters')} 
+            {t('common.filters')}
             {activeFiltersCount > 0 && (
               <span className="ml-2 text-sm text-blue-600">
                 ({activeFiltersCount})
@@ -78,11 +83,11 @@ export function MobileFilterDrawer({
       {isOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
           {/* Backdrop */}
-          <div 
+          <div
             className="absolute inset-0 bg-black/50 transition-opacity"
             onClick={() => setIsOpen(false)}
           />
-          
+
           {/* Drawer */}
           <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-xl shadow-xl max-h-[80vh] flex flex-col">
             {/* Header */}
@@ -95,7 +100,7 @@ export function MobileFilterDrawer({
                   </span>
                 )}
               </h2>
-              
+
               <div className="flex items-center gap-2">
                 {onReset && activeFiltersCount > 0 && (
                   <button
@@ -106,7 +111,7 @@ export function MobileFilterDrawer({
                     {t('common.button.reset')}
                   </button>
                 )}
-                
+
                 <button
                   onClick={() => setIsOpen(false)}
                   className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-md transition-colors"
@@ -115,14 +120,12 @@ export function MobileFilterDrawer({
                 </button>
               </div>
             </div>
-            
+
             {/* Content */}
             <div className="flex-1 overflow-y-auto p-4">
-              <div className="space-y-4">
-                {children}
-              </div>
+              <div className="space-y-4">{children}</div>
             </div>
-            
+
             {/* Footer */}
             <div className="flex items-center justify-end gap-3 p-4 border-t border-gray-200 bg-gray-50 flex-shrink-0">
               <button

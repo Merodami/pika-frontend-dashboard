@@ -128,7 +128,9 @@ export default async function ModernDashboardLayout({
   const sidebarContent = (
     <ModernSidebarNav
       navItems={navItems}
-      footer={<div className="text-xs text-gray-500">{APP_CONFIG.copyright}</div>}
+      footer={
+        <div className="text-xs text-gray-500">{APP_CONFIG.copyright}</div>
+      }
     />
   )
 

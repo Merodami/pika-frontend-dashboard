@@ -8,16 +8,17 @@ export const APP_CONFIG = {
   name: 'The VoucherBook',
   shortName: 'TVB',
   description: 'Business and Admin Management Platform',
-  
+
   // Copyright and legal
   copyright: `© ${new Date().getFullYear()} The VoucherBook`,
-  
+
   // Meta information
   meta: {
     title: 'The VoucherBook Dashboard',
-    description: 'Business and Admin Management Platform for voucher management',
+    description:
+      'Business and Admin Management Platform for voucher management',
   },
-  
+
   // Branding elements
   branding: {
     logo: {

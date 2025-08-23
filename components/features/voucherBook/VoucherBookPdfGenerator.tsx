@@ -1,8 +1,24 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Card, Button, Progress, Alert, Typography, Divider, Tag, Modal } from 'antd'
-import { FileText, Download, RefreshCw, Clock, CheckCircle, AlertCircle } from 'lucide-react'
+import {
+  Card,
+  Button,
+  Progress,
+  Alert,
+  Typography,
+  Divider,
+  Tag,
+  Modal,
+} from 'antd'
+import {
+  FileText,
+  Download,
+  RefreshCw,
+  Clock,
+  CheckCircle,
+  AlertCircle,
+} from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 import type { VoucherBookDomain } from '@/lib/api/mappers/voucherBook'
@@ -23,17 +39,19 @@ interface VoucherBookPdfGeneratorProps {
   onGenerationComplete?: (downloadUrl: string) => void
 }
 
-export function VoucherBookPdfGenerator({ 
-  book, 
-  onGenerationComplete 
+export function VoucherBookPdfGenerator({
+  book,
+  onGenerationComplete,
 }: VoucherBookPdfGeneratorProps) {
   const t = useTranslations('voucherBooks')
-  const [generationStatus, setGenerationStatus] = useState<PDFGenerationStatus>({
-    status: book.pdfUrl ? 'completed' : 'idle',
-    progress: book.pdfUrl ? 100 : 0,
-    downloadUrl: book.pdfUrl,
-    generatedAt: book.pdfGeneratedAt,
-  })
+  const [generationStatus, setGenerationStatus] = useState<PDFGenerationStatus>(
+    {
+      status: book.pdfUrl ? 'completed' : 'idle',
+      progress: book.pdfUrl ? 100 : 0,
+      downloadUrl: book.pdfUrl,
+      generatedAt: book.pdfGeneratedAt,
+    }
+  )
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const generatePdfMutation = useGenerateVoucherBookPdf()
@@ -42,13 +60,13 @@ export function VoucherBookPdfGenerator({
   useEffect(() => {
     if (generationStatus.status === 'generating') {
       const interval = setInterval(() => {
-        setGenerationStatus(prev => {
+        setGenerationStatus((prev) => {
           if (prev.progress >= 95) {
             return prev // Stop at 95% until real completion
           }
           return {
             ...prev,
-            progress: Math.min(prev.progress + Math.random() * 10, 95)
+            progress: Math.min(prev.progress + Math.random() * 10, 95),
           }
         })
       }, 1000)
@@ -58,7 +76,9 @@ export function VoucherBookPdfGenerator({
     return undefined
   }, [generationStatus.status])
 
-  const handleGeneratePdf = async (priority: 'low' | 'normal' | 'high' = 'normal') => {
+  const handleGeneratePdf = async (
+    priority: 'low' | 'normal' | 'high' = 'normal'
+  ) => {
     try {
       setGenerationStatus({
         status: 'generating',
@@ -68,7 +88,7 @@ export function VoucherBookPdfGenerator({
 
       await generatePdfMutation.mutateAsync({
         id: book.id,
-        data: { priority }
+        data: { priority },
       })
 
       // Simulate completion after API call
@@ -85,7 +105,6 @@ export function VoucherBookPdfGenerator({
           onGenerationComplete('#') // Mock URL for now
         }
       }, 2000)
-
     } catch (error) {
       setGenerationStatus({
         status: 'failed',
@@ -140,7 +159,7 @@ export function VoucherBookPdfGenerator({
 
   return (
     <>
-      <Card 
+      <Card
         title={
           <div className="flex items-center space-x-2">
             <FileText className="w-5 h-5" />
@@ -158,7 +177,8 @@ export function VoucherBookPdfGenerator({
                 <Text strong>{t(`pdf.status.${generationStatus.status}`)}</Text>
                 {generationStatus.generatedAt && (
                   <div className="text-sm text-gray-500">
-                    {t('pdf.lastGenerated')}: {formatDate(generationStatus.generatedAt)}
+                    {t('pdf.lastGenerated')}:{' '}
+                    {formatDate(generationStatus.generatedAt)}
                   </div>
                 )}
               </div>
@@ -171,8 +191,8 @@ export function VoucherBookPdfGenerator({
           {/* Progress Bar (shown during generation) */}
           {generationStatus.status === 'generating' && (
             <div className="space-y-2">
-              <Progress 
-                percent={Math.round(generationStatus.progress)} 
+              <Progress
+                percent={Math.round(generationStatus.progress)}
                 status="active"
                 strokeColor={{
                   '0%': '#108ee9',
@@ -197,14 +217,15 @@ export function VoucherBookPdfGenerator({
             />
           )}
 
-          {generationStatus.status === 'completed' && generationStatus.downloadUrl && (
-            <Alert
-              message={t('pdf.generationComplete')}
-              description={t('pdf.readyForDownload')}
-              type="success"
-              showIcon
-            />
-          )}
+          {generationStatus.status === 'completed' &&
+            generationStatus.downloadUrl && (
+              <Alert
+                message={t('pdf.generationComplete')}
+                description={t('pdf.readyForDownload')}
+                type="success"
+                showIcon
+              />
+            )}
 
           <Divider />
 
@@ -216,9 +237,11 @@ export function VoucherBookPdfGenerator({
                 onClick={() => setIsModalOpen(true)}
                 disabled={generationStatus.status === 'generating'}
               >
-                {generationStatus.status === 'idle' ? t('pdf.generate') : t('pdf.regenerate')}
+                {generationStatus.status === 'idle'
+                  ? t('pdf.generate')
+                  : t('pdf.regenerate')}
               </Button>
-              
+
               {generationStatus.status === 'generating' && (
                 <Button
                   icon={<RefreshCw className="w-4 h-4" />}
@@ -230,20 +253,23 @@ export function VoucherBookPdfGenerator({
               )}
             </div>
 
-            {generationStatus.downloadUrl && generationStatus.status === 'completed' && (
-              <Button
-                type="primary"
-                icon={<Download className="w-4 h-4" />}
-                onClick={handleDownload}
-              >
-                {t('pdf.download')}
-              </Button>
-            )}
+            {generationStatus.downloadUrl &&
+              generationStatus.status === 'completed' && (
+                <Button
+                  type="primary"
+                  icon={<Download className="w-4 h-4" />}
+                  onClick={handleDownload}
+                >
+                  {t('pdf.download')}
+                </Button>
+              )}
           </div>
 
           {/* Book Info Summary */}
           <div className="bg-gray-50 rounded-lg p-4 mt-4">
-            <Title level={5} className="mb-2">{t('pdf.bookSummary')}</Title>
+            <Title level={5} className="mb-2">
+              {t('pdf.bookSummary')}
+            </Title>
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
                 <Text type="secondary">{t('fields.totalPages')}:</Text>
@@ -259,7 +285,9 @@ export function VoucherBookPdfGenerator({
               </div>
               <div>
                 <Text type="secondary">{t('pdf.estimatedSize')}:</Text>
-                <div className="font-medium">~{Math.ceil(book.totalPages * 0.5)}MB</div>
+                <div className="font-medium">
+                  ~{Math.ceil(book.totalPages * 0.5)}MB
+                </div>
               </div>
             </div>
           </div>
@@ -284,7 +312,7 @@ export function VoucherBookPdfGenerator({
 
           <div className="space-y-3">
             <Title level={5}>{t('pdf.priority')}</Title>
-            
+
             <div className="space-y-2">
               <Button
                 block
@@ -297,7 +325,9 @@ export function VoucherBookPdfGenerator({
               >
                 <div>
                   <div className="font-medium">{t('pdf.priorityHigh')}</div>
-                  <div className="text-sm text-gray-500">{t('pdf.priorityHighDesc')}</div>
+                  <div className="text-sm text-gray-500">
+                    {t('pdf.priorityHighDesc')}
+                  </div>
                 </div>
                 <Tag color="red">~2-5 {t('pdf.minutes')}</Tag>
               </Button>
@@ -314,7 +344,9 @@ export function VoucherBookPdfGenerator({
               >
                 <div>
                   <div className="font-medium">{t('pdf.priorityNormal')}</div>
-                  <div className="text-sm text-gray-200">{t('pdf.priorityNormalDesc')}</div>
+                  <div className="text-sm text-gray-200">
+                    {t('pdf.priorityNormalDesc')}
+                  </div>
                 </div>
                 <Tag color="blue">~5-10 {t('pdf.minutes')}</Tag>
               </Button>
@@ -330,7 +362,9 @@ export function VoucherBookPdfGenerator({
               >
                 <div>
                   <div className="font-medium">{t('pdf.priorityLow')}</div>
-                  <div className="text-sm text-gray-500">{t('pdf.priorityLowDesc')}</div>
+                  <div className="text-sm text-gray-500">
+                    {t('pdf.priorityLowDesc')}
+                  </div>
                 </div>
                 <Tag color="green">~10-30 {t('pdf.minutes')}</Tag>
               </Button>

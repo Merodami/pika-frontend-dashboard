@@ -314,7 +314,7 @@ export function VoucherPreview({
               opacity: 0.7,
             }}
           >
-{APP_CONFIG.branding.poweredBy} • Not valid with other offers
+            {APP_CONFIG.branding.poweredBy} • Not valid with other offers
           </Text>
         </div>
       </Card>

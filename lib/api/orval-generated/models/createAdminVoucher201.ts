@@ -26,7 +26,7 @@ export type CreateAdminVoucher201 = {
   /** Universally Unique Identifier */
   businessId: string
   /** Universally Unique Identifier */
-  categoryId: string
+  categoryId?: string
   state: VoucherState
   /** Voucher title in requested language */
   title: string

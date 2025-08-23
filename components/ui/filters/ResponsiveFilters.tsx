@@ -22,7 +22,7 @@ export function ResponsiveFilters({
   activeFiltersCount,
   onReset,
   className,
-  quickFilters
+  quickFilters,
 }: ResponsiveFiltersProps) {
   return (
     <div className={className}>

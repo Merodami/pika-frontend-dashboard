@@ -37,6 +37,7 @@
       "changesSaved": "Changes saved successfully",
       "errorOccurred": "An error occurred",
       "noData": "No data available",
+      "noDataDescription": "Try adjusting your filters or search terms",
       "required": "This field is required",
       "comingSoon": "Coming soon",
       "passwordsMustMatch": "Passwords must match",
@@ -58,7 +59,7 @@
     "filters": "Filters",
     "table": {
       "showingResults": "Showing results",
-      "showingItems": "Showing items", 
+      "showingItems": "Showing items",
       "showing": "Showing {count} of {total}",
       "rowsPerPage": "Rows per page",
       "itemsPerPage": "Items per page",
@@ -66,7 +67,7 @@
       "pageOf": "Page {current} of {total}",
       "pagination": "Page {current} of {total}",
       "of": "of",
-      "previous": "Previous", 
+      "previous": "Previous",
       "next": "Next",
       "noData": "No data available",
       "loading": "Loading..."
@@ -679,7 +680,7 @@
     "field": {
       "name": "Name",
       "email": "Email",
-      "phone": "Phone", 
+      "phone": "Phone",
       "status": "Status",
       "role": "Role",
       "emailVerified": "Email Verified",
@@ -693,7 +694,7 @@
       "searchPlaceholder": "Search users...",
       "emailPlaceholder": "Enter email address",
       "statusPlaceholder": "Select status",
-      "rolePlaceholder": "Select role", 
+      "rolePlaceholder": "Select role",
       "emailVerifiedPlaceholder": "Email verified?",
       "phoneVerifiedPlaceholder": "Phone verified?",
       "registrationDatePlaceholder": "Select date range",
@@ -704,7 +705,7 @@
     },
     "status": {
       "active": "Active",
-      "suspended": "Suspended", 
+      "suspended": "Suspended",
       "banned": "Banned",
       "unconfirmed": "Unconfirmed"
     },
@@ -1071,7 +1072,7 @@
     },
     "bookType": {
       "MONTHLY": "Monthly",
-      "SEASONAL": "Seasonal", 
+      "SEASONAL": "Seasonal",
       "ANNUAL": "Annual",
       "SPECIAL": "Special Edition"
     },
@@ -1152,7 +1153,7 @@
       "requirements": {
         "title": "Requirements",
         "coverImage": "Cover image is required",
-        "backImage": "Back cover image is recommended", 
+        "backImage": "Back cover image is recommended",
         "minimumPages": "Must have at least {count} pages",
         "minimumPlacements": "Must have at least {count} placements",
         "completeMetadata": "All required metadata must be filled"
@@ -1172,7 +1173,7 @@
           "requirements": "Please ensure all requirements are met before publishing."
         },
         "archive": {
-          "title": "Archive Voucher Book", 
+          "title": "Archive Voucher Book",
           "message": "Archiving will remove this book from public view. You can unarchive it later."
         },
         "reject": {
@@ -1183,7 +1184,7 @@
       }
     },
     "pdf": {
-      "title": "PDF Generation", 
+      "title": "PDF Generation",
       "description": "Generate and download voucher book PDF",
       "generate": "Generate PDF",
       "regenerate": "Regenerate PDF",
@@ -1202,7 +1203,7 @@
       "optionsDescription": "Higher priority generates faster but may cost more resources",
       "priority": "Priority Level",
       "priorityHigh": "High Priority",
-      "priorityNormal": "Normal Priority", 
+      "priorityNormal": "Normal Priority",
       "priorityLow": "Low Priority",
       "priorityHighDesc": "Fastest generation, immediate processing",
       "priorityNormalDesc": "Standard generation speed, balanced performance",
@@ -1236,7 +1237,7 @@
     },
     "placements": {
       "title": "Placements",
-      "description": "Manage voucher placements within the book", 
+      "description": "Manage voucher placements within the book",
       "addPlacement": "Add Placement",
       "editPlacement": "Edit Placement",
       "deletePlacement": "Delete Placement",
@@ -1254,7 +1255,7 @@
     "messages": {
       "createSuccess": "Voucher book created successfully",
       "createError": "Failed to create voucher book",
-      "updateSuccess": "Voucher book updated successfully", 
+      "updateSuccess": "Voucher book updated successfully",
       "updateError": "Failed to update voucher book",
       "deleteSuccess": "Voucher book deleted successfully",
       "deleteError": "Failed to delete voucher book",
@@ -1307,7 +1308,7 @@
         "title": "Book Types",
         "monthly": "Monthly books are published each month with time-sensitive offers",
         "seasonal": "Seasonal books align with seasons (Spring, Summer, Fall, Winter)",
-        "annual": "Annual books are published once per year with long-term offers", 
+        "annual": "Annual books are published once per year with long-term offers",
         "special": "Special edition books for holidays, events, or unique campaigns"
       },
       "workflow": {

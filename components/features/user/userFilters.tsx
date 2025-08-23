@@ -81,7 +81,10 @@ export function UserFilters({ values, onChange, onReset }: UserFiltersProps) {
             { label: t('user.status.active'), value: UserStatus.ACTIVE },
             { label: t('user.status.suspended'), value: UserStatus.SUSPENDED },
             { label: t('user.status.banned'), value: UserStatus.BANNED },
-            { label: t('user.status.unconfirmed'), value: UserStatus.UNCONFIRMED },
+            {
+              label: t('user.status.unconfirmed'),
+              value: UserStatus.UNCONFIRMED,
+            },
           ]}
         />
 

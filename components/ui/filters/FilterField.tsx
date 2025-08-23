@@ -29,7 +29,7 @@ export function FilterField({
   placeholder,
   className,
   allowClear = true,
-  icon
+  icon,
 }: FilterFieldProps) {
   const renderInput = () => {
     switch (type) {
@@ -103,9 +103,7 @@ export function FilterField({
 
   return (
     <div className={cn('space-y-2', className)}>
-      <label className="block text-sm font-medium text-gray-700">
-        {label}
-      </label>
+      <label className="block text-sm font-medium text-gray-700">{label}</label>
       {renderInput()}
     </div>
   )
@@ -120,12 +118,12 @@ interface FilterChipProps {
   className?: string
 }
 
-export function FilterChip({ 
-  label, 
-  value, 
-  isActive, 
-  onClick, 
-  className 
+export function FilterChip({
+  label,
+  value,
+  isActive,
+  onClick,
+  className,
 }: FilterChipProps) {
   return (
     <button
@@ -158,9 +156,7 @@ export function FilterGroup({ title, children, className }: FilterGroupProps) {
           {title}
         </h4>
       )}
-      <div className="space-y-4">
-        {children}
-      </div>
+      <div className="space-y-4">{children}</div>
     </div>
   )
 }

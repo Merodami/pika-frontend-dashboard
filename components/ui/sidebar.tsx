@@ -39,14 +39,8 @@ const useSidebarContext = () => {
 // Provider Component
 export function SidebarProvider({ children }: { children: React.ReactNode }) {
   const { isMobile } = useResponsive()
-  const { 
-    isOpen, 
-    isMobileOpen, 
-    toggle, 
-    setMobileOpen 
-  } = useSidebarState()
+  const { isOpen, isMobileOpen, toggle, setMobileOpen } = useSidebarState()
   const pathname = usePathname()
-  
 
   // Close mobile sidebar on route change
   useEffect(() => {
@@ -62,7 +56,7 @@ export function SidebarProvider({ children }: { children: React.ReactNode }) {
     } else {
       document.body.style.overflow = ''
     }
-    
+
     return () => {
       document.body.style.overflow = ''
     }
@@ -82,7 +76,7 @@ export function SidebarProvider({ children }: { children: React.ReactNode }) {
       if (isMobile) {
         setMobileOpen(false)
       }
-    }
+    },
   }
 
   return (
@@ -138,19 +132,19 @@ function SidebarToggle({ className }: { className?: string }) {
 }
 
 // Main Sidebar
-function Sidebar({ 
-  children, 
-  className 
-}: { 
+function Sidebar({
+  children,
+  className,
+}: {
   children: React.ReactNode
-  className?: string 
+  className?: string
 }) {
   const { isOpen } = useSidebarContext()
 
   return (
     <>
       <SidebarOverlay />
-      
+
       {/* Desktop Sidebar */}
       <div
         className={cn(
@@ -178,15 +172,19 @@ function Sidebar({
           )}
         >
           {/* Mobile Header with Centered Brand and Close Button */}
-          <div className="relative flex items-center p-4 border-b border-gray-200">            
+          <div className="relative flex items-center p-4 border-b border-gray-200">
             {/* Centered Brand - Absolutely positioned for true centering */}
             <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-2">
               <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <span className="text-white font-bold text-sm">{APP_CONFIG.branding.logo.icon}</span>
+                <span className="text-white font-bold text-sm">
+                  {APP_CONFIG.branding.logo.icon}
+                </span>
               </div>
-              <span className="font-semibold text-gray-900 text-lg">{APP_CONFIG.branding.logo.text}</span>
+              <span className="font-semibold text-gray-900 text-lg">
+                {APP_CONFIG.branding.logo.text}
+              </span>
             </div>
-            
+
             {/* Close Button - Right aligned */}
             <button
               type="button"
@@ -196,11 +194,9 @@ function Sidebar({
               <X className="h-6 w-6" />
             </button>
           </div>
-          
+
           {/* Sidebar Content */}
-          <div className="flex-1 overflow-y-auto">
-            {children}
-          </div>
+          <div className="flex-1 overflow-y-auto">{children}</div>
         </div>
       </div>
     </>
@@ -208,20 +204,20 @@ function Sidebar({
 }
 
 // Sidebar Header
-function SidebarHeader({ 
-  children, 
-  className 
-}: { 
+function SidebarHeader({
+  children,
+  className,
+}: {
   children: React.ReactNode
-  className?: string 
+  className?: string
 }) {
   const { isMobile } = useResponsive() // Use the hook directly for more responsive updates
-  
+
   // On mobile, don't render the header since we show the brand in the mobile header
   if (isMobile) {
     return null
   }
-  
+
   return (
     <div className={cn('flex h-11 flex-shrink-0 items-center px-4', className)}>
       {children}
@@ -230,12 +226,12 @@ function SidebarHeader({
 }
 
 // Sidebar Content/Navigation
-function SidebarContent({ 
-  children, 
-  className 
-}: { 
+function SidebarContent({
+  children,
+  className,
+}: {
   children: React.ReactNode
-  className?: string 
+  className?: string
 }) {
   return (
     <nav className={cn('mt-5 flex-1 space-y-1 px-2', className)}>
@@ -245,16 +241,16 @@ function SidebarContent({
 }
 
 // Sidebar Navigation Item
-function SidebarItem({ 
-  href, 
-  icon, 
-  label, 
+function SidebarItem({
+  href,
+  icon,
+  label,
   badge,
-  className 
+  className,
 }: SidebarItemProps) {
   const pathname = usePathname()
   const { close } = useSidebarContext()
-  
+
   const isActive = pathname === href || pathname.startsWith(`${href}/`)
 
   return (
@@ -271,16 +267,21 @@ function SidebarItem({
       )}
     >
       {icon && (
-        <div className={cn(
-          'mr-3 flex-shrink-0 h-6 w-6',
-          isActive ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500'
-        )}>
+        <div
+          className={cn(
+            'mr-3 flex-shrink-0 h-6 w-6',
+            isActive
+              ? 'text-gray-500'
+              : 'text-gray-400 group-hover:text-gray-500'
+          )}
+        >
           {icon}
         </div>
       )}
-      
+
       <span className="flex-1">
-        {label.toLowerCase().includes('voucher') && label.toLowerCase().includes('book') ? (
+        {label.toLowerCase().includes('voucher') &&
+        label.toLowerCase().includes('book') ? (
           <>
             <span className="font-semibold">Voucher </span>
             <span className="font-light">Books</span>
@@ -289,14 +290,16 @@ function SidebarItem({
           label
         )}
       </span>
-      
+
       {badge && (
-        <span className={cn(
-          'ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full',
-          isActive
-            ? 'bg-white text-gray-900'
-            : 'bg-gray-100 text-gray-900 group-hover:bg-gray-200'
-        )}>
+        <span
+          className={cn(
+            'ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full',
+            isActive
+              ? 'bg-white text-gray-900'
+              : 'bg-gray-100 text-gray-900 group-hover:bg-gray-200'
+          )}
+        >
           {badge}
         </span>
       )}
@@ -305,15 +308,20 @@ function SidebarItem({
 }
 
 // Sidebar Footer
-function SidebarFooter({ 
-  children, 
-  className 
-}: { 
+function SidebarFooter({
+  children,
+  className,
+}: {
   children: React.ReactNode
-  className?: string 
+  className?: string
 }) {
   return (
-    <div className={cn('flex flex-shrink-0 border-t border-gray-200 p-4', className)}>
+    <div
+      className={cn(
+        'flex flex-shrink-0 border-t border-gray-200 p-4',
+        className
+      )}
+    >
       {children}
     </div>
   )

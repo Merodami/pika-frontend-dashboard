@@ -130,7 +130,9 @@ export default async function DashboardLayout({
     <ModernSidebarNav
       navItems={navItems}
       footer={
-        <div className="text-xs text-gray-500 text-center">{APP_CONFIG.copyright}</div>
+        <div className="text-xs text-gray-500 text-center">
+          {APP_CONFIG.copyright}
+        </div>
       }
     />
   )

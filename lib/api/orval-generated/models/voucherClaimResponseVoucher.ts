@@ -18,7 +18,7 @@ export type VoucherClaimResponseVoucher = {
   /** Universally Unique Identifier */
   businessId: string
   /** Universally Unique Identifier */
-  categoryId: string
+  categoryId?: string
   state: VoucherState
   /** Multilingual voucher title */
   title?: unknown

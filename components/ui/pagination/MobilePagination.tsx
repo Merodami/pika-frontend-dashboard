@@ -1,6 +1,12 @@
 'use client'
 
-import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, MoreHorizontal } from 'lucide-react'
+import {
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+  MoreHorizontal,
+} from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { cn } from '@/lib/utils/cn'
 import { useResponsive } from '@/lib/hooks/useResponsive'
@@ -22,7 +28,7 @@ export function MobilePagination({
   totalItems,
   onPageChange,
   onPageSizeChange,
-  className
+  className,
 }: MobilePaginationProps) {
   const t = useTranslations()
   const { isMobile } = useResponsive()
@@ -34,15 +40,15 @@ export function MobilePagination({
   const endItem = Math.min(current * pageSize, totalItems)
 
   // Debug logging
-  console.log('📄 Pagination Debug:', { 
-    current, 
-    total, 
-    pageSize, 
-    totalItems, 
-    canPreviousPage, 
+  console.log('📄 Pagination Debug:', {
+    current,
+    total,
+    pageSize,
+    totalItems,
+    canPreviousPage,
     canNextPage,
     startItem,
-    endItem 
+    endItem,
   })
 
   // Mobile-first design
@@ -55,10 +61,10 @@ export function MobilePagination({
             {t('table.showingItems', {
               start: startItem,
               end: endItem,
-              total: totalItems
+              total: totalItems,
             })}
           </span>
-          
+
           {onPageSizeChange && (
             <select
               value={pageSize}
@@ -78,7 +84,10 @@ export function MobilePagination({
         <div className="flex items-center justify-between px-4 py-3 border-t border-gray-100">
           <button
             onClick={() => {
-              console.log('📄 Previous clicked:', { current, willGoTo: current - 1 })
+              console.log('📄 Previous clicked:', {
+                current,
+                willGoTo: current - 1,
+              })
               onPageChange(current - 1)
             }}
             disabled={!canPreviousPage}
@@ -99,7 +108,10 @@ export function MobilePagination({
 
           <button
             onClick={() => {
-              console.log('📄 Next clicked:', { current, willGoTo: current + 1 })
+              console.log('📄 Next clicked:', {
+                current,
+                willGoTo: current + 1,
+              })
               onPageChange(current + 1)
             }}
             disabled={!canNextPage}
@@ -156,7 +168,12 @@ export function MobilePagination({
   }
 
   return (
-    <div className={cn('flex items-center justify-between bg-white border-t border-gray-200 px-4 py-3 sm:px-6', className)}>
+    <div
+      className={cn(
+        'flex items-center justify-between bg-white border-t border-gray-200 px-4 py-3 sm:px-6',
+        className
+      )}
+    >
       <div className="flex-1 flex justify-between sm:hidden">
         {/* Mobile fallback */}
         <button
@@ -181,10 +198,10 @@ export function MobilePagination({
             {t('table.showingItems', {
               start: startItem,
               end: endItem,
-              total: totalItems
+              total: totalItems,
             })}
           </p>
-          
+
           {onPageSizeChange && (
             <div className="flex items-center space-x-2">
               <label className="text-sm text-gray-700">
@@ -206,7 +223,10 @@ export function MobilePagination({
         </div>
 
         <div>
-          <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+          <nav
+            className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
+            aria-label="Pagination"
+          >
             {/* First page */}
             <button
               onClick={() => onPageChange(1)}
@@ -229,7 +249,9 @@ export function MobilePagination({
             {getVisiblePages().map((page, index) => (
               <button
                 key={index}
-                onClick={() => typeof page === 'number' ? onPageChange(page) : undefined}
+                onClick={() =>
+                  typeof page === 'number' ? onPageChange(page) : undefined
+                }
                 disabled={page === '...'}
                 className={cn(
                   'relative inline-flex items-center px-4 py-2 border text-sm font-medium',

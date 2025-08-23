@@ -18,7 +18,7 @@ export type CreateAdminVoucherBody = {
   /** Universally Unique Identifier */
   businessId: string
   /** Universally Unique Identifier */
-  categoryId: string
+  categoryId?: string
   /** Title translations by language code */
   title: CreateAdminVoucherBodyTitle
   /** Description translations by language code */

@@ -42,9 +42,7 @@ export function ResponsiveDashboardWrapper({
         {/* Main Content */}
         <main className="lg:pl-64">
           <div className="py-6">
-            <div className="px-4 sm:px-6 lg:px-8">
-              {children}
-            </div>
+            <div className="px-4 sm:px-6 lg:px-8">{children}</div>
           </div>
         </main>
       </div>

@@ -27,22 +27,14 @@ export async function generateMetadata({
 export default async function AdminVouchersPage({ params }: PageProps) {
   const { locale } = await params
   const user = await getCurrentUser()
-  const t = await getTranslations({ locale, namespace: 'vouchers' })
 
   if (!user || user.role !== UserRole.ADMIN) {
     return null // Auth middleware should handle this
   }
 
   return (
-    <div className="admin-vouchers-page">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold">{t('title')}</h1>
-        <p className="text-gray-600">{t('subtitle')}</p>
-      </div>
-
-      <Suspense fallback={<LoadingSkeleton />}>
-        <VoucherListContainer userRole={UserRole.ADMIN} locale={locale} />
-      </Suspense>
-    </div>
+    <Suspense fallback={<LoadingSkeleton />}>
+      <VoucherListContainer userRole={UserRole.ADMIN} locale={locale} />
+    </Suspense>
   )
 }

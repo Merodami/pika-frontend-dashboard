@@ -35,6 +35,7 @@
       "changesSaved": "Los cambios se han guardado correctamente",
       "errorOccurred": "Ha ocurrido un error",
       "noData": "No hay datos disponibles",
+      "noDataDescription": "Intenta ajustar tus filtros o términos de búsqueda",
       "required": "Este campo es obligatorio",
       "comingSoon": "Próximamente",
       "passwordsMustMatch": "Las contraseñas deben coincidir",
@@ -59,7 +60,7 @@
       "showingItems": "Mostrando elementos",
       "showing": "Mostrando {count} de {total}",
       "rowsPerPage": "Filas por página",
-      "itemsPerPage": "Elementos por página", 
+      "itemsPerPage": "Elementos por página",
       "page": "Página",
       "pageOf": "Página {current} de {total}",
       "pagination": "Página {current} de {total}",
@@ -668,7 +669,7 @@
     "field": {
       "name": "Nombre",
       "email": "Correo Electrónico",
-      "phone": "Teléfono", 
+      "phone": "Teléfono",
       "status": "Estado",
       "role": "Rol",
       "emailVerified": "Correo Verificado",
@@ -682,7 +683,7 @@
       "searchPlaceholder": "Buscar usuarios...",
       "emailPlaceholder": "Ingresar correo electrónico",
       "statusPlaceholder": "Seleccionar estado",
-      "rolePlaceholder": "Seleccionar rol", 
+      "rolePlaceholder": "Seleccionar rol",
       "emailVerifiedPlaceholder": "¿Correo verificado?",
       "phoneVerifiedPlaceholder": "¿Teléfono verificado?",
       "registrationDatePlaceholder": "Seleccionar rango de fechas",
@@ -693,7 +694,7 @@
     },
     "status": {
       "active": "Activo",
-      "suspended": "Suspendido", 
+      "suspended": "Suspendido",
       "banned": "Baneado",
       "unconfirmed": "No Confirmado"
     },
@@ -1060,7 +1061,7 @@
     },
     "bookType": {
       "MONTHLY": "Mensual",
-      "SEASONAL": "Estacional", 
+      "SEASONAL": "Estacional",
       "ANNUAL": "Anual",
       "SPECIAL": "Edición Especial"
     },
@@ -1141,7 +1142,7 @@
       "requirements": {
         "title": "Requisitos",
         "coverImage": "La imagen de portada es requerida",
-        "backImage": "La imagen de contraportada es recomendada", 
+        "backImage": "La imagen de contraportada es recomendada",
         "minimumPages": "Debe tener al menos {count} páginas",
         "minimumPlacements": "Debe tener al menos {count} ubicaciones",
         "completeMetadata": "Toda la metadata requerida debe estar completa"
@@ -1161,7 +1162,7 @@
           "requirements": "Por favor asegúrate de que todos los requisitos se cumplan antes de publicar."
         },
         "archive": {
-          "title": "Archivar Libro de Cupones", 
+          "title": "Archivar Libro de Cupones",
           "message": "Archivar removerá este libro de la vista pública. Puedes desarchivarlo más tarde."
         },
         "reject": {
@@ -1172,7 +1173,7 @@
       }
     },
     "pdf": {
-      "title": "Generación de PDF", 
+      "title": "Generación de PDF",
       "description": "Generar y descargar PDF del libro de cupones",
       "generate": "Generar PDF",
       "regenerate": "Regenerar PDF",
@@ -1191,7 +1192,7 @@
       "optionsDescription": "Mayor prioridad genera más rápido pero puede costar más recursos",
       "priority": "Nivel de Prioridad",
       "priorityHigh": "Prioridad Alta",
-      "priorityNormal": "Prioridad Normal", 
+      "priorityNormal": "Prioridad Normal",
       "priorityLow": "Prioridad Baja",
       "priorityHighDesc": "Generación más rápida, procesamiento inmediato",
       "priorityNormalDesc": "Velocidad de generación estándar, rendimiento equilibrado",
@@ -1225,7 +1226,7 @@
     },
     "placements": {
       "title": "Ubicaciones",
-      "description": "Gestionar ubicaciones de cupones dentro del libro", 
+      "description": "Gestionar ubicaciones de cupones dentro del libro",
       "addPlacement": "Agregar Ubicación",
       "editPlacement": "Editar Ubicación",
       "deletePlacement": "Eliminar Ubicación",
@@ -1243,7 +1244,7 @@
     "messages": {
       "createSuccess": "Libro de cupones creado exitosamente",
       "createError": "Falló al crear libro de cupones",
-      "updateSuccess": "Libro de cupones actualizado exitosamente", 
+      "updateSuccess": "Libro de cupones actualizado exitosamente",
       "updateError": "Falló al actualizar libro de cupones",
       "deleteSuccess": "Libro de cupones eliminado exitosamente",
       "deleteError": "Falló al eliminar libro de cupones",
@@ -1296,7 +1297,7 @@
         "title": "Tipos de Libro",
         "monthly": "Los libros mensuales se publican cada mes con ofertas sensibles al tiempo",
         "seasonal": "Los libros estacionales se alinean con las estaciones (Primavera, Verano, Otoño, Invierno)",
-        "annual": "Los libros anuales se publican una vez por año con ofertas a largo plazo", 
+        "annual": "Los libros anuales se publican una vez por año con ofertas a largo plazo",
         "special": "Libros de edición especial para vacaciones, eventos o campañas únicas"
       },
       "workflow": {

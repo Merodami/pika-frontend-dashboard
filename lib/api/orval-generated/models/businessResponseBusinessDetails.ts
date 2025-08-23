@@ -33,6 +33,11 @@ export type BusinessResponseBusinessDetails = {
    */
   website?: string
   /**
+   * Business logo image URL
+   * @maxLength 512
+   */
+  logoUrl?: string
+  /**
    * Street address
    * @maxLength 255
    */

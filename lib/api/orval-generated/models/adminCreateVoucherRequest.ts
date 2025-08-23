@@ -18,7 +18,7 @@ export interface AdminCreateVoucherRequest {
   /** Universally Unique Identifier */
   businessId: string
   /** Universally Unique Identifier */
-  categoryId: string
+  categoryId?: string
   /** Title translations by language code */
   title: AdminCreateVoucherRequestTitle
   /** Description translations by language code */

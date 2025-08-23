@@ -143,7 +143,12 @@ export function VoucherBookDetail({ bookId, locale }: VoucherBookDetailProps) {
     {
       key: 'workflow',
       label: t('detail.tabs.workflow'),
-      children: <VoucherBookStatusWorkflow book={book} onStatusChange={handleStatusChange} />,
+      children: (
+        <VoucherBookStatusWorkflow
+          book={book}
+          onStatusChange={handleStatusChange}
+        />
+      ),
     },
     {
       key: 'pdf',

@@ -163,6 +163,7 @@ import type {
   GetSubscriptionsPlansParams,
   GetSupportCommentById200,
   GetUserProfile200,
+  GetUserSettings200,
   GetUserSupportProblems200,
   GetUserSupportProblemsParams,
   GetUserVouchers200,
@@ -180,6 +181,8 @@ import type {
   PatchPromoCodesIdBody,
   PatchSubscriptionsPlansId200,
   PatchSubscriptionsPlansIdBody,
+  PatchUserSettings200,
+  PatchUserSettingsBody,
   PatchVouchersBulkUpdate200,
   PatchVouchersBulkUpdateBody,
   PostAdminCommentsBody,
@@ -255,6 +258,8 @@ import type {
   UpdateSupportCommentBody,
   UpdateUserProfile200,
   UpdateUserProfileBody,
+  UpdateUserSettings200,
+  UpdateUserSettingsBody,
   UploadAdminUserAvatar200,
   UploadAdminUserAvatarBody,
   UploadAdminVoucherImage200,
@@ -904,6 +909,44 @@ export const uploadUserAvatar = (uploadAvatarRequest: UploadAvatarRequest) => {
     method: 'POST',
     headers: { 'Content-Type': 'multipart/form-data' },
     data: formData,
+  })
+}
+
+/**
+ * @summary Get current user settings
+ */
+export const getUserSettings = () => {
+  return customInstance<GetUserSettings200>({
+    url: `/users/me/settings`,
+    method: 'GET',
+  })
+}
+
+/**
+ * @summary Update user settings (full replace)
+ */
+export const updateUserSettings = (
+  updateUserSettingsBody: UpdateUserSettingsBody
+) => {
+  return customInstance<UpdateUserSettings200>({
+    url: `/users/me/settings`,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    data: updateUserSettingsBody,
+  })
+}
+
+/**
+ * @summary Patch user settings (partial update)
+ */
+export const patchUserSettings = (
+  patchUserSettingsBody: PatchUserSettingsBody
+) => {
+  return customInstance<PatchUserSettings200>({
+    url: `/users/me/settings`,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    data: patchUserSettingsBody,
   })
 }
 
@@ -2592,6 +2635,15 @@ export type UpdateUserProfileResult = NonNullable<
 >
 export type UploadUserAvatarResult = NonNullable<
   Awaited<ReturnType<typeof uploadUserAvatar>>
+>
+export type GetUserSettingsResult = NonNullable<
+  Awaited<ReturnType<typeof getUserSettings>>
+>
+export type UpdateUserSettingsResult = NonNullable<
+  Awaited<ReturnType<typeof updateUserSettings>>
+>
+export type PatchUserSettingsResult = NonNullable<
+  Awaited<ReturnType<typeof patchUserSettings>>
 >
 export type HandleStripeWebhookResult = NonNullable<
   Awaited<ReturnType<typeof handleStripeWebhook>>

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { message } from 'antd'
 import { UserPlus } from 'lucide-react'
 import { useTranslations } from 'next-intl'
@@ -44,11 +44,24 @@ export function UserListContainer({ locale }: UserListContainerProps) {
     },
   })
 
+  // State to track query params from DataGrid
+  const [gridQueryParams, setGridQueryParams] = useState<any>({})
+
+  // Merge query params from both useServerDataTable and DataGridServer
+  const finalQueryParams = useMemo(() => {
+    // Prioritize grid params for pagination since DataGridServer controls it
+    return {
+      ...dataTable.queryParams,
+      ...gridQueryParams,
+    }
+  }, [dataTable.queryParams, gridQueryParams])
+
   // Fetch users data - driven by DataGrid's query params
   const { data, isLoading } = useQuery({
-    queryKey: ['admin-users', dataTable.queryParams],
+    queryKey: ['admin-users', finalQueryParams],
     queryFn: async () => {
-      return await getAdminUserList(dataTable.queryParams)
+      console.log('🔄 Fetching users with params:', finalQueryParams)
+      return await getAdminUserList(finalQueryParams)
     },
     placeholderData: (previousData) => previousData,
   })
@@ -147,6 +160,7 @@ export function UserListContainer({ locale }: UserListContainerProps) {
           onEdit={handleEditUser}
           onDelete={handleDeleteUser}
           onSendEmail={handleSendEmail}
+          onQueryChange={setGridQueryParams}
         />
       </div>
 

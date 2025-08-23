@@ -1,44 +1,30 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState, useMemo } from 'react'
+import { message } from 'antd'
+import { Ticket } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import {
-  Table,
-  Card,
-  Button,
-  Space,
-  Tag,
-  Input,
-  Select,
-  Dropdown,
-  type MenuProps,
-} from 'antd'
-import {
-  PlusOutlined,
-  SearchOutlined,
-  MoreOutlined,
-  EditOutlined,
-  DeleteOutlined,
-  EyeOutlined,
-  CheckCircleOutlined,
-  CloseCircleOutlined,
-} from '@ant-design/icons'
-import {
-  UserRole,
-  VoucherState,
-  VoucherDiscountType,
-} from '@merodami/pika-types'
-import type { ColumnsType } from 'antd/es/table'
+import { useRouter } from 'next/navigation'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { UserRole } from '@merodami/pika-types'
 
-import { useVoucherQueries } from '@/hooks/api/vouchers/useVoucherQueries'
-import { useVoucherMutations } from '@/hooks/api/vouchers/useVoucherMutations'
-import { formatDate } from '@/lib/utils/date'
+import {
+  BulkActions,
+  commonBulkActions,
+} from '@/components/ui/DataGrid/actions/BulkActions'
+import { ContextActionBar } from '@/components/ui/ContextActionBar'
+import type { ActionItem } from '@/components/ui/ContextActionBar'
+import {
+  getAdminVoucherList,
+  deleteAdminVoucher,
+  publishAdminVoucher,
+  pauseAdminVoucher,
+} from '@/lib/api/orval-client'
 import type { Locale } from '@/i18n/config'
-import type { VoucherSearchParams } from '@/types/voucher'
-import type { VoucherDomain } from '@/lib/api/mappers/voucher'
+import { useServerDataTable } from '@/hooks/useDataTable'
 
-const { Search } = Input
+import { VoucherTable } from './voucherTable'
+import { VoucherFilters } from './voucherFilters'
 
 interface VoucherListContainerProps {
   userRole: UserRole
@@ -52,52 +38,82 @@ export function VoucherListContainer({
   locale,
 }: VoucherListContainerProps) {
   const router = useRouter()
-  const t = useTranslations('vouchers')
-  const tCommon = useTranslations('common')
+  const t = useTranslations()
+  const queryClient = useQueryClient()
 
-  const [searchParams, setSearchParams] = useState<VoucherSearchParams>({
-    page: 1,
-    limit: 10,
-    ...(businessId && { businessId }),
+  // Initialize data table with server-side support
+  const dataTable = useServerDataTable({
+    initialPageSize: 20,
+    onFilter: (filters) => {
+      console.log('Filter changed:', filters)
+    },
+    onSort: (field, order) => {
+      console.log('Sort changed:', { field, order })
+    },
   })
 
-  const { useVouchersList } = useVoucherQueries()
-  const { deleteVoucher, publishVoucher, expireVoucher } = useVoucherMutations()
+  // State to track query params from DataGrid
+  const [gridQueryParams, setGridQueryParams] = useState<any>({})
 
-  const { data, isLoading, refetch } = useVouchersList(searchParams, userRole)
+  // Merge query params from both useServerDataTable and DataGridServer
+  const finalQueryParams = useMemo(() => {
+    // Prioritize grid params for pagination since DataGridServer controls it
+    return {
+      ...dataTable.queryParams,
+      ...gridQueryParams,
+      ...(businessId && { businessId }), // Include businessId if provided
+      include: 'business', // Always include business data
+    }
+  }, [dataTable.queryParams, gridQueryParams, businessId])
 
-  const handleSearch = (value: string) => {
-    setSearchParams((prev: VoucherSearchParams) => ({
-      ...prev,
-      search: value,
-      page: 1,
-    }))
-  }
+  // Fetch vouchers data - driven by DataGrid's query params
+  const { data, isLoading } = useQuery({
+    queryKey: ['admin-vouchers', finalQueryParams],
+    queryFn: async () => {
+      console.log('🔄 Fetching vouchers with params:', finalQueryParams)
+      return await getAdminVoucherList(finalQueryParams)
+    },
+    placeholderData: (previousData) => previousData,
+  })
 
-  const handleFilterChange = (field: keyof VoucherSearchParams, value: any) => {
-    setSearchParams((prev: VoucherSearchParams) => ({
-      ...prev,
-      [field]: value,
-      page: 1,
-    }))
-  }
+  // Delete mutation
+  const deleteMutation = useMutation({
+    mutationFn: deleteAdminVoucher,
+    onSuccess: () => {
+      message.success(t('voucher.message.deleteSuccess'))
+      queryClient.invalidateQueries({ queryKey: ['admin-vouchers'] })
+      dataTable.clearSelection()
+    },
+    onError: () => {
+      message.error(t('common.message.errorOccurred'))
+    },
+  })
 
-  const handlePageChange = (page: number, pageSize: number) => {
-    setSearchParams((prev: VoucherSearchParams) => ({
-      ...prev,
-      page,
-      limit: pageSize,
-    }))
-  }
+  // Publish mutation
+  const publishMutation = useMutation({
+    mutationFn: publishAdminVoucher,
+    onSuccess: () => {
+      message.success(t('voucher.message.publishSuccess'))
+      queryClient.invalidateQueries({ queryKey: ['admin-vouchers'] })
+    },
+    onError: () => {
+      message.error(t('common.message.errorOccurred'))
+    },
+  })
 
-  const handleCreateVoucher = () => {
-    const path =
-      userRole === UserRole.ADMIN
-        ? `/${locale}/admin/vouchers/create`
-        : `/${locale}/business/vouchers/create`
-    router.push(path)
-  }
+  // Pause mutation
+  const pauseMutation = useMutation({
+    mutationFn: pauseAdminVoucher,
+    onSuccess: () => {
+      message.success(t('voucher.message.pauseSuccess'))
+      queryClient.invalidateQueries({ queryKey: ['admin-vouchers'] })
+    },
+    onError: () => {
+      message.error(t('common.message.errorOccurred'))
+    },
+  })
 
+  // Event handlers
   const handleViewVoucher = (id: string) => {
     const path =
       userRole === UserRole.ADMIN
@@ -114,242 +130,91 @@ export function VoucherListContainer({
     router.push(path)
   }
 
-  const handleDeleteVoucher = async (id: string) => {
-    await deleteVoucher.mutateAsync(id)
-    refetch()
+  const handleDeleteVoucher = (id: string) => {
+    deleteMutation.mutate(id)
   }
 
-  const handlePublishVoucher = async (id: string) => {
-    await publishVoucher.mutateAsync(id)
-    refetch()
+  const handlePublishVoucher = (id: string) => {
+    publishMutation.mutate(id)
   }
 
-  const handleExpireVoucher = async (id: string) => {
-    await expireVoucher.mutateAsync(id)
-    refetch()
+  const handlePauseVoucher = (id: string) => {
+    pauseMutation.mutate(id)
   }
 
-  const getStateColor = (state: VoucherState) => {
-    switch (state) {
-      case VoucherState.DRAFT:
-        return 'default'
-      case VoucherState.PUBLISHED:
-        return 'success'
-      case VoucherState.EXPIRED:
-        return 'error'
-      case VoucherState.SUSPENDED:
-        return 'warning'
-      default:
-        return 'default'
+  const handleCreateVoucher = () => {
+    const path =
+      userRole === UserRole.ADMIN
+        ? `/${locale}/admin/vouchers/create`
+        : `/${locale}/business/vouchers/create`
+    router.push(path)
+  }
+
+  const handleBulkDelete = async (selectedKeys: React.Key[]) => {
+    try {
+      await Promise.all(
+        selectedKeys.map((key) => deleteAdminVoucher(String(key)))
+      )
+      message.success(t('voucher.message.bulkDeleteSuccess'))
+      queryClient.invalidateQueries({ queryKey: ['admin-vouchers'] })
+      dataTable.clearSelection()
+    } catch (error) {
+      message.error(t('common.message.errorOccurred'))
     }
   }
 
-  const getStateLabel = (state: VoucherState) => {
-    switch (state) {
-      case VoucherState.DRAFT:
-        return t('status.draft')
-      case VoucherState.PUBLISHED:
-        return t('status.published')
-      case VoucherState.EXPIRED:
-        return t('status.expired')
-      case VoucherState.SUSPENDED:
-        return t('status.suspended')
-      default:
-        return state
-    }
-  }
-
-  const getDiscountDisplay = (voucher: VoucherDomain) => {
-    if (voucher.discountType === VoucherDiscountType.PERCENTAGE) {
-      return `${voucher.discountValue}%`
-    }
-    return `Gs. ${voucher.discountValue?.toLocaleString()}`
-  }
-
-  const getActionItems = (voucher: VoucherDomain): MenuProps['items'] => {
-    const items: MenuProps['items'] = [
-      {
-        key: 'view',
-        label: tCommon('button.view'),
-        icon: <EyeOutlined />,
-        onClick: () => handleViewVoucher(voucher.id),
-      },
-      {
-        key: 'edit',
-        label: tCommon('button.edit'),
-        icon: <EditOutlined />,
-        onClick: () => handleEditVoucher(voucher.id),
-        disabled: voucher.state !== VoucherState.DRAFT,
-      },
-    ]
-
-    if (voucher.state === VoucherState.DRAFT) {
-      items.push({
-        key: 'publish',
-        label: t('actions.publish'),
-        icon: <CheckCircleOutlined />,
-        onClick: () => handlePublishVoucher(voucher.id),
-      })
-    }
-
-    if (voucher.state === VoucherState.PUBLISHED) {
-      items.push({
-        key: 'expire',
-        label: t('actions.expire'),
-        icon: <CloseCircleOutlined />,
-        onClick: () => handleExpireVoucher(voucher.id),
-      })
-    }
-
-    items.push(
-      { type: 'divider' },
-      {
-        key: 'delete',
-        label: tCommon('button.delete'),
-        icon: <DeleteOutlined />,
-        danger: true,
-        onClick: () => handleDeleteVoucher(voucher.id),
-        disabled: voucher.state === VoucherState.PUBLISHED,
-      }
-    )
-
-    return items
-  }
-
-  const columns: ColumnsType<VoucherDomain> = [
+  // Context actions
+  const contextActions: ActionItem[] = [
     {
-      title: t('fields.title'),
-      dataIndex: 'title',
-      key: 'title',
-      render: (title: string) => title || t('untitled'),
+      key: 'add',
+      label: t('voucher.action.create'),
+      icon: <Ticket className="w-4 h-4" />,
+      type: 'primary',
+      onClick: handleCreateVoucher,
     },
-    {
-      title: t('fields.business'),
-      dataIndex: 'businessName',
-      key: 'businessName',
-      render: (_: any, record: VoucherDomain) => record.businessId,
-      hidden: userRole === UserRole.BUSINESS,
-    },
-    {
-      title: t('fields.discount'),
-      dataIndex: 'discountValue',
-      key: 'discountValue',
-      render: (_: any, record: VoucherDomain) => getDiscountDisplay(record),
-    },
-    {
-      title: t('fields.state'),
-      dataIndex: 'state',
-      key: 'state',
-      render: (state: VoucherState) => (
-        <Tag color={getStateColor(state)}>
-          {getStateLabel(state).toUpperCase()}
-        </Tag>
-      ),
-    },
-    {
-      title: t('fields.validFrom'),
-      dataIndex: 'validFrom',
-      key: 'validFrom',
-      render: (date: Date) => (date ? formatDate(date) : '-'),
-    },
-    {
-      title: t('fields.validUntil'),
-      dataIndex: 'expiresAt',
-      key: 'expiresAt',
-      render: (date: Date) => (date ? formatDate(date) : '-'),
-    },
-    {
-      title: t('fields.redemptions'),
-      key: 'redemptions',
-      render: (_: any, record: VoucherDomain) =>
-        `${record.currentRedemptions || 0}/${record.maxRedemptions || '∞'}`,
-    },
-    {
-      title: t('fields.actions'),
-      key: 'actions',
-      render: (_: any, record: VoucherDomain) => (
-        <Dropdown menu={{ items: getActionItems(record) }} trigger={['click']}>
-          <Button icon={<MoreOutlined />} />
-        </Dropdown>
-      ),
-    },
-  ].filter((col) => !col.hidden)
+  ]
 
   return (
-    <div className="voucher-list-container">
-      {/* Actions Bar */}
-      <Card className="mb-4">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <Space>
-            <Search
-              placeholder={t('searchPlaceholder')}
-              onSearch={handleSearch}
-              style={{ width: 250 }}
-              prefix={<SearchOutlined />}
-            />
+    <div className="space-y-0">
+      <ContextActionBar
+        breadcrumbs={[
+          {
+            label: t('navigation.dashboard'),
+            onClick: () => router.push(`/${locale}/admin`),
+          },
+          { label: t('navigation.vouchers') },
+        ]}
+        actions={contextActions}
+      />
 
-            <Select
-              placeholder={t('filterByState')}
-              style={{ width: 150 }}
-              allowClear
-              onChange={(value) => handleFilterChange('state', value)}
-            >
-              <Select.Option value={VoucherState.DRAFT}>
-                {t('status.draft')}
-              </Select.Option>
-              <Select.Option value={VoucherState.PUBLISHED}>
-                {t('status.published')}
-              </Select.Option>
-              <Select.Option value={VoucherState.EXPIRED}>
-                {t('status.expired')}
-              </Select.Option>
-              <Select.Option value={VoucherState.SUSPENDED}>
-                {t('status.suspended')}
-              </Select.Option>
-            </Select>
-
-            <Select
-              placeholder={t('filterByType')}
-              style={{ width: 150 }}
-              allowClear
-              onChange={(value) => handleFilterChange('discountType', value)}
-            >
-              <Select.Option value={VoucherDiscountType.PERCENTAGE}>
-                {t('discountType.percentage')}
-              </Select.Option>
-              <Select.Option value={VoucherDiscountType.FIXED}>
-                {t('discountType.fixed')}
-              </Select.Option>
-            </Select>
-          </Space>
-
-          <Button
-            type="primary"
-            icon={<PlusOutlined />}
-            onClick={handleCreateVoucher}
-          >
-            {t('create.button')}
-          </Button>
-        </div>
-      </Card>
-
-      {/* Vouchers Table */}
-      <Card>
-        <Table
-          columns={columns}
-          dataSource={data?.data || []}
-          rowKey="id"
-          loading={isLoading}
-          pagination={{
-            current: searchParams.page,
-            pageSize: searchParams.limit,
-            total: data?.pagination?.total || 0,
-            onChange: handlePageChange,
-            showSizeChanger: true,
-            showTotal: (total) => t('totalVouchers', { count: total }),
-          }}
+      <div className="p-4">
+        {/* Filters */}
+        <VoucherFilters
+          values={dataTable.state.filters}
+          onChange={dataTable.setFilters}
+          onReset={dataTable.clearFilters}
         />
-      </Card>
+
+        {/* Bulk Actions */}
+        <BulkActions
+          selectedKeys={dataTable.state.selectedRowKeys}
+          onClear={dataTable.clearSelection}
+          actions={[commonBulkActions.deleteMultiple(handleBulkDelete)]}
+        />
+
+        {/* Vouchers Table */}
+        <VoucherTable
+          data={data?.data || []}
+          loading={isLoading}
+          pagination={dataTable.serverPagination(data?.pagination)}
+          onView={handleViewVoucher}
+          onEdit={handleEditVoucher}
+          onDelete={handleDeleteVoucher}
+          onPublish={handlePublishVoucher}
+          onPause={handlePauseVoucher}
+          onQueryChange={setGridQueryParams}
+        />
+      </div>
     </div>
   )
 }

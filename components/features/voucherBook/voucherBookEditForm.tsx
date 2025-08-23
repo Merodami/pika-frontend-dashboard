@@ -3,20 +3,33 @@
 import { useState, useEffect } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Form, Input, Select, InputNumber, Button, Card, Row, Col, Space, message, Spin, Alert } from 'antd'
+import {
+  Form,
+  Input,
+  Select,
+  InputNumber,
+  Button,
+  Card,
+  Row,
+  Col,
+  Space,
+  message,
+  Spin,
+  Alert,
+} from 'antd'
 import { ArrowLeft, Save } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { z } from 'zod'
 
-import { 
-  VoucherBookType, 
-  mapApiVoucherBookToDomain
+import {
+  VoucherBookType,
+  mapApiVoucherBookToDomain,
 } from '@/lib/api/mappers/voucherBook'
 import { ImageUpload } from '@/components/ui/FileUpload/ImageUpload'
-import { 
-  useVoucherBook, 
-  useUpdateVoucherBook 
+import {
+  useVoucherBook,
+  useUpdateVoucherBook,
 } from '@/hooks/api/voucherBooks/useVoucherBooks'
 import type { Locale } from '@/i18n/config'
 
@@ -28,11 +41,13 @@ const EditVoucherBookSchema = z.object({
   month: z.number().min(1).max(12).optional(),
   year: z.number().min(2020).max(2100),
   totalPages: z.number().min(1).max(100),
-  metadata: z.object({
-    description: z.string().optional(),
-    targetAudience: z.string().optional(),
-    notes: z.string().optional(),
-  }).optional(),
+  metadata: z
+    .object({
+      description: z.string().optional(),
+      targetAudience: z.string().optional(),
+      notes: z.string().optional(),
+    })
+    .optional(),
 })
 
 type EditVoucherBookFormData = z.infer<typeof EditVoucherBookSchema>
@@ -64,7 +79,7 @@ export function VoucherBookEditForm({
     handleSubmit,
     watch,
     reset,
-    formState: { errors, isDirty }
+    formState: { errors, isDirty },
   } = useForm<EditVoucherBookFormData>({
     resolver: zodResolver(EditVoucherBookSchema),
   })
@@ -85,7 +100,7 @@ export function VoucherBookEditForm({
           description: book.metadata?.description || '',
           targetAudience: book.metadata?.targetAudience || '',
           notes: book.metadata?.notes || '',
-        }
+        },
       })
       setCoverImageUrl(book.coverImageUrl)
       setBackImageUrl(book.backImageUrl)
@@ -114,14 +129,18 @@ export function VoucherBookEditForm({
         month: shouldShowMonth ? data.month : undefined,
         coverImageUrl,
         backImageUrl,
-        metadata: data.metadata && Object.keys(data.metadata).some(key => data.metadata?.[key as keyof typeof data.metadata]) 
-          ? data.metadata 
-          : undefined,
+        metadata:
+          data.metadata &&
+          Object.keys(data.metadata).some(
+            (key) => data.metadata?.[key as keyof typeof data.metadata]
+          )
+            ? data.metadata
+            : undefined,
       }
 
       await updateBookMutation.mutateAsync({
         id: bookId,
-        data: updateData
+        data: updateData,
       })
 
       message.success(t('messages.updateSuccess'))
@@ -153,7 +172,7 @@ export function VoucherBookEditForm({
     )
   }
 
-  const bookTypeOptions = Object.values(VoucherBookType).map(type => ({
+  const bookTypeOptions = Object.values(VoucherBookType).map((type) => ({
     label: t(`bookType.${type}`),
     value: type,
   }))
@@ -193,7 +212,7 @@ export function VoucherBookEditForm({
             <Card title={t('sections.basicInfo')} className="shadow-sm">
               <Row gutter={[24, 16]}>
                 <Col xs={24} md={12}>
-                  <Form.Item 
+                  <Form.Item
                     label={t('fields.title')}
                     validateStatus={errors.title ? 'error' : ''}
                     help={errors.title?.message}
@@ -213,7 +232,7 @@ export function VoucherBookEditForm({
                   </Form.Item>
                 </Col>
                 <Col xs={24} md={12}>
-                  <Form.Item 
+                  <Form.Item
                     label={t('fields.edition')}
                     validateStatus={errors.edition ? 'error' : ''}
                     help={errors.edition?.message}
@@ -235,7 +254,7 @@ export function VoucherBookEditForm({
 
               <Row gutter={[24, 16]}>
                 <Col xs={24} md={8}>
-                  <Form.Item 
+                  <Form.Item
                     label={t('fields.bookType')}
                     validateStatus={errors.bookType ? 'error' : ''}
                     help={errors.bookType?.message}
@@ -257,7 +276,7 @@ export function VoucherBookEditForm({
                 </Col>
                 {shouldShowMonth && (
                   <Col xs={24} md={8}>
-                    <Form.Item 
+                    <Form.Item
                       label={t('fields.month')}
                       validateStatus={errors.month ? 'error' : ''}
                       help={errors.month?.message}
@@ -278,7 +297,7 @@ export function VoucherBookEditForm({
                   </Col>
                 )}
                 <Col xs={24} md={8}>
-                  <Form.Item 
+                  <Form.Item
                     label={t('fields.year')}
                     validateStatus={errors.year ? 'error' : ''}
                     help={errors.year?.message}
@@ -304,7 +323,7 @@ export function VoucherBookEditForm({
 
               <Row gutter={[24, 16]}>
                 <Col xs={24} md={12}>
-                  <Form.Item 
+                  <Form.Item
                     label={t('fields.totalPages')}
                     validateStatus={errors.totalPages ? 'error' : ''}
                     help={errors.totalPages?.message}
@@ -359,7 +378,7 @@ export function VoucherBookEditForm({
             <Card title={t('sections.metadata')} className="shadow-sm">
               <Row gutter={[24, 16]}>
                 <Col xs={24}>
-                  <Form.Item 
+                  <Form.Item
                     label={t('fields.description')}
                     validateStatus={errors.metadata?.description ? 'error' : ''}
                     help={errors.metadata?.description?.message}
@@ -378,9 +397,11 @@ export function VoucherBookEditForm({
                   </Form.Item>
                 </Col>
                 <Col xs={24} md={12}>
-                  <Form.Item 
+                  <Form.Item
                     label={t('fields.targetAudience')}
-                    validateStatus={errors.metadata?.targetAudience ? 'error' : ''}
+                    validateStatus={
+                      errors.metadata?.targetAudience ? 'error' : ''
+                    }
                     help={errors.metadata?.targetAudience?.message}
                   >
                     <Controller
@@ -396,7 +417,7 @@ export function VoucherBookEditForm({
                   </Form.Item>
                 </Col>
                 <Col xs={24} md={12}>
-                  <Form.Item 
+                  <Form.Item
                     label={t('fields.notes')}
                     validateStatus={errors.metadata?.notes ? 'error' : ''}
                     help={errors.metadata?.notes?.message}
@@ -421,8 +442,8 @@ export function VoucherBookEditForm({
           {/* Action Buttons */}
           <div className="mt-8 flex justify-end">
             <Space size="middle">
-              <Button 
-                size="large" 
+              <Button
+                size="large"
                 onClick={handleCancel}
                 disabled={updateBookMutation.isPending}
               >

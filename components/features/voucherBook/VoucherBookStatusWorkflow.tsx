@@ -1,20 +1,32 @@
 'use client'
 
 import { useState } from 'react'
-import { Steps, Card, Button, Modal, Input, Alert, Typography, Divider } from 'antd'
-import { 
-  Edit, 
-  Eye, 
-  FileText, 
-  Upload, 
-  Archive, 
-  CheckCircle, 
+import {
+  Steps,
+  Card,
+  Button,
+  Modal,
+  Input,
+  Alert,
+  Typography,
+  Divider,
+} from 'antd'
+import {
+  Edit,
+  Eye,
+  FileText,
+  Upload,
+  Archive,
+  CheckCircle,
   Clock,
-  AlertCircle 
+  AlertCircle,
 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
-import { VoucherBookStatus, type VoucherBookDomain } from '@/lib/api/mappers/voucherBook'
+import {
+  VoucherBookStatus,
+  type VoucherBookDomain,
+} from '@/lib/api/mappers/voucherBook'
 
 const { Title, Text, Paragraph } = Typography
 const { TextArea } = Input
@@ -37,14 +49,15 @@ interface VoucherBookStatusWorkflowProps {
   readOnly?: boolean
 }
 
-export function VoucherBookStatusWorkflow({ 
-  book, 
+export function VoucherBookStatusWorkflow({
+  book,
   onStatusChange,
-  readOnly = false 
+  readOnly = false,
 }: VoucherBookStatusWorkflowProps) {
   const t = useTranslations('voucherBooks')
   const [isTransitionModalOpen, setIsTransitionModalOpen] = useState(false)
-  const [selectedTransition, setSelectedTransition] = useState<StatusTransition | null>(null)
+  const [selectedTransition, setSelectedTransition] =
+    useState<StatusTransition | null>(null)
   const [reason, setReason] = useState('')
   const [isProcessing, setIsProcessing] = useState(false)
 
@@ -105,21 +118,21 @@ export function VoucherBookStatusWorkflow({
 
   // Get available transitions for current status
   const availableTransitions = statusTransitions.filter(
-    transition => transition.from === book.status
+    (transition) => transition.from === book.status
   )
 
   // Get workflow steps based on current status
   const getWorkflowSteps = () => {
     const allStatuses = [
       VoucherBookStatus.DRAFT,
-      VoucherBookStatus.READY_FOR_PRINT, 
+      VoucherBookStatus.READY_FOR_PRINT,
       VoucherBookStatus.PUBLISHED,
-      VoucherBookStatus.ARCHIVED
+      VoucherBookStatus.ARCHIVED,
     ]
 
     return allStatuses.map((status, index) => {
       let stepStatus: 'wait' | 'process' | 'finish' | 'error' = 'wait'
-      
+
       if (status === book.status) {
         stepStatus = 'process'
       } else if (allStatuses.indexOf(book.status) > index) {
@@ -179,11 +192,11 @@ export function VoucherBookStatusWorkflow({
     }
 
     setIsProcessing(true)
-    
+
     try {
       // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 1500))
-      
+      await new Promise((resolve) => setTimeout(resolve, 1500))
+
       onStatusChange?.(selectedTransition.to, reason.trim() || undefined)
       setIsTransitionModalOpen(false)
       setSelectedTransition(null)
@@ -200,7 +213,7 @@ export function VoucherBookStatusWorkflow({
       VoucherBookStatus.DRAFT,
       VoucherBookStatus.READY_FOR_PRINT,
       VoucherBookStatus.PUBLISHED,
-      VoucherBookStatus.ARCHIVED
+      VoucherBookStatus.ARCHIVED,
     ]
     return statuses.indexOf(book.status)
   }
@@ -218,9 +231,7 @@ export function VoucherBookStatusWorkflow({
               <Title level={4} className="mb-0">
                 {t(`status.${book.status}`)}
               </Title>
-              <Text type="secondary">
-                {getStatusDescription(book.status)}
-              </Text>
+              <Text type="secondary">{getStatusDescription(book.status)}</Text>
             </div>
           </div>
 
@@ -319,7 +330,9 @@ export function VoucherBookStatusWorkflow({
                 ) : (
                   <AlertCircle className="w-4 h-4 text-orange-500" />
                 )}
-                <Text className={book.totalPages === 0 ? 'text-orange-600' : ''}>
+                <Text
+                  className={book.totalPages === 0 ? 'text-orange-600' : ''}
+                >
                   {t('workflow.req.pages')}
                 </Text>
               </div>
@@ -346,7 +359,9 @@ export function VoucherBookStatusWorkflow({
         {selectedTransition && (
           <div className="space-y-4 py-4">
             <div className="flex items-center space-x-3">
-              <div className={`p-2 rounded-lg bg-${selectedTransition.color}-50`}>
+              <div
+                className={`p-2 rounded-lg bg-${selectedTransition.color}-50`}
+              >
                 {selectedTransition.icon}
               </div>
               <div>
@@ -354,14 +369,13 @@ export function VoucherBookStatusWorkflow({
                   {selectedTransition.label}
                 </Title>
                 <Text type="secondary">
-                  {t(`status.${book.status}`)} → {t(`status.${selectedTransition.to}`)}
+                  {t(`status.${book.status}`)} →{' '}
+                  {t(`status.${selectedTransition.to}`)}
                 </Text>
               </div>
             </div>
 
-            <Paragraph>
-              {selectedTransition.description}
-            </Paragraph>
+            <Paragraph>{selectedTransition.description}</Paragraph>
 
             {selectedTransition.warning && (
               <Alert
@@ -388,7 +402,7 @@ export function VoucherBookStatusWorkflow({
             <Divider />
 
             <div className="flex justify-end space-x-2">
-              <Button 
+              <Button
                 onClick={() => {
                   setIsTransitionModalOpen(false)
                   setSelectedTransition(null)

@@ -328,7 +328,9 @@ export default function AddUserDrawer({
           </div>
 
           <div className="flex items-center justify-between">
-            <span className="text-sm">{t('common.message.autoGeneratePassword')}</span>
+            <span className="text-sm">
+              {t('common.message.autoGeneratePassword')}
+            </span>
             <Controller
               name="autoGeneratePassword"
               control={control}

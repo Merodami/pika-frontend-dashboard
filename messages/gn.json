@@ -35,6 +35,7 @@
       "changesSaved": "Umi ñemoambue oñeñongatu porã",
       "errorOccurred": "Oiko peteĩ jejavy",
       "noData": "Ndaipóri mba'ekuaarã",
+      "noDataDescription": "Ehaʼã emoambue ne mbogua térã eheka ambue mbaʼe",
       "required": "Ko tenda oñeikotevẽ",
       "comingSoon": "Ou potáta",
       "passwordsMustMatch": "Umi ñe'ẽñemi ojuehe vaerã",
@@ -61,7 +62,7 @@
       "rowsPerPage": "Tenda kuatiarogue",
       "itemsPerPage": "Mba'e kuatiarogue",
       "page": "Kuatiarogue",
-      "pageOf": "Kuatiarogue {current} {total}-gui", 
+      "pageOf": "Kuatiarogue {current} {total}-gui",
       "pagination": "Kuatiarogue {current} {total}-gui",
       "of": "pe",
       "previous": "Tenondegua",
@@ -297,7 +298,7 @@
     "field": {
       "name": "Téra",
       "email": "Ñanduti Veve",
-      "phone": "Pumbyry", 
+      "phone": "Pumbyry",
       "status": "Tekove",
       "role": "Tembiapo",
       "emailVerified": "Ñanduti Veve Jehechajeýva",
@@ -311,7 +312,7 @@
       "searchPlaceholder": "Jeheka puruhára...",
       "emailPlaceholder": "Emoinge ñanduti veve",
       "statusPlaceholder": "Eiporavo tekove",
-      "rolePlaceholder": "Eiporavo tembiapo", 
+      "rolePlaceholder": "Eiporavo tembiapo",
       "emailVerifiedPlaceholder": "¿Ñanduti veve jehechajeýva?",
       "phoneVerifiedPlaceholder": "¿Pumbyry jehechajeýva?",
       "registrationDatePlaceholder": "Eiporavo ára intervalo",
@@ -322,7 +323,7 @@
     },
     "status": {
       "active": "Hendyva",
-      "suspended": "Jokohápe", 
+      "suspended": "Jokohápe",
       "banned": "Ñanipyre",
       "unconfirmed": "Noñemoneĩriva"
     },
@@ -1034,7 +1035,7 @@
     },
     "bookType": {
       "MONTHLY": "Jasýpe",
-      "SEASONAL": "Arapeve", 
+      "SEASONAL": "Arapeve",
       "ANNUAL": "Aryve",
       "SPECIAL": "Edición Especial"
     },
@@ -1115,7 +1116,7 @@
       "requirements": {
         "title": "Mba'ekotevẽ",
         "coverImage": "Portada ta'anga tekotevẽ",
-        "backImage": "Contraportada ta'anga iporãvéta", 
+        "backImage": "Contraportada ta'anga iporãvéta",
         "minimumPages": "Oguerekova'erã sa'ive {count} kuatiarogue",
         "minimumPlacements": "Oguerekova'erã sa'ive {count} tenda",
         "completeMetadata": "Opaite metadata oñeikotevẽva oñemyenyhẽva'erã"
@@ -1135,7 +1136,7 @@
           "requirements": "Eme'ẽ porã opaite mba'ekotevẽ oñemyenyhẽ hesakã mboyve."
         },
         "archive": {
-          "title": "Ñongatu Kupon Ararendápe", 
+          "title": "Ñongatu Kupon Ararendápe",
           "message": "Ñongatu oguéta ko ararendápe techauka opavavégui. Ikatu guenoñongatu ag̃ave."
         },
         "reject": {
@@ -1146,7 +1147,7 @@
       }
     },
     "pdf": {
-      "title": "PDF Jejapo", 
+      "title": "PDF Jejapo",
       "description": "Moheñói ha mboguejy kupon ararendápe PDF",
       "generate": "Moheñói PDF",
       "regenerate": "Moheñói Jey PDF",
@@ -1165,7 +1166,7 @@
       "optionsDescription": "Tenonderã yvateve ijapo pya'eve hákatu ikatu hepyve",
       "priority": "Tenonderã Nivel",
       "priorityHigh": "Tenonderã Yvate",
-      "priorityNormal": "Tenonderã Normal", 
+      "priorityNormal": "Tenonderã Normal",
       "priorityLow": "Tenonderã Michĩ",
       "priorityHighDesc": "Jejapo pya'evéva, ojejapo ag̃aite",
       "priorityNormalDesc": "Jejapo rekakuaa normal, ojejapo porã",
@@ -1199,7 +1200,7 @@
     },
     "placements": {
       "title": "Tenda",
-      "description": "Ñangareko kupon tenda ararendápe ryepýpe", 
+      "description": "Ñangareko kupon tenda ararendápe ryepýpe",
       "addPlacement": "Mbojuaju Tenda",
       "editPlacement": "Moambue Tenda",
       "deletePlacement": "Mbogue Tenda",
@@ -1217,7 +1218,7 @@
     "messages": {
       "createSuccess": "Kupon ararendápe ojejapo porã",
       "createError": "Ndaikatúi ojejapo kupon ararendápe",
-      "updateSuccess": "Kupon ararendápe oñembopyahu porã", 
+      "updateSuccess": "Kupon ararendápe oñembopyahu porã",
       "updateError": "Ndaikatúi oñembopyahu kupon ararendápe",
       "deleteSuccess": "Kupon ararendápe oñembogue porã",
       "deleteError": "Ndaikatúi oñembogue kupon ararendápe",
@@ -1270,7 +1271,7 @@
         "title": "Ararendápe Tipo",
         "monthly": "Ararendápe jasýpe ojehesakã peteĩteĩ jasy oferta aravo michĩva",
         "seasonal": "Ararendápe arapeve oñembojojorã arapokõi rehe (Temoteasã, Arapokõi, Araroguekũi, Arapokõi Ro'ysã)",
-        "annual": "Ararendápe aryve ojehesakã peteĩ jey aryve oferta pukúva", 
+        "annual": "Ararendápe aryve ojehesakã peteĩ jey aryve oferta pukúva",
         "special": "Ararendápe edición especial arete, tembiapo térã campaña ijojaha'ỹva peg̃uarã"
       },
       "workflow": {

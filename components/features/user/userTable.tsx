@@ -28,6 +28,7 @@ interface UserTableProps {
   onEdit: (id: string) => void
   onDelete: (id: string) => void
   onSendEmail: () => void
+  onQueryChange?: (params: any) => void
 }
 
 export function UserTable({
@@ -38,6 +39,7 @@ export function UserTable({
   onEdit,
   onDelete,
   onSendEmail,
+  onQueryChange,
 }: UserTableProps) {
   const t = useTranslations()
 
@@ -234,6 +236,7 @@ export function UserTable({
       columns={columns}
       loading={loading}
       pagination={pagination}
+      onQueryChange={onQueryChange}
     />
   )
 }

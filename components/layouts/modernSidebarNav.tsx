@@ -49,7 +49,11 @@ interface ModernSidebarNavProps {
   footer?: React.ReactNode
 }
 
-export function ModernSidebarNav({ navItems, logo, footer }: ModernSidebarNavProps) {
+export function ModernSidebarNav({
+  navItems,
+  logo,
+  footer,
+}: ModernSidebarNavProps) {
   // Group items by section
   const sections = navItems.reduce(
     (acc, item) => {

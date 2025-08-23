@@ -1,7 +1,8 @@
 import { getTranslations } from 'next-intl/server'
 import { requireAdmin } from '@/app/services/authService'
 import { redirect } from 'next/navigation'
-import BusinessesTable from './BusinessesTable'
+import { BusinessListContainer } from '@/components/features/business/businessListContainer'
+import { UserRole } from '@merodami/pika-types'
 
 export async function generateMetadata({
   params,
@@ -32,5 +33,7 @@ export default async function BusinessesPage({
     redirect(`/${locale}/dashboard`)
   }
 
-  return <BusinessesTable locale={locale} />
+  return (
+    <BusinessListContainer userRole={UserRole.ADMIN} locale={locale as any} />
+  )
 }

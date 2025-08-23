@@ -320,18 +320,26 @@ export function DataGridServer<T>({
         pageSize={dataGrid.pagination.pageSize}
         totalItems={serverPagination?.total ?? data.length}
         onPageChange={(page) => {
+          console.log('📊 DataGridServer: Page change requested:', {
+            from: dataGrid.pagination.pageIndex + 1,
+            to: page,
+          })
           dataGrid.setPagination((prev) => ({
             ...prev,
             pageIndex: page - 1,
           }))
         }}
-        onPageSizeChange={(pageSize) =>
+        onPageSizeChange={(pageSize) => {
+          console.log('📊 DataGridServer: Page size change requested:', {
+            from: dataGrid.pagination.pageSize,
+            to: pageSize,
+          })
           dataGrid.setPagination((prev) => ({
             ...prev,
             pageSize,
             pageIndex: 0, // Reset to first page
           }))
-        }
+        }}
       />
     </div>
   )
