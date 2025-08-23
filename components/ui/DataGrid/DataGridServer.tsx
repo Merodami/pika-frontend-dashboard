@@ -23,13 +23,17 @@ interface ServerPaginationMeta {
   totalPages: number
 }
 
-interface DataGridServerProps<T> extends Omit<DataGridConfig<T>, 'onSelectionChange'> {
+interface DataGridServerProps<T>
+  extends Omit<DataGridConfig<T>, 'onSelectionChange'> {
   loading?: boolean
   error?: Error | null
   pagination?: ServerPaginationMeta
   onRefresh?: () => void
   onQueryChange?: (params: any) => void
-  onSelectionChange?: (selectedRows: T[], selectedRowData: Record<string, T>) => void
+  onSelectionChange?: (
+    selectedRows: T[],
+    selectedRowData: Record<string, T>
+  ) => void
   className?: string
 }
 
@@ -48,7 +52,7 @@ export function DataGridServer<T>({
   className,
 }: DataGridServerProps<T>) {
   const t = useTranslations('common')
-  
+
   // Use the data grid hook for state management
   const dataGrid = useDataGrid({
     initialPageSize: 20,
@@ -78,30 +82,34 @@ export function DataGridServer<T>({
     pageCount: serverPagination?.totalPages ?? -1, // -1 means unknown page count
     enableRowSelection: true,
     manualPagination: true, // Server-side pagination
-    manualSorting: true,    // Server-side sorting
-    manualFiltering: true,  // Server-side filtering
+    manualSorting: true, // Server-side sorting
+    manualFiltering: true, // Server-side filtering
     onSortingChange: dataGrid.setSorting,
     onColumnFiltersChange: dataGrid.setColumnFilters,
     onColumnVisibilityChange: dataGrid.setColumnVisibility,
     onRowSelectionChange: (updater) => {
-      const newSelection = typeof updater === 'function' ? updater(dataGrid.rowSelection) : updater
+      const newSelection =
+        typeof updater === 'function' ? updater(dataGrid.rowSelection) : updater
       dataGrid.setRowSelection(newSelection)
-      
+
       // Notify parent of selection changes with both arrays and lookup object
       if (onSelectionChange) {
         const selectedRows = Object.keys(newSelection)
-          .map(index => data[parseInt(index)])
+          .map((index) => data[parseInt(index)])
           .filter(Boolean)
-        
-        const selectedRowData = Object.keys(newSelection).reduce((acc, index) => {
-          const row = data[parseInt(index)]
-          if (row && typeof row === 'object' && row !== null && 'id' in row) {
-            const rowWithId = row as T & { id: string }
-            acc[rowWithId.id] = row
-          }
-          return acc
-        }, {} as Record<string, T>)
-        
+
+        const selectedRowData = Object.keys(newSelection).reduce(
+          (acc, index) => {
+            const row = data[parseInt(index)]
+            if (row && typeof row === 'object' && row !== null && 'id' in row) {
+              const rowWithId = row as T & { id: string }
+              acc[rowWithId.id] = row
+            }
+            return acc
+          },
+          {} as Record<string, T>
+        )
+
         onSelectionChange(selectedRows, selectedRowData)
       }
     },
@@ -162,12 +170,14 @@ export function DataGridServer<T>({
               />
             </div>
           )}
-          
+
           {/* Active filters count */}
           {dataGrid.columnFilters.length > 0 && (
             <div className="flex items-center space-x-2">
               <span className="text-sm text-gray-500">
-                {t('table.filtersActive', { count: dataGrid.columnFilters.length })}
+                {t('table.filtersActive', {
+                  count: dataGrid.columnFilters.length,
+                })}
               </span>
               <button
                 onClick={dataGrid.clearFilters}
@@ -184,10 +194,12 @@ export function DataGridServer<T>({
           {/* Selected count */}
           {Object.keys(dataGrid.rowSelection).length > 0 && (
             <div className="text-sm text-gray-500">
-              {t('table.selectedCount', { count: Object.keys(dataGrid.rowSelection).length })}
+              {t('table.selectedCount', {
+                count: Object.keys(dataGrid.rowSelection).length,
+              })}
             </div>
           )}
-          
+
           {/* Refresh button */}
           {onRefresh && (
             <button
@@ -195,7 +207,9 @@ export function DataGridServer<T>({
               disabled={loading}
               className="p-2 text-gray-400 hover:text-gray-600 disabled:opacity-50"
             >
-              <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
+              <RefreshCw
+                className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`}
+              />
             </button>
           )}
         </div>
@@ -212,12 +226,17 @@ export function DataGridServer<T>({
                     <th
                       key={header.id}
                       className={`px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider ${
-                        header.column.getCanSort() ? 'cursor-pointer select-none hover:bg-gray-100' : ''
+                        header.column.getCanSort()
+                          ? 'cursor-pointer select-none hover:bg-gray-100'
+                          : ''
                       }`}
                       onClick={header.column.getToggleSortingHandler()}
                     >
                       <div className="flex items-center space-x-2">
-                        {flexRender(header.column.columnDef.header, header.getContext())}
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                         {header.column.getCanSort() && (
                           <span className="text-gray-400">
                             {{
@@ -238,7 +257,10 @@ export function DataGridServer<T>({
                 [...Array(dataGrid.pagination.pageSize)].map((_, index) => (
                   <tr key={index} className="animate-pulse">
                     {columns.map((_, colIndex) => (
-                      <td key={colIndex} className="px-6 py-4 whitespace-nowrap">
+                      <td
+                        key={colIndex}
+                        className="px-6 py-4 whitespace-nowrap"
+                      >
                         <div className="h-4 bg-gray-200 rounded"></div>
                       </td>
                     ))}
@@ -247,10 +269,17 @@ export function DataGridServer<T>({
               ) : table.getRowModel().rows.length === 0 ? (
                 // Empty state
                 <tr>
-                  <td colSpan={columns.length} className="px-6 py-12 text-center">
+                  <td
+                    colSpan={columns.length}
+                    className="px-6 py-12 text-center"
+                  >
                     <div className="text-gray-500">
-                      <div className="text-lg font-medium">{t('message.noData')}</div>
-                      <div className="text-sm">{t('message.noDataDescription')}</div>
+                      <div className="text-lg font-medium">
+                        {t('message.noData')}
+                      </div>
+                      <div className="text-sm">
+                        {t('message.noDataDescription')}
+                      </div>
                     </div>
                   </td>
                 </tr>
@@ -269,7 +298,10 @@ export function DataGridServer<T>({
                         key={cell.id}
                         className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
                       >
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
                       </td>
                     ))}
                   </tr>
@@ -286,21 +318,30 @@ export function DataGridServer<T>({
           <div className="flex items-center space-x-2 text-sm text-gray-700">
             <span>
               {t('table.showingResults', {
-                start: serverPagination ? (serverPagination.page - 1) * serverPagination.limit + 1 : 1,
-                end: serverPagination ? Math.min(serverPagination.page * serverPagination.limit, serverPagination.total) : data.length,
+                start: serverPagination
+                  ? (serverPagination.page - 1) * serverPagination.limit + 1
+                  : 1,
+                end: serverPagination
+                  ? Math.min(
+                      serverPagination.page * serverPagination.limit,
+                      serverPagination.total
+                    )
+                  : data.length,
                 total: serverPagination?.total ?? data.length,
               })}
             </span>
           </div>
-          
+
           <div className="flex items-center space-x-6">
             <div className="flex items-center space-x-2">
-              <label className="text-sm text-gray-700">{t('table.rowsPerPage')}:</label>
+              <label className="text-sm text-gray-700">
+                {t('table.rowsPerPage')}:
+              </label>
               <select
                 value={dataGrid.pagination.pageSize}
-                onChange={(e) => 
-                  dataGrid.setPagination(prev => ({ 
-                    ...prev, 
+                onChange={(e) =>
+                  dataGrid.setPagination((prev) => ({
+                    ...prev,
                     pageSize: Number(e.target.value),
                     pageIndex: 0, // Reset to first page
                   }))
@@ -314,11 +355,13 @@ export function DataGridServer<T>({
                 ))}
               </select>
             </div>
-            
+
             <div className="flex items-center space-x-2">
               <button
                 className="px-3 py-1 text-sm text-gray-600 hover:text-gray-900 disabled:opacity-50"
-                onClick={() => dataGrid.setPagination(prev => ({ ...prev, pageIndex: 0 }))}
+                onClick={() =>
+                  dataGrid.setPagination((prev) => ({ ...prev, pageIndex: 0 }))
+                }
                 disabled={!table.getCanPreviousPage()}
               >
                 {'<<'}
@@ -330,14 +373,14 @@ export function DataGridServer<T>({
               >
                 {t('button.previous')}
               </button>
-              
+
               <span className="text-sm text-gray-700">
                 {t('table.pageOf', {
                   current: dataGrid.pagination.pageIndex + 1,
                   total: serverPagination?.totalPages ?? 1,
                 })}
               </span>
-              
+
               <button
                 className="px-3 py-1 text-sm text-gray-600 hover:text-gray-900 disabled:opacity-50"
                 onClick={() => table.nextPage()}
@@ -347,10 +390,10 @@ export function DataGridServer<T>({
               </button>
               <button
                 className="px-3 py-1 text-sm text-gray-600 hover:text-gray-900 disabled:opacity-50"
-                onClick={() => 
-                  dataGrid.setPagination(prev => ({ 
-                    ...prev, 
-                    pageIndex: (serverPagination?.totalPages ?? 1) - 1 
+                onClick={() =>
+                  dataGrid.setPagination((prev) => ({
+                    ...prev,
+                    pageIndex: (serverPagination?.totalPages ?? 1) - 1,
                   }))
                 }
                 disabled={!table.getCanNextPage()}

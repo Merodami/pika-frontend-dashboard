@@ -17,7 +17,9 @@ const DataGridContext = createContext<DataGridContextValue>({
 export const useDataGridContext = <T,>() => {
   const context = useContext(DataGridContext) as DataGridContextValue<T>
   if (!context.table) {
-    throw new Error('DataGrid compound components must be used within DataGrid.Root')
+    throw new Error(
+      'DataGrid compound components must be used within DataGrid.Root'
+    )
   }
   return context
 }
@@ -40,9 +42,7 @@ export function DataGridRoot<T>({
 }: DataGridRootProps<T>) {
   return (
     <DataGridContext.Provider value={{ table, loading, error }}>
-      <div className={`space-y-4 ${className}`}>
-        {children}
-      </div>
+      <div className={`space-y-4 ${className}`}>{children}</div>
     </DataGridContext.Provider>
   )
 }
@@ -53,9 +53,9 @@ interface DataGridToolbarProps {
   className?: string
 }
 
-export function DataGridToolbar({ 
-  children, 
-  className = '' 
+export function DataGridToolbar({
+  children,
+  className = '',
 }: DataGridToolbarProps) {
   return (
     <div className={`flex items-center justify-between ${className}`}>
@@ -72,14 +72,14 @@ interface DataGridSearchProps {
   className?: string
 }
 
-export function DataGridSearch({ 
-  placeholder = 'Search...', 
+export function DataGridSearch({
+  placeholder = 'Search...',
   value = '',
   onChange,
-  className = '' 
+  className = '',
 }: DataGridSearchProps) {
   const { table } = useDataGridContext()
-  
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value
     if (onChange) {
@@ -88,7 +88,7 @@ export function DataGridSearch({
       table.setGlobalFilter(newValue)
     }
   }
-  
+
   return (
     <div className={`relative ${className}`}>
       <svg
@@ -121,14 +121,12 @@ interface DataGridFiltersProps {
   className?: string
 }
 
-export function DataGridFilters({ 
-  children, 
-  className = '' 
+export function DataGridFilters({
+  children,
+  className = '',
 }: DataGridFiltersProps) {
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
-      {children}
-    </div>
+    <div className={`flex items-center gap-2 ${className}`}>{children}</div>
   )
 }
 
@@ -138,14 +136,12 @@ interface DataGridActionsProps {
   className?: string
 }
 
-export function DataGridActions({ 
-  children, 
-  className = '' 
+export function DataGridActions({
+  children,
+  className = '',
 }: DataGridActionsProps) {
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
-      {children}
-    </div>
+    <div className={`flex items-center gap-2 ${className}`}>{children}</div>
   )
 }
 

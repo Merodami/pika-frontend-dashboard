@@ -1,13 +1,21 @@
+import { Suspense } from 'react'
+import { Metadata } from 'next'
+import { UserRole } from '@merodami/pika-types'
 import { getTranslations } from 'next-intl/server'
-import { requireAdmin } from '@/app/services/authService'
 import { redirect } from 'next/navigation'
-import UsersTable from './UsersTable'
+
+import { getCurrentUser } from '@/app/services/authService'
+import { UserListContainer } from '@/components/features/user/userListContainer'
+import { LoadingSkeleton } from '@/components/ui/loadingSkeleton'
+import type { Locale } from '@/i18n/config'
+
+interface PageProps {
+  params: Promise<{ locale: Locale }>
+}
 
 export async function generateMetadata({
   params,
-}: {
-  params: Promise<{ locale: string }>
-}) {
+}: PageProps): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'navigation' })
 
@@ -17,20 +25,25 @@ export async function generateMetadata({
   }
 }
 
-export default async function UsersPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>
-}) {
+export default async function AdminUsersPage({ params }: PageProps) {
   const { locale } = await params
+  const user = await getCurrentUser()
+  const t = await getTranslations({ locale, namespace: 'user' })
 
-  // Require admin role - will throw if not admin
-  try {
-    await requireAdmin()
-  } catch (error) {
-    // Redirect non-admins to dashboard
+  if (!user || user.role !== UserRole.ADMIN) {
     redirect(`/${locale}/dashboard`)
   }
 
-  return <UsersTable locale={locale} />
+  return (
+    <div className="admin-users-page">
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold">{t('title')}</h1>
+        <p className="text-gray-600">{t('subtitle')}</p>
+      </div>
+
+      <Suspense fallback={<LoadingSkeleton />}>
+        <UserListContainer userRole={UserRole.ADMIN} locale={locale} />
+      </Suspense>
+    </div>
+  )
 }

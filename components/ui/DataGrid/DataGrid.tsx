@@ -26,12 +26,12 @@ export function DataGrid<T>({
   loading = false,
   onRowClick,
   onSelectionChange,
-  className
+  className,
 }: DataGridProps<T>) {
   // Note: features will be used in future iterations
   console.log('Features config:', features)
   const t = useTranslations('common')
-  
+
   // Table state
   const [state, setState] = useState<DataGridState>({
     sorting: [],
@@ -58,42 +58,53 @@ export function DataGrid<T>({
       pagination: state.pagination,
     },
     enableRowSelection: true,
-    onSortingChange: (updater) => 
-      setState((prev: DataGridState) => ({ 
-        ...prev, 
-        sorting: typeof updater === 'function' ? updater(prev.sorting) : updater 
+    onSortingChange: (updater) =>
+      setState((prev: DataGridState) => ({
+        ...prev,
+        sorting:
+          typeof updater === 'function' ? updater(prev.sorting) : updater,
       })),
-    onColumnFiltersChange: (updater) => 
-      setState((prev: DataGridState) => ({ 
-        ...prev, 
-        columnFilters: typeof updater === 'function' ? updater(prev.columnFilters) : updater 
+    onColumnFiltersChange: (updater) =>
+      setState((prev: DataGridState) => ({
+        ...prev,
+        columnFilters:
+          typeof updater === 'function' ? updater(prev.columnFilters) : updater,
       })),
-    onColumnVisibilityChange: (updater) => 
-      setState((prev: DataGridState) => ({ 
-        ...prev, 
-        columnVisibility: typeof updater === 'function' ? updater(prev.columnVisibility) : updater 
+    onColumnVisibilityChange: (updater) =>
+      setState((prev: DataGridState) => ({
+        ...prev,
+        columnVisibility:
+          typeof updater === 'function'
+            ? updater(prev.columnVisibility)
+            : updater,
       })),
     onRowSelectionChange: (updater) => {
-      const newSelection = typeof updater === 'function' ? updater(state.rowSelection) : updater
-      setState((prev: DataGridState) => ({ ...prev, rowSelection: newSelection }))
-      
+      const newSelection =
+        typeof updater === 'function' ? updater(state.rowSelection) : updater
+      setState((prev: DataGridState) => ({
+        ...prev,
+        rowSelection: newSelection,
+      }))
+
       // Notify parent of selection changes
       if (onSelectionChange) {
         const selectedRows = Object.keys(newSelection)
-          .map(index => data[parseInt(index)])
+          .map((index) => data[parseInt(index)])
           .filter(Boolean)
         onSelectionChange(selectedRows)
       }
     },
-    onGlobalFilterChange: (updater) => 
-      setState((prev: DataGridState) => ({ 
-        ...prev, 
-        globalFilter: typeof updater === 'function' ? updater(prev.globalFilter) : updater 
+    onGlobalFilterChange: (updater) =>
+      setState((prev: DataGridState) => ({
+        ...prev,
+        globalFilter:
+          typeof updater === 'function' ? updater(prev.globalFilter) : updater,
       })),
-    onPaginationChange: (updater) => 
-      setState((prev: DataGridState) => ({ 
-        ...prev, 
-        pagination: typeof updater === 'function' ? updater(prev.pagination) : updater 
+    onPaginationChange: (updater) =>
+      setState((prev: DataGridState) => ({
+        ...prev,
+        pagination:
+          typeof updater === 'function' ? updater(prev.pagination) : updater,
       })),
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -132,12 +143,12 @@ export function DataGrid<T>({
       {/* Toolbar will be added here */}
       <div className="space-y-2">
         <div className="text-sm text-gray-600">
-          {t('table.showing', { 
+          {t('table.showing', {
             count: table.getFilteredRowModel().rows.length,
-            total: data.length 
+            total: data.length,
           })}
         </div>
-        
+
         {/* Table */}
         <div className="overflow-hidden rounded-md border border-gray-200">
           <table className="min-w-full divide-y divide-gray-200 bg-white">
@@ -148,12 +159,17 @@ export function DataGrid<T>({
                     <th
                       key={header.id}
                       className={`px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider ${
-                        header.column.getCanSort() ? 'cursor-pointer select-none' : ''
+                        header.column.getCanSort()
+                          ? 'cursor-pointer select-none'
+                          : ''
                       }`}
                       onClick={header.column.getToggleSortingHandler()}
                     >
                       <div className="flex items-center space-x-2">
-                        {flexRender(header.column.columnDef.header, header.getContext())}
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                         {header.column.getCanSort() && (
                           <span className="text-gray-400">
                             {{
@@ -182,7 +198,10 @@ export function DataGrid<T>({
                       key={cell.id}
                       className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
                     >
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
                     </td>
                   ))}
                 </tr>
@@ -223,14 +242,14 @@ export function DataGrid<T>({
               {'>>'}
             </button>
           </div>
-          
+
           <span className="text-sm text-gray-700">
             {t('table.pagination', {
               current: table.getState().pagination.pageIndex + 1,
               total: table.getPageCount(),
             })}
           </span>
-          
+
           <select
             value={table.getState().pagination.pageSize}
             onChange={(e) => table.setPageSize(Number(e.target.value))}

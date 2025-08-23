@@ -10,7 +10,10 @@ interface VoucherBookEditFormProps {
   locale: Locale
 }
 
-export function VoucherBookEditForm({ bookId, locale }: VoucherBookEditFormProps) {
+export function VoucherBookEditForm({
+  bookId,
+  locale,
+}: VoucherBookEditFormProps) {
   const t = useTranslations('voucherBooks')
   const router = useRouter()
 
@@ -51,7 +54,9 @@ export function VoucherBookEditForm({ bookId, locale }: VoucherBookEditFormProps
           {/* TODO: Implement edit form */}
           <div className="border border-gray-200 rounded-lg p-8 text-center">
             <p className="text-gray-500">{t('edit.comingSoon')}</p>
-            <p className="text-sm text-gray-400 mt-2">{t('edit.comingSoonDescription')}</p>
+            <p className="text-sm text-gray-400 mt-2">
+              {t('edit.comingSoonDescription')}
+            </p>
             <p className="text-xs text-gray-300 mt-2">Book ID: {bookId}</p>
           </div>
         </div>

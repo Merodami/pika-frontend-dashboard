@@ -16,7 +16,6 @@ declare module 'jspdf' {
   }
 }
 
-
 interface ExportManagerProps<T> {
   data: T[]
   columns: Array<{
@@ -39,7 +38,7 @@ export function ExportManager<T extends Record<string, any>>({
   const t = useTranslations()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedFields, setSelectedFields] = useState<Set<string>>(
-    new Set(columns.map(col => col.key))
+    new Set(columns.map((col) => col.key))
   )
   const [loading, setLoading] = useState(false)
 
@@ -54,11 +53,11 @@ export function ExportManager<T extends Record<string, any>>({
   }
 
   const prepareData = () => {
-    const selectedColumns = columns.filter(col => selectedFields.has(col.key))
-    
-    return data.map(item => {
+    const selectedColumns = columns.filter((col) => selectedFields.has(col.key))
+
+    return data.map((item) => {
       const row: Record<string, any> = {}
-      selectedColumns.forEach(col => {
+      selectedColumns.forEach((col) => {
         if (col.accessor) {
           row[col.label] = col.accessor(item)
         } else {
@@ -74,16 +73,21 @@ export function ExportManager<T extends Record<string, any>>({
     const headers = Object.keys(preparedData[0] || {})
     const csvContent = [
       headers.join(','),
-      ...preparedData.map(row =>
-        headers.map(header => {
-          const value = row[header]
-          // Escape commas and quotes in CSV
-          if (typeof value === 'string' && (value.includes(',') || value.includes('"'))) {
-            return `"${value.replace(/"/g, '""')}"`
-          }
-          return value ?? ''
-        }).join(',')
-      )
+      ...preparedData.map((row) =>
+        headers
+          .map((header) => {
+            const value = row[header]
+            // Escape commas and quotes in CSV
+            if (
+              typeof value === 'string' &&
+              (value.includes(',') || value.includes('"'))
+            ) {
+              return `"${value.replace(/"/g, '""')}"`
+            }
+            return value ?? ''
+          })
+          .join(',')
+      ),
     ].join('\n')
 
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
@@ -98,37 +102,40 @@ export function ExportManager<T extends Record<string, any>>({
     const worksheet = XLSX.utils.json_to_sheet(preparedData)
     const workbook = XLSX.utils.book_new()
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Data')
-    
+
     // Auto-size columns
     const maxWidths: Record<string, number> = {}
-    preparedData.forEach(row => {
+    preparedData.forEach((row) => {
       Object.entries(row).forEach(([key, value]) => {
         const length = String(value).length
         maxWidths[key] = Math.max(maxWidths[key] || 10, length)
       })
     })
-    
-    worksheet['!cols'] = Object.keys(preparedData[0] || {}).map(key => ({
-      wch: Math.min(maxWidths[key] || 10, 50)
+
+    worksheet['!cols'] = Object.keys(preparedData[0] || {}).map((key) => ({
+      wch: Math.min(maxWidths[key] || 10, 50),
     }))
-    
-    XLSX.writeFile(workbook, `${filename}-${new Date().toISOString().split('T')[0]}.xlsx`)
+
+    XLSX.writeFile(
+      workbook,
+      `${filename}-${new Date().toISOString().split('T')[0]}.xlsx`
+    )
   }
 
   const exportToPDF = () => {
     const preparedData = prepareData()
     const doc = new jsPDF()
-    
+
     const headers = Object.keys(preparedData[0] || {})
-    const rows = preparedData.map(row => headers.map(header => row[header]))
-    
+    const rows = preparedData.map((row) => headers.map((header) => row[header]))
+
     doc.autoTable({
       head: [headers],
       body: rows,
       styles: { fontSize: 8 },
       headStyles: { fillColor: [66, 139, 202] },
     })
-    
+
     doc.save(`${filename}-${new Date().toISOString().split('T')[0]}.pdf`)
   }
 
@@ -163,7 +170,7 @@ export function ExportManager<T extends Record<string, any>>({
           exportToJSON()
           break
       }
-      
+
       message.success(t('export.success'))
       setIsModalOpen(false)
     } catch (error) {
@@ -174,7 +181,7 @@ export function ExportManager<T extends Record<string, any>>({
     }
   }
 
-  const menuItems: MenuProps['items'] = formats.map(format => ({
+  const menuItems: MenuProps['items'] = formats.map((format) => ({
     key: format,
     label: t(`export.format.${format}`),
     icon: getFormatIcon(format),
@@ -222,7 +229,7 @@ export function ExportManager<T extends Record<string, any>>({
           <Dropdown
             key="export"
             menu={{
-              items: formats.map(format => ({
+              items: formats.map((format) => ({
                 key: format,
                 label: t(`export.format.${format}`),
                 icon: getFormatIcon(format),
@@ -245,21 +252,20 @@ export function ExportManager<T extends Record<string, any>>({
             <Space>
               <Button
                 size="small"
-                onClick={() => setSelectedFields(new Set(columns.map(col => col.key)))}
+                onClick={() =>
+                  setSelectedFields(new Set(columns.map((col) => col.key)))
+                }
               >
                 {t('export.selectAll')}
               </Button>
-              <Button
-                size="small"
-                onClick={() => setSelectedFields(new Set())}
-              >
+              <Button size="small" onClick={() => setSelectedFields(new Set())}>
                 {t('export.deselectAll')}
               </Button>
             </Space>
           </div>
 
           <div className="space-y-2 max-h-96 overflow-y-auto">
-            {columns.map(col => (
+            {columns.map((col) => (
               <Checkbox
                 key={col.key}
                 checked={selectedFields.has(col.key)}

@@ -53,7 +53,7 @@ export function VirtualizedDataGrid<T extends Record<string, any>>({
   useEffect(() => {
     if (selectable && selectedRowKeys) {
       const newSelection: Record<string, boolean> = {}
-      selectedRowKeys.forEach(key => {
+      selectedRowKeys.forEach((key) => {
         newSelection[String(key)] = true
       })
       setRowSelection(newSelection)
@@ -118,7 +118,9 @@ export function VirtualizedDataGrid<T extends Record<string, any>>({
   // Handle selection changes
   useEffect(() => {
     if (selectable && onSelectionChange) {
-      const selectedKeys = Object.keys(rowSelection).filter(key => rowSelection[key])
+      const selectedKeys = Object.keys(rowSelection).filter(
+        (key) => rowSelection[key]
+      )
       onSelectionChange(selectedKeys)
     }
   }, [rowSelection, selectable, onSelectionChange])
@@ -140,27 +142,38 @@ export function VirtualizedDataGrid<T extends Record<string, any>>({
   }
 
   return (
-    <div className={cn('relative overflow-hidden bg-white rounded-lg border', className)}>
+    <div
+      className={cn(
+        'relative overflow-hidden bg-white rounded-lg border',
+        className
+      )}
+    >
       {/* Table Header */}
       <div className="sticky top-0 z-10 bg-white border-b">
         <div className="flex">
-          {table.getHeaderGroups().map(headerGroup => (
-            headerGroup.headers.map(header => (
+          {table.getHeaderGroups().map((headerGroup) =>
+            headerGroup.headers.map((header) => (
               <div
                 key={header.id}
                 className={cn(
                   'flex items-center px-4 py-3 font-medium text-gray-700 bg-gray-50',
-                  header.column.getCanSort() && 'cursor-pointer hover:bg-gray-100'
+                  header.column.getCanSort() &&
+                    'cursor-pointer hover:bg-gray-100'
                 )}
                 style={{
                   width: header.getSize() || 'auto',
-                  flex: header.column.columnDef.size ? `0 0 ${header.column.columnDef.size}px` : '1 1 auto',
+                  flex: header.column.columnDef.size
+                    ? `0 0 ${header.column.columnDef.size}px`
+                    : '1 1 auto',
                 }}
                 onClick={header.column.getToggleSortingHandler()}
               >
                 {header.isPlaceholder ? null : (
                   <>
-                    {flexRender(header.column.columnDef.header, header.getContext())}
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
                     {header.column.getCanSort() && (
                       <span className="ml-2">
                         {header.column.getIsSorted() === 'asc' ? (
@@ -176,7 +189,7 @@ export function VirtualizedDataGrid<T extends Record<string, any>>({
                 )}
               </div>
             ))
-          ))}
+          )}
         </div>
       </div>
 
@@ -193,7 +206,7 @@ export function VirtualizedDataGrid<T extends Record<string, any>>({
             position: 'relative',
           }}
         >
-          {virtualRows.map(virtualRow => {
+          {virtualRows.map((virtualRow) => {
             const row = rows[virtualRow.index]
             return (
               <div
@@ -208,13 +221,15 @@ export function VirtualizedDataGrid<T extends Record<string, any>>({
                 }}
                 onClick={() => onRowClick?.(row.original)}
               >
-                {row.getVisibleCells().map(cell => (
+                {row.getVisibleCells().map((cell) => (
                   <div
                     key={cell.id}
                     className="flex items-center px-4 py-2"
                     style={{
                       width: cell.column.getSize() || 'auto',
-                      flex: cell.column.columnDef.size ? `0 0 ${cell.column.columnDef.size}px` : '1 1 auto',
+                      flex: cell.column.columnDef.size
+                        ? `0 0 ${cell.column.columnDef.size}px`
+                        : '1 1 auto',
                     }}
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -232,7 +247,9 @@ export function VirtualizedDataGrid<T extends Record<string, any>>({
           {t('table.totalRows', { count: rows.length })}
           {selectable && Object.keys(rowSelection).length > 0 && (
             <span className="ml-4">
-              {t('table.selectedCount', { count: Object.keys(rowSelection).length })}
+              {t('table.selectedCount', {
+                count: Object.keys(rowSelection).length,
+              })}
             </span>
           )}
         </div>

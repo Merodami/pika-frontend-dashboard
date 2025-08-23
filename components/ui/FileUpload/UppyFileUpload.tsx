@@ -73,27 +73,7 @@ export function UppyFileUpload({
           ? { Authorization: `Bearer ${localStorage.getItem('token')}` }
           : {}),
       },
-      // Add extra form data
-      getUploadParameters: (file) => {
-        return {
-          method: 'POST',
-          headers: {
-            ...(typeof window !== 'undefined' && localStorage.getItem('token')
-              ? { Authorization: `Bearer ${localStorage.getItem('token')}` }
-              : {}),
-          },
-          formData: {
-            folder,
-            isPublic: isPublic.toString(),
-            metadata: JSON.stringify({
-              ...metadata,
-              originalName: file.name,
-              size: file.size,
-              type: file.type,
-            }),
-          },
-        }
-      },
+      // Form data is handled via meta fields
     })
 
     // Add Compressor plugin for image optimization
@@ -110,7 +90,6 @@ export function UppyFileUpload({
         aspectRatio: NaN, // free ratio
         initialAspectRatio: 1,
         responsive: true,
-        croppable: true,
         rotatable: true,
         scalable: true,
         zoomable: true,
@@ -169,7 +148,7 @@ export function UppyFileUpload({
       uppy.off('error', handleError)
       uppy.off('file-added', handleFileAdded)
       uppy.off('file-removed', handleFileRemoved)
-      uppy.close()
+      uppy.destroy()
     }
   }, [uppy, onUploadSuccess, onUploadError, t])
 

@@ -1,7 +1,15 @@
 'use client'
 
 import { Tag, Avatar, Button, Dropdown } from 'antd'
-import { BookOpen, Download, Calendar, MoreVertical, Eye, Edit, Trash2 } from 'lucide-react'
+import {
+  BookOpen,
+  Download,
+  Calendar,
+  MoreVertical,
+  Eye,
+  Edit,
+  Trash2,
+} from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import type { ColumnDef } from '@tanstack/react-table'
 import type { MenuProps } from 'antd'
@@ -107,7 +115,10 @@ export function VoucherBookTable({
       header: t('fields.type'),
       accessorKey: 'bookType',
       cell: ({ getValue }) => (
-        <Tag color={getBookTypeColor(getValue() as VoucherBookType)} icon={<BookOpen className="w-3 h-3" />}>
+        <Tag
+          color={getBookTypeColor(getValue() as VoucherBookType)}
+          icon={<BookOpen className="w-3 h-3" />}
+        >
           {t(`bookType.${getValue()}`)}
         </Tag>
       ),
@@ -117,12 +128,15 @@ export function VoucherBookTable({
     {
       id: 'period',
       header: t('fields.period'),
-      accessorFn: (row) => `${row.month ? String(row.month).padStart(2, '0') + '/' : ''}${row.year}`,
+      accessorFn: (row) =>
+        `${row.month ? String(row.month).padStart(2, '0') + '/' : ''}${row.year}`,
       cell: ({ row }) => (
         <div className="flex items-center gap-1">
           <Calendar className="w-3 h-3 text-gray-400" />
           <span>
-            {row.original.month && `${String(row.original.month).padStart(2, '0')}/`}{row.original.year}
+            {row.original.month &&
+              `${String(row.original.month).padStart(2, '0')}/`}
+            {row.original.year}
           </span>
         </div>
       ),
@@ -146,7 +160,9 @@ export function VoucherBookTable({
       cell: ({ row }) => (
         <div className="text-center">
           <div className="font-medium">{row.original.pageCount}</div>
-          <div className="text-xs text-gray-500">of {row.original.totalPages}</div>
+          <div className="text-xs text-gray-500">
+            of {row.original.totalPages}
+          </div>
         </div>
       ),
     },
@@ -172,7 +188,7 @@ export function VoucherBookTable({
       header: t('fields.actions'),
       cell: ({ row }) => {
         const record = row.original
-        
+
         const menuItems: MenuProps['items'] = [
           {
             key: 'view',
@@ -185,15 +201,20 @@ export function VoucherBookTable({
             label: t('actions.edit'),
             icon: <Edit className="w-4 h-4" />,
             onClick: () => onEdit(record.id),
-            disabled: record.status === VoucherBookStatus.PUBLISHED || 
-                     record.status === VoucherBookStatus.ARCHIVED,
+            disabled:
+              record.status === VoucherBookStatus.PUBLISHED ||
+              record.status === VoucherBookStatus.ARCHIVED,
           },
-          ...(record.pdfUrl ? [{
-            key: 'download',
-            label: t('actions.downloadPdf'),
-            icon: <Download className="w-4 h-4" />,
-            onClick: () => onDownloadPdf(record.pdfUrl!),
-          }] : []),
+          ...(record.pdfUrl
+            ? [
+                {
+                  key: 'download',
+                  label: t('actions.downloadPdf'),
+                  icon: <Download className="w-4 h-4" />,
+                  onClick: () => onDownloadPdf(record.pdfUrl!),
+                },
+              ]
+            : []),
           {
             type: 'divider' as const,
           },
@@ -230,27 +251,27 @@ export function VoucherBookTable({
       onQueryChange={(params) => onTableChange(params, {}, {})}
       features={{
         virtualization: { enabled: false },
-        columnManagement: { 
-          enabled: true, 
-          resizable: true, 
-          reorderable: true, 
+        columnManagement: {
+          enabled: true,
+          resizable: true,
+          reorderable: true,
           hideable: true,
-          pinnable: false 
+          pinnable: false,
         },
-        filtering: { 
-          enabled: true, 
-          globalSearch: true, 
+        filtering: {
+          enabled: true,
+          globalSearch: true,
           columnFilters: true,
-          advancedFilters: false 
+          advancedFilters: false,
         },
-        export: { 
+        export: {
           enabled: false,
-          formats: []
+          formats: [],
         },
-        realtime: { enabled: false }
+        realtime: { enabled: false },
       }}
       display={{
-        responsive: true
+        responsive: true,
       }}
       onRowClick={(row) => onView(row.id)}
     />

@@ -60,7 +60,7 @@ export function ResponsiveDataGrid<T extends Record<string, any>>({
     // Extract primary info from columns
     const primaryColumn = columns[0]
     const secondaryColumn = columns[1]
-    
+
     const getPrimaryValue = () => {
       if (primaryColumn && 'accessorKey' in primaryColumn) {
         return item[primaryColumn.accessorKey as keyof T]
@@ -85,9 +85,7 @@ export function ResponsiveDataGrid<T extends Record<string, any>>({
             {getSecondaryValue()?.toString() || ''}
           </div>
         </div>
-        {onRowClick && (
-          <ChevronRight className="w-5 h-5 text-gray-400" />
-        )}
+        {onRowClick && <ChevronRight className="w-5 h-5 text-gray-400" />}
       </div>
     )
   }
@@ -106,7 +104,9 @@ export function ResponsiveDataGrid<T extends Record<string, any>>({
             onClick={() => onRowClick?.(item)}
             size="small"
           >
-            {renderMobileCard ? renderMobileCard(item) : defaultMobileCard(item)}
+            {renderMobileCard
+              ? renderMobileCard(item)
+              : defaultMobileCard(item)}
           </Card>
         ))
       )}

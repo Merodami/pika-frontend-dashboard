@@ -2,18 +2,27 @@
  * VoucherBook API Mappers
  *
  * Converts between Orval-generated API types and domain types
- * This layer handles type conversions between external API contracts and internal domain types.
+ * Uses backend shared types for consistency
  */
 
 import type {
   GetAdminVoucherBookList200DataItem,
   GetAdminVoucherBookList200,
-  GetAdminVoucherBookList200DataItemStatus,
-  GetAdminVoucherBookList200DataItemBookType,
+  GetAdminVoucherBookById200,
 } from '../orval-client'
 
+// Use backend types instead of creating our own
+import { VoucherBookStatus, VoucherBookType } from '@merodami/pika-types'
+import type {
+  VoucherBookStatusType,
+  VoucherBookTypeType,
+} from '@merodami/pika-types'
+
+export { VoucherBookStatus, VoucherBookType }
+export type { VoucherBookStatusType, VoucherBookTypeType }
+
 /**
- * Domain voucher book interface - cleaner types for components
+ * Domain voucher book interface that works with both list and single item API responses
  */
 export interface VoucherBookDomain {
   id: string
@@ -40,29 +49,9 @@ export interface VoucherBookDomain {
 }
 
 /**
- * Domain types for better component usage
+ * Convert API status string to domain enum
  */
-export enum VoucherBookStatus {
-  DRAFT = 'draft',
-  READY_FOR_PRINT = 'readyForPrint',
-  PUBLISHED = 'published',
-  ARCHIVED = 'archived',
-}
-
-export enum VoucherBookType {
-  MONTHLY = 'monthly',
-  SPECIAL_EDITION = 'specialEdition',
-  REGIONAL = 'regional',
-  SEASONAL = 'seasonal',
-  PROMOTIONAL = 'promotional',
-}
-
-/**
- * Convert API status to domain enum
- */
-export const mapApiStatusToDomain = (
-  apiStatus: GetAdminVoucherBookList200DataItemStatus
-): VoucherBookStatus => {
+export const mapApiStatusToDomain = (apiStatus: string): VoucherBookStatus => {
   switch (apiStatus) {
     case 'draft':
       return VoucherBookStatus.DRAFT
@@ -78,11 +67,9 @@ export const mapApiStatusToDomain = (
 }
 
 /**
- * Convert API book type to domain enum
+ * Convert API book type string to domain enum
  */
-export const mapApiBookTypeToDomain = (
-  apiType: GetAdminVoucherBookList200DataItemBookType
-): VoucherBookType => {
+export const mapApiBookTypeToDomain = (apiType: string): VoucherBookType => {
   switch (apiType) {
     case 'monthly':
       return VoucherBookType.MONTHLY
@@ -100,10 +87,10 @@ export const mapApiBookTypeToDomain = (
 }
 
 /**
- * Convert API item to domain object
+ * Convert API response to domain object (works with both list item and single item responses)
  */
 export const mapApiVoucherBookToDomain = (
-  apiBook: GetAdminVoucherBookList200DataItem
+  apiBook: GetAdminVoucherBookList200DataItem | GetAdminVoucherBookById200
 ): VoucherBookDomain => {
   return {
     ...apiBook,

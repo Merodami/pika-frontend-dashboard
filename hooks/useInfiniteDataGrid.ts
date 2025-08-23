@@ -76,7 +76,13 @@ export function useInfiniteDataGrid<T>({
     fetchNextPage,
     refetch,
   } = useInfiniteQuery({
-    queryKey: [...queryKey, state.sort, state.filters, debouncedSearchRef.current, state.limit],
+    queryKey: [
+      ...queryKey,
+      state.sort,
+      state.filters,
+      debouncedSearchRef.current,
+      state.limit,
+    ],
     queryFn: async ({ pageParam = 1 }) => {
       return queryFn({
         page: pageParam as number,
@@ -104,28 +110,31 @@ export function useInfiniteDataGrid<T>({
   )
 
   const updateSort = useCallback((sort: SortConfig) => {
-    setState(prev => ({ ...prev, sort, page: 1 }))
+    setState((prev) => ({ ...prev, sort, page: 1 }))
   }, [])
 
   const updateFilters = useCallback((filters: FilterCondition[]) => {
-    setState(prev => ({ ...prev, filters, page: 1 }))
+    setState((prev) => ({ ...prev, filters, page: 1 }))
   }, [])
 
-  const updateSearch = useCallback((search: string) => {
-    setState(prev => ({ ...prev, search }))
-    debouncedSearch(search)
-  }, [debouncedSearch])
+  const updateSearch = useCallback(
+    (search: string) => {
+      setState((prev) => ({ ...prev, search }))
+      debouncedSearch(search)
+    },
+    [debouncedSearch]
+  )
 
   const updatePage = useCallback((page: number) => {
-    setState(prev => ({ ...prev, page }))
+    setState((prev) => ({ ...prev, page }))
   }, [])
 
   const updateLimit = useCallback((limit: number) => {
-    setState(prev => ({ ...prev, limit, page: 1 }))
+    setState((prev) => ({ ...prev, limit, page: 1 }))
   }, [])
 
   const resetFilters = useCallback(() => {
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
       filters: [],
       search: '',
@@ -135,7 +144,7 @@ export function useInfiniteDataGrid<T>({
   }, [])
 
   // Flatten all pages data
-  const flatData = data?.pages.flatMap(page => page.data) || []
+  const flatData = data?.pages.flatMap((page) => page.data) || []
   const total = data?.pages[0]?.total || 0
 
   // Auto-fetch next page when scrolling near bottom

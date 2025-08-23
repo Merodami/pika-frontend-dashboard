@@ -89,30 +89,14 @@ export function useUppy({
           ? { Authorization: `Bearer ${localStorage.getItem('token')}` }
           : {}),
       },
-      getUploadParameters: (file) => {
-        return {
-          method: 'POST',
-          headers: {
-            ...(typeof window !== 'undefined' && localStorage.getItem('token')
-              ? { Authorization: `Bearer ${localStorage.getItem('token')}` }
-              : {}),
-          },
-          formData: {
-            folder,
-            isPublic: isPublic.toString(),
-            metadata: JSON.stringify({
-              ...meta,
-              originalName: file.name,
-              size: file.size,
-              type: file.type,
-            }),
-          },
-        }
-      },
+      // Form data is sent via meta fields
     })
 
     // Add Compressor plugin if enabled
-    if (enableCompressor && allowedFileTypes?.some(type => type.includes('image'))) {
+    if (
+      enableCompressor &&
+      allowedFileTypes?.some((type) => type.includes('image'))
+    ) {
       uppyInstance.use(Compressor, {
         quality: compressionQuality,
         limit: 10,
@@ -120,14 +104,16 @@ export function useUppy({
     }
 
     // Add Image Editor plugin if enabled
-    if (enableImageEditor && allowedFileTypes?.some(type => type.includes('image'))) {
+    if (
+      enableImageEditor &&
+      allowedFileTypes?.some((type) => type.includes('image'))
+    ) {
       uppyInstance.use(ImageEditor, {
         quality: compressionQuality,
         cropperOptions: {
           aspectRatio: aspectRatio || NaN,
           viewMode: 1,
           responsive: true,
-          croppable: true,
           rotatable: true,
           scalable: true,
           zoomable: true,
@@ -165,9 +151,9 @@ export function useUppy({
           metadata: file.response?.body?.metadata,
         }))
 
-        setUploadedFiles(prev => [...prev, ...files])
+        setUploadedFiles((prev) => [...prev, ...files])
         onUploadSuccess?.(files)
-        
+
         message.success(
           result.successful.length === 1
             ? t('upload.success')
@@ -203,11 +189,11 @@ export function useUppy({
     const handleFileRemovedEvent = (file: any) => {
       console.log('File removed:', file)
       onFileRemoved?.(file)
-      
+
       // Remove from uploadedFiles if it was uploaded
       const fileUrl = file.response?.body?.url || file.response?.uploadURL
       if (fileUrl) {
-        setUploadedFiles(prev => prev.filter(f => f.url !== fileUrl))
+        setUploadedFiles((prev) => prev.filter((f) => f.url !== fileUrl))
       }
     }
 
@@ -225,32 +211,38 @@ export function useUppy({
       uppy.off('error', handleError)
       uppy.off('file-added', handleFileAddedEvent)
       uppy.off('file-removed', handleFileRemovedEvent)
-      uppy.close()
+      uppy.destroy()
     }
   }, [uppy, onUploadSuccess, onUploadError, onFileAdded, onFileRemoved, t])
 
   const reset = useCallback(() => {
-    uppy.reset()
+    uppy.cancelAll()
     setUploadedFiles([])
     setUploadProgress(0)
     setIsUploading(false)
   }, [uppy])
 
-  const addFile = useCallback((file: File) => {
-    try {
-      uppy.addFile({
-        name: file.name,
-        type: file.type,
-        data: file,
-      })
-    } catch (error: any) {
-      message.error(error.message)
-    }
-  }, [uppy])
+  const addFile = useCallback(
+    (file: File) => {
+      try {
+        uppy.addFile({
+          name: file.name,
+          type: file.type,
+          data: file,
+        })
+      } catch (error: any) {
+        message.error(error.message)
+      }
+    },
+    [uppy]
+  )
 
-  const removeFile = useCallback((fileId: string) => {
-    uppy.removeFile(fileId)
-  }, [uppy])
+  const removeFile = useCallback(
+    (fileId: string) => {
+      uppy.removeFile(fileId)
+    },
+    [uppy]
+  )
 
   const upload = useCallback(() => {
     return uppy.upload()

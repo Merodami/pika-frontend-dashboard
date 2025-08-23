@@ -82,11 +82,14 @@ export function InfiniteDataGrid<T extends Record<string, any>>({
     getRowId: (row) => row.id || JSON.stringify(row),
   })
 
-  const handleRowClick = useCallback((row: T) => {
-    if (onRowClick) {
-      onRowClick(row)
-    }
-  }, [onRowClick])
+  const handleRowClick = useCallback(
+    (row: T) => {
+      if (onRowClick) {
+        onRowClick(row)
+      }
+    },
+    [onRowClick]
+  )
 
   if (loading && data.length === 0) {
     return (
@@ -109,14 +112,15 @@ export function InfiniteDataGrid<T extends Record<string, any>>({
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
-            {table.getHeaderGroups().map(headerGroup => (
+            {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id} className="border-b bg-gray-50">
-                {headerGroup.headers.map(header => (
+                {headerGroup.headers.map((header) => (
                   <th
                     key={header.id}
                     className={cn(
                       'px-4 py-3 text-left font-medium text-gray-700',
-                      header.column.getCanSort() && 'cursor-pointer hover:bg-gray-100'
+                      header.column.getCanSort() &&
+                        'cursor-pointer hover:bg-gray-100'
                     )}
                     style={{
                       width: header.column.columnDef.size || 'auto',
@@ -125,7 +129,10 @@ export function InfiniteDataGrid<T extends Record<string, any>>({
                   >
                     {header.isPlaceholder ? null : (
                       <div className="flex items-center">
-                        {flexRender(header.column.columnDef.header, header.getContext())}
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                         {header.column.getCanSort() && (
                           <span className="ml-2">
                             {header.column.getIsSorted() === 'asc' ? (
@@ -143,7 +150,7 @@ export function InfiniteDataGrid<T extends Record<string, any>>({
             ))}
           </thead>
           <tbody>
-            {table.getRowModel().rows.map(row => (
+            {table.getRowModel().rows.map((row) => (
               <tr
                 key={row.id}
                 className={cn(
@@ -152,7 +159,7 @@ export function InfiniteDataGrid<T extends Record<string, any>>({
                 )}
                 onClick={() => handleRowClick(row.original)}
               >
-                {row.getVisibleCells().map(cell => (
+                {row.getVisibleCells().map((cell) => (
                   <td
                     key={cell.id}
                     className="px-4 py-3"
@@ -176,7 +183,9 @@ export function InfiniteDataGrid<T extends Record<string, any>>({
       {loadingMore && (
         <div className="flex items-center justify-center py-4 border-t">
           <Loader2 className="w-5 h-5 animate-spin mr-2" />
-          <span className="text-sm text-gray-600">{t('common.loadingMore')}</span>
+          <span className="text-sm text-gray-600">
+            {t('common.loadingMore')}
+          </span>
         </div>
       )}
 

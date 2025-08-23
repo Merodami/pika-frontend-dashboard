@@ -42,44 +42,85 @@ export function FilterBuilder({
   }
 
   const updateCondition = (id: string, updates: Partial<FilterCondition>) => {
-    onChange(
-      conditions.map(c => 
-        c.id === id ? { ...c, ...updates } : c
-      )
-    )
+    onChange(conditions.map((c) => (c.id === id ? { ...c, ...updates } : c)))
   }
 
   const removeCondition = (id: string) => {
-    onChange(conditions.filter(c => c.id !== id))
+    onChange(conditions.filter((c) => c.id !== id))
   }
 
   const getOperatorsForType = (type: FieldType) => {
     switch (type) {
       case FieldType.TEXT:
         return [
-          { label: t('filters.operators.equals'), value: FilterOperator.EQUALS },
-          { label: t('filters.operators.notEquals'), value: FilterOperator.NOT_EQUALS },
-          { label: t('filters.operators.contains'), value: FilterOperator.CONTAINS },
-          { label: t('filters.operators.notContains'), value: FilterOperator.NOT_CONTAINS },
-          { label: t('filters.operators.startsWith'), value: FilterOperator.STARTS_WITH },
-          { label: t('filters.operators.endsWith'), value: FilterOperator.ENDS_WITH },
-          { label: t('filters.operators.isEmpty'), value: FilterOperator.IS_EMPTY },
-          { label: t('filters.operators.isNotEmpty'), value: FilterOperator.IS_NOT_EMPTY },
+          {
+            label: t('filters.operators.equals'),
+            value: FilterOperator.EQUALS,
+          },
+          {
+            label: t('filters.operators.notEquals'),
+            value: FilterOperator.NOT_EQUALS,
+          },
+          {
+            label: t('filters.operators.contains'),
+            value: FilterOperator.CONTAINS,
+          },
+          {
+            label: t('filters.operators.notContains'),
+            value: FilterOperator.NOT_CONTAINS,
+          },
+          {
+            label: t('filters.operators.startsWith'),
+            value: FilterOperator.STARTS_WITH,
+          },
+          {
+            label: t('filters.operators.endsWith'),
+            value: FilterOperator.ENDS_WITH,
+          },
+          {
+            label: t('filters.operators.isEmpty'),
+            value: FilterOperator.IS_EMPTY,
+          },
+          {
+            label: t('filters.operators.isNotEmpty'),
+            value: FilterOperator.IS_NOT_EMPTY,
+          },
         ]
       case FieldType.NUMBER:
       case FieldType.DATE:
         return [
-          { label: t('filters.operators.equals'), value: FilterOperator.EQUALS },
-          { label: t('filters.operators.notEquals'), value: FilterOperator.NOT_EQUALS },
-          { label: t('filters.operators.greaterThan'), value: FilterOperator.GREATER_THAN },
-          { label: t('filters.operators.lessThan'), value: FilterOperator.LESS_THAN },
-          { label: t('filters.operators.between'), value: FilterOperator.BETWEEN },
+          {
+            label: t('filters.operators.equals'),
+            value: FilterOperator.EQUALS,
+          },
+          {
+            label: t('filters.operators.notEquals'),
+            value: FilterOperator.NOT_EQUALS,
+          },
+          {
+            label: t('filters.operators.greaterThan'),
+            value: FilterOperator.GREATER_THAN,
+          },
+          {
+            label: t('filters.operators.lessThan'),
+            value: FilterOperator.LESS_THAN,
+          },
+          {
+            label: t('filters.operators.between'),
+            value: FilterOperator.BETWEEN,
+          },
         ]
       case FieldType.SELECT:
       case FieldType.BOOLEAN:
         return [
-          { label: t('filters.operators.equals'), value: FilterOperator.EQUALS },
-          { label: t('filters.operators.notEquals'), value: FilterOperator.NOT_EQUALS },
+          {
+            label: t('filters.operators.equals'),
+            value: FilterOperator.EQUALS,
+          },
+          {
+            label: t('filters.operators.notEquals'),
+            value: FilterOperator.NOT_EQUALS,
+          },
         ]
       default:
         return []
@@ -93,7 +134,8 @@ export function FilterBuilder({
         onClick={() => setIsOpen(true)}
         className="flex items-center gap-2"
       >
-        {t('filters.button')} {conditions.length > 0 && `(${conditions.length})`}
+        {t('filters.button')}{' '}
+        {conditions.length > 0 && `(${conditions.length})`}
       </Button>
     )
   }
@@ -114,7 +156,7 @@ export function FilterBuilder({
 
         <div className="space-y-4">
           {conditions.map((condition, index) => {
-            const field = fields.find(f => f.key === condition.field)
+            const field = fields.find((f) => f.key === condition.field)
             const operators = field ? getOperatorsForType(field.type) : []
 
             return (
@@ -122,9 +164,11 @@ export function FilterBuilder({
                 {index > 0 && (
                   <select
                     value={condition.logic}
-                    onChange={e => updateCondition(condition.id, { 
-                      logic: e.target.value as FilterLogic 
-                    })}
+                    onChange={(e) =>
+                      updateCondition(condition.id, {
+                        logic: e.target.value as FilterLogic,
+                      })
+                    }
                     className="px-3 py-2 border border-gray-300 rounded-md"
                     aria-label={t('filters.logic')}
                   >
@@ -135,13 +179,15 @@ export function FilterBuilder({
 
                 <select
                   value={condition.field}
-                  onChange={e => updateCondition(condition.id, { 
-                    field: e.target.value 
-                  })}
+                  onChange={(e) =>
+                    updateCondition(condition.id, {
+                      field: e.target.value,
+                    })
+                  }
                   className="px-3 py-2 border border-gray-300 rounded-md"
                   aria-label={t('filters.field')}
                 >
-                  {fields.map(field => (
+                  {fields.map((field) => (
                     <option key={field.key} value={field.key}>
                       {field.label}
                     </option>
@@ -150,32 +196,36 @@ export function FilterBuilder({
 
                 <select
                   value={condition.operator}
-                  onChange={e => updateCondition(condition.id, { 
-                    operator: e.target.value as FilterOperator 
-                  })}
+                  onChange={(e) =>
+                    updateCondition(condition.id, {
+                      operator: e.target.value as FilterOperator,
+                    })
+                  }
                   className="px-3 py-2 border border-gray-300 rounded-md"
                   aria-label={t('filters.operator')}
                 >
-                  {operators.map(op => (
+                  {operators.map((op) => (
                     <option key={op.value} value={op.value}>
                       {op.label}
                     </option>
                   ))}
                 </select>
 
-                {condition.operator !== FilterOperator.IS_EMPTY && 
-                 condition.operator !== FilterOperator.IS_NOT_EMPTY && (
-                  field?.type === FieldType.SELECT && field.options ? (
+                {condition.operator !== FilterOperator.IS_EMPTY &&
+                  condition.operator !== FilterOperator.IS_NOT_EMPTY &&
+                  (field?.type === FieldType.SELECT && field.options ? (
                     <select
                       value={condition.value}
-                      onChange={e => updateCondition(condition.id, { 
-                        value: e.target.value 
-                      })}
+                      onChange={(e) =>
+                        updateCondition(condition.id, {
+                          value: e.target.value,
+                        })
+                      }
                       className="px-3 py-2 border border-gray-300 rounded-md flex-1"
                       aria-label={t('filters.value')}
                     >
                       <option value="">{t('common.select.placeholder')}</option>
-                      {field.options.map(option => (
+                      {field.options.map((option) => (
                         <option key={option.value} value={option.value}>
                           {option.label}
                         </option>
@@ -183,18 +233,24 @@ export function FilterBuilder({
                     </select>
                   ) : (
                     <input
-                      type={field?.type === FieldType.NUMBER ? 'number' : 
-                            field?.type === FieldType.DATE ? 'date' : 'text'}
+                      type={
+                        field?.type === FieldType.NUMBER
+                          ? 'number'
+                          : field?.type === FieldType.DATE
+                            ? 'date'
+                            : 'text'
+                      }
                       value={condition.value}
-                      onChange={e => updateCondition(condition.id, { 
-                        value: e.target.value 
-                      })}
+                      onChange={(e) =>
+                        updateCondition(condition.id, {
+                          value: e.target.value,
+                        })
+                      }
                       placeholder={t('filters.valuePlaceholder')}
                       className="px-3 py-2 border border-gray-300 rounded-md flex-1"
                       aria-label={t('filters.value')}
                     />
-                  )
-                )}
+                  ))}
 
                 <button
                   onClick={() => removeCondition(condition.id)}

@@ -4,7 +4,10 @@ import { useTranslations } from 'next-intl'
 
 import { Form, Input, Select, Button, Space } from 'antd'
 import { Search } from 'lucide-react'
-import { VoucherBookStatus, VoucherBookType } from '@/lib/api/mappers/voucherBook'
+import {
+  VoucherBookStatus,
+  VoucherBookType,
+} from '@/lib/api/mappers/voucherBook'
 
 interface VoucherBookFiltersProps {
   values: Record<string, any>
@@ -44,10 +47,18 @@ export function VoucherBookFilters({
             allowClear
             placeholder={t('list.filterByStatus')}
           >
-            <Select.Option value={VoucherBookStatus.DRAFT}>{t('status.draft')}</Select.Option>
-            <Select.Option value={VoucherBookStatus.READY_FOR_PRINT}>{t('status.readyForPrint')}</Select.Option>
-            <Select.Option value={VoucherBookStatus.PUBLISHED}>{t('status.published')}</Select.Option>
-            <Select.Option value={VoucherBookStatus.ARCHIVED}>{t('status.archived')}</Select.Option>
+            <Select.Option value={VoucherBookStatus.DRAFT}>
+              {t('status.draft')}
+            </Select.Option>
+            <Select.Option value={VoucherBookStatus.READY_FOR_PRINT}>
+              {t('status.readyForPrint')}
+            </Select.Option>
+            <Select.Option value={VoucherBookStatus.PUBLISHED}>
+              {t('status.published')}
+            </Select.Option>
+            <Select.Option value={VoucherBookStatus.ARCHIVED}>
+              {t('status.archived')}
+            </Select.Option>
           </Select>
         </Form.Item>
 
@@ -59,11 +70,21 @@ export function VoucherBookFilters({
             allowClear
             placeholder={t('list.filterByType')}
           >
-            <Select.Option value={VoucherBookType.MONTHLY}>{t('bookType.monthly')}</Select.Option>
-            <Select.Option value={VoucherBookType.SPECIAL_EDITION}>{t('bookType.specialEdition')}</Select.Option>
-            <Select.Option value={VoucherBookType.REGIONAL}>{t('bookType.regional')}</Select.Option>
-            <Select.Option value={VoucherBookType.SEASONAL}>{t('bookType.seasonal')}</Select.Option>
-            <Select.Option value={VoucherBookType.PROMOTIONAL}>{t('bookType.promotional')}</Select.Option>
+            <Select.Option value={VoucherBookType.MONTHLY}>
+              {t('bookType.monthly')}
+            </Select.Option>
+            <Select.Option value={VoucherBookType.SPECIAL_EDITION}>
+              {t('bookType.specialEdition')}
+            </Select.Option>
+            <Select.Option value={VoucherBookType.REGIONAL}>
+              {t('bookType.regional')}
+            </Select.Option>
+            <Select.Option value={VoucherBookType.SEASONAL}>
+              {t('bookType.seasonal')}
+            </Select.Option>
+            <Select.Option value={VoucherBookType.PROMOTIONAL}>
+              {t('bookType.promotional')}
+            </Select.Option>
           </Select>
         </Form.Item>
 

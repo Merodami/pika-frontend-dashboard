@@ -1,65 +1,262 @@
 'use client'
 
+import { useState } from 'react'
+import { Tabs, Modal, message, Spin, Alert } from 'antd'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 
+import {
+  VoucherBookStatus,
+  mapApiVoucherBookToDomain,
+} from '@/lib/api/mappers/voucherBook'
+import { VoucherBookHeader } from './detail/VoucherBookHeader'
+import { VoucherBookSummaryCard } from './detail/VoucherBookSummaryCard'
+import { VoucherBookOverview } from './detail/VoucherBookOverview'
+import { VoucherBookHistory } from './detail/VoucherBookHistory'
+import { VoucherBookDistribution } from './detail/VoucherBookDistribution'
+import {
+  useVoucherBook,
+  useDeleteVoucherBook,
+  useGenerateVoucherBookPdf,
+} from '@/hooks/api/voucherBooks/useVoucherBooks'
 import type { Locale } from '@/i18n/config'
 
 interface VoucherBookDetailProps {
   bookId: string
   locale: Locale
-  readOnly?: boolean
 }
 
-export function VoucherBookDetail({
-  bookId,
-  locale,
-  readOnly = false,
-}: VoucherBookDetailProps) {
+export function VoucherBookDetail({ bookId, locale }: VoucherBookDetailProps) {
   const t = useTranslations('voucherBooks')
   const router = useRouter()
+  const [activeTab, setActiveTab] = useState('overview')
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [isStatusModalOpen, setIsStatusModalOpen] = useState(false)
+  const [selectedStatus, setSelectedStatus] =
+    useState<VoucherBookStatus | null>(null)
 
-  const handleEdit = () => {
-    router.push(`/${locale}/admin/voucher-books/${bookId}/edit`)
-  }
+  // API hooks
+  const { data: apiBook, isLoading, error, refetch } = useVoucherBook(bookId)
+  const deleteBookMutation = useDeleteVoucherBook()
+  const generatePdfMutation = useGenerateVoucherBookPdf()
+
+  // Convert API response to domain object
+  const book = apiBook ? mapApiVoucherBookToDomain(apiBook) : null
 
   const handleBack = () => {
     router.push(`/${locale}/admin/voucher-books`)
   }
 
+  const handleEdit = () => {
+    router.push(`/${locale}/admin/voucher-books/${bookId}/edit`)
+  }
+
+  const handleDelete = () => {
+    setIsDeleteModalOpen(true)
+  }
+
+  const confirmDelete = async () => {
+    try {
+      await deleteBookMutation.mutateAsync(bookId)
+      message.success(t('messages.deleteSuccess'))
+      setIsDeleteModalOpen(false)
+      router.push(`/${locale}/admin/voucher-books`)
+    } catch (error) {
+      message.error(t('messages.deleteError'))
+    }
+  }
+
+  const handleStatusChange = (status: VoucherBookStatus) => {
+    setSelectedStatus(status)
+    setIsStatusModalOpen(true)
+  }
+
+  const confirmStatusChange = async () => {
+    if (!selectedStatus || !book) return
+
+    try {
+      // TODO: Implement status change API call when available
+      message.info(t('messages.statusChangeComingSoon'))
+      setIsStatusModalOpen(false)
+      setSelectedStatus(null)
+      refetch()
+    } catch (error) {
+      message.error(t('messages.statusChangeError'))
+    }
+  }
+
+  const handleGeneratePdf = async () => {
+    try {
+      await generatePdfMutation.mutateAsync({
+        id: bookId,
+        data: { priority: 'normal' },
+      })
+      message.success(t('messages.pdfGenerationStarted'))
+      refetch()
+    } catch (error) {
+      message.error(t('messages.pdfGenerationError'))
+    }
+  }
+
+  const handleArchive = async () => {
+    await handleStatusChange(VoucherBookStatus.ARCHIVED)
+  }
+
+  const handleDuplicate = async () => {
+    try {
+      // TODO: Implement duplicate API call when available
+      message.info(t('messages.duplicateComingSoon'))
+    } catch (error) {
+      message.error(t('messages.duplicateError'))
+    }
+  }
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <Spin size="large" />
+      </div>
+    )
+  }
+
+  if (error || !book) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <Alert
+          message={t('messages.loadError')}
+          description={t('messages.bookNotFound')}
+          type="error"
+          showIcon
+        />
+      </div>
+    )
+  }
+
+  const tabItems = [
+    {
+      key: 'overview',
+      label: t('detail.tabs.overview'),
+      children: <VoucherBookOverview book={book} />,
+    },
+    {
+      key: 'history',
+      label: t('detail.tabs.history'),
+      children: <VoucherBookHistory book={book} />,
+    },
+    {
+      key: 'distribution',
+      label: t('detail.tabs.distribution'),
+      children: <VoucherBookDistribution book={book} />,
+    },
+  ]
+
+  const getStatusChangeConfirmMessage = (status: VoucherBookStatus) => {
+    switch (status) {
+      case VoucherBookStatus.PUBLISHED:
+        return t('detail.confirmPublish')
+      case VoucherBookStatus.ARCHIVED:
+        return t('detail.confirmArchive')
+      case VoucherBookStatus.DRAFT:
+        return t('detail.confirmRevertToDraft')
+      default:
+        return t('detail.confirmStatusChange', { status })
+    }
+  }
+
   return (
-    <div className="voucher-book-detail">
-      <div className="mb-6">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <button
-              onClick={handleBack}
-              className="text-gray-500 hover:text-gray-700"
-            >
-              ← {t('common.back')}
-            </button>
-            <div>
-              <h1 className="text-2xl font-bold">{t('detail.title')}</h1>
-              <p className="text-gray-600">{t('detail.subtitle')}</p>
-            </div>
-          </div>
-          {!readOnly && (
-            <button
-              onClick={handleEdit}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
-            >
-              {t('detail.editButton')}
-            </button>
-          )}
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        {/* Header */}
+        <VoucherBookHeader
+          book={book}
+          onBack={handleBack}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+          onGeneratePdf={handleGeneratePdf}
+          onStatusChange={handleStatusChange}
+          onArchive={handleArchive}
+          onDuplicate={handleDuplicate}
+        />
+
+        {/* Summary Card */}
+        <VoucherBookSummaryCard book={book} />
+
+        {/* Tabs Content */}
+        <div className="bg-white rounded-lg shadow-sm">
+          <Tabs
+            activeKey={activeTab}
+            onChange={setActiveTab}
+            items={tabItems}
+            className="px-6"
+          />
         </div>
       </div>
 
-      {/* TODO: Implement voucher book detail view */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
-        <p className="text-gray-500">{t('detail.comingSoon')}</p>
-        <p className="text-sm text-gray-400 mt-2">{t('detail.comingSoonDescription')}</p>
-        <p className="text-xs text-gray-300 mt-2">Book ID: {bookId}</p>
-      </div>
+      {/* Delete Confirmation Modal */}
+      <Modal
+        title={t('detail.deleteConfirmTitle')}
+        open={isDeleteModalOpen}
+        onOk={confirmDelete}
+        onCancel={() => setIsDeleteModalOpen(false)}
+        okText={t('actions.delete')}
+        cancelText={t('actions.cancel')}
+        okButtonProps={{
+          danger: true,
+          loading: deleteBookMutation.isPending,
+        }}
+        maskClosable={!deleteBookMutation.isPending}
+        closable={!deleteBookMutation.isPending}
+      >
+        <div className="py-4">
+          <p className="text-gray-600 mb-4">
+            {t('detail.deleteConfirmMessage', { title: book.title })}
+          </p>
+          <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+            <p className="text-red-800 text-sm font-medium">
+              {t('detail.deleteWarning')}
+            </p>
+          </div>
+        </div>
+      </Modal>
+
+      {/* Status Change Confirmation Modal */}
+      <Modal
+        title={t('detail.statusChangeTitle')}
+        open={isStatusModalOpen}
+        onOk={confirmStatusChange}
+        onCancel={() => {
+          setIsStatusModalOpen(false)
+          setSelectedStatus(null)
+        }}
+        okText={t('actions.confirm')}
+        cancelText={t('actions.cancel')}
+        maskClosable={true}
+        closable={true}
+      >
+        <div className="py-4">
+          {selectedStatus && (
+            <>
+              <p className="text-gray-600 mb-4">
+                {getStatusChangeConfirmMessage(selectedStatus)}
+              </p>
+              {selectedStatus === VoucherBookStatus.PUBLISHED && (
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                  <p className="text-blue-800 text-sm">
+                    {t('detail.publishInfo')}
+                  </p>
+                </div>
+              )}
+              {selectedStatus === VoucherBookStatus.ARCHIVED && (
+                <div className="bg-orange-50 border border-orange-200 rounded-lg p-3">
+                  <p className="text-orange-800 text-sm">
+                    {t('detail.archiveInfo')}
+                  </p>
+                </div>
+              )}
+            </>
+          )}
+        </div>
+      </Modal>
     </div>
   )
 }

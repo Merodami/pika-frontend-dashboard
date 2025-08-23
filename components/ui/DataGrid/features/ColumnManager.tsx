@@ -19,9 +19,7 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable'
-import {
-  useSortable,
-} from '@dnd-kit/sortable'
+import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 
 interface Column {
@@ -39,22 +37,17 @@ interface ColumnManagerProps {
 }
 
 // Sortable column item
-function SortableColumnItem({ 
-  column, 
-  onToggle, 
-  onPin 
-}: { 
+function SortableColumnItem({
+  column,
+  onToggle,
+  onPin,
+}: {
   column: Column
   onToggle: (id: string) => void
   onPin: (id: string, position: 'left' | 'right' | null) => void
 }) {
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-  } = useSortable({ id: column.id })
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id: column.id })
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -75,13 +68,13 @@ function SortableColumnItem({
         >
           <GripVertical className="w-4 h-4" />
         </button>
-        
+
         <Switch
           checked={column.visible}
           onChange={() => onToggle(column.id)}
           size="small"
         />
-        
+
         <span className={`${!column.visible ? 'text-gray-400' : ''}`}>
           {column.label}
         </span>
@@ -125,7 +118,11 @@ function SortableColumnItem({
   )
 }
 
-export function ColumnManager({ columns, onChange, onReset }: ColumnManagerProps) {
+export function ColumnManager({
+  columns,
+  onChange,
+  onReset,
+}: ColumnManagerProps) {
   const t = useTranslations()
   const [isOpen, setIsOpen] = useState(false)
   const [localColumns, setLocalColumns] = useState(columns)
@@ -157,24 +154,21 @@ export function ColumnManager({ columns, onChange, onReset }: ColumnManagerProps
     )
   }, [])
 
-  const handlePin = useCallback((id: string, position: 'left' | 'right' | null) => {
-    setLocalColumns((cols) =>
-      cols.map((col) =>
-        col.id === id ? { ...col, pinned: position } : col
+  const handlePin = useCallback(
+    (id: string, position: 'left' | 'right' | null) => {
+      setLocalColumns((cols) =>
+        cols.map((col) => (col.id === id ? { ...col, pinned: position } : col))
       )
-    )
-  }, [])
+    },
+    []
+  )
 
   const handleShowAll = useCallback(() => {
-    setLocalColumns((cols) =>
-      cols.map((col) => ({ ...col, visible: true }))
-    )
+    setLocalColumns((cols) => cols.map((col) => ({ ...col, visible: true })))
   }, [])
 
   const handleHideAll = useCallback(() => {
-    setLocalColumns((cols) =>
-      cols.map((col) => ({ ...col, visible: false }))
-    )
+    setLocalColumns((cols) => cols.map((col) => ({ ...col, visible: false })))
   }, [])
 
   const handleApply = useCallback(() => {
@@ -194,7 +188,7 @@ export function ColumnManager({ columns, onChange, onReset }: ColumnManagerProps
     }
   }, [columns, onReset])
 
-  const visibleCount = localColumns.filter(col => col.visible).length
+  const visibleCount = localColumns.filter((col) => col.visible).length
   const totalCount = localColumns.length
 
   return (
@@ -231,7 +225,10 @@ export function ColumnManager({ columns, onChange, onReset }: ColumnManagerProps
         <div className="space-y-4">
           <div className="flex justify-between items-center mb-4">
             <span className="text-sm text-gray-600">
-              {t('columns.showing', { visible: visibleCount, total: totalCount })}
+              {t('columns.showing', {
+                visible: visibleCount,
+                total: totalCount,
+              })}
             </span>
             <Space>
               <Button size="small" onClick={handleShowAll}>
@@ -255,7 +252,7 @@ export function ColumnManager({ columns, onChange, onReset }: ColumnManagerProps
             onDragEnd={handleDragEnd}
           >
             <SortableContext
-              items={localColumns.map(col => col.id)}
+              items={localColumns.map((col) => col.id)}
               strategy={verticalListSortingStrategy}
             >
               <div className="space-y-2">
@@ -277,13 +274,19 @@ export function ColumnManager({ columns, onChange, onReset }: ColumnManagerProps
               <div className="text-sm">
                 <span className="font-medium">{t('columns.pinnedLeft')}:</span>
                 <span className="ml-2 text-gray-600">
-                  {localColumns.filter(c => c.pinned === 'left').map(c => c.label).join(', ') || t('common.none')}
+                  {localColumns
+                    .filter((c) => c.pinned === 'left')
+                    .map((c) => c.label)
+                    .join(', ') || t('common.none')}
                 </span>
               </div>
               <div className="text-sm">
                 <span className="font-medium">{t('columns.pinnedRight')}:</span>
                 <span className="ml-2 text-gray-600">
-                  {localColumns.filter(c => c.pinned === 'right').map(c => c.label).join(', ') || t('common.none')}
+                  {localColumns
+                    .filter((c) => c.pinned === 'right')
+                    .map((c) => c.label)
+                    .join(', ') || t('common.none')}
                 </span>
               </div>
             </div>

@@ -96,9 +96,15 @@ export const createBusinessColumns = (
         if (!active)
           return { color: 'default', text: t('businesses.status.inactive') }
         if (verified && approved)
-          return { color: 'success', text: t('businesses.status.verifiedApproved') }
+          return {
+            color: 'success',
+            text: t('businesses.status.verifiedApproved'),
+          }
         if (verified && !approved)
-          return { color: 'warning', text: t('businesses.status.verifiedPending') }
+          return {
+            color: 'warning',
+            text: t('businesses.status.verifiedPending'),
+          }
         if (!verified && approved)
           return {
             color: 'processing',
@@ -106,7 +112,7 @@ export const createBusinessColumns = (
           }
         return { color: 'default', text: t('businesses.status.pending') }
       }
-      
+
       const status = getVerificationStatus(
         business.verified,
         business.approved,

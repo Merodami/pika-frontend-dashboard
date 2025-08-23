@@ -82,7 +82,7 @@ export const createUserColumns = (
             return 'default'
         }
       }
-      
+
       return (
         <Tag color={getRoleColor(role)}>
           {t(`profile.role.${role.toLowerCase()}`)}
@@ -111,7 +111,7 @@ export const createUserColumns = (
             return 'default'
         }
       }
-      
+
       return (
         <Tag color={getStatusColor(status)}>
           {t(`profile.status.${status.toLowerCase()}`)}
@@ -126,7 +126,9 @@ export const createUserColumns = (
     header: t('profile.security.lastLogin'),
     cell: ({ getValue }) => {
       const date = getValue() as string
-      return date ? new Date(date).toLocaleDateString(locale) : t('profile.never')
+      return date
+        ? new Date(date).toLocaleDateString(locale)
+        : t('profile.never')
     },
     enableSorting: true,
   },

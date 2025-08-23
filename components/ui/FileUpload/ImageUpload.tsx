@@ -31,7 +31,70 @@ interface ImageUploadProps {
   label?: string
   required?: boolean
   disabled?: boolean
-  placeholder?: React.ReactNode
+}
+
+// Dropzone component with full drag-and-drop support
+function DropzoneArea({
+  uppy,
+  disabled = false,
+}: {
+  uppy: any
+  disabled?: boolean
+}) {
+  const t = useTranslations('common')
+  const [isDragging, setIsDragging] = useState(false)
+
+  const dropzone = useDropzone({
+    onDrop: (files) => {
+      if (disabled) return
+      files.forEach((file) => {
+        try {
+          uppy.addFile({
+            name: file.name,
+            type: file.type,
+            data: file,
+          })
+        } catch (err) {
+          console.error('Error adding file:', err)
+        }
+      })
+      setIsDragging(false)
+    },
+    onDragEnter: () => setIsDragging(true),
+    onDragLeave: () => setIsDragging(false),
+  })
+
+  return (
+    <div
+      {...dropzone.getRootProps()}
+      className={`
+        flex items-center justify-center border-2 border-dashed rounded-lg h-full 
+        cursor-pointer transition-all p-4
+        ${
+          isDragging
+            ? 'border-blue-500 bg-blue-50 scale-105'
+            : 'border-gray-300 hover:border-gray-400'
+        }
+        ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
+      `}
+    >
+      <input {...dropzone.getInputProps()} disabled={disabled} />
+      <div className="text-center pointer-events-none">
+        <UploadIcon
+          className={`w-8 h-8 mx-auto mb-2 transition-colors ${
+            isDragging ? 'text-blue-500' : 'text-gray-400'
+          }`}
+        />
+        <p
+          className={`text-xs transition-colors ${
+            isDragging ? 'text-blue-600' : 'text-gray-500'
+          }`}
+        >
+          {isDragging ? t('upload.dropNow') : t('upload.clickOrDrag')}
+        </p>
+      </div>
+    </div>
+  )
 }
 
 export function ImageUpload({
@@ -49,7 +112,6 @@ export function ImageUpload({
   label,
   required = false,
   disabled = false,
-  placeholder,
 }: ImageUploadProps) {
   const t = useTranslations('common')
   const [uploading, setUploading] = useState(false)
@@ -172,7 +234,7 @@ export function ImageUpload({
             </label>
           </div>
         )}
-        <div 
+        <div
           className="relative inline-block border-2 border-gray-200 rounded-lg overflow-hidden"
           style={{ width, height }}
         >
@@ -228,11 +290,8 @@ export function ImageUpload({
           </label>
         </div>
       )}
-      
-      <div 
-        className="relative"
-        style={{ width, height }}
-      >
+
+      <div className="relative" style={{ width, height }}>
         {uploading ? (
           <div className="flex items-center justify-center border-2 border-dashed border-gray-300 rounded-lg h-full">
             <div className="text-center">
@@ -241,19 +300,12 @@ export function ImageUpload({
             </div>
           </div>
         ) : (
-          <DropzoneArea uppy={uppy} disabled={disabled} />
-        )}
-        
-        {!uploading && !value && (
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            {placeholder || (
-              <div className="text-center">
-                <UploadIcon className="w-8 h-8 mx-auto mb-2 text-gray-400" />
-                <p className="text-xs text-gray-500">{t('upload.clickOrDrag')}</p>
-                <p className="text-xs text-gray-400 mt-1">
-                  {t('upload.maxSize', { size: maxFileSize })}
-                </p>
-              </div>
+          <div className="h-full">
+            <DropzoneArea uppy={uppy} disabled={disabled} />
+            {!value && (
+              <p className="text-xs text-gray-400 text-center mt-2">
+                {t('upload.maxSize', { size: maxFileSize })}
+              </p>
             )}
           </div>
         )}

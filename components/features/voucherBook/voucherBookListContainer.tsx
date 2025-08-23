@@ -7,12 +7,21 @@ import { useRouter } from 'next/navigation'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { UserRole } from '@merodami/pika-types'
 
-import { BulkActions, commonBulkActions } from '@/components/ui/DataGrid/actions/BulkActions'
+import {
+  BulkActions,
+  commonBulkActions,
+} from '@/components/ui/DataGrid/actions/BulkActions'
 import { ContextActionBar } from '@/components/ui/ContextActionBar'
 import type { ActionItem } from '@/components/ui/ContextActionBar'
 import { useServerDataTable } from '@/hooks/useDataTable'
-import { getAdminVoucherBookList, deleteAdminVoucherBook } from '@/lib/api/orval-client'
-import { mapApiVoucherBookListToDomain, VoucherBookDomain } from '@/lib/api/mappers/voucherBook'
+import {
+  getAdminVoucherBookList,
+  deleteAdminVoucherBook,
+} from '@/lib/api/orval-client'
+import {
+  mapApiVoucherBookListToDomain,
+  VoucherBookDomain,
+} from '@/lib/api/mappers/voucherBook'
 import type { Locale } from '@/i18n/config'
 
 import { VoucherBookTable } from './voucherBookTable'
@@ -97,7 +106,6 @@ export function VoucherBookListContainer({
     dataTable.clearSelection()
   }
 
-
   // Context action bar actions
   const contextActions: ActionItem[] = [
     {
@@ -143,9 +151,7 @@ export function VoucherBookListContainer({
         <BulkActions
           selectedKeys={dataTable.state.selectedRowKeys}
           onClear={dataTable.clearSelection}
-          actions={[
-            commonBulkActions.deleteMultiple(handleBulkDelete),
-          ]}
+          actions={[commonBulkActions.deleteMultiple(handleBulkDelete)]}
         />
       </div>
     </div>

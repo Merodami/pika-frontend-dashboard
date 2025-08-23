@@ -3,7 +3,19 @@
 import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
-import { Form, Input, Select, InputNumber, Button, Card, Row, Col, Upload, message, Space } from 'antd'
+import {
+  Form,
+  Input,
+  Select,
+  InputNumber,
+  Button,
+  Card,
+  Row,
+  Col,
+  Upload,
+  message,
+  Space,
+} from 'antd'
 import { ArrowLeft, Save, Upload as UploadIcon } from 'lucide-react'
 import type { UploadFile } from 'antd/es/upload'
 
@@ -113,7 +125,9 @@ export function VoucherBookCreateForm({ locale }: VoucherBookCreateFormProps) {
           <Row gutter={24}>
             {/* Basic Information */}
             <Col span={24}>
-              <h3 className="text-lg font-medium mb-4">{t('create.sections.basicInfo')}</h3>
+              <h3 className="text-lg font-medium mb-4">
+                {t('create.sections.basicInfo')}
+              </h3>
             </Col>
 
             <Col xs={24} md={12}>
@@ -122,7 +136,10 @@ export function VoucherBookCreateForm({ locale }: VoucherBookCreateFormProps) {
                 label={t('fields.title')}
                 rules={[
                   { required: true, message: t('validation.required') },
-                  { max: 255, message: t('validation.maxLength', { max: 255 }) },
+                  {
+                    max: 255,
+                    message: t('validation.maxLength', { max: 255 }),
+                  },
                 ]}
               >
                 <Input placeholder={t('placeholders.title')} />
@@ -133,7 +150,12 @@ export function VoucherBookCreateForm({ locale }: VoucherBookCreateFormProps) {
               <Form.Item
                 name="edition"
                 label={t('fields.edition')}
-                rules={[{ max: 100, message: t('validation.maxLength', { max: 100 }) }]}
+                rules={[
+                  {
+                    max: 100,
+                    message: t('validation.maxLength', { max: 100 }),
+                  },
+                ]}
               >
                 <Input placeholder={t('placeholders.edition')} />
               </Form.Item>
@@ -172,7 +194,7 @@ export function VoucherBookCreateForm({ locale }: VoucherBookCreateFormProps) {
                 rules={[{ required: true, message: t('validation.required') }]}
               >
                 <Select>
-                  {years.map(year => (
+                  {years.map((year) => (
                     <Select.Option key={year} value={year}>
                       {year}
                     </Select.Option>
@@ -193,10 +215,12 @@ export function VoucherBookCreateForm({ locale }: VoucherBookCreateFormProps) {
                     <Form.Item
                       name="month"
                       label={t('fields.month')}
-                      rules={[{ required: true, message: t('validation.required') }]}
+                      rules={[
+                        { required: true, message: t('validation.required') },
+                      ]}
                     >
                       <Select placeholder={t('placeholders.selectMonth')}>
-                        {months.map(month => (
+                        {months.map((month) => (
                           <Select.Option key={month.value} value={month.value}>
                             {month.label}
                           </Select.Option>
@@ -220,7 +244,12 @@ export function VoucherBookCreateForm({ locale }: VoucherBookCreateFormProps) {
                 name="totalPages"
                 label={t('fields.totalPages')}
                 rules={[
-                  { type: 'number', min: 1, max: 100, message: t('validation.pageRange') },
+                  {
+                    type: 'number',
+                    min: 1,
+                    max: 100,
+                    message: t('validation.pageRange'),
+                  },
                 ]}
               >
                 <InputNumber
@@ -233,10 +262,7 @@ export function VoucherBookCreateForm({ locale }: VoucherBookCreateFormProps) {
             </Col>
 
             <Col xs={24} md={16}>
-              <Form.Item
-                name="description"
-                label={t('fields.description')}
-              >
+              <Form.Item name="description" label={t('fields.description')}>
                 <Input.TextArea
                   rows={3}
                   placeholder={t('placeholders.description')}
@@ -246,14 +272,13 @@ export function VoucherBookCreateForm({ locale }: VoucherBookCreateFormProps) {
 
             {/* Images */}
             <Col span={24}>
-              <h3 className="text-lg font-medium mb-4 mt-6">{t('create.sections.images')}</h3>
+              <h3 className="text-lg font-medium mb-4 mt-6">
+                {t('create.sections.images')}
+              </h3>
             </Col>
 
             <Col xs={24} md={12}>
-              <Form.Item
-                name="coverImage"
-                label={t('fields.coverImage')}
-              >
+              <Form.Item name="coverImage" label={t('fields.coverImage')}>
                 <Upload
                   {...uploadProps}
                   fileList={coverFile}
@@ -263,7 +288,9 @@ export function VoucherBookCreateForm({ locale }: VoucherBookCreateFormProps) {
                   {coverFile.length === 0 && (
                     <div>
                       <UploadIcon className="w-6 h-6 mx-auto mb-2" />
-                      <div className="text-xs">{t('placeholders.uploadCover')}</div>
+                      <div className="text-xs">
+                        {t('placeholders.uploadCover')}
+                      </div>
                     </div>
                   )}
                 </Upload>
@@ -271,10 +298,7 @@ export function VoucherBookCreateForm({ locale }: VoucherBookCreateFormProps) {
             </Col>
 
             <Col xs={24} md={12}>
-              <Form.Item
-                name="backImage"
-                label={t('fields.backImage')}
-              >
+              <Form.Item name="backImage" label={t('fields.backImage')}>
                 <Upload
                   {...uploadProps}
                   fileList={backFile}
@@ -284,7 +308,9 @@ export function VoucherBookCreateForm({ locale }: VoucherBookCreateFormProps) {
                   {backFile.length === 0 && (
                     <div>
                       <UploadIcon className="w-6 h-6 mx-auto mb-2" />
-                      <div className="text-xs">{t('placeholders.uploadBack')}</div>
+                      <div className="text-xs">
+                        {t('placeholders.uploadBack')}
+                      </div>
                     </div>
                   )}
                 </Upload>

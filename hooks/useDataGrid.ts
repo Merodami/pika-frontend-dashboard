@@ -39,11 +39,23 @@ interface UseDataGridReturn {
   globalFilter: string
 
   // State setters
-  setPagination: (state: PaginationState | ((old: PaginationState) => PaginationState)) => void
-  setSorting: (state: SortingState | ((old: SortingState) => SortingState)) => void
-  setColumnFilters: (state: ColumnFiltersState | ((old: ColumnFiltersState) => ColumnFiltersState)) => void
-  setColumnVisibility: (state: VisibilityState | ((old: VisibilityState) => VisibilityState)) => void
-  setRowSelection: (state: RowSelectionState | ((old: RowSelectionState) => RowSelectionState)) => void
+  setPagination: (
+    state: PaginationState | ((old: PaginationState) => PaginationState)
+  ) => void
+  setSorting: (
+    state: SortingState | ((old: SortingState) => SortingState)
+  ) => void
+  setColumnFilters: (
+    state:
+      | ColumnFiltersState
+      | ((old: ColumnFiltersState) => ColumnFiltersState)
+  ) => void
+  setColumnVisibility: (
+    state: VisibilityState | ((old: VisibilityState) => VisibilityState)
+  ) => void
+  setRowSelection: (
+    state: RowSelectionState | ((old: RowSelectionState) => RowSelectionState)
+  ) => void
   setGlobalFilter: (filter: string) => void
 
   // Server query helpers
@@ -54,7 +66,9 @@ interface UseDataGridReturn {
   resetPagination: () => void
 }
 
-export const useDataGrid = (config: UseDataGridConfig = {}): UseDataGridReturn => {
+export const useDataGrid = (
+  config: UseDataGridConfig = {}
+): UseDataGridReturn => {
   const {
     initialPageSize = 20,
     initialSorting = [],
@@ -98,7 +112,11 @@ export const useDataGrid = (config: UseDataGridConfig = {}): UseDataGridReturn =
 
     // Column filters
     columnFilters.forEach((filter) => {
-      if (filter.value !== undefined && filter.value !== null && filter.value !== '') {
+      if (
+        filter.value !== undefined &&
+        filter.value !== null &&
+        filter.value !== ''
+      ) {
         params[filter.id] = filter.value
       }
     })
@@ -114,32 +132,43 @@ export const useDataGrid = (config: UseDataGridConfig = {}): UseDataGridReturn =
 
   // Create debounced version of search updates
   const debouncedSetGlobalFilter = useMemo(
-    () => debounce((value: string) => {
-      setGlobalFilter(value)
-      // Reset to first page when searching
-      setPagination(prev => ({ ...prev, pageIndex: 0 }))
-    }, debounceMs),
+    () =>
+      debounce((value: string) => {
+        setGlobalFilter(value)
+        // Reset to first page when searching
+        setPagination((prev) => ({ ...prev, pageIndex: 0 }))
+      }, debounceMs),
     [debounceMs]
   )
 
   // Enhanced setters that reset pagination when needed
-  const enhancedSetSorting = useCallback((state: SortingState | ((old: SortingState) => SortingState)) => {
-    setSorting(state)
-    // Reset to first page when sorting changes
-    setPagination(prev => ({ ...prev, pageIndex: 0 }))
-  }, [])
+  const enhancedSetSorting = useCallback(
+    (state: SortingState | ((old: SortingState) => SortingState)) => {
+      setSorting(state)
+      // Reset to first page when sorting changes
+      setPagination((prev) => ({ ...prev, pageIndex: 0 }))
+    },
+    []
+  )
 
-  const enhancedSetColumnFilters = useCallback((state: ColumnFiltersState | ((old: ColumnFiltersState) => ColumnFiltersState)) => {
-    setColumnFilters(state)
-    // Reset to first page when filters change
-    setPagination(prev => ({ ...prev, pageIndex: 0 }))
-  }, [])
+  const enhancedSetColumnFilters = useCallback(
+    (
+      state:
+        | ColumnFiltersState
+        | ((old: ColumnFiltersState) => ColumnFiltersState)
+    ) => {
+      setColumnFilters(state)
+      // Reset to first page when filters change
+      setPagination((prev) => ({ ...prev, pageIndex: 0 }))
+    },
+    []
+  )
 
   // Helper functions
   const clearFilters = useCallback(() => {
     setColumnFilters([])
     setGlobalFilter('')
-    setPagination(prev => ({ ...prev, pageIndex: 0 }))
+    setPagination((prev) => ({ ...prev, pageIndex: 0 }))
   }, [])
 
   const clearSelection = useCallback(() => {
@@ -147,7 +176,7 @@ export const useDataGrid = (config: UseDataGridConfig = {}): UseDataGridReturn =
   }, [])
 
   const resetPagination = useCallback(() => {
-    setPagination(prev => ({ ...prev, pageIndex: 0 }))
+    setPagination((prev) => ({ ...prev, pageIndex: 0 }))
   }, [])
 
   return {

@@ -23,7 +23,11 @@ interface BulkActionsProps {
   onClear?: () => void
 }
 
-export function BulkActions({ selectedKeys, actions, onClear }: BulkActionsProps) {
+export function BulkActions({
+  selectedKeys,
+  actions,
+  onClear,
+}: BulkActionsProps) {
   const t = useTranslations()
   const [loading, setLoading] = useState<string | null>(null)
 
@@ -62,7 +66,7 @@ export function BulkActions({ selectedKeys, actions, onClear }: BulkActionsProps
     }
   }
 
-  const menuItems: MenuProps['items'] = actions.map(action => ({
+  const menuItems: MenuProps['items'] = actions.map((action) => ({
     key: action.key,
     label: action.label,
     icon: action.icon,
@@ -80,7 +84,7 @@ export function BulkActions({ selectedKeys, actions, onClear }: BulkActionsProps
       <span className="text-sm text-gray-600">
         {t('table.selectedCount', { count: selectedKeys.length })}
       </span>
-      
+
       <Dropdown menu={{ items: menuItems }} placement="bottomRight">
         <Button
           type="primary"
@@ -92,11 +96,7 @@ export function BulkActions({ selectedKeys, actions, onClear }: BulkActionsProps
       </Dropdown>
 
       {onClear && (
-        <Button
-          type="text"
-          size="small"
-          onClick={onClear}
-        >
+        <Button type="text" size="small" onClick={onClear}>
           {t('common.button.clearSelection')}
         </Button>
       )}
@@ -106,31 +106,40 @@ export function BulkActions({ selectedKeys, actions, onClear }: BulkActionsProps
 
 // Common bulk action builders
 export const commonBulkActions = {
-  deleteMultiple: (handler: (keys: React.Key[]) => void | Promise<void>): BulkActionItem => ({
+  deleteMultiple: (
+    handler: (keys: React.Key[]) => void | Promise<void>
+  ): BulkActionItem => ({
     key: 'delete',
     label: 'Delete Selected',
     icon: <Trash2 className="w-4 h-4" />,
     danger: true,
     onClick: handler,
     confirmTitle: 'Delete Items',
-    confirmMessage: 'Are you sure you want to delete the selected items? This action cannot be undone.',
+    confirmMessage:
+      'Are you sure you want to delete the selected items? This action cannot be undone.',
   }),
 
-  activateMultiple: (handler: (keys: React.Key[]) => void | Promise<void>): BulkActionItem => ({
+  activateMultiple: (
+    handler: (keys: React.Key[]) => void | Promise<void>
+  ): BulkActionItem => ({
     key: 'activate',
     label: 'Activate Selected',
     icon: <CheckCircle className="w-4 h-4" />,
     onClick: handler,
   }),
 
-  deactivateMultiple: (handler: (keys: React.Key[]) => void | Promise<void>): BulkActionItem => ({
+  deactivateMultiple: (
+    handler: (keys: React.Key[]) => void | Promise<void>
+  ): BulkActionItem => ({
     key: 'deactivate',
     label: 'Deactivate Selected',
     icon: <XCircle className="w-4 h-4" />,
     onClick: handler,
   }),
 
-  exportSelected: (handler: (keys: React.Key[]) => void | Promise<void>): BulkActionItem => ({
+  exportSelected: (
+    handler: (keys: React.Key[]) => void | Promise<void>
+  ): BulkActionItem => ({
     key: 'export',
     label: 'Export Selected',
     icon: <Eye className="w-4 h-4" />,
