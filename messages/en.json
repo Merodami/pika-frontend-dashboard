@@ -19,7 +19,9 @@
       "submit": "Submit",
       "email": "Send Email",
       "view": "View",
-      "viewDetails": "View Details"
+      "viewDetails": "View Details",
+      "reset": "Reset",
+      "apply": "Apply"
     },
     "status": {
       "loading": "Loading...",
@@ -51,20 +53,20 @@
     "never": "Never",
     "notApplicable": "N/A",
     "na": "N/A",
-    "filters": {
-      "showFilters": "Show Filters",
-      "hideFilters": "Hide Filters",
-      "clearFilters": "Clear All",
-      "activeFilters": "Active Filters"
-    },
+    "active": "Active",
+    "page": "Page",
+    "filters": "Filters",
     "table": {
       "showingResults": "Showing results",
-      "showingItems": "Showing items",
+      "showingItems": "Showing items", 
+      "showing": "Showing {count} of {total}",
       "rowsPerPage": "Rows per page",
       "itemsPerPage": "Items per page",
       "page": "Page",
+      "pageOf": "Page {current} of {total}",
+      "pagination": "Page {current} of {total}",
       "of": "of",
-      "previous": "Previous",
+      "previous": "Previous", 
       "next": "Next",
       "noData": "No data available",
       "loading": "Loading..."

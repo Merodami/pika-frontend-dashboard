@@ -14,10 +14,9 @@ import {
 } from '@/components/ui/DataGrid/actions/BulkActions'
 import { ContextActionBar } from '@/components/ui/ContextActionBar'
 import type { ActionItem } from '@/components/ui/ContextActionBar'
-import { useServerDataTable } from '@/hooks/useDataTable'
 import { getAdminUserList, deleteAdminUser } from '@/lib/api/orval-client'
-import type { GetAdminUserList200DataItem } from '@/lib/api/orval-client'
 import type { Locale } from '@/i18n/config'
+import { useServerDataTable } from '@/hooks/useDataTable'
 
 import { UserTable } from './userTable'
 import { UserFilters } from './userFilters'
@@ -34,30 +33,22 @@ export function UserListContainer({ locale }: UserListContainerProps) {
   const queryClient = useQueryClient()
   const [isAddUserDrawerOpen, setIsAddUserDrawerOpen] = useState(false)
 
-  // Data table state management
-  const dataTable = useServerDataTable<GetAdminUserList200DataItem>({
+  // Initialize data table with server-side support
+  const dataTable = useServerDataTable({
     initialPageSize: 20,
+    onFilter: (filters) => {
+      console.log('Filter changed:', filters)
+    },
+    onSort: (field, order) => {
+      console.log('Sort changed:', { field, order })
+    },
   })
 
-  // Fetch users data
+  // Fetch users data - driven by DataGrid's query params
   const { data, isLoading } = useQuery({
     queryKey: ['admin-users', dataTable.queryParams],
     queryFn: async () => {
-      return await getAdminUserList({
-        page: dataTable.state.page,
-        limit: dataTable.state.pageSize,
-        search: dataTable.state.search || undefined,
-        status: dataTable.state.filters.status,
-        role: dataTable.state.filters.role,
-        emailVerified: dataTable.state.filters.emailVerified,
-        phoneVerified: dataTable.state.filters.phoneVerified,
-        registeredFrom:
-          dataTable.state.filters.registeredRange?.[0]?.format('YYYY-MM-DD'),
-        registeredTo:
-          dataTable.state.filters.registeredRange?.[1]?.format('YYYY-MM-DD'),
-        sortBy: dataTable.state.sortField as any,
-        sortOrder: dataTable.state.sortOrder as any,
-      })
+      return await getAdminUserList(dataTable.queryParams)
     },
     placeholderData: (previousData) => previousData,
   })

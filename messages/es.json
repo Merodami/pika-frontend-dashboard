@@ -17,7 +17,9 @@
       "export": "Exportar",
       "import": "Importar",
       "submit": "Enviar",
-      "email": "Enviar Email"
+      "email": "Enviar Email",
+      "reset": "Restablecer",
+      "apply": "Aplicar"
     },
     "status": {
       "loading": "Cargando...",
@@ -49,18 +51,18 @@
     "never": "Nunca",
     "notApplicable": "N/A",
     "na": "N/A",
-    "filters": {
-      "showFilters": "Mostrar Filtros",
-      "hideFilters": "Ocultar Filtros",
-      "clearFilters": "Limpiar Todo",
-      "activeFilters": "Filtros Activos"
-    },
+    "active": "Activo",
+    "page": "Página",
+    "filters": "Filtros",
     "table": {
       "showingResults": "Mostrando resultados",
       "showingItems": "Mostrando elementos",
+      "showing": "Mostrando {count} de {total}",
       "rowsPerPage": "Filas por página",
-      "itemsPerPage": "Elementos por página",
+      "itemsPerPage": "Elementos por página", 
       "page": "Página",
+      "pageOf": "Página {current} de {total}",
+      "pagination": "Página {current} de {total}",
       "of": "de",
       "previous": "Anterior",
       "next": "Siguiente",

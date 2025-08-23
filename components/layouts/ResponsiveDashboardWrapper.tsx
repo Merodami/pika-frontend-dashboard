@@ -27,7 +27,7 @@ export function ResponsiveDashboardWrapper({
         <Sidebar.Root>{sidebar}</Sidebar.Root>
 
         {/* Header with Mobile Menu Toggle */}
-        <header className="lg:pl-64 sticky top-0 z-30 h-16 bg-white border-b border-gray-200">
+        <header className="lg:pl-64 sticky top-0 z-30 h-11 bg-white border-b border-gray-200">
           <div className="flex items-center justify-between h-full px-4 sm:px-6 lg:px-8">
             {/* Mobile Menu Toggle */}
             <div className="lg:hidden">

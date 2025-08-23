@@ -134,6 +134,7 @@ export function UserTable({
     {
       accessorKey: 'fullName',
       header: t('user.field.name'),
+      enableSorting: true,
       cell: ({ row }) => (
         <div>
           <div className="font-medium">
@@ -146,6 +147,7 @@ export function UserTable({
     {
       accessorKey: 'email',
       header: t('user.field.email'),
+      enableSorting: true,
       cell: ({ row }) => (
         <div className="flex items-center gap-2">
           <span>{row.original.email}</span>
@@ -170,6 +172,7 @@ export function UserTable({
     {
       accessorKey: 'role',
       header: t('user.field.role'),
+      enableSorting: true,
       cell: ({ row }) => (
         <Tag
           color={getRoleColor(row.original.role)}
@@ -182,6 +185,7 @@ export function UserTable({
     {
       accessorKey: 'status',
       header: t('user.field.status'),
+      enableSorting: true,
       cell: ({ row }) => (
         <Tag color={getStatusColor(row.original.status)}>
           {t(`user.status.${row.original.status}`)}
@@ -191,11 +195,13 @@ export function UserTable({
     {
       accessorKey: 'createdAt',
       header: t('user.field.createdAt'),
+      enableSorting: true,
       cell: ({ row }) => formatDate(row.original.createdAt),
     },
     {
       accessorKey: 'lastLoginAt',
       header: t('user.field.lastLogin'),
+      enableSorting: true,
       cell: ({ row }) =>
         row.original.lastLoginAt
           ? formatDate(row.original.lastLoginAt)

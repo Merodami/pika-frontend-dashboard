@@ -28,7 +28,6 @@ export async function generateMetadata({
 export default async function AdminUsersPage({ params }: PageProps) {
   const { locale } = await params
   const user = await getCurrentUser()
-  const t = await getTranslations({ locale, namespace: 'user' })
 
   if (!user || user.role !== UserRole.ADMIN) {
     redirect(`/${locale}/dashboard`)

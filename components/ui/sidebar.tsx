@@ -154,7 +154,7 @@ function Sidebar({
       {/* Desktop Sidebar */}
       <div
         className={cn(
-          'hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0',
+          'hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0 z-40',
           className
         )}
       >
@@ -223,7 +223,7 @@ function SidebarHeader({
   }
   
   return (
-    <div className={cn('flex h-16 flex-shrink-0 items-center px-4', className)}>
+    <div className={cn('flex h-11 flex-shrink-0 items-center px-4', className)}>
       {children}
     </div>
   )
@@ -262,10 +262,11 @@ function SidebarItem({
       href={href}
       onClick={close}
       className={cn(
-        'group flex items-center px-2 py-2 text-sm font-medium rounded-md transition-colors',
+        'group flex items-center px-2 py-2 text-sm font-semibold rounded-md transition-colors',
         isActive
-          ? 'bg-gray-100 text-gray-900'
-          : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+          ? 'bg-gray-100 text-black no-underline'
+          : 'text-black hover:bg-gray-50 hover:text-black no-underline',
+        '!text-black',
         className
       )}
     >
@@ -278,7 +279,16 @@ function SidebarItem({
         </div>
       )}
       
-      <span className="flex-1">{label}</span>
+      <span className="flex-1">
+        {label.toLowerCase().includes('voucher') && label.toLowerCase().includes('book') ? (
+          <>
+            <span className="font-semibold">Voucher </span>
+            <span className="font-light">Books</span>
+          </>
+        ) : (
+          label
+        )}
+      </span>
       
       {badge && (
         <span className={cn(

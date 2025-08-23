@@ -17,7 +17,9 @@
       "export": "Gueraha",
       "import": "Gueru",
       "submit": "Mondo",
-      "email": "Mondo Email"
+      "email": "Mondo Email",
+      "reset": "Mbojevy",
+      "apply": "Moapli"
     },
     "status": {
       "loading": "Henyhẽhína...",
@@ -49,18 +51,18 @@
     "never": "Araka'eve",
     "notApplicable": "N/A",
     "na": "N/A",
-    "filters": {
-      "showFilters": "Hechauka Mboguaha",
-      "hideFilters": "Mokañy Mboguaha",
-      "clearFilters": "Mopotĩ Opavave",
-      "activeFilters": "Mboguaha Hendýva"
-    },
+    "active": "Hendyva",
+    "page": "Kuatiarogue",
+    "filters": "Mboguaha",
     "table": {
       "showingResults": "Hechauka aporã",
       "showingItems": "Hechauka mba'e",
+      "showing": "Hechauka {count} {total}-gui",
       "rowsPerPage": "Tenda kuatiarogue",
       "itemsPerPage": "Mba'e kuatiarogue",
       "page": "Kuatiarogue",
+      "pageOf": "Kuatiarogue {current} {total}-gui", 
+      "pagination": "Kuatiarogue {current} {total}-gui",
       "of": "pe",
       "previous": "Tenondegua",
       "next": "Upeigua",

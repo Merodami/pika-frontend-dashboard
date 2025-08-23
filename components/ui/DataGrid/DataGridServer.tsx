@@ -314,25 +314,12 @@ export function DataGridServer<T>({
       </div>
 
       {/* Mobile-Responsive Pagination */}
-      {console.log('🔄 DataGrid Pagination Props:', {
-        current: dataGrid.pagination.pageIndex + 1,
-        total: serverPagination?.totalPages ?? 1,
-        pageSize: dataGrid.pagination.pageSize,
-        totalItems: serverPagination?.total ?? data.length,
-        serverPagination,
-        dataGridPagination: dataGrid.pagination
-      })}
       <MobilePagination
         current={dataGrid.pagination.pageIndex + 1}
         total={serverPagination?.totalPages ?? 1}
         pageSize={dataGrid.pagination.pageSize}
         totalItems={serverPagination?.total ?? data.length}
         onPageChange={(page) => {
-          console.log('🔄 DataGrid onPageChange:', { 
-            requestedPage: page, 
-            willSetPageIndex: page - 1,
-            currentPagination: dataGrid.pagination
-          })
           dataGrid.setPagination((prev) => ({
             ...prev,
             pageIndex: page - 1,

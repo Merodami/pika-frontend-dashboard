@@ -2,7 +2,6 @@
 
 import React from 'react'
 import Sidebar from '@/components/ui/sidebar'
-import { APP_CONFIG } from '@/lib/constants/app'
 import {
   LayoutDashboard,
   Users,
@@ -69,15 +68,11 @@ export function ModernSidebarNav({ navItems, logo, footer }: ModernSidebarNavPro
       {/* Sidebar Header */}
       <Sidebar.Header>
         {logo || (
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-              <span className="text-white font-bold text-sm">
-                {APP_CONFIG.branding.logo.icon}
-              </span>
-            </div>
-            <span className="font-semibold text-gray-900">
-              {APP_CONFIG.branding.logo.text}
-            </span>
+          <div className="flex justify-center w-full">
+            <h1 className="text-base text-gray-900 tracking-wide">
+              <span className="font-black">THE VOUCHER</span>
+              <span className="font-light">BOOK</span>
+            </h1>
           </div>
         )}
       </Sidebar.Header>
