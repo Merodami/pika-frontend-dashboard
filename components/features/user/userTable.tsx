@@ -160,7 +160,7 @@ export function UserTable({
       header: t('user.field.phone'),
       cell: ({ row }) => (
         <div className="flex items-center gap-2">
-          <span>{row.original.phoneNumber || 'N/A'}</span>
+          <span>{row.original.phoneNumber || t('common.na')}</span>
           {row.original.phoneVerified && (
             <Phone className="w-4 h-4 text-green-500" />
           )}

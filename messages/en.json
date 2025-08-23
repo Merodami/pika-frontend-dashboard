@@ -35,7 +35,39 @@
       "changesSaved": "Changes saved successfully",
       "errorOccurred": "An error occurred",
       "noData": "No data available",
-      "required": "This field is required"
+      "required": "This field is required",
+      "comingSoon": "Coming soon",
+      "passwordsMustMatch": "Passwords must match",
+      "autoGeneratePassword": "Auto-generate password",
+      "confirmPassword": "Confirm Password",
+      "confirmPasswordPlaceholder": "Confirm password",
+      "passwordWillBeGenerated": "Password will be auto-generated",
+      "userWillReceiveEmail": "The user will receive an email to set their password on first login.",
+      "userCreationInfo": "User will be created as Business User with Active status",
+      "userCreationDescription": "The user will automatically be assigned the Business role and Active status as per the business registration flow."
+    },
+    "yes": "Yes",
+    "no": "No",
+    "never": "Never",
+    "notApplicable": "N/A",
+    "na": "N/A",
+    "filters": {
+      "showFilters": "Show Filters",
+      "hideFilters": "Hide Filters",
+      "clearFilters": "Clear All",
+      "activeFilters": "Active Filters"
+    },
+    "table": {
+      "showingResults": "Showing results",
+      "showingItems": "Showing items",
+      "rowsPerPage": "Rows per page",
+      "itemsPerPage": "Items per page",
+      "page": "Page",
+      "of": "of",
+      "previous": "Previous",
+      "next": "Next",
+      "noData": "No data available",
+      "loading": "Loading..."
     }
   },
   "auth": {
@@ -90,7 +122,7 @@
   },
   "dashboard": {
     "title": "Dashboard",
-    "description": "Pika Admin Dashboard",
+    "description": "The VoucherBook Admin Dashboard",
     "welcome": "Welcome, {name}",
     "admin": {
       "subtitle": "Here's an overview of your platform"
@@ -166,6 +198,8 @@
       "business": "Business",
       "category": "Category",
       "discount": "Discount",
+      "discountType": "Discount Type",
+      "discountValue": "Discount Value",
       "state": "State",
       "validFrom": "Valid from",
       "validUntil": "Valid until",
@@ -212,8 +246,11 @@
       "loadFailed": "Failed to load voucher",
       "createFailed": "Failed to create voucher",
       "updateFailed": "Failed to update voucher",
-      "deleteFailed": "Failed to delete voucher"
-    }
+      "deleteFailed": "Failed to delete voucher",
+      "cannotEdit": "Cannot Edit Voucher",
+      "onlyDraftEditable": "Only draft vouchers can be edited. Published, expired, or suspended vouchers cannot be modified."
+    },
+    "selectCategory": "Select a category"
   },
   "businesses": {
     "title": "Businesses",
@@ -462,10 +499,233 @@
       "user": "User"
     },
     "fields": {
+      "id": "ID",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "fullName": "Full Name",
+      "email": "Email",
       "emailVerified": "Email Verified",
+      "phoneNumber": "Phone Number",
+      "phoneVerified": "Phone Verified",
+      "role": "Role",
+      "status": "Status",
+      "avatar": "Profile Picture",
+      "dateOfBirth": "Date of Birth",
+      "gender": "Gender",
+      "country": "Country",
+      "city": "City",
+      "address": "Address",
+      "postalCode": "Postal Code",
+      "timezone": "Timezone",
+      "language": "Language",
+      "currency": "Currency",
+      "twoFactorEnabled": "Two-Factor Authentication",
+      "marketingConsent": "Marketing Consent",
+      "termsAccepted": "Terms Accepted",
+      "privacyPolicyAccepted": "Privacy Policy Accepted",
       "joined": "Joined",
-      "lastSeen": "Last seen"
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "lastSeen": "Last Seen",
+      "lastLogin": "Last Login",
+      "loginCount": "Login Count",
+      "isOnline": "Online Status",
+      "businessCount": "Number of Businesses",
+      "voucherCount": "Number of Vouchers",
+      "notes": "Admin Notes",
+      "suspended": "Suspended",
+      "suspendedAt": "Suspended At",
+      "suspendedUntil": "Suspended Until",
+      "suspensionReason": "Suspension Reason",
+      "banned": "Banned",
+      "bannedAt": "Banned At",
+      "banReason": "Ban Reason"
+    },
+    "list": {
+      "title": "All Users",
+      "subtitle": "Browse and manage user accounts",
+      "table": {
+        "columns": {
+          "avatar": "Avatar",
+          "name": "Name",
+          "email": "Email",
+          "phone": "Phone",
+          "role": "Role",
+          "status": "Status",
+          "emailVerified": "Email Verified",
+          "phoneVerified": "Phone Verified",
+          "lastSeen": "Last Seen",
+          "joined": "Joined",
+          "businessCount": "Businesses",
+          "actions": "Actions"
+        }
+      },
+      "filters": {
+        "all": "All Users",
+        "search": "Search users...",
+        "clearFilters": "Clear Filters",
+        "showFilters": "Show Filters",
+        "hideFilters": "Hide Filters",
+        "filterByRole": {
+          "label": "Filter by Role",
+          "placeholder": "Select role",
+          "options": {
+            "all": "All Roles",
+            "admin": "Admin",
+            "business": "Business",
+            "businessowner": "Business Owner",
+            "customer": "Customer",
+            "user": "User"
+          }
+        },
+        "filterByStatus": {
+          "label": "Filter by Status",
+          "placeholder": "Select status",
+          "options": {
+            "all": "All Statuses",
+            "active": "Active",
+            "inactive": "Inactive",
+            "suspended": "Suspended",
+            "pending": "Pending",
+            "banned": "Banned"
+          }
+        },
+        "filterByVerification": {
+          "label": "Filter by Verification",
+          "placeholder": "Select verification status",
+          "options": {
+            "all": "All Users",
+            "emailVerified": "Email Verified",
+            "emailUnverified": "Email Unverified",
+            "phoneVerified": "Phone Verified",
+            "phoneUnverified": "Phone Unverified",
+            "fullyVerified": "Fully Verified",
+            "unverified": "Unverified"
+          }
+        },
+        "filterByCountry": {
+          "label": "Filter by Country",
+          "placeholder": "Select country",
+          "options": {
+            "all": "All Countries"
+          }
+        },
+        "filterByRegistrationDate": {
+          "label": "Filter by Registration Date",
+          "placeholder": "Select date range",
+          "options": {
+            "all": "All Time",
+            "today": "Today",
+            "yesterday": "Yesterday",
+            "thisWeek": "This Week",
+            "lastWeek": "Last Week",
+            "thisMonth": "This Month",
+            "lastMonth": "Last Month",
+            "thisYear": "This Year",
+            "lastYear": "Last Year",
+            "custom": "Custom Range"
+          }
+        },
+        "filterByActivity": {
+          "label": "Filter by Activity",
+          "placeholder": "Select activity status",
+          "options": {
+            "all": "All Users",
+            "online": "Currently Online",
+            "recentlyActive": "Recently Active",
+            "inactive": "Inactive",
+            "neverLoggedIn": "Never Logged In"
+          }
+        },
+        "sortBy": {
+          "label": "Sort by",
+          "placeholder": "Select sorting",
+          "options": {
+            "createdAt_desc": "Newest First",
+            "createdAt_asc": "Oldest First",
+            "name_asc": "Name A-Z",
+            "name_desc": "Name Z-A",
+            "email_asc": "Email A-Z",
+            "lastSeen_desc": "Recently Active",
+            "loginCount_desc": "Most Active"
+          }
+        },
+        "quickFilters": {
+          "label": "Quick Filters",
+          "admins": "Admins",
+          "businessOwners": "Business Owners",
+          "customers": "Customers",
+          "verifiedUsers": "Verified Users",
+          "unverifiedUsers": "Unverified Users",
+          "onlineUsers": "Online Users",
+          "recentUsers": "Recent Users",
+          "suspendedUsers": "Suspended Users",
+          "bannedUsers": "Banned Users"
+        }
+      },
+      "results": {
+        "showing": "Showing {from}-{to} of {total}",
+        "noResults": "No users match your criteria",
+        "noResultsDescription": "Try adjusting your filters or search terms",
+        "resetFilters": "Reset all filters"
+      }
     }
+  },
+  "user": {
+    "title": "Users",
+    "subtitle": "Manage user accounts and permissions",
+    "field": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone", 
+      "status": "Status",
+      "role": "Role",
+      "emailVerified": "Email Verified",
+      "phoneVerified": "Phone Verified",
+      "createdAt": "Created At",
+      "lastLogin": "Last Login",
+      "registrationDate": "Registration Date"
+    },
+    "filter": {
+      "search": "Search",
+      "searchPlaceholder": "Search users...",
+      "emailPlaceholder": "Enter email address",
+      "statusPlaceholder": "Select status",
+      "rolePlaceholder": "Select role", 
+      "emailVerifiedPlaceholder": "Email verified?",
+      "phoneVerifiedPlaceholder": "Phone verified?",
+      "registrationDatePlaceholder": "Select date range",
+      "basic": "Basic Filters",
+      "statusAndRole": "Status & Role",
+      "verification": "Verification",
+      "dates": "Date Filters"
+    },
+    "status": {
+      "active": "Active",
+      "suspended": "Suspended", 
+      "banned": "Banned",
+      "unconfirmed": "Unconfirmed"
+    },
+    "role": {
+      "admin": "Admin",
+      "business": "Business",
+      "customer": "Customer"
+    },
+    "action": {
+      "view": "View User",
+      "edit": "Edit User",
+      "delete": "Delete User",
+      "sendEmail": "Send Email",
+      "create": "Create User"
+    },
+    "message": {
+      "deleteSuccess": "User deleted successfully",
+      "bulkDeleteSuccess": "Users deleted successfully"
+    }
+  },
+  "filter": {
+    "apply": "Apply",
+    "reset": "Reset"
   },
   "businessSelector": {
     "title": {
@@ -654,5 +914,413 @@
       "unsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
       "incompleteStep": "Please complete all required fields before proceeding"
     }
+  },
+  "voucherBooks": {
+    "title": "Voucher Books",
+    "subtitle": "Manage voucher book collections and PDF generation",
+    "description": "Create and manage voucher book collections",
+    "totalBooks": "Total {count} voucher books",
+    "searchPlaceholder": "Search voucher books...",
+    "filterByStatus": "Filter by status",
+    "filterByType": "Filter by type",
+    "noBooks": "No voucher books found",
+    "list": {
+      "title": "All Voucher Books",
+      "subtitle": "Browse and manage your voucher book collection",
+      "table": {
+        "columns": {
+          "title": "Title",
+          "type": "Type",
+          "status": "Status",
+          "pages": "Pages",
+          "placements": "Placements",
+          "created": "Created",
+          "updated": "Updated",
+          "actions": "Actions"
+        }
+      },
+      "filters": {
+        "all": "All Books",
+        "search": "Search books...",
+        "clearFilters": "Clear Filters",
+        "showFilters": "Show Filters",
+        "hideFilters": "Hide Filters",
+        "filterByStatus": {
+          "label": "Filter by Status",
+          "placeholder": "Select status",
+          "options": {
+            "all": "All Statuses",
+            "DRAFT": "Draft",
+            "IN_REVIEW": "In Review",
+            "APPROVED": "Approved",
+            "PUBLISHED": "Published",
+            "ARCHIVED": "Archived",
+            "REJECTED": "Rejected"
+          }
+        },
+        "filterByType": {
+          "label": "Filter by Type",
+          "placeholder": "Select type",
+          "options": {
+            "all": "All Types",
+            "MONTHLY": "Monthly",
+            "SEASONAL": "Seasonal",
+            "ANNUAL": "Annual",
+            "SPECIAL": "Special Edition"
+          }
+        },
+        "filterByYear": {
+          "label": "Filter by Year",
+          "placeholder": "Select year",
+          "options": {
+            "all": "All Years"
+          }
+        },
+        "filterByMonth": {
+          "label": "Filter by Month",
+          "placeholder": "Select month",
+          "options": {
+            "all": "All Months",
+            "1": "January",
+            "2": "February",
+            "3": "March",
+            "4": "April",
+            "5": "May",
+            "6": "June",
+            "7": "July",
+            "8": "August",
+            "9": "September",
+            "10": "October",
+            "11": "November",
+            "12": "December"
+          }
+        },
+        "sortBy": {
+          "label": "Sort by",
+          "placeholder": "Select sorting",
+          "options": {
+            "createdAt_desc": "Newest First",
+            "createdAt_asc": "Oldest First",
+            "title_asc": "Title A-Z",
+            "title_desc": "Title Z-A",
+            "updatedAt_desc": "Recently Updated",
+            "status_asc": "Status"
+          }
+        },
+        "dateRange": {
+          "label": "Date Range",
+          "placeholder": "Select date range",
+          "options": {
+            "all": "All Time",
+            "today": "Today",
+            "yesterday": "Yesterday",
+            "thisWeek": "This Week",
+            "lastWeek": "Last Week",
+            "thisMonth": "This Month",
+            "lastMonth": "Last Month",
+            "thisYear": "This Year",
+            "lastYear": "Last Year",
+            "custom": "Custom Range"
+          }
+        },
+        "quickFilters": {
+          "label": "Quick Filters",
+          "myBooks": "My Books",
+          "recentlyUpdated": "Recently Updated",
+          "needsReview": "Needs Review",
+          "readyToPublish": "Ready to Publish",
+          "published": "Published",
+          "drafts": "Drafts",
+          "archived": "Archived"
+        }
+      },
+      "results": {
+        "showing": "Showing {from}-{to} of {total}",
+        "noResults": "No voucher books match your criteria",
+        "noResultsDescription": "Try adjusting your filters or search terms",
+        "resetFilters": "Reset all filters"
+      }
+    },
+    "emptyState": {
+      "title": "No Voucher Books",
+      "description": "Get started by creating your first voucher book",
+      "createButton": "Create Voucher Book"
+    },
+    "create": {
+      "title": "Create Voucher Book",
+      "button": "New Voucher Book",
+      "subtitle": "Set up a new voucher book collection"
+    },
+    "edit": {
+      "title": "Edit Voucher Book",
+      "subtitle": "Modify voucher book details for {title}"
+    },
+    "detail": {
+      "title": "Voucher Book Details",
+      "description": "View voucher book information and manage PDF generation",
+      "tabs": {
+        "overview": "Overview",
+        "workflow": "Status & Workflow",
+        "pdf": "PDF Generation",
+        "pages": "Pages",
+        "placements": "Placements",
+        "analytics": "Analytics"
+      }
+    },
+    "bookType": {
+      "MONTHLY": "Monthly",
+      "SEASONAL": "Seasonal", 
+      "ANNUAL": "Annual",
+      "SPECIAL": "Special Edition"
+    },
+    "status": {
+      "DRAFT": "Draft",
+      "IN_REVIEW": "In Review",
+      "APPROVED": "Approved",
+      "PUBLISHED": "Published",
+      "ARCHIVED": "Archived",
+      "REJECTED": "Rejected"
+    },
+    "fields": {
+      "id": "ID",
+      "title": "Title",
+      "edition": "Edition",
+      "bookType": "Book Type",
+      "month": "Month",
+      "year": "Year",
+      "totalPages": "Total Pages",
+      "currentPages": "Current Pages",
+      "pageCount": "Page Count",
+      "totalPlacements": "Total Placements",
+      "status": "Status",
+      "createdAt": "Created",
+      "updatedAt": "Last Updated",
+      "publishedAt": "Published",
+      "archivedAt": "Archived",
+      "coverImage": "Cover Image",
+      "backImage": "Back Cover Image",
+      "description": "Description",
+      "targetAudience": "Target Audience",
+      "notes": "Notes",
+      "metadata": "Additional Information"
+    },
+    "placeholders": {
+      "title": "Enter voucher book title",
+      "edition": "e.g., Summer Edition, Q1 2024",
+      "bookType": "Select book type",
+      "month": "Select month",
+      "year": "Select year",
+      "totalPages": "Enter total number of pages",
+      "description": "Describe the voucher book content and purpose",
+      "targetAudience": "e.g., Families, Young Professionals, Tourists",
+      "notes": "Any additional notes or comments"
+    },
+    "sections": {
+      "basicInfo": "Basic Information",
+      "images": "Cover Images",
+      "metadata": "Additional Details",
+      "settings": "Book Settings",
+      "preview": "Preview"
+    },
+    "actions": {
+      "create": "Create Book",
+      "update": "Update Book",
+      "delete": "Delete Book",
+      "duplicate": "Duplicate Book",
+      "archive": "Archive Book",
+      "unarchive": "Unarchive Book",
+      "publish": "Publish Book",
+      "unpublish": "Unpublish Book",
+      "approve": "Approve Book",
+      "reject": "Reject Book",
+      "submitForReview": "Submit for Review",
+      "saveChanges": "Save Changes",
+      "saveDraft": "Save Draft",
+      "viewDetails": "View Details",
+      "editBook": "Edit Book",
+      "generatePdf": "Generate PDF",
+      "downloadPdf": "Download PDF"
+    },
+    "workflow": {
+      "title": "Status Workflow",
+      "description": "Manage the voucher book publication workflow",
+      "currentStatus": "Current Status",
+      "availableActions": "Available Actions",
+      "history": "Status History",
+      "requirements": {
+        "title": "Requirements",
+        "coverImage": "Cover image is required",
+        "backImage": "Back cover image is recommended", 
+        "minimumPages": "Must have at least {count} pages",
+        "minimumPlacements": "Must have at least {count} placements",
+        "completeMetadata": "All required metadata must be filled"
+      },
+      "transitions": {
+        "toDraft": "Move to Draft",
+        "toInReview": "Submit for Review",
+        "toApproved": "Approve",
+        "toPublished": "Publish",
+        "toArchived": "Archive",
+        "toRejected": "Reject"
+      },
+      "confirmations": {
+        "publish": {
+          "title": "Publish Voucher Book",
+          "message": "Are you sure you want to publish this voucher book? It will be available to the public.",
+          "requirements": "Please ensure all requirements are met before publishing."
+        },
+        "archive": {
+          "title": "Archive Voucher Book", 
+          "message": "Archiving will remove this book from public view. You can unarchive it later."
+        },
+        "reject": {
+          "title": "Reject Voucher Book",
+          "message": "Please provide a reason for rejection:",
+          "reasonPlaceholder": "Enter rejection reason..."
+        }
+      }
+    },
+    "pdf": {
+      "title": "PDF Generation", 
+      "description": "Generate and download voucher book PDF",
+      "generate": "Generate PDF",
+      "regenerate": "Regenerate PDF",
+      "download": "Download PDF",
+      "generating": "Generating...",
+      "generationStarted": "PDF generation started",
+      "generationComplete": "PDF generated successfully",
+      "generationFailed": "PDF generation failed",
+      "generationFailedDescription": "Please try again or contact support if the problem persists",
+      "readyForDownload": "Your PDF is ready for download",
+      "lastGenerated": "Last generated",
+      "estimatedSize": "Estimated Size",
+      "bookSummary": "Book Summary",
+      "generationOptions": "Generation Options",
+      "optionsInfo": "Choose generation priority",
+      "optionsDescription": "Higher priority generates faster but may cost more resources",
+      "priority": "Priority Level",
+      "priorityHigh": "High Priority",
+      "priorityNormal": "Normal Priority", 
+      "priorityLow": "Low Priority",
+      "priorityHighDesc": "Fastest generation, immediate processing",
+      "priorityNormalDesc": "Standard generation speed, balanced performance",
+      "priorityLowDesc": "Economy generation, processed when resources are available",
+      "minutes": "minutes",
+      "status": {
+        "idle": "Ready to Generate",
+        "generating": "Generating PDF",
+        "completed": "PDF Ready",
+        "failed": "Generation Failed"
+      }
+    },
+    "overview": {
+      "title": "Overview",
+      "summary": "Book Summary",
+      "details": "Book Details",
+      "images": "Cover Images",
+      "statistics": "Statistics",
+      "recentActivity": "Recent Activity",
+      "createdBy": "Created by",
+      "lastModifiedBy": "Last modified by"
+    },
+    "pages": {
+      "title": "Pages",
+      "description": "Manage voucher book pages and layout",
+      "addPage": "Add Page",
+      "deletePage": "Delete Page",
+      "reorderPages": "Reorder Pages",
+      "pageNumber": "Page {number}",
+      "totalPages": "{current} of {total} pages"
+    },
+    "placements": {
+      "title": "Placements",
+      "description": "Manage voucher placements within the book", 
+      "addPlacement": "Add Placement",
+      "editPlacement": "Edit Placement",
+      "deletePlacement": "Delete Placement",
+      "placementNumber": "Placement {number}",
+      "totalPlacements": "{current} placements"
+    },
+    "analytics": {
+      "title": "Analytics",
+      "description": "View voucher book performance metrics",
+      "downloads": "PDF Downloads",
+      "views": "Book Views",
+      "engagement": "User Engagement",
+      "performance": "Performance Metrics"
+    },
+    "messages": {
+      "createSuccess": "Voucher book created successfully",
+      "createError": "Failed to create voucher book",
+      "updateSuccess": "Voucher book updated successfully", 
+      "updateError": "Failed to update voucher book",
+      "deleteSuccess": "Voucher book deleted successfully",
+      "deleteError": "Failed to delete voucher book",
+      "publishSuccess": "Voucher book published successfully",
+      "publishError": "Failed to publish voucher book",
+      "archiveSuccess": "Voucher book archived successfully",
+      "archiveError": "Failed to archive voucher book",
+      "loadError": "Failed to load voucher book",
+      "bookNotFound": "Voucher book not found",
+      "validationError": "Please fix the validation errors",
+      "networkError": "Network error. Please try again.",
+      "permissionError": "You don't have permission to perform this action"
+    },
+    "validation": {
+      "titleRequired": "Title is required",
+      "titleTooLong": "Title must be less than 255 characters",
+      "bookTypeRequired": "Book type is required",
+      "yearRequired": "Year is required",
+      "yearInvalid": "Year must be between 2020 and 2100",
+      "totalPagesRequired": "Total pages is required",
+      "totalPagesMin": "Must have at least 1 page",
+      "totalPagesMax": "Cannot exceed 100 pages",
+      "monthRequired": "Month is required for monthly books",
+      "monthInvalid": "Month must be between 1 and 12",
+      "coverImageRequired": "Cover image is required",
+      "descriptionTooLong": "Description must be less than 500 characters"
+    },
+    "confirmations": {
+      "delete": {
+        "title": "Delete Voucher Book",
+        "message": "Are you sure you want to delete this voucher book? This action cannot be undone.",
+        "input": "Type DELETE to confirm"
+      },
+      "unsavedChanges": {
+        "title": "Unsaved Changes",
+        "message": "You have unsaved changes. Are you sure you want to leave?"
+      }
+    },
+    "tooltips": {
+      "bookType": "Select the type of voucher book collection",
+      "month": "Required for monthly books to specify the target month",
+      "totalPages": "Maximum number of pages this book can contain",
+      "coverImage": "Main cover image displayed to users",
+      "backImage": "Back cover image for PDF generation",
+      "targetAudience": "Specify the intended audience for marketing purposes"
+    },
+    "help": {
+      "title": "Voucher Book Help",
+      "bookTypes": {
+        "title": "Book Types",
+        "monthly": "Monthly books are published each month with time-sensitive offers",
+        "seasonal": "Seasonal books align with seasons (Spring, Summer, Fall, Winter)",
+        "annual": "Annual books are published once per year with long-term offers", 
+        "special": "Special edition books for holidays, events, or unique campaigns"
+      },
+      "workflow": {
+        "title": "Publication Workflow",
+        "draft": "Initial state - book is being created and edited",
+        "inReview": "Book is submitted for review and approval",
+        "approved": "Book is approved and ready for publication",
+        "published": "Book is live and available to the public",
+        "archived": "Book is no longer active but preserved for records"
+      }
+    }
+  },
+  "table": {
+    "showingItems": "Showing {start}-{end} of {total}",
+    "itemsPerPage": "Items per page",
+    "pageOf": "Page {current} of {total}"
   }
 }

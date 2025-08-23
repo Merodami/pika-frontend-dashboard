@@ -1,11 +1,8 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Form, Input, Select, Button, Space, DatePicker } from 'antd'
-import { Search } from 'lucide-react'
 import { UserStatus, UserRole } from '@merodami/pika-types'
-
-const { RangePicker } = DatePicker
+import { ResponsiveFilters } from '@/components/ui/filters'
 
 interface UserFiltersProps {
   values: Record<string, any>
@@ -20,120 +17,125 @@ export function UserFilters({ values, onChange, onReset }: UserFiltersProps) {
     onChange({ ...values, [field]: value })
   }
 
-  const handleReset = () => {
-    onReset()
-  }
+  // Count active filters
+  const activeFiltersCount = Object.values(values).filter(
+    (value) => value !== undefined && value !== null && value !== ''
+  ).length
+
+  // Quick filter options for common use cases
+  const quickFilters = [
+    {
+      label: t('user.status.active'),
+      value: UserStatus.ACTIVE,
+      isActive: values.status === UserStatus.ACTIVE,
+      onClick: (value: any) => handleChange('status', value),
+    },
+    {
+      label: t('user.role.business'),
+      value: UserRole.BUSINESS,
+      isActive: values.role === UserRole.BUSINESS,
+      onClick: (value: any) => handleChange('role', value),
+    },
+    {
+      label: t('user.field.emailVerified'),
+      value: true,
+      isActive: values.emailVerified === true,
+      onClick: (value: any) => handleChange('emailVerified', value),
+    },
+  ]
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-sm mb-4">
-      <Form layout="inline" className="gap-2">
-        <Form.Item label={t('user.filter.search')}>
-          <Input
-            placeholder={t('user.filter.searchPlaceholder')}
-            value={values.search}
-            onChange={(e) => handleChange('search', e.target.value)}
-            prefix={<Search className="w-4 h-4 text-gray-400" />}
-            allowClear
-            style={{ width: 250 }}
-          />
-        </Form.Item>
+    <ResponsiveFilters
+      activeFiltersCount={activeFiltersCount}
+      onReset={onReset}
+      quickFilters={quickFilters}
+    >
+      {/* Basic Filters */}
+      <ResponsiveFilters.Group title={t('user.filter.basic')}>
+        <ResponsiveFilters.Field
+          label={t('user.filter.search')}
+          type="search"
+          value={values.search}
+          onChange={(value) => handleChange('search', value)}
+          placeholder={t('user.filter.searchPlaceholder')}
+        />
 
-        <Form.Item label={t('user.field.email')}>
-          <Input
-            placeholder={t('user.filter.emailPlaceholder')}
-            value={values.email}
-            onChange={(e) => handleChange('email', e.target.value)}
-            allowClear
-            style={{ width: 200 }}
-          />
-        </Form.Item>
+        <ResponsiveFilters.Field
+          label={t('user.field.email')}
+          type="input"
+          value={values.email}
+          onChange={(value) => handleChange('email', value)}
+          placeholder={t('user.filter.emailPlaceholder')}
+        />
+      </ResponsiveFilters.Group>
 
-        <Form.Item label={t('user.field.status')}>
-          <Select
-            placeholder={t('user.filter.statusPlaceholder')}
-            value={values.status}
-            onChange={(value) => handleChange('status', value)}
-            allowClear
-            style={{ width: 150 }}
-          >
-            <Select.Option value={UserStatus.ACTIVE}>
-              {t('user.status.active')}
-            </Select.Option>
-            <Select.Option value={UserStatus.SUSPENDED}>
-              {t('user.status.suspended')}
-            </Select.Option>
-            <Select.Option value={UserStatus.BANNED}>
-              {t('user.status.banned')}
-            </Select.Option>
-            <Select.Option value={UserStatus.UNCONFIRMED}>
-              {t('user.status.unconfirmed')}
-            </Select.Option>
-          </Select>
-        </Form.Item>
+      {/* Status & Role Filters */}
+      <ResponsiveFilters.Group title={t('user.filter.statusAndRole')}>
+        <ResponsiveFilters.Field
+          label={t('user.field.status')}
+          type="select"
+          value={values.status}
+          onChange={(value) => handleChange('status', value)}
+          placeholder={t('user.filter.statusPlaceholder')}
+          options={[
+            { label: t('user.status.active'), value: UserStatus.ACTIVE },
+            { label: t('user.status.suspended'), value: UserStatus.SUSPENDED },
+            { label: t('user.status.banned'), value: UserStatus.BANNED },
+            { label: t('user.status.unconfirmed'), value: UserStatus.UNCONFIRMED },
+          ]}
+        />
 
-        <Form.Item label={t('user.field.role')}>
-          <Select
-            placeholder={t('user.filter.rolePlaceholder')}
-            value={values.role}
-            onChange={(value) => handleChange('role', value)}
-            allowClear
-            style={{ width: 150 }}
-          >
-            <Select.Option value={UserRole.ADMIN}>
-              {t('user.role.admin')}
-            </Select.Option>
-            <Select.Option value={UserRole.CUSTOMER}>
-              {t('user.role.customer')}
-            </Select.Option>
-            <Select.Option value={UserRole.BUSINESS}>
-              {t('user.role.business')}
-            </Select.Option>
-          </Select>
-        </Form.Item>
+        <ResponsiveFilters.Field
+          label={t('user.field.role')}
+          type="select"
+          value={values.role}
+          onChange={(value) => handleChange('role', value)}
+          placeholder={t('user.filter.rolePlaceholder')}
+          options={[
+            { label: t('user.role.admin'), value: UserRole.ADMIN },
+            { label: t('user.role.customer'), value: UserRole.CUSTOMER },
+            { label: t('user.role.business'), value: UserRole.BUSINESS },
+          ]}
+        />
+      </ResponsiveFilters.Group>
 
-        <Form.Item label={t('user.field.emailVerified')}>
-          <Select
-            placeholder={t('user.filter.emailVerifiedPlaceholder')}
-            value={values.emailVerified}
-            onChange={(value) => handleChange('emailVerified', value)}
-            allowClear
-            style={{ width: 120 }}
-          >
-            <Select.Option value={true}>{t('common.yes')}</Select.Option>
-            <Select.Option value={false}>{t('common.no')}</Select.Option>
-          </Select>
-        </Form.Item>
+      {/* Verification Filters */}
+      <ResponsiveFilters.Group title={t('user.filter.verification')}>
+        <ResponsiveFilters.Field
+          label={t('user.field.emailVerified')}
+          type="select"
+          value={values.emailVerified}
+          onChange={(value) => handleChange('emailVerified', value)}
+          placeholder={t('user.filter.emailVerifiedPlaceholder')}
+          options={[
+            { label: t('common.yes'), value: true },
+            { label: t('common.no'), value: false },
+          ]}
+        />
 
-        <Form.Item label={t('user.field.phoneVerified')}>
-          <Select
-            placeholder={t('user.filter.phoneVerifiedPlaceholder')}
-            value={values.phoneVerified}
-            onChange={(value) => handleChange('phoneVerified', value)}
-            allowClear
-            style={{ width: 120 }}
-          >
-            <Select.Option value={true}>{t('common.yes')}</Select.Option>
-            <Select.Option value={false}>{t('common.no')}</Select.Option>
-          </Select>
-        </Form.Item>
+        <ResponsiveFilters.Field
+          label={t('user.field.phoneVerified')}
+          type="select"
+          value={values.phoneVerified}
+          onChange={(value) => handleChange('phoneVerified', value)}
+          placeholder={t('user.filter.phoneVerifiedPlaceholder')}
+          options={[
+            { label: t('common.yes'), value: true },
+            { label: t('common.no'), value: false },
+          ]}
+        />
+      </ResponsiveFilters.Group>
 
-        <Form.Item label={t('user.field.registrationDate')}>
-          <RangePicker
-            value={values.registeredRange}
-            onChange={(dates) => handleChange('registeredRange', dates)}
-            style={{ width: 250 }}
-          />
-        </Form.Item>
-
-        <Form.Item>
-          <Space>
-            <Button type="primary" htmlType="submit">
-              {t('filter.apply')}
-            </Button>
-            <Button onClick={handleReset}>{t('filter.reset')}</Button>
-          </Space>
-        </Form.Item>
-      </Form>
-    </div>
+      {/* Date Filters */}
+      <ResponsiveFilters.Group title={t('user.filter.dates')}>
+        <ResponsiveFilters.Field
+          label={t('user.field.registrationDate')}
+          type="date-range"
+          value={values.registeredRange}
+          onChange={(value) => handleChange('registeredRange', value)}
+          placeholder={t('user.filter.registrationDatePlaceholder')}
+        />
+      </ResponsiveFilters.Group>
+    </ResponsiveFilters>
   )
 }

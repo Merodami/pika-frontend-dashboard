@@ -1,4 +1,10 @@
-import type { ColumnDef, SortingState, ColumnFiltersState, VisibilityState, RowSelectionState } from '@tanstack/react-table'
+import type {
+  ColumnDef,
+  SortingState,
+  ColumnFiltersState,
+  VisibilityState,
+  RowSelectionState,
+} from '@tanstack/react-table'
 import type { ReactNode } from 'react'
 
 // Re-export enums from pika-types to avoid string literals
@@ -8,7 +14,7 @@ export interface DataGridConfig<T = any> {
   name: string
   data: T[]
   columns: ColumnDef<T>[]
-  
+
   // Features
   features?: {
     virtualization?: VirtualizationConfig
@@ -17,14 +23,14 @@ export interface DataGridConfig<T = any> {
     export?: ExportConfig
     realtime?: RealtimeConfig
   }
-  
+
   // UI Configuration
   display?: {
     density?: TableDensity
     theme?: TableTheme
     responsive?: boolean
   }
-  
+
   // Callbacks
   onRowClick?: (row: T) => void
   onSelectionChange?: (selectedRows: T[]) => void
@@ -69,19 +75,19 @@ export enum ExportFormat {
   CSV = 'csv',
   XLSX = 'xlsx',
   PDF = 'pdf',
-  JSON = 'json'
+  JSON = 'json',
 }
 
 export enum TableDensity {
   COMPACT = 'compact',
   COMFORTABLE = 'comfortable',
-  SPACIOUS = 'spacious'
+  SPACIOUS = 'spacious',
 }
 
 export enum TableTheme {
   LIGHT = 'light',
   DARK = 'dark',
-  AUTO = 'auto'
+  AUTO = 'auto',
 }
 
 export enum ActionVariant {
@@ -90,7 +96,7 @@ export enum ActionVariant {
   OUTLINE = 'outline',
   SECONDARY = 'secondary',
   GHOST = 'ghost',
-  LINK = 'link'
+  LINK = 'link',
 }
 
 // Filter types

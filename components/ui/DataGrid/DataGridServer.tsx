@@ -14,6 +14,7 @@ import { Search, RefreshCw } from 'lucide-react'
 
 import type { DataGridConfig } from '@/types/data-grid'
 import { useDataGrid } from '@/hooks/useDataGrid'
+import { MobilePagination } from '@/components/ui/pagination'
 
 // Server-side pagination metadata
 interface ServerPaginationMeta {
@@ -216,7 +217,7 @@ export function DataGridServer<T>({
       </div>
 
       {/* Table */}
-      <div className="overflow-hidden rounded-lg border border-gray-200 shadow">
+      <div className="overflow-hidden rounded-lg border border-gray-200 shadow -mx-4 sm:mx-0">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200 bg-white">
             <thead className="bg-gray-50">
@@ -225,7 +226,7 @@ export function DataGridServer<T>({
                   {headerGroup.headers.map((header) => (
                     <th
                       key={header.id}
-                      className={`px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider ${
+                      className={`px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider ${
                         header.column.getCanSort()
                           ? 'cursor-pointer select-none hover:bg-gray-100'
                           : ''
@@ -259,7 +260,7 @@ export function DataGridServer<T>({
                     {columns.map((_, colIndex) => (
                       <td
                         key={colIndex}
-                        className="px-6 py-4 whitespace-nowrap"
+                        className="px-3 sm:px-6 py-4 whitespace-nowrap"
                       >
                         <div className="h-4 bg-gray-200 rounded"></div>
                       </td>
@@ -271,7 +272,7 @@ export function DataGridServer<T>({
                 <tr>
                   <td
                     colSpan={columns.length}
-                    className="px-6 py-12 text-center"
+                    className="px-3 sm:px-6 py-12 text-center"
                   >
                     <div className="text-gray-500">
                       <div className="text-lg font-medium">
@@ -296,7 +297,7 @@ export function DataGridServer<T>({
                     {row.getVisibleCells().map((cell) => (
                       <td
                         key={cell.id}
-                        className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
+                        className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-900"
                       >
                         {flexRender(
                           cell.column.columnDef.cell,
@@ -312,98 +313,39 @@ export function DataGridServer<T>({
         </div>
       </div>
 
-      {/* Pagination */}
-      <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200">
-        <div className="flex-1 flex items-center justify-between">
-          <div className="flex items-center space-x-2 text-sm text-gray-700">
-            <span>
-              {t('table.showingResults', {
-                start: serverPagination
-                  ? (serverPagination.page - 1) * serverPagination.limit + 1
-                  : 1,
-                end: serverPagination
-                  ? Math.min(
-                      serverPagination.page * serverPagination.limit,
-                      serverPagination.total
-                    )
-                  : data.length,
-                total: serverPagination?.total ?? data.length,
-              })}
-            </span>
-          </div>
-
-          <div className="flex items-center space-x-6">
-            <div className="flex items-center space-x-2">
-              <label className="text-sm text-gray-700">
-                {t('table.rowsPerPage')}:
-              </label>
-              <select
-                value={dataGrid.pagination.pageSize}
-                onChange={(e) =>
-                  dataGrid.setPagination((prev) => ({
-                    ...prev,
-                    pageSize: Number(e.target.value),
-                    pageIndex: 0, // Reset to first page
-                  }))
-                }
-                className="border border-gray-300 rounded px-2 py-1 text-sm"
-              >
-                {[10, 20, 30, 40, 50, 100].map((pageSize) => (
-                  <option key={pageSize} value={pageSize}>
-                    {pageSize}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="flex items-center space-x-2">
-              <button
-                className="px-3 py-1 text-sm text-gray-600 hover:text-gray-900 disabled:opacity-50"
-                onClick={() =>
-                  dataGrid.setPagination((prev) => ({ ...prev, pageIndex: 0 }))
-                }
-                disabled={!table.getCanPreviousPage()}
-              >
-                {'<<'}
-              </button>
-              <button
-                className="px-3 py-1 text-sm text-gray-600 hover:text-gray-900 disabled:opacity-50"
-                onClick={() => table.previousPage()}
-                disabled={!table.getCanPreviousPage()}
-              >
-                {t('button.previous')}
-              </button>
-
-              <span className="text-sm text-gray-700">
-                {t('table.pageOf', {
-                  current: dataGrid.pagination.pageIndex + 1,
-                  total: serverPagination?.totalPages ?? 1,
-                })}
-              </span>
-
-              <button
-                className="px-3 py-1 text-sm text-gray-600 hover:text-gray-900 disabled:opacity-50"
-                onClick={() => table.nextPage()}
-                disabled={!table.getCanNextPage()}
-              >
-                {t('button.next')}
-              </button>
-              <button
-                className="px-3 py-1 text-sm text-gray-600 hover:text-gray-900 disabled:opacity-50"
-                onClick={() =>
-                  dataGrid.setPagination((prev) => ({
-                    ...prev,
-                    pageIndex: (serverPagination?.totalPages ?? 1) - 1,
-                  }))
-                }
-                disabled={!table.getCanNextPage()}
-              >
-                {'>>'}
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Mobile-Responsive Pagination */}
+      {console.log('🔄 DataGrid Pagination Props:', {
+        current: dataGrid.pagination.pageIndex + 1,
+        total: serverPagination?.totalPages ?? 1,
+        pageSize: dataGrid.pagination.pageSize,
+        totalItems: serverPagination?.total ?? data.length,
+        serverPagination,
+        dataGridPagination: dataGrid.pagination
+      })}
+      <MobilePagination
+        current={dataGrid.pagination.pageIndex + 1}
+        total={serverPagination?.totalPages ?? 1}
+        pageSize={dataGrid.pagination.pageSize}
+        totalItems={serverPagination?.total ?? data.length}
+        onPageChange={(page) => {
+          console.log('🔄 DataGrid onPageChange:', { 
+            requestedPage: page, 
+            willSetPageIndex: page - 1,
+            currentPagination: dataGrid.pagination
+          })
+          dataGrid.setPagination((prev) => ({
+            ...prev,
+            pageIndex: page - 1,
+          }))
+        }}
+        onPageSizeChange={(pageSize) =>
+          dataGrid.setPagination((prev) => ({
+            ...prev,
+            pageSize,
+            pageIndex: 0, // Reset to first page
+          }))
+        }
+      />
     </div>
   )
 }

@@ -12,9 +12,8 @@ import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 
 // Import Uppy styles
-import '@uppy/core/dist/style.min.css'
-import '@uppy/drag-drop/dist/style.min.css'
-import '@uppy/image-editor/dist/style.min.css'
+import '@uppy/core/css/style.min.css'
+import '@uppy/image-editor/css/style.min.css'
 
 interface ImageUploadProps {
   value?: string // Current image URL

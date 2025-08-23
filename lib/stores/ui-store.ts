@@ -63,10 +63,12 @@ export const useUIStore = create<UIState>()(
           sidebarOpen: !state.sidebarOpen,
         })),
 
-      setMobileSidebarOpen: (open) =>
+      setMobileSidebarOpen: (open) => {
+        console.log('Zustand setMobileSidebarOpen called', { open })
         set({
           mobileSidebarOpen: open,
-        }),
+        })
+      },
 
       collapseSidebar: (collapsed) =>
         set({

@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { message } from 'antd'
 import { UserPlus } from 'lucide-react'
 import { useTranslations } from 'next-intl'
@@ -20,6 +21,7 @@ import type { Locale } from '@/i18n/config'
 
 import { UserTable } from './userTable'
 import { UserFilters } from './userFilters'
+import AddUserDrawer from '@/app/[locale]/(dashboard)/admin/users/AddUserDrawer'
 
 interface UserListContainerProps {
   userRole: UserRole
@@ -30,6 +32,7 @@ export function UserListContainer({ locale }: UserListContainerProps) {
   const router = useRouter()
   const t = useTranslations()
   const queryClient = useQueryClient()
+  const [isAddUserDrawerOpen, setIsAddUserDrawerOpen] = useState(false)
 
   // Data table state management
   const dataTable = useServerDataTable<GetAdminUserList200DataItem>({
@@ -91,7 +94,7 @@ export function UserListContainer({ locale }: UserListContainerProps) {
   }
 
   const handleAddUser = () => {
-    router.push(`/${locale}/admin/users/new`)
+    setIsAddUserDrawerOpen(true)
   }
 
   const handleBulkDelete = async (selectedKeys: React.Key[]) => {
@@ -155,6 +158,13 @@ export function UserListContainer({ locale }: UserListContainerProps) {
           onSendEmail={handleSendEmail}
         />
       </div>
+
+      {/* Add User Drawer */}
+      <AddUserDrawer
+        open={isAddUserDrawerOpen}
+        onClose={() => setIsAddUserDrawerOpen(false)}
+        locale={locale}
+      />
     </div>
   )
 }

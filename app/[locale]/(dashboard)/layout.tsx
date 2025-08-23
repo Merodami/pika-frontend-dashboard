@@ -8,6 +8,7 @@ import { ModernSidebarNav } from '@/components/layouts/modernSidebarNav'
 import { DashboardHeader } from '@/components/layouts/dashboardHeader'
 import { LoadingSkeleton } from '@/components/ui/loadingSkeleton'
 import type { Locale } from '@/i18n/config'
+import { APP_CONFIG } from '@/lib/constants/app'
 
 // Force dynamic rendering for authenticated routes
 export const dynamic = 'force-dynamic'
@@ -129,7 +130,7 @@ export default async function DashboardLayout({
     <ModernSidebarNav
       navItems={navItems}
       footer={
-        <div className="text-xs text-gray-500 text-center">© 2024 Pika</div>
+        <div className="text-xs text-gray-500 text-center">{APP_CONFIG.copyright}</div>
       }
     />
   )

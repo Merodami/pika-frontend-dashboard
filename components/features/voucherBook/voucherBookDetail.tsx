@@ -14,6 +14,8 @@ import { VoucherBookSummaryCard } from './detail/VoucherBookSummaryCard'
 import { VoucherBookOverview } from './detail/VoucherBookOverview'
 import { VoucherBookHistory } from './detail/VoucherBookHistory'
 import { VoucherBookDistribution } from './detail/VoucherBookDistribution'
+import { VoucherBookPdfGenerator } from './VoucherBookPdfGenerator'
+import { VoucherBookStatusWorkflow } from './VoucherBookStatusWorkflow'
 import {
   useVoucherBook,
   useDeleteVoucherBook,
@@ -137,6 +139,16 @@ export function VoucherBookDetail({ bookId, locale }: VoucherBookDetailProps) {
       key: 'overview',
       label: t('detail.tabs.overview'),
       children: <VoucherBookOverview book={book} />,
+    },
+    {
+      key: 'workflow',
+      label: t('detail.tabs.workflow'),
+      children: <VoucherBookStatusWorkflow book={book} onStatusChange={handleStatusChange} />,
+    },
+    {
+      key: 'pdf',
+      label: t('detail.tabs.pdf'),
+      children: <VoucherBookPdfGenerator book={book} />,
     },
     {
       key: 'history',

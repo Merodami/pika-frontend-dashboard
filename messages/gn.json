@@ -33,7 +33,39 @@
       "changesSaved": "Umi ñemoambue oñeñongatu porã",
       "errorOccurred": "Oiko peteĩ jejavy",
       "noData": "Ndaipóri mba'ekuaarã",
-      "required": "Ko tenda oñeikotevẽ"
+      "required": "Ko tenda oñeikotevẽ",
+      "comingSoon": "Ou potáta",
+      "passwordsMustMatch": "Umi ñe'ẽñemi ojuehe vaerã",
+      "autoGeneratePassword": "Jejapo ijehegui ñe'ẽñemi",
+      "confirmPassword": "Moneĩ Ñe'ẽñemi",
+      "confirmPasswordPlaceholder": "Moneĩ ñe'ẽñemi",
+      "passwordWillBeGenerated": "Pe ñe'ẽñemi ojejapo ijehegui",
+      "userWillReceiveEmail": "Pe puruhára ohapykuévo peteĩ ñanduti veve omoĩ hag̃ua iñe'ẽñemi peteĩha jave oike.",
+      "userCreationInfo": "Pe puruhára ojejapo Atyrusu Puruhára ramo Myendy tekove ndive",
+      "userCreationDescription": "Pe puruhára ojeporavokéta ijehegui Atyrusu tembiapo ha Myendy tekove rupi atyrusu ñemboguataha rapykuere."
+    },
+    "yes": "Heẽ",
+    "no": "Nahániri",
+    "never": "Araka'eve",
+    "notApplicable": "N/A",
+    "na": "N/A",
+    "filters": {
+      "showFilters": "Hechauka Mboguaha",
+      "hideFilters": "Mokañy Mboguaha",
+      "clearFilters": "Mopotĩ Opavave",
+      "activeFilters": "Mboguaha Hendýva"
+    },
+    "table": {
+      "showingResults": "Hechauka aporã",
+      "showingItems": "Hechauka mba'e",
+      "rowsPerPage": "Tenda kuatiarogue",
+      "itemsPerPage": "Mba'e kuatiarogue",
+      "page": "Kuatiarogue",
+      "of": "pe",
+      "previous": "Tenondegua",
+      "next": "Upeigua",
+      "noData": "Ndaipóri mba'ekuaarã",
+      "loading": "Henyhẽ..."
     }
   },
   "users": {
@@ -58,8 +90,260 @@
       "edit": "Moambue",
       "delete": "Mboguete",
       "activate": "Myendy",
-      "deactivate": "Mbogue"
+      "deactivate": "Mbogue",
+      "ban": "Ñani Puruhára",
+      "unban": "Mboguevi Ñani",
+      "resetRegistration": "Mbojevyjey Ñemboguataha"
+    },
+    "filters": {
+      "search": "Jeheka puruhára...",
+      "role": "Tembiapo",
+      "status": "Tekove",
+      "allRoles": "Opaite tembiapo",
+      "allStatuses": "Opaite tekove"
+    },
+    "status": {
+      "active": "Hendyva",
+      "inactive": "Nohendy'ỹva",
+      "suspended": "Jokohápe",
+      "pending": "Oha'arõhína",
+      "banned": "Ñanipyre"
+    },
+    "role": {
+      "admin": "Ñangarekohára",
+      "business": "Mba'apo",
+      "businessowner": "Mba'apo Jára",
+      "customer": "Ñemuhára",
+      "user": "Puruhára"
+    },
+    "fields": {
+      "id": "ID",
+      "firstName": "Téra Tenondeve",
+      "lastName": "Téra Tapykue",
+      "fullName": "Téra Tuichavéva",
+      "email": "Ñanduti Veve",
+      "emailVerified": "Ñanduti Veve Jehechajeýva",
+      "phoneNumber": "Pumbyry Papapy",
+      "phoneVerified": "Pumbyry Jehechajeýva",
+      "role": "Tembiapo",
+      "status": "Tekove",
+      "avatar": "Ta'anga Rechaha",
+      "dateOfBirth": "Jahechauka Ára",
+      "gender": "Kua",
+      "country": "Tetã",
+      "city": "Táva",
+      "address": "Dirección",
+      "postalCode": "Código Postal",
+      "timezone": "Aravo Zona",
+      "language": "Ñe'ẽ",
+      "currency": "Pirapire",
+      "twoFactorEnabled": "Mokõi Ãha Jehechajeý",
+      "marketingConsent": "Marketing Ñemoneĩ",
+      "termsAccepted": "Ñemboguataha Oñemoneĩmava",
+      "privacyPolicyAccepted": "Tekoñemi Purureko Oñemoneĩmava",
+      "joined": "Oike",
+      "createdAt": "Ojejapo",
+      "updatedAt": "Oñembopyahu",
+      "lastSeen": "Pahápe Ojehechámava",
+      "lastLogin": "Paha Jeike",
+      "loginCount": "Jeike Papapy",
+      "isOnline": "Ñanduti Rekove",
+      "businessCount": "Mba'apo Papapy",
+      "voucherCount": "Kupon Papapy",
+      "notes": "Ñangarekohára Jehaipy",
+      "suspended": "Jokohápe",
+      "suspendedAt": "Jokohápe Oñeme'ẽ",
+      "suspendedUntil": "Jokoháramo",
+      "suspensionReason": "Jokohá Mba'ére",
+      "banned": "Ñanipyre",
+      "bannedAt": "Ñanipyre Oñeme'ẽ",
+      "banReason": "Ñani Mba'ére"
+    },
+    "list": {
+      "title": "Opaite Puruhára",
+      "subtitle": "Ekundaha ha eñangareko puruhára mba'e'aty",
+      "table": {
+        "columns": {
+          "avatar": "Avatar",
+          "name": "Téra",
+          "email": "Ñanduti Veve",
+          "phone": "Pumbyry",
+          "role": "Tembiapo",
+          "status": "Tekove",
+          "emailVerified": "Ñanduti Veve Jehechajeýva",
+          "phoneVerified": "Pumbyry Jehechajeýva",
+          "lastSeen": "Pahápe Ojehechámava",
+          "joined": "Oike",
+          "businessCount": "Mba'apo",
+          "actions": "Ñemboguata"
+        }
+      },
+      "filters": {
+        "all": "Opaite Puruhára",
+        "search": "Jeheka puruhára...",
+        "clearFilters": "Mopotĩ Mboguaha",
+        "showFilters": "Hechauka Mboguaha",
+        "hideFilters": "Mokañy Mboguaha",
+        "filterByRole": {
+          "label": "Mbogua Tembiapo rupi",
+          "placeholder": "Eiporavo tembiapo",
+          "options": {
+            "all": "Opaite Tembiapo",
+            "admin": "Ñangarekohára",
+            "business": "Mba'apo",
+            "businessowner": "Mba'apo Jára",
+            "customer": "Ñemuhára",
+            "user": "Puruhára"
+          }
+        },
+        "filterByStatus": {
+          "label": "Mbogua Tekove rupi",
+          "placeholder": "Eiporavo tekove",
+          "options": {
+            "all": "Opaite Tekove",
+            "active": "Hendyva",
+            "inactive": "Nohendy'ỹva",
+            "suspended": "Jokohápe",
+            "pending": "Oha'arõhína",
+            "banned": "Ñanipyre"
+          }
+        },
+        "filterByVerification": {
+          "label": "Mbogua Jehechajeý rupi",
+          "placeholder": "Eiporavo jehechajeý rekove",
+          "options": {
+            "all": "Opaite Puruhára",
+            "emailVerified": "Ñanduti Veve Jehechajeýva",
+            "emailUnverified": "Ñanduti Veve Nojehechajeýiva",
+            "phoneVerified": "Pumbyry Jehechajeýva",
+            "phoneUnverified": "Pumbyry Nojehechajeýiva",
+            "fullyVerified": "Opaite Mba'e Jehechajeýva",
+            "unverified": "Nojehechajeýiva"
+          }
+        },
+        "filterByCountry": {
+          "label": "Mbogua Tetã rupi",
+          "placeholder": "Eiporavo tetã",
+          "options": {
+            "all": "Opaite Tetã"
+          }
+        },
+        "filterByRegistrationDate": {
+          "label": "Mbogua Ñemboguataha Ára rupi",
+          "placeholder": "Eiporavo ára arange",
+          "options": {
+            "all": "Opaite Aravo",
+            "today": "Ko Árape",
+            "yesterday": "Kuehe",
+            "thisWeek": "Ko Arapokõindy",
+            "lastWeek": "Arapokõindy Ohasáva",
+            "thisMonth": "Ko Jasy",
+            "lastMonth": "Jasy Ohasáva",
+            "thisYear": "Ko Ary",
+            "lastYear": "Ary Ohasáva",
+            "custom": "Arange Ijojaha'ỹva"
+          }
+        },
+        "filterByActivity": {
+          "label": "Mbogua Ñemba'apo rupi",
+          "placeholder": "Eiporavo ñemba'apo rekove",
+          "options": {
+            "all": "Opaite Puruhára",
+            "online": "Ko'ag̃a Ñanduti-pe",
+            "recentlyActive": "Ramovépe Omba'apóva",
+            "inactive": "Nomba'aposéiva",
+            "neverLoggedIn": "Araka'eve Noikéiva"
+          }
+        },
+        "sortBy": {
+          "label": "Mbohasa rupi",
+          "placeholder": "Eiporavo mbohasa",
+          "options": {
+            "createdAt_desc": "Pyahuvéva Tenondeve",
+            "createdAt_asc": "Itujáveva Tenondeve",
+            "name_asc": "Téra A-Z",
+            "name_desc": "Téra Z-A",
+            "email_asc": "Ñanduti Veve A-Z",
+            "lastSeen_desc": "Ramovépe Hendyva",
+            "loginCount_desc": "Hetave Omba'apóva"
+          }
+        },
+        "quickFilters": {
+          "label": "Mboguaha Pya'e",
+          "admins": "Ñangarekohára",
+          "businessOwners": "Mba'apo Jára",
+          "customers": "Ñemuhára",
+          "verifiedUsers": "Puruhára Jehechajeýva",
+          "unverifiedUsers": "Puruhára Nojehechajeýiva",
+          "onlineUsers": "Puruhára Ñanduti-pe",
+          "recentUsers": "Puruhára Pyahu",
+          "suspendedUsers": "Puruhára Jokohápe",
+          "bannedUsers": "Puruhára Ñanipyre"
+        }
+      },
+      "results": {
+        "showing": "Ojehechauka {from}-{to} {total}-gui",
+        "noResults": "Ndaipóri puruhára ojokupytýva ne jerure rehe",
+        "noResultsDescription": "Eha'ã emoambue ne mboguaha térã jeheka ñe'ẽ",
+        "resetFilters": "Mbojevy opaite mboguaha"
+      }
     }
+  },
+  "user": {
+    "title": "Puruhára",
+    "subtitle": "Ñangareko puruhára mba'e'aty ha ñemoneĩ",
+    "field": {
+      "name": "Téra",
+      "email": "Ñanduti Veve",
+      "phone": "Pumbyry", 
+      "status": "Tekove",
+      "role": "Tembiapo",
+      "emailVerified": "Ñanduti Veve Jehechajeýva",
+      "phoneVerified": "Pumbyry Jehechajeýva",
+      "createdAt": "Ojejapo",
+      "lastLogin": "Paha Jeike",
+      "registrationDate": "Ñemboguataha Ára"
+    },
+    "filter": {
+      "search": "Jeheka",
+      "searchPlaceholder": "Jeheka puruhára...",
+      "emailPlaceholder": "Emoinge ñanduti veve",
+      "statusPlaceholder": "Eiporavo tekove",
+      "rolePlaceholder": "Eiporavo tembiapo", 
+      "emailVerifiedPlaceholder": "¿Ñanduti veve jehechajeýva?",
+      "phoneVerifiedPlaceholder": "¿Pumbyry jehechajeýva?",
+      "registrationDatePlaceholder": "Eiporavo ára intervalo",
+      "basic": "Mboguaha Básico",
+      "statusAndRole": "Tekove ha Tembiapo",
+      "verification": "Ñehechajey",
+      "dates": "Ára Mboguaha"
+    },
+    "status": {
+      "active": "Hendyva",
+      "suspended": "Jokohápe", 
+      "banned": "Ñanipyre",
+      "unconfirmed": "Noñemoneĩriva"
+    },
+    "role": {
+      "admin": "Ñangarekohára",
+      "business": "Mba'apo",
+      "customer": "Ñemuhára"
+    },
+    "action": {
+      "view": "Hecha Puruhára",
+      "edit": "Moambue Puruhára",
+      "delete": "Mbogue Puruhára",
+      "sendEmail": "Mondo Ñanduti Veve",
+      "create": "Japo Puruhára"
+    },
+    "message": {
+      "deleteSuccess": "Puruhára oñembogue porã",
+      "bulkDeleteSuccess": "Puruhára oñembogue porã"
+    }
+  },
+  "filter": {
+    "apply": "Moapli",
+    "reset": "Mbojevy"
   },
   "auth": {
     "login": {
@@ -113,7 +397,7 @@
   },
   "dashboard": {
     "title": "Panel Ñangarekoha",
-    "description": "Pika Panel Ñangarekoha",
+    "description": "The VoucherBook Panel Ñangarekoha",
     "welcome": "Tereg̃uahẽ porãite, {name}",
     "admin": {
       "subtitle": "Ko'ápe oĩ ne plataforma resumen"
@@ -133,28 +417,97 @@
   },
   "vouchers": {
     "title": "Kupón",
+    "subtitle": "Emoheñói ha emohenda kupón promocional negósio-pe g̃uarã",
+    "description": "Emohenda kupón ha campaña promocional",
+    "untitled": "Ndoguerekoíva téra",
+    "unlimited": "Opavavegua",
+    "totalVouchers": "Opavave {count} kupón",
+    "searchPlaceholder": "Eheka kupón...",
+    "filterByState": "Emboguaha teko rupi",
+    "filterByType": "Emboguaha tipo rupi",
     "create": {
       "title": "Emoheñói Kupón",
-      "button": "Kupón Pyahu"
+      "button": "Kupón Pyahu",
+      "subtitle": "Emohenda peteĩ kupón promocional pyahu"
     },
     "edit": {
-      "title": "Embosakói Kupón"
+      "title": "Embosakói Kupón",
+      "subtitle": "Emoambue kupón marandu"
+    },
+    "detail": {
+      "title": "Kupón Marandu",
+      "description": "Ehecha kupón marandu ha jehechaukaha"
+    },
+    "business": {
+      "title": "Che Kupón",
+      "subtitle": "Emohenda ne negósio kupón",
+      "description": "Emoheñói ha emohenda kupón ne negósio-pe g̃uarã",
+      "create": {
+        "title": "Emoheñói Kupón Pyahu",
+        "subtitle": "Emoheñói peteĩ kupón promocional ne negósio-pe g̃uarã",
+        "description": "Emohenda peteĩ campaña kupón pyahu"
+      }
     },
     "fields": {
+      "id": "ID",
       "title": "Moñe'ẽrã",
       "description": "Ñemombe'u",
+      "business": "Negósio",
+      "category": "Aty",
       "discount": "Ñemboguejy",
+      "discountType": "Ñemboguejy Tipo",
+      "discountValue": "Ñemboguejy Valor",
+      "state": "Teko",
       "validFrom": "Oikóta guive",
       "validUntil": "Oikóta peve",
       "maxRedemptions": "Jepuru hetave",
-      "termsAndConditions": "Térã ha kondisión"
+      "maxRedemptionsPerUser": "Hetave joguarã-pe",
+      "termsAndConditions": "Térã ha kondisión",
+      "redemptions": "Jepuru",
+      "actions": "Tembiapokue",
+      "createdAt": "Ojejapo",
+      "updatedAt": "Oñembopyahu"
     },
     "status": {
       "active": "Hendy",
       "expired": "Ndoikovéima",
       "draft": "Moã'anga",
-      "suspended": "Ojejoko"
-    }
+      "suspended": "Ojejoko",
+      "published": "Ojemuasaje"
+    },
+    "discountType": {
+      "percentage": "Porcentaje",
+      "fixed": "Hepykue Mba'e"
+    },
+    "actions": {
+      "publish": "Emuasaje",
+      "expire": "Emboopa",
+      "suspend": "Ejoko",
+      "duplicate": "Emokõi"
+    },
+    "stats": {
+      "scans": "Jehechaukaha Opavave",
+      "claims": "Jejerure Opavave",
+      "redemptions": "Jepuru",
+      "conversionRate": "Conversión Tasa"
+    },
+    "details": {
+      "title": "Kupón Marandu"
+    },
+    "preview": {
+      "title": "Jehecha Ymaguare"
+    },
+    "error": {
+      "notFound": "Kupón Ndojejuhúi",
+      "voucherNotFound": "Kupón rehekáva ndopĩri térã oñembogue.",
+      "loadFailed": "Ojavy oñehenyhẽ kupón",
+      "createFailed": "Ojavy ojapo kupón",
+      "updateFailed": "Ojavy oñembopyahu kupón",
+      "deleteFailed": "Ojavy oñembogue kupón",
+      "cannotEdit": "Ndaikatúi Oñemoambue Kupón",
+      "onlyDraftEditable": "Kupón moã'anga añoite ikatu oñemoambue. Kupón ojemuasajepyre, oopapyre térã ojejokopyre ndaikatúi oñemoambue."
+    },
+    "selectCategory": "Eiporavo peteĩ aty"
   },
   "businesses": {
     "title": "Negósio",
@@ -524,5 +877,413 @@
       "unsavedChanges": "Oguereko ñemoambue noñeñongatúiva. ¿Añetehápe resẽsépa?",
       "incompleteStep": "Emyenyhẽ opaite tenda oñeikotevẽva eku'e mboyve"
     }
+  },
+  "voucherBooks": {
+    "title": "Kupon Ararendápe",
+    "subtitle": "Ñangareko kupon ararendápe rykuéra ha PDF jejapo",
+    "description": "Japo ha ñangareko kupon ararendápe aty",
+    "totalBooks": "Opaite {count} kupon ararendápe",
+    "searchPlaceholder": "Jeheka kupon ararendápe...",
+    "filterByStatus": "Mbogua teko rupi",
+    "filterByType": "Mbogua tipo rupi",
+    "noBooks": "Ndojejuhúi kupon ararendápe",
+    "list": {
+      "title": "Opaite Kupon Ararendápe",
+      "subtitle": "Ekundaha ha eñangareko ne kupon ararendápe aty",
+      "table": {
+        "columns": {
+          "title": "Teratee",
+          "type": "Tipo",
+          "status": "Teko",
+          "pages": "Kuatiarogue",
+          "placements": "Tenda",
+          "created": "Ojejapo",
+          "updated": "Oñembopyahu",
+          "actions": "Tembiapo"
+        }
+      },
+      "filters": {
+        "all": "Opaite Ararendápe",
+        "search": "Jeheka ararendápe...",
+        "clearFilters": "Mopotĩ Mboguaha",
+        "showFilters": "Hechauka Mboguaha",
+        "hideFilters": "Mokañy Mboguaha",
+        "filterByStatus": {
+          "label": "Mbogua Teko rupi",
+          "placeholder": "Eiporavo teko",
+          "options": {
+            "all": "Opaite Teko",
+            "DRAFT": "Borrador",
+            "IN_REVIEW": "Ojehecha Hínape",
+            "APPROVED": "Oĩmava",
+            "PUBLISHED": "Hesakãmbyre",
+            "ARCHIVED": "Oñeñongatúva",
+            "REJECTED": "Ojehejaréiva"
+          }
+        },
+        "filterByType": {
+          "label": "Mbogua Tipo rupi",
+          "placeholder": "Eiporavo tipo",
+          "options": {
+            "all": "Opaite Tipo",
+            "MONTHLY": "Jasýpe",
+            "SEASONAL": "Arapeve",
+            "ANNUAL": "Aryve",
+            "SPECIAL": "Edición Especial"
+          }
+        },
+        "filterByYear": {
+          "label": "Mbogua Ary rupi",
+          "placeholder": "Eiporavo ary",
+          "options": {
+            "all": "Opaite Ary"
+          }
+        },
+        "filterByMonth": {
+          "label": "Mbogua Jasy rupi",
+          "placeholder": "Eiporavo jasy",
+          "options": {
+            "all": "Opaite Jasy",
+            "1": "Jasyteĩ",
+            "2": "Jasymokõi",
+            "3": "Jasyapy",
+            "4": "Jasyrundy",
+            "5": "Jasypo",
+            "6": "Jasypoteĩ",
+            "7": "Jasypokõi",
+            "8": "Jasypoapy",
+            "9": "Jasyporundy",
+            "10": "Jasypa",
+            "11": "Jasypateĩ",
+            "12": "Jasypakõi"
+          }
+        },
+        "sortBy": {
+          "label": "Mbohasa rupi",
+          "placeholder": "Eiporavo mbohasa",
+          "options": {
+            "createdAt_desc": "Pyahuvéva Tenondeve",
+            "createdAt_asc": "Itujáveva Tenondeve",
+            "title_asc": "Teratee A-Z",
+            "title_desc": "Teratee Z-A",
+            "updatedAt_desc": "Ramovépe Oñembopyahu",
+            "status_asc": "Teko"
+          }
+        },
+        "dateRange": {
+          "label": "Arange Fecha",
+          "placeholder": "Eiporavo fecha arange",
+          "options": {
+            "all": "Opaite Aravo",
+            "today": "Ko Árape",
+            "yesterday": "Kuehe",
+            "thisWeek": "Ko Arapokõindy",
+            "lastWeek": "Arapokõindy Ohasáva",
+            "thisMonth": "Ko Jasy",
+            "lastMonth": "Jasy Ohasáva",
+            "thisYear": "Ko Ary",
+            "lastYear": "Ary Ohasáva",
+            "custom": "Arange Ijojaha'ỹva"
+          }
+        },
+        "quickFilters": {
+          "label": "Mboguaha Pya'e",
+          "myBooks": "Che Ararendápe",
+          "recentlyUpdated": "Ramovépe Oñembopyahu",
+          "needsReview": "Oikotevẽ Jehechakuaa",
+          "readyToPublish": "Oĩma Ojehesakãkuaa",
+          "published": "Hesakãmbyre",
+          "drafts": "Borrador",
+          "archived": "Oñeñongatúva"
+        }
+      },
+      "results": {
+        "showing": "Ojehechauka {from}-{to} {total}-gui",
+        "noResults": "Ndaipóri kupon ararendápe ojokupytýva ne jerure rehe",
+        "noResultsDescription": "Eha'ã emoambue ne mboguaha térã jeheka ñe'ẽ",
+        "resetFilters": "Mbojevy opaite mboguaha"
+      }
+    },
+    "emptyState": {
+      "title": "Ndaipóri Kupon Ararendápe",
+      "description": "Eñepyrũ emoheñóivo nde peteĩha kupon ararendápe",
+      "createButton": "Japo Kupon Ararendápe"
+    },
+    "create": {
+      "title": "Moheñói Kupon Ararendápe",
+      "button": "Kupon Ararendápe Pyahu",
+      "subtitle": "Emboheko peteĩ kupon ararendápe aty pyahu"
+    },
+    "edit": {
+      "title": "Moambue Kupon Ararendápe",
+      "subtitle": "Moambue kupon ararendápe mba'ekuaarã {title} peg̃uarã"
+    },
+    "detail": {
+      "title": "Kupon Ararendápe Marandu",
+      "description": "Ehecha kupon ararendápe marandu ha eñangareko PDF jejapo",
+      "tabs": {
+        "overview": "Ñemombyky",
+        "workflow": "Teko ha Tembiapo Rape",
+        "pdf": "PDF Jejapo",
+        "pages": "Kuatiarogue",
+        "placements": "Tenda",
+        "analytics": "Jehechakuaa"
+      }
+    },
+    "bookType": {
+      "MONTHLY": "Jasýpe",
+      "SEASONAL": "Arapeve", 
+      "ANNUAL": "Aryve",
+      "SPECIAL": "Edición Especial"
+    },
+    "status": {
+      "DRAFT": "Borrador",
+      "IN_REVIEW": "Ojehecha Hínape",
+      "APPROVED": "Oĩmava",
+      "PUBLISHED": "Hesakãmbyre",
+      "ARCHIVED": "Oñeñongatúva",
+      "REJECTED": "Ojehejaréiva"
+    },
+    "fields": {
+      "id": "ID",
+      "title": "Teratee",
+      "edition": "Edición",
+      "bookType": "Ararendápe Tipo",
+      "month": "Jasy",
+      "year": "Ary",
+      "totalPages": "Kuatiarogue Opavave",
+      "currentPages": "Kuatiarogue Ko'ag̃agua",
+      "pageCount": "Kuatiarogue Papapy",
+      "totalPlacements": "Tenda Opavave",
+      "status": "Teko",
+      "createdAt": "Ojejapo",
+      "updatedAt": "Paha Ñemoambue",
+      "publishedAt": "Ojehechauka",
+      "archivedAt": "Oñeñongatu",
+      "coverImage": "Portada Ta'anga",
+      "backImage": "Contraportada Ta'anga",
+      "description": "Ñemombeukuaa",
+      "targetAudience": "Henduha Apopyre",
+      "notes": "Jehaipy",
+      "metadata": "Marandu Ambue"
+    },
+    "placeholders": {
+      "title": "Ehai kupon ararendápe teratee",
+      "edition": "ha'eháicha, Arapokõi Edición, Q1 2024",
+      "bookType": "Eiporavo ararendápe tipo",
+      "month": "Eiporavo jasy",
+      "year": "Eiporavo ary",
+      "totalPages": "Ehai kuatiarogue papapy opavave",
+      "description": "Emoñe'ẽ kupon ararendápe tetepy ha hembipuru",
+      "targetAudience": "ha'eháicha, Tetã, Tapicha Pyahu Mba'apoha, Turistas",
+      "notes": "Oimeraẽ jehaipy térã comentario"
+    },
+    "sections": {
+      "basicInfo": "Marandu Ypykue",
+      "images": "Portada Ta'anga",
+      "metadata": "Ambue Marandu",
+      "settings": "Ararendápe Ñemboheko",
+      "preview": "Jehecha Tenondeve"
+    },
+    "actions": {
+      "create": "Japo Ararendápe",
+      "update": "Mbopyahu Ararendápe",
+      "delete": "Mbogue Ararendápe",
+      "duplicate": "Mondoha Ararendápe",
+      "archive": "Ñongatu Ararendápe",
+      "unarchive": "Guenoñongatu Ararendápe",
+      "publish": "Hesakã Ararendápe",
+      "unpublish": "Nohesakãvéi Ararendápe",
+      "approve": "Moneĩ Ararendápe",
+      "reject": "Heja Ararendápe",
+      "submitForReview": "Mondo Jehechakuaa",
+      "saveChanges": "Ñongatu Ñemoambue",
+      "saveDraft": "Ñongatu Borrador",
+      "viewDetails": "Ehecha Marandu",
+      "editBook": "Moambue Ararendápe",
+      "generatePdf": "Moheñói PDF",
+      "downloadPdf": "Mboguejy PDF"
+    },
+    "workflow": {
+      "title": "Teko Tembiapo Rape",
+      "description": "Ñangareko kupon ararendápe hesãi tembiapo rape",
+      "currentStatus": "Ko'ag̃agua Teko",
+      "availableActions": "Tembiapo Ojepururukuaáva",
+      "history": "Teko Tembiasakue",
+      "requirements": {
+        "title": "Mba'ekotevẽ",
+        "coverImage": "Portada ta'anga tekotevẽ",
+        "backImage": "Contraportada ta'anga iporãvéta", 
+        "minimumPages": "Oguerekova'erã sa'ive {count} kuatiarogue",
+        "minimumPlacements": "Oguerekova'erã sa'ive {count} tenda",
+        "completeMetadata": "Opaite metadata oñeikotevẽva oñemyenyhẽva'erã"
+      },
+      "transitions": {
+        "toDraft": "Gueru Borrador-pe",
+        "toInReview": "Mondo Jehechakuaa",
+        "toApproved": "Moneĩ",
+        "toPublished": "Hesakã",
+        "toArchived": "Ñongatu",
+        "toRejected": "Heja"
+      },
+      "confirmations": {
+        "publish": {
+          "title": "Hesakã Kupon Ararendápe",
+          "message": "¿Añetehápe rehesakãse ko kupon ararendápe? Oikokuaa opavavépe.",
+          "requirements": "Eme'ẽ porã opaite mba'ekotevẽ oñemyenyhẽ hesakã mboyve."
+        },
+        "archive": {
+          "title": "Ñongatu Kupon Ararendápe", 
+          "message": "Ñongatu oguéta ko ararendápe techauka opavavégui. Ikatu guenoñongatu ag̃ave."
+        },
+        "reject": {
+          "title": "Heja Kupon Ararendápe",
+          "message": "Eme'ẽ mba'ére hejáta:",
+          "reasonPlaceholder": "Ehai mba'ére hejáta..."
+        }
+      }
+    },
+    "pdf": {
+      "title": "PDF Jejapo", 
+      "description": "Moheñói ha mboguejy kupon ararendápe PDF",
+      "generate": "Moheñói PDF",
+      "regenerate": "Moheñói Jey PDF",
+      "download": "Mboguejy PDF",
+      "generating": "Ojejapo hína...",
+      "generationStarted": "PDF jejapo oñepyrũ",
+      "generationComplete": "PDF ojejapo porã",
+      "generationFailed": "PDF jejapo ojavy",
+      "generationFailedDescription": "Eha'ã jey térã eñe'ẽ pytyvõha ndive ojoavy gueteri ramo",
+      "readyForDownload": "Ne PDF oĩma omboguejykuaa hag̃ua",
+      "lastGenerated": "Opa rire ojejapo",
+      "estimatedSize": "Tuicha Ojehupiáva",
+      "bookSummary": "Ararendápe Ñemombyky",
+      "generationOptions": "Jejapo Poravopyrã",
+      "optionsInfo": "Eiporavo jejapo tenonderã",
+      "optionsDescription": "Tenonderã yvateve ijapo pya'eve hákatu ikatu hepyve",
+      "priority": "Tenonderã Nivel",
+      "priorityHigh": "Tenonderã Yvate",
+      "priorityNormal": "Tenonderã Normal", 
+      "priorityLow": "Tenonderã Michĩ",
+      "priorityHighDesc": "Jejapo pya'evéva, ojejapo ag̃aite",
+      "priorityNormalDesc": "Jejapo rekakuaa normal, ojejapo porã",
+      "priorityLowDesc": "Jejapo económico, ojejapo oĩ jave mba'epuru",
+      "minutes": "aravo'i",
+      "status": {
+        "idle": "Oĩma Ojejapókuaa",
+        "generating": "Ojejapo Hína PDF",
+        "completed": "PDF Oĩma",
+        "failed": "Jejapo Ojavy"
+      }
+    },
+    "overview": {
+      "title": "Ñemombyky",
+      "summary": "Ararendápe Ñemombyky",
+      "details": "Ararendápe Marandu",
+      "images": "Portada Ta'anga",
+      "statistics": "Estadística",
+      "recentActivity": "Tembiapo Ramovéva",
+      "createdBy": "Ojejapo",
+      "lastModifiedBy": "Paha oñemoambue"
+    },
+    "pages": {
+      "title": "Kuatiarogue",
+      "description": "Ñangareko kupon ararendápe kuatiarogue ha diseño",
+      "addPage": "Mbojuaju Kuatiarogue",
+      "deletePage": "Mbogue Kuatiarogue",
+      "reorderPages": "Mbohasa Jey Kuatiarogue",
+      "pageNumber": "Kuatiarogue {number}",
+      "totalPages": "{current} {total} kuatiarogue-gui"
+    },
+    "placements": {
+      "title": "Tenda",
+      "description": "Ñangareko kupon tenda ararendápe ryepýpe", 
+      "addPlacement": "Mbojuaju Tenda",
+      "editPlacement": "Moambue Tenda",
+      "deletePlacement": "Mbogue Tenda",
+      "placementNumber": "Tenda {number}",
+      "totalPlacements": "{current} tenda"
+    },
+    "analytics": {
+      "title": "Jehechakuaa",
+      "description": "Ehecha kupon ararendápe rembiapo ta'anga",
+      "downloads": "PDF Mboguejy",
+      "views": "Ararendápe Jehecha",
+      "engagement": "Puruhára Ñepyrũ",
+      "performance": "Rembiapo Ta'anga"
+    },
+    "messages": {
+      "createSuccess": "Kupon ararendápe ojejapo porã",
+      "createError": "Ndaikatúi ojejapo kupon ararendápe",
+      "updateSuccess": "Kupon ararendápe oñembopyahu porã", 
+      "updateError": "Ndaikatúi oñembopyahu kupon ararendápe",
+      "deleteSuccess": "Kupon ararendápe oñembogue porã",
+      "deleteError": "Ndaikatúi oñembogue kupon ararendápe",
+      "publishSuccess": "Kupon ararendápe ojehechauka porã",
+      "publishError": "Ndaikatúi ojehechauka kupon ararendápe",
+      "archiveSuccess": "Kupon ararendápe oñeñongatu porã",
+      "archiveError": "Ndaikatúi oñeñongatu kupon ararendápe",
+      "loadError": "Ndaikatúi oñemyenyhẽ kupon ararendápe",
+      "bookNotFound": "Kupon ararendápe ndojejuhúi",
+      "validationError": "Emyatyrõ umi jejavy oĩva",
+      "networkError": "Ñanduti jejavy. Eha'ã jey.",
+      "permissionError": "Ndererekói permiso ojapo hag̃ua ko tembiapo"
+    },
+    "validation": {
+      "titleRequired": "Teratee tekotevẽ",
+      "titleTooLong": "Teratee oguerekova'erã sa'ive 255 taĩ",
+      "bookTypeRequired": "Ararendápe tipo tekotevẽ",
+      "yearRequired": "Ary tekotevẽ",
+      "yearInvalid": "Ary oĩva'erã 2020 ha 2100 mbytépe",
+      "totalPagesRequired": "Kuatiarogue opavave tekotevẽ",
+      "totalPagesMin": "Oguerekova'erã sa'ive 1 kuatiarogue",
+      "totalPagesMax": "Ndaikatúi ohasa 100 kuatiarogue",
+      "monthRequired": "Jasy tekotevẽ ararendápe jasýpe g̃uarã",
+      "monthInvalid": "Jasy oĩva'erã 1 ha 12 mbytépe",
+      "coverImageRequired": "Portada ta'anga tekotevẽ",
+      "descriptionTooLong": "Ñemombeukuaa oguerekova'erã sa'ive 500 taĩ"
+    },
+    "confirmations": {
+      "delete": {
+        "title": "Mbogue Kupon Ararendápe",
+        "message": "¿Añetehápe remboguesépa ko kupon ararendápe? Ko tembiapo ndaikatúi ojejapo jey.",
+        "input": "Ehai MBOGUE emoneĩ hag̃ua"
+      },
+      "unsavedChanges": {
+        "title": "Ñemoambue Noñeñongatúiva",
+        "message": "Oguereko ñemoambue noñeñongatúiva. ¿Añetehápe resẽsépa?"
+      }
+    },
+    "tooltips": {
+      "bookType": "Eiporavo kupon ararendápe aty tipo",
+      "month": "Tekotevẽ ararendápe jasýpe g̃uarã oñemopyenda hag̃ua jasy",
+      "totalPages": "Kuatiarogue hetáva ikatu oguerekóva ko ararendápe",
+      "coverImage": "Portada ta'anga tuichavéva ojehechauka puruhárape",
+      "backImage": "Contraportada ta'anga PDF jejapo peg̃uarã",
+      "targetAudience": "Oñemopyenda henduha apopyre marketing peg̃uarã"
+    },
+    "help": {
+      "title": "Kupon Ararendápe Pytyvõ",
+      "bookTypes": {
+        "title": "Ararendápe Tipo",
+        "monthly": "Ararendápe jasýpe ojehesakã peteĩteĩ jasy oferta aravo michĩva",
+        "seasonal": "Ararendápe arapeve oñembojojorã arapokõi rehe (Temoteasã, Arapokõi, Araroguekũi, Arapokõi Ro'ysã)",
+        "annual": "Ararendápe aryve ojehesakã peteĩ jey aryve oferta pukúva", 
+        "special": "Ararendápe edición especial arete, tembiapo térã campaña ijojaha'ỹva peg̃uarã"
+      },
+      "workflow": {
+        "title": "Jehechauka Tembiapo Rape",
+        "draft": "Ñepyrũ teko - ararendápe ojejapo ha oñemoambue hína",
+        "inReview": "Ararendápe oñemondo jehechakuaa ha moneĩkuaa",
+        "approved": "Ararendápe moneĩmbyre ha oĩma ojehechauka hag̃ua",
+        "published": "Ararendápe hendýva ha ojepururukuaáva opavavépe",
+        "archived": "Ararendápe ndohendy'véi hákatu oñeñongatu registrópe g̃uarã"
+      }
+    }
+  },
+  "table": {
+    "showingItems": "Hechauka {start}-{end} {total}-gui",
+    "itemsPerPage": "Mba'e kuatiarogue",
+    "pageOf": "Kuatiarogue {current} {total}-gui"
   }
 }

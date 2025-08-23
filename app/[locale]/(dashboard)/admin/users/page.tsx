@@ -35,15 +35,13 @@ export default async function AdminUsersPage({ params }: PageProps) {
   }
 
   return (
-    <div className="admin-users-page">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold">{t('title')}</h1>
-        <p className="text-gray-600">{t('subtitle')}</p>
+    <>
+      {/* Full-width section below header */}
+      <div className="-my-6 -mx-4 sm:-mx-6 lg:-mx-8">
+        <Suspense fallback={<LoadingSkeleton />}>
+          <UserListContainer userRole={UserRole.ADMIN} locale={locale} />
+        </Suspense>
       </div>
-
-      <Suspense fallback={<LoadingSkeleton />}>
-        <UserListContainer userRole={UserRole.ADMIN} locale={locale} />
-      </Suspense>
-    </div>
+    </>
   )
 }

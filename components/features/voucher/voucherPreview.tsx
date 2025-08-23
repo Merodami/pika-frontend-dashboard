@@ -9,6 +9,7 @@ import {
   ShopOutlined,
 } from '@ant-design/icons'
 import { VoucherDiscountType } from '@merodami/pika-types'
+import { APP_CONFIG } from '@/lib/constants/app'
 import { Card, Divider, QRCode, Space, Tag, Typography } from 'antd'
 
 import { formatDate } from '@/lib/utils/date'
@@ -313,7 +314,7 @@ export function VoucherPreview({
               opacity: 0.7,
             }}
           >
-            Powered by Pika • Not valid with other offers
+{APP_CONFIG.branding.poweredBy} • Not valid with other offers
           </Text>
         </div>
       </Card>

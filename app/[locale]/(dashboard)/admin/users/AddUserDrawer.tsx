@@ -28,30 +28,31 @@ import { userAdmin } from '@merodami/pika-api'
 // Use the backend schema directly from userAdmin - this is the single source of truth
 const { AdminCreateUserRequest } = userAdmin
 
-// Extend the backend schema with UI-only fields for form handling
-const CreateUserFormSchema = AdminCreateUserRequest.extend({
-  // UI-specific field for password handling
-  autoGeneratePassword: z.boolean().default(true),
-  confirmPassword: z.string().optional(),
-}).refine(
-  (data) => {
-    // If not auto-generating, password is required
-    if (!data.autoGeneratePassword && !data.password) {
-      return false
+// Create schema factory function that accepts translation function
+const createUserFormSchema = (t: any) =>
+  AdminCreateUserRequest.extend({
+    // UI-specific field for password handling
+    autoGeneratePassword: z.boolean().default(true),
+    confirmPassword: z.string().optional(),
+  }).refine(
+    (data) => {
+      // If not auto-generating, password is required
+      if (!data.autoGeneratePassword && !data.password) {
+        return false
+      }
+      // If password is provided, confirm password must match
+      if (data.password && data.password !== data.confirmPassword) {
+        return false
+      }
+      return true
+    },
+    {
+      message: t('common.message.passwordsMustMatch'),
+      path: ['confirmPassword'],
     }
-    // If password is provided, confirm password must match
-    if (data.password && data.password !== data.confirmPassword) {
-      return false
-    }
-    return true
-  },
-  {
-    message: 'Passwords must match',
-    path: ['confirmPassword'],
-  }
-)
+  )
 
-type CreateUserFormData = z.infer<typeof CreateUserFormSchema>
+type CreateUserFormData = z.infer<ReturnType<typeof createUserFormSchema>>
 
 interface AddUserDrawerProps {
   open: boolean
@@ -75,7 +76,7 @@ export default function AddUserDrawer({
     reset,
     watch,
   } = useForm({
-    resolver: zodResolver(CreateUserFormSchema),
+    resolver: zodResolver(createUserFormSchema(t)),
     defaultValues: {
       // Required fields
       email: '',
@@ -102,7 +103,7 @@ export default function AddUserDrawer({
   const createUserMutation = useMutation({
     mutationFn: async (data: CreateUserFormData) => {
       // Build the request data conforming to AdminCreateUserRequest schema
-      const requestData: z.infer<typeof AdminCreateUserRequest> = {
+      const requestData = {
         email: data.email,
         firstName: data.firstName,
         lastName: data.lastName,
@@ -292,8 +293,8 @@ export default function AddUserDrawer({
         </div>
 
         <Alert
-          message="User will be created as Business User with Active status"
-          description="The user will automatically be assigned the Business role and Active status as per the business registration flow."
+          message={t('common.message.userCreationInfo')}
+          description={t('common.message.userCreationDescription')}
           type="info"
           showIcon
           className="mb-4"
@@ -327,7 +328,7 @@ export default function AddUserDrawer({
           </div>
 
           <div className="flex items-center justify-between">
-            <span className="text-sm">Auto-generate password</span>
+            <span className="text-sm">{t('common.message.autoGeneratePassword')}</span>
             <Controller
               name="autoGeneratePassword"
               control={control}
@@ -359,7 +360,7 @@ export default function AddUserDrawer({
             </Form.Item>
 
             <Form.Item
-              label="Confirm Password"
+              label={t('common.message.confirmPassword')}
               validateStatus={errors.confirmPassword ? 'error' : ''}
               help={errors.confirmPassword?.message}
             >
@@ -370,7 +371,7 @@ export default function AddUserDrawer({
                   <Input.Password
                     {...field}
                     prefix={<Lock className="w-4 h-4 text-gray-400" />}
-                    placeholder="Confirm password"
+                    placeholder={t('common.message.confirmPasswordPlaceholder')}
                   />
                 )}
               />
@@ -380,8 +381,8 @@ export default function AddUserDrawer({
 
         {watchAutoGenerate && (
           <Alert
-            message="Password will be auto-generated"
-            description="The user will receive an email to set their password on first login."
+            message={t('common.message.passwordWillBeGenerated')}
+            description={t('common.message.userWillReceiveEmail')}
             type="info"
             showIcon
             className="mt-2"

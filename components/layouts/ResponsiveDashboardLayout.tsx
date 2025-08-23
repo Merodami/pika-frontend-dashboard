@@ -1,8 +1,7 @@
 'use client'
 
 import React from 'react'
-import { useResponsive } from '@/lib/hooks/useResponsive'
-import Sidebar from '@/components/ui/responsive-sidebar'
+import Sidebar from '@/components/ui/sidebar'
 import { cn } from '@/lib/utils/cn'
 
 interface ResponsiveDashboardLayoutProps {
@@ -16,53 +15,38 @@ export function ResponsiveDashboardLayout({
   sidebar,
   header,
 }: ResponsiveDashboardLayoutProps) {
-  const { isMobile } = useResponsive()
-
   return (
     <Sidebar.Provider>
       <div className="min-h-screen bg-gray-50">
-        {/* Mobile Overlay */}
-        <Sidebar.Overlay />
+        {/* Sidebar */}
+        <Sidebar.Root>{sidebar}</Sidebar.Root>
 
         {/* Header */}
-        <header
-          className={cn(
-            'sticky top-0 z-30 h-16 bg-white border-b border-gray-200',
-            'flex items-center px-4 sm:px-6 lg:px-8'
-          )}
-        >
-          {/* Mobile Menu Toggle */}
-          <Sidebar.Trigger className="mr-4" />
+        <header className="lg:pl-64 sticky top-0 z-30 h-16 bg-white border-b border-gray-200">
+          <div className="flex items-center justify-between h-full px-4 sm:px-6 lg:px-8">
+            {/* Mobile Menu Toggle */}
+            <div className="lg:hidden">
+              <Sidebar.Toggle />
+            </div>
 
-          {/* Header Content */}
-          <div className="flex-1">{header}</div>
+            {/* Header Content */}
+            <div className="flex-1">{header}</div>
+          </div>
         </header>
 
-        {/* Main Layout */}
-        <div className="flex h-[calc(100vh-4rem)]">
-          {/* Sidebar */}
-          <Sidebar.Root className="w-64">{sidebar}</Sidebar.Root>
-
-          {/* Main Content */}
-          <main
+        {/* Main Content */}
+        <main className="lg:pl-64">
+          <div
             className={cn(
-              'flex-1 overflow-y-auto',
-              'transition-all duration-300',
-              !isMobile && 'lg:ml-0' // Adjust based on sidebar state
+              'container mx-auto',
+              'px-4 sm:px-6 lg:px-8',
+              'py-4 sm:py-6 lg:py-8',
+              'max-w-7xl'
             )}
           >
-            <div
-              className={cn(
-                'container mx-auto',
-                'px-4 sm:px-6 lg:px-8',
-                'py-4 sm:py-6 lg:py-8',
-                'max-w-7xl'
-              )}
-            >
-              {children}
-            </div>
-          </main>
-        </div>
+            {children}
+          </div>
+        </main>
       </div>
     </Sidebar.Provider>
   )
