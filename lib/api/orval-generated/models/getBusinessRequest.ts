@@ -10,6 +10,6 @@
  * Query parameters for getting business details
  */
 export interface GetBusinessRequest {
-  /** Comma-separated relations: user,category */
+  /** Comma-separated relations: user,category,businessDetails */
   include?: string
 }

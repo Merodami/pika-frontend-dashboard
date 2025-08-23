@@ -214,7 +214,7 @@
     },
     "filters": {
       "verification": "Verificación",
-      "approval": "Aprobación", 
+      "approval": "Aprobación",
       "status": "Estado",
       "createdDate": "Fecha de Creación"
     },

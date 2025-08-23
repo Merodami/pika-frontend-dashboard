@@ -7,6 +7,7 @@
  */
 import type { UpdateMyBusiness200User } from './updateMyBusiness200User'
 import type { UpdateMyBusiness200Category } from './updateMyBusiness200Category'
+import type { UpdateMyBusiness200BusinessDetails } from './updateMyBusiness200BusinessDetails'
 
 export type UpdateMyBusiness200 = {
   /** Universally Unique Identifier */
@@ -41,6 +42,8 @@ export type UpdateMyBusiness200 = {
   user?: UpdateMyBusiness200User
   /** Category information when ?include=category */
   category?: UpdateMyBusiness200Category
+  /** Detailed contact and location information when ?include=businessDetails */
+  businessDetails?: UpdateMyBusiness200BusinessDetails
   /** When the record was created */
   createdAt: string
   /** When the record was last updated */

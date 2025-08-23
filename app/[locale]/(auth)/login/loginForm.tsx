@@ -36,7 +36,7 @@ export function LoginForm() {
   const currentLocale = localizedRouter.locale || getCurrentLocale()
 
   const isDevelopment = process.env.NODE_ENV === 'development'
-  
+
   // Clear registration store when login page loads (user has logged out)
   useEffect(() => {
     // Only clear if localStorage is available

@@ -52,7 +52,7 @@ export function RegistrationWizard() {
       ) {
         // Mark that we've attempted to start
         setHasAttemptedStart(true)
-        
+
         // Reset store for fresh registration only once
         const { reset } = useRegistrationStore.getState()
         reset()
@@ -79,7 +79,10 @@ export function RegistrationWizard() {
         // If registration is in progress, sync with backend's current step
         // Only sync if backend is AHEAD of local step (not behind)
         // Don't sync if registration was just completed
-        console.log('Syncing currentStep from backend:', registrationStatus.currentStep)
+        console.log(
+          'Syncing currentStep from backend:',
+          registrationStatus.currentStep
+        )
         setCurrentStep(registrationStatus.currentStep)
       }
     }
@@ -133,7 +136,7 @@ export function RegistrationWizard() {
           } catch (e) {
             console.log('Message notification failed:', e)
           }
-          
+
           // Don't manually redirect - let the page-level logic handle it
           // when needsRegistration becomes false
           console.log('Registration completed, page will handle redirect')
@@ -152,17 +155,37 @@ export function RegistrationWizard() {
       case 1:
         return <BusinessInfoStep onComplete={handleStepComplete} />
       case 2:
-        return <ContactDetailsStep onComplete={handleStepComplete} onPrevious={goToPreviousStep} />
+        return (
+          <ContactDetailsStep
+            onComplete={handleStepComplete}
+            onPrevious={goToPreviousStep}
+          />
+        )
       case 3:
-        return <AdditionalInfoStep onComplete={handleStepComplete} onPrevious={goToPreviousStep} />
+        return (
+          <AdditionalInfoStep
+            onComplete={handleStepComplete}
+            onPrevious={goToPreviousStep}
+          />
+        )
       case 4:
-        return <ReviewStep onSubmit={handleFinalSubmit} onPrevious={goToPreviousStep} />
+        return (
+          <ReviewStep
+            onSubmit={handleFinalSubmit}
+            onPrevious={goToPreviousStep}
+          />
+        )
       default:
         return null
     }
   }
 
-  console.log('RegistrationWizard render - currentStep:', currentStep, 'completedSteps:', completedSteps)
+  console.log(
+    'RegistrationWizard render - currentStep:',
+    currentStep,
+    'completedSteps:',
+    completedSteps
+  )
 
   return (
     <div className="space-y-6">

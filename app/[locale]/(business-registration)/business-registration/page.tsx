@@ -25,19 +25,20 @@ export default function BusinessRegistrationPage() {
     isLoading: statusLoading,
     error: statusError,
   } = useRegistrationStatus()
-  
+
   const needsRegistration = registrationStatus?.needsRegistration ?? false
   const canAccessDashboard = registrationStatus?.canAccessDashboard ?? false
 
   // Get registration store
   const store = useRegistrationStore()
-  
+
   // Immediately check and reset if user changed (synchronous check)
   if (currentUser?.id && store.userId && store.userId !== currentUser.id) {
     store.checkAndResetForUser(currentUser.id)
   }
-  
-  const { currentStep, completedSteps, status, checkAndResetForUser, reset } = store
+
+  const { currentStep, completedSteps, status, checkAndResetForUser, reset } =
+    store
 
   // Also check in effect for when currentUser loads
   useEffect(() => {

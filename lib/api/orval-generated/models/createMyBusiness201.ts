@@ -7,6 +7,7 @@
  */
 import type { CreateMyBusiness201User } from './createMyBusiness201User'
 import type { CreateMyBusiness201Category } from './createMyBusiness201Category'
+import type { CreateMyBusiness201BusinessDetails } from './createMyBusiness201BusinessDetails'
 
 export type CreateMyBusiness201 = {
   /** Universally Unique Identifier */
@@ -41,6 +42,8 @@ export type CreateMyBusiness201 = {
   user?: CreateMyBusiness201User
   /** Category information when ?include=category */
   category?: CreateMyBusiness201Category
+  /** Detailed contact and location information when ?include=businessDetails */
+  businessDetails?: CreateMyBusiness201BusinessDetails
   /** When the record was created */
   createdAt: string
   /** When the record was last updated */

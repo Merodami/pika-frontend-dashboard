@@ -273,13 +273,19 @@ export default function UsersTable({ locale }: UsersTableProps) {
             danger: record.status !== UserStatus.BANNED,
           },
           // Only show reset registration for business users
-          ...(record.role === UserRole.BUSINESS ? [{
-            key: 'resetRegistration',
-            label: t('users.resetRegistration.action', { defaultValue: 'Reset Registration' }),
-            icon: <RotateCcw className="w-4 h-4" />,
-            onClick: () => handleResetRegistration(record.id),
-            danger: true,
-          }] : []),
+          ...(record.role === UserRole.BUSINESS
+            ? [
+                {
+                  key: 'resetRegistration',
+                  label: t('users.resetRegistration.action', {
+                    defaultValue: 'Reset Registration',
+                  }),
+                  icon: <RotateCcw className="w-4 h-4" />,
+                  onClick: () => handleResetRegistration(record.id),
+                  danger: true,
+                },
+              ]
+            : []),
           commonActions.delete(() => handleDelete(record.id), record.email),
         ]}
       />
@@ -339,13 +345,7 @@ export default function UsersTable({ locale }: UsersTableProps) {
       cancelText: t('common.button.cancel'),
       okType: 'danger',
       onOk: () => {
-        resetRegistrationMutation.mutate({
-          userId,
-          data: {
-            reason: 'Reset by admin',
-            notifyUser: true
-          }
-        })
+        resetRegistrationMutation.mutate(userId)
       },
     })
   }

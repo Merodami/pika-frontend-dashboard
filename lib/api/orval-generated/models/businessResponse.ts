@@ -7,6 +7,7 @@
  */
 import type { BusinessResponseUser } from './businessResponseUser'
 import type { BusinessResponseCategory } from './businessResponseCategory'
+import type { BusinessResponseBusinessDetails } from './businessResponseBusinessDetails'
 
 export interface BusinessResponse {
   /** Universally Unique Identifier */
@@ -41,6 +42,8 @@ export interface BusinessResponse {
   user?: BusinessResponseUser
   /** Category information when ?include=category */
   category?: BusinessResponseCategory
+  /** Detailed contact and location information when ?include=businessDetails */
+  businessDetails?: BusinessResponseBusinessDetails
   /** When the record was created */
   createdAt: string
   /** When the record was last updated */

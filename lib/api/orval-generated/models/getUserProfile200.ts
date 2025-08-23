@@ -16,6 +16,8 @@ export type GetUserProfile200 = {
   firstName: string
   /** @maxLength 50 */
   lastName: string
+  /** Computed full name (firstName + lastName) */
+  name: string
   /**
    * Phone number in E.164 format
    * @pattern ^\+[1-9]\d{1,14}$
@@ -39,6 +41,8 @@ export type GetUserProfile200 = {
   status: GetUserProfile200Status
   emailVerified: boolean
   phoneVerified?: boolean
+  /** Primary business for business users */
+  primaryBusinessId?: string
   /** ISO 8601 datetime with timezone */
   createdAt: string
   /** ISO 8601 datetime with timezone */

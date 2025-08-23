@@ -121,10 +121,10 @@ export function AdditionalInfoStep({ onComplete }: AdditionalInfoStepProps) {
         onSuccess: () => {
           // Only mark as completed after successful API call
           markStepCompleted(3)
-          
+
           // Call onComplete first to ensure navigation happens
           onComplete()
-          
+
           // Then show success message (if this fails, navigation still happened)
           try {
             message.success(tMessages('stepCompleted', { step: 3 }))

@@ -7,6 +7,7 @@
  */
 import type { GetMyBusinesses200DataItemUser } from './getMyBusinesses200DataItemUser'
 import type { GetMyBusinesses200DataItemCategory } from './getMyBusinesses200DataItemCategory'
+import type { GetMyBusinesses200DataItemBusinessDetails } from './getMyBusinesses200DataItemBusinessDetails'
 
 export type GetMyBusinesses200DataItem = {
   /** Universally Unique Identifier */
@@ -41,6 +42,8 @@ export type GetMyBusinesses200DataItem = {
   user?: GetMyBusinesses200DataItemUser
   /** Category information when ?include=category */
   category?: GetMyBusinesses200DataItemCategory
+  /** Detailed contact and location information when ?include=businessDetails */
+  businessDetails?: GetMyBusinesses200DataItemBusinessDetails
   /** When the record was created */
   createdAt: string
   /** When the record was last updated */

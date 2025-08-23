@@ -7,6 +7,7 @@
  */
 import type { BusinessListResponseDataItemUser } from './businessListResponseDataItemUser'
 import type { BusinessListResponseDataItemCategory } from './businessListResponseDataItemCategory'
+import type { BusinessListResponseDataItemBusinessDetails } from './businessListResponseDataItemBusinessDetails'
 
 export type BusinessListResponseDataItem = {
   /** Universally Unique Identifier */
@@ -41,6 +42,8 @@ export type BusinessListResponseDataItem = {
   user?: BusinessListResponseDataItemUser
   /** Category information when ?include=category */
   category?: BusinessListResponseDataItemCategory
+  /** Detailed contact and location information when ?include=businessDetails */
+  businessDetails?: BusinessListResponseDataItemBusinessDetails
   /** When the record was created */
   createdAt: string
   /** When the record was last updated */

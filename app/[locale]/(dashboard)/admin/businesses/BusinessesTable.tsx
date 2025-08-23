@@ -87,14 +87,14 @@ export default function BusinessesTable({ locale }: BusinessesTableProps) {
     firstBusiness: data?.data?.[0], // Show complete structure of first business
     isLoading,
     totalBusinesses: data?.data?.length,
-    businessRegistrationExists: data?.data?.map(b => ({ 
-      id: b.id, 
+    businessRegistrationExists: data?.data?.map((b) => ({
+      id: b.id,
       businessName: b.businessName,
       hasRegistration: !!b.businessRegistration,
       registrationId: b.businessRegistration?.id,
       registrationStatus: b.businessRegistration?.registrationStatus,
-      allFields: Object.keys(b || {}) // Show all available fields
-    }))
+      allFields: Object.keys(b || {}), // Show all available fields
+    })),
   })
 
   // Use custom hooks for mutations
@@ -103,7 +103,6 @@ export default function BusinessesTable({ locale }: BusinessesTableProps) {
   const approveBusinessMutation = useApproveBusiness()
   const deleteBusinessMutation = useDeleteBusiness()
   const bulkUpdateBusinessesMutation = useBulkUpdateBusinesses()
-
 
   // Status helpers using proper types
   const getVerificationStatus = (
@@ -203,7 +202,9 @@ export default function BusinessesTable({ locale }: BusinessesTableProps) {
             <XCircle className="w-4 h-4 text-gray-400" />
           )}
           <span className="text-sm">
-            {record.verified ? t('businesses.status.verified') : t('businesses.status.notVerified')}
+            {record.verified
+              ? t('businesses.status.verified')
+              : t('businesses.status.notVerified')}
           </span>
         </div>
       ),
@@ -220,7 +221,9 @@ export default function BusinessesTable({ locale }: BusinessesTableProps) {
               <XCircle className="w-4 h-4 text-gray-400" />
             )}
             <span className="text-sm">
-              {record.approved ? t('businesses.status.approved') : t('businesses.status.notApproved')}
+              {record.approved
+                ? t('businesses.status.approved')
+                : t('businesses.status.notApproved')}
             </span>
           </div>
           {record.approvedBy && record.approvedAt && (
@@ -260,7 +263,7 @@ export default function BusinessesTable({ locale }: BusinessesTableProps) {
         businessName: record.businessName,
         hasRegistration: !!record.businessRegistration,
         registration: record.businessRegistration,
-        willShowResetButton: !!record.businessRegistration
+        willShowResetButton: !!record.businessRegistration,
       })
 
       return (
@@ -274,7 +277,9 @@ export default function BusinessesTable({ locale }: BusinessesTableProps) {
             ),
             {
               key: 'toggleVerification',
-              label: record.verified ? t('businesses.action.unverify') : t('businesses.action.verify'),
+              label: record.verified
+                ? t('businesses.action.unverify')
+                : t('businesses.action.verify'),
               icon: record.verified ? (
                 <XCircle className="w-4 h-4" />
               ) : (
@@ -285,7 +290,9 @@ export default function BusinessesTable({ locale }: BusinessesTableProps) {
             },
             {
               key: 'toggleApproval',
-              label: record.approved ? t('businesses.action.unapprove') : t('businesses.action.approve'),
+              label: record.approved
+                ? t('businesses.action.unapprove')
+                : t('businesses.action.approve'),
               icon: record.approved ? (
                 <XCircle className="w-4 h-4" />
               ) : (
@@ -297,7 +304,9 @@ export default function BusinessesTable({ locale }: BusinessesTableProps) {
               ? commonActions.deactivate(() =>
                   handleToggleActive(record.id, false)
                 )
-              : commonActions.activate(() => handleToggleActive(record.id, true)),
+              : commonActions.activate(() =>
+                  handleToggleActive(record.id, true)
+                ),
             commonActions.delete(
               () => handleDelete(record.id),
               record.businessName
@@ -369,7 +378,6 @@ export default function BusinessesTable({ locale }: BusinessesTableProps) {
     },
     [deleteBusinessMutation]
   )
-
 
   const handleBulkDelete = useCallback(
     async (selectedKeys: React.Key[]) => {

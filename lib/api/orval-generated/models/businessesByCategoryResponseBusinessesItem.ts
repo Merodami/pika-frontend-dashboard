@@ -7,6 +7,7 @@
  */
 import type { BusinessesByCategoryResponseBusinessesItemUser } from './businessesByCategoryResponseBusinessesItemUser'
 import type { BusinessesByCategoryResponseBusinessesItemCategory } from './businessesByCategoryResponseBusinessesItemCategory'
+import type { BusinessesByCategoryResponseBusinessesItemBusinessDetails } from './businessesByCategoryResponseBusinessesItemBusinessDetails'
 
 export type BusinessesByCategoryResponseBusinessesItem = {
   /** Universally Unique Identifier */
@@ -41,6 +42,8 @@ export type BusinessesByCategoryResponseBusinessesItem = {
   user?: BusinessesByCategoryResponseBusinessesItemUser
   /** Category information when ?include=category */
   category?: BusinessesByCategoryResponseBusinessesItemCategory
+  /** Detailed contact and location information when ?include=businessDetails */
+  businessDetails?: BusinessesByCategoryResponseBusinessesItemBusinessDetails
   /** When the record was created */
   createdAt: string
   /** When the record was last updated */

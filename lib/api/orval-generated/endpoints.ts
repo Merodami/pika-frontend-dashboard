@@ -78,13 +78,18 @@ import type {
   CreateSupportProblem201,
   CreateSupportProblemBody,
   DownloadVoucherBookPdf200,
+  ExpireAdminVoucher200,
   ForgotPassword200,
   ForgotPasswordBody,
   GenerateAdminVoucherBookPdf200,
   GenerateAdminVoucherBookPdfBody,
+  GenerateAdminVoucherCodes200,
+  GenerateAdminVoucherCodesBody,
   GetAdminBusinessById200,
   GetAdminBusinessList200,
   GetAdminBusinessListParams,
+  GetAdminBusinessVoucherStats200,
+  GetAdminBusinessVoucherStatsParams,
   GetAdminCategoryTree200,
   GetAdminCommentList200,
   GetAdminCommentListParams,
@@ -110,6 +115,8 @@ import type {
   GetAdminUserList200,
   GetAdminUserListParams,
   GetAdminUserVerificationStatus200,
+  GetAdminVoucherAnalytics200,
+  GetAdminVoucherAnalyticsParams,
   GetAdminVoucherBookById200,
   GetAdminVoucherBookList200,
   GetAdminVoucherBookListParams,
@@ -117,6 +124,7 @@ import type {
   GetAdminVoucherById200,
   GetAdminVoucherList200,
   GetAdminVoucherListParams,
+  GetAdminVoucherTranslations200,
   GetBusinessList200,
   GetBusinessListParams,
   GetBusinessRegistrationProgress200,
@@ -180,6 +188,7 @@ import type {
   PostSubscriptionsPlans201,
   PostSubscriptionsPlansBody,
   PostTemplatesSeed201,
+  PublishAdminVoucher200,
   PutAdminCommentsIdBody,
   RedeemVoucher200,
   RefundAdminTransaction200,
@@ -232,6 +241,10 @@ import type {
   UpdateAdminVoucherBookBody,
   UpdateAdminVoucherBookStatus200,
   UpdateAdminVoucherBookStatusBody,
+  UpdateAdminVoucherState200,
+  UpdateAdminVoucherStateBody,
+  UpdateAdminVoucherTranslations200,
+  UpdateAdminVoucherTranslationsBody,
   UpdateInternalSubscriptionStatus200,
   UpdateInternalSubscriptionStatusBody,
   UpdateInternalUserMembership200,
@@ -244,6 +257,8 @@ import type {
   UpdateUserProfileBody,
   UploadAdminUserAvatar200,
   UploadAdminUserAvatarBody,
+  UploadAdminVoucherImage200,
+  UploadAdminVoucherImageBody,
   UploadAvatarRequest,
   UploadAvatarResponse,
   UploadFile201,
@@ -1351,6 +1366,127 @@ export const patchVouchersBulkUpdate = (
 export const getVouchersAnalytics = (params?: GetVouchersAnalyticsParams) => {
   return customInstance<GetVouchersAnalytics200>({
     url: `/vouchers/analytics`,
+    method: 'GET',
+    params,
+  })
+}
+
+/**
+ * @summary Publish a voucher (DRAFT → PUBLISHED)
+ */
+export const publishAdminVoucher = (id: string) => {
+  return customInstance<PublishAdminVoucher200>({
+    url: `/vouchers/${id}/publish`,
+    method: 'POST',
+  })
+}
+
+/**
+ * @summary Expire a voucher (PUBLISHED → EXPIRED)
+ */
+export const expireAdminVoucher = (id: string) => {
+  return customInstance<ExpireAdminVoucher200>({
+    url: `/vouchers/${id}/expire`,
+    method: 'POST',
+  })
+}
+
+/**
+ * @summary Upload voucher image
+ */
+export const uploadAdminVoucherImage = (
+  id: string,
+  uploadAdminVoucherImageBody: UploadAdminVoucherImageBody
+) => {
+  const formData = new FormData()
+  formData.append(`image`, uploadAdminVoucherImageBody.image)
+
+  return customInstance<UploadAdminVoucherImage200>({
+    url: `/vouchers/${id}/image`,
+    method: 'POST',
+    headers: { 'Content-Type': 'multipart/form-data' },
+    data: formData,
+  })
+}
+
+/**
+ * @summary Update voucher state with validation
+ */
+export const updateAdminVoucherState = (
+  id: string,
+  updateAdminVoucherStateBody: UpdateAdminVoucherStateBody
+) => {
+  return customInstance<UpdateAdminVoucherState200>({
+    url: `/vouchers/${id}/state`,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    data: updateAdminVoucherStateBody,
+  })
+}
+
+/**
+ * @summary Generate voucher codes
+ */
+export const generateAdminVoucherCodes = (
+  id: string,
+  generateAdminVoucherCodesBody: GenerateAdminVoucherCodesBody
+) => {
+  return customInstance<GenerateAdminVoucherCodes200>({
+    url: `/vouchers/${id}/codes`,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    data: generateAdminVoucherCodesBody,
+  })
+}
+
+/**
+ * @summary Update voucher translations
+ */
+export const updateAdminVoucherTranslations = (
+  id: string,
+  updateAdminVoucherTranslationsBody: UpdateAdminVoucherTranslationsBody
+) => {
+  return customInstance<UpdateAdminVoucherTranslations200>({
+    url: `/vouchers/${id}/translations`,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    data: updateAdminVoucherTranslationsBody,
+  })
+}
+
+/**
+ * @summary Get voucher translations
+ */
+export const getAdminVoucherTranslations = (id: string) => {
+  return customInstance<GetAdminVoucherTranslations200>({
+    url: `/vouchers/${id}/translations`,
+    method: 'GET',
+  })
+}
+
+/**
+ * @summary Get analytics for specific voucher
+ */
+export const getAdminVoucherAnalytics = (
+  id: string,
+  params?: GetAdminVoucherAnalyticsParams
+) => {
+  return customInstance<GetAdminVoucherAnalytics200>({
+    url: `/vouchers/${id}/analytics`,
+    method: 'GET',
+    params,
+  })
+}
+
+/**
+ * @summary Get voucher statistics for a specific business
+ */
+export const getAdminBusinessVoucherStats = (
+  id: string,
+  params?: GetAdminBusinessVoucherStatsParams
+) => {
+  return customInstance<GetAdminBusinessVoucherStats200>({
+    url: `/vouchers/business/${id}/stats`,
     method: 'GET',
     params,
   })
@@ -2567,6 +2703,33 @@ export type PatchVouchersBulkUpdateResult = NonNullable<
 >
 export type GetVouchersAnalyticsResult = NonNullable<
   Awaited<ReturnType<typeof getVouchersAnalytics>>
+>
+export type PublishAdminVoucherResult = NonNullable<
+  Awaited<ReturnType<typeof publishAdminVoucher>>
+>
+export type ExpireAdminVoucherResult = NonNullable<
+  Awaited<ReturnType<typeof expireAdminVoucher>>
+>
+export type UploadAdminVoucherImageResult = NonNullable<
+  Awaited<ReturnType<typeof uploadAdminVoucherImage>>
+>
+export type UpdateAdminVoucherStateResult = NonNullable<
+  Awaited<ReturnType<typeof updateAdminVoucherState>>
+>
+export type GenerateAdminVoucherCodesResult = NonNullable<
+  Awaited<ReturnType<typeof generateAdminVoucherCodes>>
+>
+export type UpdateAdminVoucherTranslationsResult = NonNullable<
+  Awaited<ReturnType<typeof updateAdminVoucherTranslations>>
+>
+export type GetAdminVoucherTranslationsResult = NonNullable<
+  Awaited<ReturnType<typeof getAdminVoucherTranslations>>
+>
+export type GetAdminVoucherAnalyticsResult = NonNullable<
+  Awaited<ReturnType<typeof getAdminVoucherAnalytics>>
+>
+export type GetAdminBusinessVoucherStatsResult = NonNullable<
+  Awaited<ReturnType<typeof getAdminBusinessVoucherStats>>
 >
 export type GetAdminUserListResult = NonNullable<
   Awaited<ReturnType<typeof getAdminUserList>>

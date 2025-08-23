@@ -28,6 +28,6 @@ export type GetInternalBusinessesByUserBody = {
   search?: string
   onlyActive?: boolean
   onlyVerified?: boolean
-  /** Comma-separated relations: user,category */
+  /** Comma-separated relations: user,category,businessDetails */
   include?: string
 }

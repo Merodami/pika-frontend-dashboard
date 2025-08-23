@@ -17,7 +17,9 @@
       "export": "Export",
       "import": "Import",
       "submit": "Submit",
-      "email": "Send Email"
+      "email": "Send Email",
+      "view": "View",
+      "viewDetails": "View Details"
     },
     "status": {
       "loading": "Loading...",
@@ -126,27 +128,91 @@
   },
   "vouchers": {
     "title": "Vouchers",
+    "subtitle": "Create and manage promotional vouchers for businesses",
+    "description": "Manage vouchers and promotional campaigns",
+    "untitled": "Untitled",
+    "unlimited": "Unlimited",
+    "totalVouchers": "Total {count} vouchers",
+    "searchPlaceholder": "Search vouchers...",
+    "filterByState": "Filter by state",
+    "filterByType": "Filter by type",
     "create": {
       "title": "Create Voucher",
-      "button": "New Voucher"
+      "button": "New Voucher",
+      "subtitle": "Set up a new promotional voucher"
     },
     "edit": {
-      "title": "Edit Voucher"
+      "title": "Edit Voucher",
+      "subtitle": "Modify voucher details"
+    },
+    "detail": {
+      "title": "Voucher Details",
+      "description": "View voucher information and analytics"
+    },
+    "business": {
+      "title": "My Vouchers",
+      "subtitle": "Manage your business vouchers",
+      "description": "Create and manage vouchers for your business",
+      "create": {
+        "title": "Create New Voucher",
+        "subtitle": "Create a promotional voucher for your business",
+        "description": "Set up a new voucher campaign"
+      }
     },
     "fields": {
+      "id": "ID",
       "title": "Title",
       "description": "Description",
+      "business": "Business",
+      "category": "Category",
       "discount": "Discount",
+      "state": "State",
       "validFrom": "Valid from",
       "validUntil": "Valid until",
       "maxRedemptions": "Max redemptions",
-      "termsAndConditions": "Terms and conditions"
+      "maxRedemptionsPerUser": "Max per customer",
+      "termsAndConditions": "Terms and conditions",
+      "redemptions": "Redemptions",
+      "actions": "Actions",
+      "createdAt": "Created",
+      "updatedAt": "Updated"
     },
     "status": {
       "active": "Active",
       "expired": "Expired",
       "draft": "Draft",
-      "suspended": "Suspended"
+      "suspended": "Suspended",
+      "published": "Published"
+    },
+    "discountType": {
+      "percentage": "Percentage",
+      "fixed": "Fixed Amount"
+    },
+    "actions": {
+      "publish": "Publish",
+      "expire": "Expire",
+      "suspend": "Suspend",
+      "duplicate": "Duplicate"
+    },
+    "stats": {
+      "scans": "Total Scans",
+      "claims": "Total Claims",
+      "redemptions": "Redemptions",
+      "conversionRate": "Conversion Rate"
+    },
+    "details": {
+      "title": "Voucher Information"
+    },
+    "preview": {
+      "title": "Preview"
+    },
+    "error": {
+      "notFound": "Voucher Not Found",
+      "voucherNotFound": "The voucher you're looking for doesn't exist or has been deleted.",
+      "loadFailed": "Failed to load voucher",
+      "createFailed": "Failed to create voucher",
+      "updateFailed": "Failed to update voucher",
+      "deleteFailed": "Failed to delete voucher"
     }
   },
   "businesses": {
@@ -364,7 +430,15 @@
       "edit": "Edit",
       "deactivate": "Deactivate",
       "activate": "Activate",
-      "delete": "Delete"
+      "delete": "Delete",
+      "ban": "Ban User",
+      "unban": "Unban User",
+      "resetRegistration": "Reset Registration"
+    },
+    "action": {
+      "ban": "Ban User",
+      "unban": "Unban User",
+      "resetRegistration": "Reset Registration"
     },
     "filters": {
       "search": "Search users...",
@@ -377,13 +451,20 @@
       "active": "Active",
       "inactive": "Inactive",
       "suspended": "Suspended",
-      "pending": "Pending"
+      "pending": "Pending",
+      "banned": "Banned"
     },
     "role": {
       "admin": "Admin",
       "business": "Business",
+      "businessowner": "Business Owner",
       "customer": "Customer",
       "user": "User"
+    },
+    "fields": {
+      "emailVerified": "Email Verified",
+      "joined": "Joined",
+      "lastSeen": "Last seen"
     }
   },
   "businessSelector": {

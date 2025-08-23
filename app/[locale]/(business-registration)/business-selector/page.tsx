@@ -29,7 +29,7 @@ export default function BusinessSelectorPage() {
   // Use React Query hook for data fetching
   const { data: businessResponse, isLoading, error } = useMyBusiness()
   const { data: currentUser } = useCurrentUser()
-  
+
   // Extract the first business from the paginated response
   const business = businessResponse?.data?.[0] || null
 
@@ -51,9 +51,9 @@ export default function BusinessSelectorPage() {
       ),
       disabled: true,
     },
-    { 
-      key: 'divider-1', 
-      type: 'divider' 
+    {
+      key: 'divider-1',
+      type: 'divider',
     },
     {
       key: 'logout',
@@ -70,7 +70,7 @@ export default function BusinessSelectorPage() {
       console.log('Business data:', business)
       console.log('Business approved status:', business?.approved)
       console.log('Business active status:', business?.active)
-      
+
       // No business exists - go to registration
       if (!business && error?.response?.status === 404) {
         router.push('/business-registration')
@@ -84,7 +84,7 @@ export default function BusinessSelectorPage() {
     console.log('Business clicked:', businessId)
     console.log('Business data in handler:', business)
     console.log('Business approved:', business?.approved)
-    
+
     // Store selected business in session/cookie
     localStorage.setItem('selectedBusinessId', businessId)
 

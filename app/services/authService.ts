@@ -4,7 +4,10 @@ import { UserRole, type UserRoleType } from '@merodami/pika-types'
 import { cache } from 'react'
 import { redirect } from 'next/navigation'
 
-import { getUserProfile, getBusinessRegistrationStatus } from '@/lib/api/server-client'
+import {
+  getUserProfile,
+  getBusinessRegistrationStatus,
+} from '@/lib/api/server-client'
 import {
   clearTokens,
   getAccessToken,
@@ -18,6 +21,7 @@ export interface User {
   firstName: string
   lastName: string
   role: UserRoleType
+  businessId?: string
   preferredLanguage?: string
   createdAt: string
   updatedAt: string
@@ -42,6 +46,7 @@ export const getCurrentUser = cache(async (): Promise<User | null> => {
       firstName: userData.firstName,
       lastName: userData.lastName,
       role: userData.role as UserRoleType,
+      businessId: userData.primaryBusinessId,
       preferredLanguage: userData.preferredLanguage,
       createdAt: userData.createdAt,
       updatedAt: userData.updatedAt,
@@ -78,7 +83,9 @@ export async function requireRole(
   return user
 }
 
-export async function requireBusiness(checkApproval: boolean = true): Promise<User> {
+export async function requireBusiness(
+  checkApproval: boolean = true
+): Promise<User> {
   const user = await requireAuth()
 
   if (user.role !== UserRole.BUSINESS) {
@@ -89,12 +96,12 @@ export async function requireBusiness(checkApproval: boolean = true): Promise<Us
   if (checkApproval) {
     try {
       const registrationStatus = await getBusinessRegistrationStatus()
-      
+
       if (registrationStatus.needsRegistration) {
         // Business needs to complete registration
         redirect('/business-registration')
       }
-      
+
       if (!registrationStatus.canAccessDashboard) {
         // Business registration submitted but not approved
         redirect('/business-registration/status')

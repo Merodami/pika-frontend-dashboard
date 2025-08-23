@@ -42,7 +42,7 @@ export function BusinessInfoStep({ onComplete }: BusinessInfoStepProps) {
   const pathname = usePathname()
   const currentLocale = useLocale()
   const { setLocale } = useAppStore()
-  
+
   // Extract actual locale from pathname as fallback
   const actualLocale = pathname.split('/')[1] as Locale
 
@@ -118,12 +118,12 @@ export function BusinessInfoStep({ onComplete }: BusinessInfoStepProps) {
           saveStep1Data(validated)
           console.log('Marking step 1 as completed...')
           markStepCompleted(1)
-          
+
           // Call onComplete first to ensure navigation happens
           console.log('Calling onComplete to navigate to next step...')
           onComplete()
           console.log('onComplete called successfully')
-          
+
           // Then show success message (if this fails, navigation still happened)
           try {
             message.success(tMessages('stepCompleted', { step: 1 }))
@@ -324,33 +324,43 @@ export function BusinessInfoStep({ onComplete }: BusinessInfoStepProps) {
                   console.log('Current locale from hook:', currentLocale)
                   console.log('Actual locale from URL:', actualLocale)
                   console.log('Current pathname:', pathname)
-                  
+
                   // Update form field
                   field.onChange(value)
-                  
+
                   // Only change app language if different from actual current locale (from URL)
-                  if (value !== actualLocale && locales.includes(value as Locale)) {
-                    console.log('Changing language from', actualLocale, 'to', value)
-                    
+                  if (
+                    value !== actualLocale &&
+                    locales.includes(value as Locale)
+                  ) {
+                    console.log(
+                      'Changing language from',
+                      actualLocale,
+                      'to',
+                      value
+                    )
+
                     // Save ALL current form data to store before switching
                     const currentData = form.getValues()
                     saveStep1Data({
                       ...currentData,
                       primaryLanguage: value, // Ensure the new language is saved
                     })
-                    
+
                     // Build new path with new locale
                     const newPath = pathname.replace(/^\/[^/]+/, `/${value}`)
                     console.log('Navigating to:', newPath)
-                    
+
                     // Update locale in store
                     setLocale(value as Locale)
-                    
+
                     // Use router.replace for immediate navigation
                     // This ensures the page reloads with new locale
                     router.replace(newPath)
                   } else {
-                    console.log('Not changing language - same as current or not in locales')
+                    console.log(
+                      'Not changing language - same as current or not in locales'
+                    )
                   }
                 }}
               />

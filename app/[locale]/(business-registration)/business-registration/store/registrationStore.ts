@@ -120,12 +120,26 @@ export const useRegistrationStore = create<RegistrationState>()(
           const nextStep = Math.min(state.currentStep + 1, 4) // 4 is review step
           console.log('Next step would be:', nextStep)
           if (state.canGoToStep(nextStep)) {
-            console.log('Can go to next step, updating currentStep to:', nextStep)
+            console.log(
+              'Can go to next step, updating currentStep to:',
+              nextStep
+            )
             set({ currentStep: nextStep })
           } else {
             console.log('Cannot go to next step! canGoToStep returned false')
-            console.log('canGoToStep logic: step', nextStep, 'requires step', nextStep - 1, 'to be completed')
-            console.log('Is step', nextStep - 1, 'in completedSteps?', state.completedSteps.includes(nextStep - 1))
+            console.log(
+              'canGoToStep logic: step',
+              nextStep,
+              'requires step',
+              nextStep - 1,
+              'to be completed'
+            )
+            console.log(
+              'Is step',
+              nextStep - 1,
+              'in completedSteps?',
+              state.completedSteps.includes(nextStep - 1)
+            )
           }
         },
 

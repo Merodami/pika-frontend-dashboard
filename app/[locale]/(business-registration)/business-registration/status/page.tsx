@@ -11,7 +11,7 @@ export default function RegistrationStatusPage() {
   const router = useRouter()
   const params = useParams()
   const locale = params.locale as string
-  
+
   const handleLogout = () => {
     // Navigate to logout page which will handle the server action
     router.push(`/${locale}/logout`)
@@ -102,7 +102,7 @@ export default function RegistrationStatusPage() {
                   >
                     Return to Dashboard
                   </Button>
-                  
+
                   <Button
                     type="default"
                     size="large"

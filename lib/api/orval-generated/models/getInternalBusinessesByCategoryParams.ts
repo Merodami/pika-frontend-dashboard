@@ -32,7 +32,7 @@ export type GetInternalBusinessesByCategoryParams = {
   onlyActive?: boolean
   onlyVerified?: boolean
   /**
-   * Comma-separated relations: user,category
+   * Comma-separated relations: user,category,businessDetails
    */
   include?: string
 }

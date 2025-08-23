@@ -177,7 +177,12 @@ export default function AddUserDrawer({
         </div>
       }
     >
-      <Form form={form} onFinish={handleSubmit(onSubmit)} layout="vertical" className="space-y-4">
+      <Form
+        form={form}
+        onFinish={handleSubmit(onSubmit)}
+        layout="vertical"
+        className="space-y-4"
+      >
         <div className="text-sm font-medium text-gray-700 mb-2">
           {t('profile.personalInfo.title')}
         </div>

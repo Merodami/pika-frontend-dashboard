@@ -15,6 +15,6 @@ export interface BulkBusinessRequest {
    * @maxItems 100
    */
   businessIds: string[]
-  /** Comma-separated relations: user,category */
+  /** Comma-separated relations: user,category,businessDetails */
   include?: string
 }

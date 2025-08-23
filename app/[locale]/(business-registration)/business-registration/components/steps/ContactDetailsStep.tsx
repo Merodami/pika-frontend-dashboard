@@ -41,7 +41,10 @@ const COUNTRIES = [
   { value: 'PT', label: 'Portugal' },
 ]
 
-export function ContactDetailsStep({ onComplete, onPrevious }: ContactDetailsStepProps) {
+export function ContactDetailsStep({
+  onComplete,
+  onPrevious,
+}: ContactDetailsStepProps) {
   const t = useTranslations('businessRegistration.steps.contactDetails')
   const tCommon = useTranslations('common')
   const tMessages = useTranslations('businessRegistration.messages')
@@ -100,10 +103,10 @@ export function ContactDetailsStep({ onComplete, onPrevious }: ContactDetailsSte
         onSuccess: () => {
           // Only mark as completed after successful API call
           markStepCompleted(2)
-          
+
           // Call onComplete first to ensure navigation happens
           onComplete()
-          
+
           // Then show success message (if this fails, navigation still happened)
           try {
             message.success(tMessages('stepCompleted', { step: 2 }))

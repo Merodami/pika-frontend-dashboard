@@ -56,6 +56,6 @@ export interface AdminBusinessQueryParams {
   updatedFrom?: string
   /** Updated date to */
   updatedTo?: string
-  /** Comma-separated relations: user,category */
+  /** Comma-separated relations: user,category,businessDetails */
   include?: string
 }

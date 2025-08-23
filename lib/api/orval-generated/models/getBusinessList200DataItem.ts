@@ -7,6 +7,7 @@
  */
 import type { GetBusinessList200DataItemUser } from './getBusinessList200DataItemUser'
 import type { GetBusinessList200DataItemCategory } from './getBusinessList200DataItemCategory'
+import type { GetBusinessList200DataItemBusinessDetails } from './getBusinessList200DataItemBusinessDetails'
 
 export type GetBusinessList200DataItem = {
   /** Universally Unique Identifier */
@@ -41,6 +42,8 @@ export type GetBusinessList200DataItem = {
   user?: GetBusinessList200DataItemUser
   /** Category information when ?include=category */
   category?: GetBusinessList200DataItemCategory
+  /** Detailed contact and location information when ?include=businessDetails */
+  businessDetails?: GetBusinessList200DataItemBusinessDetails
   /** When the record was created */
   createdAt: string
   /** When the record was last updated */

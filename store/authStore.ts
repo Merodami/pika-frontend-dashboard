@@ -57,7 +57,7 @@ function mapUserProfileToUser(profile: GetUserProfile200): User {
         ? `${profile.firstName} ${profile.lastName}`
         : profile.email,
     role: profile.role as UserRoleType,
-    businessId: undefined, // TODO: Get from business endpoint if needed
+    businessId: profile.primaryBusinessId,
     createdAt: profile.createdAt,
     updatedAt: profile.updatedAt,
   }
