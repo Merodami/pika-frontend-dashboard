@@ -6,9 +6,10 @@ import type { Locale } from '@/i18n/config'
 export async function generateMetadata({
   params,
 }: {
-  params: { locale: Locale; id: string }
+  params: Promise<{ locale: Locale; id: string }>
 }): Promise<Metadata> {
-  const t = await getTranslations({ locale: params.locale })
+  const { locale } = await params
+  const t = await getTranslations({ locale })
   
   return {
     title: `${t('business.detail.title')} | ${t('dashboard.title')}`,
@@ -16,10 +17,11 @@ export async function generateMetadata({
   }
 }
 
-export default function BusinessDetailPage({
+export default async function BusinessDetailPage({
   params,
 }: {
-  params: { locale: Locale; id: string }
+  params: Promise<{ locale: Locale; id: string }>
 }) {
-  return <BusinessDetailView businessId={params.id} locale={params.locale} mode="page" />
+  const { id, locale } = await params
+  return <BusinessDetailView businessId={id} locale={locale} mode="page" />
 }
