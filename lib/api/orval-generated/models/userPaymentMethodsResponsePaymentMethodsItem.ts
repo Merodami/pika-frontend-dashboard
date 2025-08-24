@@ -12,14 +12,12 @@ import type { UserPaymentMethodsResponsePaymentMethodsItemWallet } from './userP
 import type { UserPaymentMethodsResponsePaymentMethodsItemBillingAddress } from './userPaymentMethodsResponsePaymentMethodsItemBillingAddress'
 import type { UserPaymentMethodsResponsePaymentMethodsItemMetadata } from './userPaymentMethodsResponsePaymentMethodsItemMetadata'
 
-/**
- * User payment method
- */
 export type UserPaymentMethodsResponsePaymentMethodsItem = {
   /** Universally Unique Identifier */
   id: string
   userId: string
   stripePaymentMethodId: string
+  /** Type of payment method */
   type: UserPaymentMethodsResponsePaymentMethodsItemType
   isDefault?: boolean
   card?: UserPaymentMethodsResponsePaymentMethodsItemCard

@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Avatar upload response
- */
 export type UploadAdminUserAvatar200 = {
   /** URL of the uploaded avatar */
   avatarUrl: string

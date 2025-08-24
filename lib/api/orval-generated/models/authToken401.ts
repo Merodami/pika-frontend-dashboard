@@ -7,9 +7,6 @@
  */
 import type { AuthToken401DetailsItem } from './authToken401DetailsItem'
 
-/**
- * Standard error response
- */
 export type AuthToken401 = {
   /**
    * @minimum 100

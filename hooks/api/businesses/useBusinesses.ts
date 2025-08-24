@@ -10,12 +10,14 @@ import {
   activateAdminBusiness,
   deactivateAdminBusiness,
   updateAdminBusinessVerification,
+  approveAdminBusiness,
   type GetAdminBusinessListParams,
   type GetAdminBusinessList200,
   type GetAdminBusinessById200,
   type CreateAdminBusinessBody,
   type UpdateAdminBusinessBody,
   type UpdateAdminBusinessVerificationBody,
+  type ApproveAdminBusiness200,
 } from '@/lib/api/orval-client'
 import { queryKeys } from '@/lib/api/queryKeys'
 
@@ -62,7 +64,11 @@ export function useBusiness(id: string, options?: { enabled?: boolean }) {
 export function useCreateBusiness() {
   const queryClient = useQueryClient()
 
-  return useApiMutation<GetAdminBusinessById200, Error, CreateAdminBusinessBody>({
+  return useApiMutation<
+    GetAdminBusinessById200,
+    Error,
+    CreateAdminBusinessBody
+  >({
     mutationFn: (data) => createAdminBusiness(data),
     successMessage: 'Business created successfully',
     onSuccess: () => {
@@ -125,10 +131,35 @@ export function useToggleBusinessActive() {
 
   return useApiMutation<null, Error, { id: string; active: boolean }>({
     mutationFn: ({ id, active }) =>
-      active
-        ? activateAdminBusiness(id)
-        : deactivateAdminBusiness(id),
+      active ? activateAdminBusiness(id) : deactivateAdminBusiness(id),
     successMessage: 'Business status updated successfully',
+    onSuccess: (_, { id }) => {
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.businesses.detail(id),
+      })
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.businesses.lists(),
+      })
+    },
+  })
+}
+
+/**
+ * Hook to approve/unapprove a business
+ * Uses the dedicated approval endpoint
+ */
+export function useApproveBusiness() {
+  const queryClient = useQueryClient()
+
+  return useApiMutation<
+    ApproveAdminBusiness200,
+    Error,
+    { id: string; approved: boolean; reason?: string }
+  >({
+    mutationFn: ({ id, approved, reason }) =>
+      approveAdminBusiness(id, { approved, reason }),
+    successMessage: (data) =>
+      data.approved ? 'Business approved successfully' : 'Business rejected',
     onSuccess: (_, { id }) => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.businesses.detail(id),

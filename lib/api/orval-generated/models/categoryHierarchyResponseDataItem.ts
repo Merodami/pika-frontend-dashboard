@@ -5,6 +5,43 @@
  * Complete API documentation including public, admin, and internal endpoints
  * OpenAPI spec version: 1.0.0
  */
-import type { CategoryResponse } from './categoryResponse'
+import type { CategoryHierarchyResponseDataItemChildrenItem } from './categoryHierarchyResponseDataItemChildrenItem'
 
-export type CategoryHierarchyResponseDataItem = CategoryResponse & unknown
+export type CategoryHierarchyResponseDataItem = {
+  /** Universally Unique Identifier */
+  id: string
+  /** Category name in requested language */
+  name: string
+  /** Category description in requested language */
+  description?: string
+  /**
+   * Category icon identifier
+   * @maxLength 255
+   */
+  icon?: string
+  /** Parent category ID for hierarchical structure */
+  parentId?: string
+  /** Whether category is active */
+  isActive?: boolean
+  /** Sort order for display */
+  sortOrder?: number
+  /**
+   * URL-friendly category identifier
+   * @maxLength 255
+   */
+  slug: string
+  /** Hierarchy level (1 for root, 2+ for children) */
+  level: number
+  /** Hierarchical path using parent IDs */
+  path: string
+  /** User who created the category */
+  createdBy: string
+  /** User who last updated the category */
+  updatedBy?: string
+  /** When the record was created */
+  createdAt: string
+  /** When the record was last updated */
+  updatedAt: string
+  /** Child categories for hierarchical display */
+  children?: CategoryHierarchyResponseDataItemChildrenItem[]
+}

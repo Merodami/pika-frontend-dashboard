@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * User verification status information
- */
 export interface AdminUserVerificationStatusResponse {
   userId: string
   emailVerified: boolean

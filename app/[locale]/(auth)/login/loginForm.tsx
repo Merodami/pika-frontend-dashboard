@@ -2,10 +2,9 @@
 
 import { LockOutlined, MailOutlined } from '@ant-design/icons'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { authFrontend } from '@merodami/pika-api'
 import { Button, Form, Input, Checkbox } from 'antd'
 import { useTranslations } from 'next-intl'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -14,30 +13,45 @@ import { useAppStore } from '@/store/app.store'
 import { AuthFormWrapper } from '@/components/auth/authFormWrapper'
 import { LocalizedLink } from '@/components/ui/LocalizedLink'
 import { useLocalizedRouter } from '@/hooks/useLocalizedRouter'
-
-// Use the admin/business login schema with enhanced password requirements
-const loginSchema = authFrontend.AdminBusinessLoginFormSchema
+import {
+  LoginFormSchema,
+  transformLoginToTokenRequest,
+  type LoginFormData,
+} from '@/lib/validations/auth'
+import { getCurrentLocale } from '@/lib/utils/locale'
 
 // Extract input and output types for proper branded type handling
-type LoginFormInput = z.input<typeof loginSchema>
-type LoginFormOutput = z.output<typeof loginSchema>
-type LoginFormData = LoginFormOutput
+type LoginFormInput = z.input<typeof LoginFormSchema>
+type LoginFormOutput = z.output<typeof LoginFormSchema>
 
 export function LoginForm() {
   const t = useTranslations('auth.login')
-  const router = useLocalizedRouter()
+  const tErrors = useTranslations('errors')
+  const localizedRouter = useLocalizedRouter()
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const { formDrafts, saveFormDraft, clearFormDraft } = useAppStore()
 
+  // Get locale from URL, router, or system preference
+  const currentLocale = localizedRouter.locale || getCurrentLocale()
+
   const isDevelopment = process.env.NODE_ENV === 'development'
-  
+
+  // Clear registration store when login page loads (user has logged out)
+  useEffect(() => {
+    // Only clear if localStorage is available
+    if (typeof window !== 'undefined' && window.localStorage) {
+      // Clear the business registration store
+      window.localStorage.removeItem('business-registration-store')
+    }
+  }, [])
+
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormInput, unknown, LoginFormOutput>({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(LoginFormSchema),
     defaultValues: formDrafts['login'] || {
       email: isDevelopment ? 'admin@example.com' : '',
       password: isDevelopment ? 'AdminPassword123!' : '',
@@ -51,20 +65,118 @@ export function LoginForm() {
 
     try {
       // Transform to backend format
-      const tokenRequest = authFrontend.transformLoginToTokenRequest(data)
+      const tokenRequest = transformLoginToTokenRequest(data)
       const result = await login(tokenRequest)
 
       if (result?.error) {
-        setError(result.error)
+        // Use error code for translation if available, otherwise use the error message
+        const errorMessage = result.errorCode
+          ? tErrors(result.errorCode as any)
+          : result.error
+        setError(errorMessage)
       } else if (result?.success) {
+        // Check if user has access to the dashboard
+        if (result.user?.role !== 'admin' && result.user?.role !== 'business') {
+          setError(tErrors('accessDenied'))
+          return
+        }
+
         // Clear form draft on success
         clearFormDraft('login')
 
-        // Force page reload to ensure cookies are properly set and middleware runs
-        window.location.href = `/${router.locale}`
+        // For business users, check if they need registration
+        if (result.user?.role === 'business') {
+          console.log('Business user detected, checking registration status...')
+          console.log('User data:', result.user)
+          console.log('Access token available:', !!result.accessToken)
+
+          // First, hit the registration status endpoint to set cookies
+          try {
+            const apiUrl =
+              process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5500/api/v1'
+            console.log(
+              'Making request to:',
+              `${apiUrl}/businesses/registration/status`
+            )
+
+            // We pass the access token in the Authorization header
+            const statusResponse = await fetch(
+              `${apiUrl}/businesses/registration/status`,
+              {
+                method: 'GET',
+                headers: {
+                  Authorization: `Bearer ${result.accessToken}`,
+                  'Content-Type': 'application/json',
+                },
+              }
+            )
+
+            console.log(
+              'Registration status response status:',
+              statusResponse.status
+            )
+            console.log(
+              'Registration status response headers:',
+              Object.fromEntries(statusResponse.headers.entries())
+            )
+
+            if (statusResponse.ok) {
+              const statusData = await statusResponse.json()
+              console.log(
+                'Registration status data (full):',
+                JSON.stringify(statusData, null, 2)
+              )
+              console.log(
+                'needsRegistration value:',
+                statusData.needsRegistration
+              )
+              console.log(
+                'needsRegistration type:',
+                typeof statusData.needsRegistration
+              )
+
+              // Redirect based on registration status
+              const redirectPath = statusData.needsRegistration
+                ? `/${currentLocale}/business-selector`
+                : `/${currentLocale}/business`
+
+              console.log('Will redirect to:', redirectPath)
+              console.log(
+                'Condition: needsRegistration =',
+                statusData.needsRegistration
+              )
+
+              // Force page reload to ensure cookies are properly set and middleware runs
+              window.location.href = redirectPath
+            } else {
+              const errorText = await statusResponse.text()
+              console.error(
+                'Failed to check registration status:',
+                statusResponse.status,
+                statusResponse.statusText
+              )
+              console.error('Error response body:', errorText)
+
+              // If status check fails, redirect to business selector to ensure registration is completed
+              // This is safer than assuming they can access the dashboard
+              window.location.href = `/${currentLocale}/business-selector`
+            }
+          } catch (error) {
+            console.error('Error checking registration status:', error)
+
+            // If status check fails, redirect to business selector to ensure registration is completed
+            // This is safer than assuming they can access the dashboard
+            window.location.href = `/${currentLocale}/business-selector`
+          }
+        } else {
+          // Admin users go directly to admin dashboard
+          const redirectPath = `/${currentLocale}/admin`
+          // Force page reload to ensure cookies are properly set and middleware runs
+          window.location.href = redirectPath
+        }
       }
     } catch {
-      setError(t('error'))
+      setError(tErrors('invalidCredentials'))
     } finally {
       setIsLoading(false)
     }

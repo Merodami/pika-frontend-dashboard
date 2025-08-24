@@ -14,4 +14,6 @@ export const UserCommunicationPreferencesResponsePushTokensItemPlatform = {
   ios: 'ios',
   android: 'android',
   web: 'web',
+  desktop: 'desktop',
+  other: 'other',
 } as const

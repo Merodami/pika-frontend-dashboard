@@ -7,9 +7,6 @@
  */
 import type { ScanVoucher404DetailsItem } from './scanVoucher404DetailsItem'
 
-/**
- * Standard error response
- */
 export type ScanVoucher404 = {
   /**
    * @minimum 100

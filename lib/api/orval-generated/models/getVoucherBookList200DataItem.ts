@@ -13,9 +13,6 @@ import type { GetVoucherBookList200DataItemCoverImageUrl } from './getVoucherBoo
 import type { GetVoucherBookList200DataItemBackImageUrl } from './getVoucherBookList200DataItemBackImageUrl'
 import type { GetVoucherBookList200DataItemPdfUrl } from './getVoucherBookList200DataItemPdfUrl'
 
-/**
- * Public voucher book information (read-only)
- */
 export type GetVoucherBookList200DataItem = {
   /** Universally Unique Identifier */
   id: string

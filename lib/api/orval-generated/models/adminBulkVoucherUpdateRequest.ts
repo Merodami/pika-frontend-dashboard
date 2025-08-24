@@ -7,9 +7,6 @@
  */
 import type { AdminBulkVoucherUpdateRequestUpdates } from './adminBulkVoucherUpdateRequestUpdates'
 
-/**
- * Update multiple vouchers at once
- */
 export interface AdminBulkVoucherUpdateRequest {
   /**
    * @minItems 1

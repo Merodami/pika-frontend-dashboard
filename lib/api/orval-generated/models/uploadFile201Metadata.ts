@@ -9,4 +9,6 @@
 /**
  * File metadata
  */
-export type UploadFile201Metadata = { [key: string]: unknown }
+export type UploadFile201Metadata = {
+  [key: string]: string | number | boolean | null | null
+}

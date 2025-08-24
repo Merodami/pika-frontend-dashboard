@@ -7,9 +7,6 @@
  */
 import type { CreateSubscriptionRequestMetadata } from './createSubscriptionRequestMetadata'
 
-/**
- * Create a new subscription
- */
 export interface CreateSubscriptionRequest {
   /** Universally Unique Identifier */
   planId: string

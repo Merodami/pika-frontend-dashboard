@@ -20,16 +20,13 @@ import type { GetVouchersByIdsResponseDataItemScansItem } from './getVouchersByI
 import type { GetVouchersByIdsResponseDataItemCustomerVouchersItem } from './getVouchersByIdsResponseDataItemCustomerVouchersItem'
 import type { GetVouchersByIdsResponseDataItemDaysUntilExpiry } from './getVouchersByIdsResponseDataItemDaysUntilExpiry'
 
-/**
- * Detailed voucher information for admin with industry-standard include relations
- */
 export type GetVouchersByIdsResponseDataItem = {
   /** Universally Unique Identifier */
   id: string
   /** Universally Unique Identifier */
   businessId: string
   /** Universally Unique Identifier */
-  categoryId: string
+  categoryId?: string
   state: VoucherState
   /** Voucher title in requested language */
   title: string

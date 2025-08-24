@@ -13,9 +13,9 @@ export type AddressType = (typeof AddressType)[keyof typeof AddressType]
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const AddressType = {
-  HOME: 'HOME',
-  WORK: 'WORK',
-  BILLING: 'BILLING',
-  SHIPPING: 'SHIPPING',
-  OTHER: 'OTHER',
+  home: 'home',
+  work: 'work',
+  billing: 'billing',
+  shipping: 'shipping',
+  other: 'other',
 } as const

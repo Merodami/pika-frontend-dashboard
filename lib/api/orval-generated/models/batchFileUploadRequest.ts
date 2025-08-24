@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Batch file upload request body
- */
 export interface BatchFileUploadRequest {
   /** Target folder for uploads */
   folder?: string

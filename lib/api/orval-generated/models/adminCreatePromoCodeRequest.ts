@@ -7,9 +7,6 @@
  */
 import type { AdminCreatePromoCodeRequestType } from './adminCreatePromoCodeRequestType'
 
-/**
- * Create a new promo code
- */
 export interface AdminCreatePromoCodeRequest {
   /**
    * @minLength 3

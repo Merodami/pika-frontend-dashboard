@@ -7,9 +7,6 @@
  */
 import type { UploadFile400DetailsItem } from './uploadFile400DetailsItem'
 
-/**
- * Standard error response
- */
 export type UploadFile400 = {
   /**
    * @minimum 100

@@ -7,6 +7,8 @@
  */
 import type {
   AdminCategoryResponse,
+  ApproveAdminBusiness200,
+  ApproveAdminBusinessBody,
   AssignAdminTicketToAgent200,
   AssignAdminTicketToAgentBody,
   AuthIntrospect200,
@@ -43,6 +45,7 @@ import type {
   BulkUpdateAdminBusinessesBody,
   BulkUpdateAdminCategories200,
   BulkUpdateAdminCategoriesBody,
+  ChangePassword200,
   ChangePasswordBody,
   CheckInternalBusinessExists200,
   CheckInternalBusinessExistsBody,
@@ -51,9 +54,10 @@ import type {
   CheckInternalUserQuota200,
   CheckInternalUserQuotaBody,
   ClaimVoucher200,
-  ClaimVoucherBody,
   CleanupInternalOrphanedFiles200,
   CleanupInternalOrphanedFilesBody,
+  CompleteBusinessRegistration200,
+  CompleteBusinessRegistrationBody,
   CreateAdminBusiness201,
   CreateAdminBusinessBody,
   CreateAdminCategoryBody,
@@ -73,15 +77,19 @@ import type {
   CreateSupportCommentBody,
   CreateSupportProblem201,
   CreateSupportProblemBody,
-  DeregisterInternalService200,
-  DeregisterInternalServiceBody,
   DownloadVoucherBookPdf200,
+  ExpireAdminVoucher200,
+  ForgotPassword200,
   ForgotPasswordBody,
   GenerateAdminVoucherBookPdf200,
   GenerateAdminVoucherBookPdfBody,
+  GenerateAdminVoucherCodes200,
+  GenerateAdminVoucherCodesBody,
   GetAdminBusinessById200,
   GetAdminBusinessList200,
   GetAdminBusinessListParams,
+  GetAdminBusinessVoucherStats200,
+  GetAdminBusinessVoucherStatsParams,
   GetAdminCategoryTree200,
   GetAdminCommentList200,
   GetAdminCommentListParams,
@@ -107,6 +115,8 @@ import type {
   GetAdminUserList200,
   GetAdminUserListParams,
   GetAdminUserVerificationStatus200,
+  GetAdminVoucherAnalytics200,
+  GetAdminVoucherAnalyticsParams,
   GetAdminVoucherBookById200,
   GetAdminVoucherBookList200,
   GetAdminVoucherBookListParams,
@@ -114,8 +124,11 @@ import type {
   GetAdminVoucherById200,
   GetAdminVoucherList200,
   GetAdminVoucherListParams,
+  GetAdminVoucherTranslations200,
   GetBusinessList200,
   GetBusinessListParams,
+  GetBusinessRegistrationProgress200,
+  GetBusinessRegistrationStatus200,
   GetCategoryPath200,
   GetFileHistory200,
   GetFileHistoryParams,
@@ -132,13 +145,6 @@ import type {
   GetInternalCategoryList200,
   GetInternalCategoryListParams,
   GetInternalFileById200,
-  GetInternalServiceConfig200,
-  GetInternalServiceConfigParams,
-  GetInternalServiceEndpoints200,
-  GetInternalServiceEndpointsParams,
-  GetInternalServiceHealth200,
-  GetInternalServiceRegistry200,
-  GetInternalServiceRegistryParams,
   GetInternalStorageHealth200,
   GetInternalUserByEmail200,
   GetInternalUserByEmailBody,
@@ -146,7 +152,8 @@ import type {
   GetInternalUserFileSummary200,
   GetInternalUserFiles200Item,
   GetInternalUserFilesBody,
-  GetMyBusiness200,
+  GetMyBusinesses200,
+  GetMyBusinessesParams,
   GetProblemComments200,
   GetPromoCodes200,
   GetPromoCodesParams,
@@ -156,6 +163,7 @@ import type {
   GetSubscriptionsPlansParams,
   GetSupportCommentById200,
   GetUserProfile200,
+  GetUserSettings200,
   GetUserSupportProblems200,
   GetUserSupportProblemsParams,
   GetUserVouchers200,
@@ -166,7 +174,6 @@ import type {
   GetVouchersAnalyticsParams,
   HandleStripeWebhook200,
   HandleStripeWebhookBody,
-  MessageResponse,
   MigrateInternalFile200,
   MigrateInternalFileBody,
   MoveAdminCategoryBody,
@@ -174,6 +181,8 @@ import type {
   PatchPromoCodesIdBody,
   PatchSubscriptionsPlansId200,
   PatchSubscriptionsPlansIdBody,
+  PatchUserSettings200,
+  PatchUserSettingsBody,
   PatchVouchersBulkUpdate200,
   PatchVouchersBulkUpdateBody,
   PostAdminCommentsBody,
@@ -182,23 +191,31 @@ import type {
   PostSubscriptionsPlans201,
   PostSubscriptionsPlansBody,
   PostTemplatesSeed201,
+  PublishAdminVoucher200,
   PutAdminCommentsIdBody,
   RedeemVoucher200,
-  RedeemVoucherBody,
   RefundAdminTransaction200,
   RefundAdminTransactionBody,
-  RegisterInternalService201,
-  RegisterInternalServiceBody,
   ResendAdminUserVerification200,
   ResendAdminUserVerificationBody,
+  ResendVerification200,
   ResendVerificationBody,
+  ResetBusinessRegistration200,
+  ResetBusinessRegistrationBody,
+  ResetPassword200,
   ResetPasswordBody,
   ScanVoucher200,
-  ScanVoucherBody,
   SendInternalSystemNotification201,
   SendInternalSystemNotificationBody,
   SendInternalTransactionalEmail200,
   SendInternalTransactionalEmailBody,
+  StartBusinessRegistration200,
+  SubmitBusinessRegistrationStep1200,
+  SubmitBusinessRegistrationStep1Body,
+  SubmitBusinessRegistrationStep2200,
+  SubmitBusinessRegistrationStep2Body,
+  SubmitBusinessRegistrationStep3200,
+  SubmitBusinessRegistrationStep3Body,
   ToggleAdminCategoryActivationBody,
   UnbanAdminUserBody,
   UpdateAdminBusiness200,
@@ -227,7 +244,13 @@ import type {
   UpdateAdminVoucherBookBody,
   UpdateAdminVoucherBookStatus200,
   UpdateAdminVoucherBookStatusBody,
+  UpdateAdminVoucherState200,
+  UpdateAdminVoucherStateBody,
+  UpdateAdminVoucherTranslations200,
+  UpdateAdminVoucherTranslationsBody,
+  UpdateInternalSubscriptionStatus200,
   UpdateInternalSubscriptionStatusBody,
+  UpdateInternalUserMembership200,
   UpdateInternalUserMembershipBody,
   UpdateMyBusiness200,
   UpdateMyBusinessBody,
@@ -235,10 +258,18 @@ import type {
   UpdateSupportCommentBody,
   UpdateUserProfile200,
   UpdateUserProfileBody,
+  UpdateUserSettings200,
+  UpdateUserSettingsBody,
+  UploadAdminBusinessLogo200,
+  UploadAdminBusinessLogoBody,
   UploadAdminUserAvatar200,
   UploadAdminUserAvatarBody,
+  UploadAdminVoucherImage200,
+  UploadAdminVoucherImageBody,
   UploadAvatarRequest,
   UploadAvatarResponse,
+  UploadBusinessLogo200,
+  UploadBusinessLogoBody,
   UploadFile201,
   UploadFileBody,
   ValidateInternalBusinesses200,
@@ -250,6 +281,10 @@ import type {
   ValidateInternalVoucher200,
   ValidateInternalVoucherBody,
   VerifyAdminUserBody,
+  VerifyEmail200,
+  VoucherClaimRequest,
+  VoucherRedeemRequest,
+  VoucherScanRequest,
 } from './models'
 
 import { customInstance } from './custom-instance'
@@ -300,7 +335,7 @@ export const createMyBusiness = (
   createMyBusinessBody: CreateMyBusinessBody
 ) => {
   return customInstance<CreateMyBusiness201>({
-    url: `/my/business`,
+    url: `/businesses/me`,
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     data: createMyBusinessBody,
@@ -308,12 +343,13 @@ export const createMyBusiness = (
 }
 
 /**
- * @summary Get my business details
+ * @summary Get my businesses with pagination and filters
  */
-export const getMyBusiness = () => {
-  return customInstance<GetMyBusiness200>({
-    url: `/my/business`,
+export const getMyBusinesses = (params?: GetMyBusinessesParams) => {
+  return customInstance<GetMyBusinesses200>({
+    url: `/businesses/me`,
     method: 'GET',
+    params,
   })
 }
 
@@ -324,7 +360,7 @@ export const updateMyBusiness = (
   updateMyBusinessBody: UpdateMyBusinessBody
 ) => {
   return customInstance<UpdateMyBusiness200>({
-    url: `/my/business`,
+    url: `/businesses/me`,
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     data: updateMyBusinessBody,
@@ -335,7 +371,110 @@ export const updateMyBusiness = (
  * @summary Delete my business
  */
 export const deleteMyBusiness = () => {
-  return customInstance<null>({ url: `/my/business`, method: 'DELETE' })
+  return customInstance<null>({ url: `/businesses/me`, method: 'DELETE' })
+}
+
+/**
+ * @summary Upload business logo
+ */
+export const uploadBusinessLogo = (
+  uploadBusinessLogoBody: UploadBusinessLogoBody
+) => {
+  const formData = new FormData()
+  formData.append(`logo`, uploadBusinessLogoBody.logo)
+
+  return customInstance<UploadBusinessLogo200>({
+    url: `/businesses/me/logo`,
+    method: 'POST',
+    headers: { 'Content-Type': 'multipart/form-data' },
+    data: formData,
+  })
+}
+
+/**
+ * @summary Start business registration process
+ */
+export const startBusinessRegistration = () => {
+  return customInstance<StartBusinessRegistration200>({
+    url: `/businesses/registration/start`,
+    method: 'POST',
+  })
+}
+
+/**
+ * @summary Get current business registration status
+ */
+export const getBusinessRegistrationStatus = () => {
+  return customInstance<GetBusinessRegistrationStatus200>({
+    url: `/businesses/registration/status`,
+    method: 'GET',
+  })
+}
+
+/**
+ * @summary Get detailed registration progress with all step data
+ */
+export const getBusinessRegistrationProgress = () => {
+  return customInstance<GetBusinessRegistrationProgress200>({
+    url: `/businesses/registration/progress`,
+    method: 'GET',
+  })
+}
+
+/**
+ * @summary Submit business registration step 1 (basic info)
+ */
+export const submitBusinessRegistrationStep1 = (
+  submitBusinessRegistrationStep1Body: SubmitBusinessRegistrationStep1Body
+) => {
+  return customInstance<SubmitBusinessRegistrationStep1200>({
+    url: `/businesses/registration/step1`,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    data: submitBusinessRegistrationStep1Body,
+  })
+}
+
+/**
+ * @summary Submit business registration step 2 (details)
+ */
+export const submitBusinessRegistrationStep2 = (
+  submitBusinessRegistrationStep2Body: SubmitBusinessRegistrationStep2Body
+) => {
+  return customInstance<SubmitBusinessRegistrationStep2200>({
+    url: `/businesses/registration/step2`,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    data: submitBusinessRegistrationStep2Body,
+  })
+}
+
+/**
+ * @summary Submit business registration step 3 (additional info)
+ */
+export const submitBusinessRegistrationStep3 = (
+  submitBusinessRegistrationStep3Body: SubmitBusinessRegistrationStep3Body
+) => {
+  return customInstance<SubmitBusinessRegistrationStep3200>({
+    url: `/businesses/registration/step3`,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    data: submitBusinessRegistrationStep3Body,
+  })
+}
+
+/**
+ * @summary Complete business registration with user consent
+ */
+export const completeBusinessRegistration = (
+  completeBusinessRegistrationBody: CompleteBusinessRegistrationBody
+) => {
+  return customInstance<CompleteBusinessRegistration200>({
+    url: `/businesses/registration/complete`,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    data: completeBusinessRegistrationBody,
+  })
 }
 
 /**
@@ -582,12 +721,15 @@ export const deleteAdminVoucher = (id: string) => {
 /**
  * @summary Scan a voucher
  */
-export const scanVoucher = (id: string, scanVoucherBody: ScanVoucherBody) => {
+export const scanVoucher = (
+  id: string,
+  voucherScanRequest: VoucherScanRequest
+) => {
   return customInstance<ScanVoucher200>({
     url: `/vouchers/${id}/scan`,
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    data: scanVoucherBody,
+    data: voucherScanRequest,
   })
 }
 
@@ -596,13 +738,13 @@ export const scanVoucher = (id: string, scanVoucherBody: ScanVoucherBody) => {
  */
 export const claimVoucher = (
   id: string,
-  claimVoucherBody: ClaimVoucherBody
+  voucherClaimRequest: VoucherClaimRequest
 ) => {
   return customInstance<ClaimVoucher200>({
     url: `/vouchers/${id}/claim`,
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    data: claimVoucherBody,
+    data: voucherClaimRequest,
   })
 }
 
@@ -611,13 +753,13 @@ export const claimVoucher = (
  */
 export const redeemVoucher = (
   id: string,
-  redeemVoucherBody: RedeemVoucherBody
+  voucherRedeemRequest: VoucherRedeemRequest
 ) => {
   return customInstance<RedeemVoucher200>({
     url: `/vouchers/${id}/redeem`,
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    data: redeemVoucherBody,
+    data: voucherRedeemRequest,
   })
 }
 
@@ -697,7 +839,7 @@ export const authUserInfo = () => {
  * @summary Request password reset
  */
 export const forgotPassword = (forgotPasswordBody: ForgotPasswordBody) => {
-  return customInstance<MessageResponse>({
+  return customInstance<ForgotPassword200>({
     url: `/auth/forgot-password`,
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -709,7 +851,7 @@ export const forgotPassword = (forgotPasswordBody: ForgotPasswordBody) => {
  * @summary Reset password with token
  */
 export const resetPassword = (resetPasswordBody: ResetPasswordBody) => {
-  return customInstance<MessageResponse>({
+  return customInstance<ResetPassword200>({
     url: `/auth/reset-password`,
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -721,7 +863,7 @@ export const resetPassword = (resetPasswordBody: ResetPasswordBody) => {
  * @summary Verify email address
  */
 export const verifyEmail = (token: string) => {
-  return customInstance<MessageResponse>({
+  return customInstance<VerifyEmail200>({
     url: `/auth/verify-email/${token}`,
     method: 'GET',
   })
@@ -733,7 +875,7 @@ export const verifyEmail = (token: string) => {
 export const resendVerification = (
   resendVerificationBody: ResendVerificationBody
 ) => {
-  return customInstance<MessageResponse>({
+  return customInstance<ResendVerification200>({
     url: `/auth/resend-verification`,
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -745,7 +887,7 @@ export const resendVerification = (
  * @summary Change user password
  */
 export const changePassword = (changePasswordBody: ChangePasswordBody) => {
-  return customInstance<MessageResponse>({
+  return customInstance<ChangePassword200>({
     url: `/auth/change-password`,
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -788,6 +930,44 @@ export const uploadUserAvatar = (uploadAvatarRequest: UploadAvatarRequest) => {
     method: 'POST',
     headers: { 'Content-Type': 'multipart/form-data' },
     data: formData,
+  })
+}
+
+/**
+ * @summary Get current user settings
+ */
+export const getUserSettings = () => {
+  return customInstance<GetUserSettings200>({
+    url: `/users/me/settings`,
+    method: 'GET',
+  })
+}
+
+/**
+ * @summary Update user settings (full replace)
+ */
+export const updateUserSettings = (
+  updateUserSettingsBody: UpdateUserSettingsBody
+) => {
+  return customInstance<UpdateUserSettings200>({
+    url: `/users/me/settings`,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    data: updateUserSettingsBody,
+  })
+}
+
+/**
+ * @summary Patch user settings (partial update)
+ */
+export const patchUserSettings = (
+  patchUserSettingsBody: PatchUserSettingsBody
+) => {
+  return customInstance<PatchUserSettings200>({
+    url: `/users/me/settings`,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    data: patchUserSettingsBody,
   })
 }
 
@@ -1099,6 +1279,21 @@ export const updateAdminBusinessRating = (
 }
 
 /**
+ * @summary Approve or reject a business
+ */
+export const approveAdminBusiness = (
+  id: string,
+  approveAdminBusinessBody: ApproveAdminBusinessBody
+) => {
+  return customInstance<ApproveAdminBusiness200>({
+    url: `/admin/businesses/${id}/approve`,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    data: approveAdminBusinessBody,
+  })
+}
+
+/**
  * @summary Update multiple businesses at once
  */
 export const bulkUpdateAdminBusinesses = (
@@ -1123,6 +1318,40 @@ export const bulkDeleteAdminBusinesses = (
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json' },
     data: bulkDeleteAdminBusinessesBody,
+  })
+}
+
+/**
+ * Reset a business registration to allow the user to restart the registration process
+ * @summary Reset a business registration by user ID
+ */
+export const resetBusinessRegistration = (
+  id: string,
+  resetBusinessRegistrationBody: ResetBusinessRegistrationBody
+) => {
+  return customInstance<ResetBusinessRegistration200>({
+    url: `/admin/businesses/users/${id}/registration/reset`,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    data: resetBusinessRegistrationBody,
+  })
+}
+
+/**
+ * @summary Admin uploads logo for any business
+ */
+export const uploadAdminBusinessLogo = (
+  id: string,
+  uploadAdminBusinessLogoBody: UploadAdminBusinessLogoBody
+) => {
+  const formData = new FormData()
+  formData.append(`logo`, uploadAdminBusinessLogoBody.logo)
+
+  return customInstance<UploadAdminBusinessLogo200>({
+    url: `/admin/businesses/${id}/logo`,
+    method: 'POST',
+    headers: { 'Content-Type': 'multipart/form-data' },
+    data: formData,
   })
 }
 
@@ -1219,6 +1448,127 @@ export const patchVouchersBulkUpdate = (
 export const getVouchersAnalytics = (params?: GetVouchersAnalyticsParams) => {
   return customInstance<GetVouchersAnalytics200>({
     url: `/vouchers/analytics`,
+    method: 'GET',
+    params,
+  })
+}
+
+/**
+ * @summary Publish a voucher (DRAFT → PUBLISHED)
+ */
+export const publishAdminVoucher = (id: string) => {
+  return customInstance<PublishAdminVoucher200>({
+    url: `/vouchers/${id}/publish`,
+    method: 'POST',
+  })
+}
+
+/**
+ * @summary Expire a voucher (PUBLISHED → EXPIRED)
+ */
+export const expireAdminVoucher = (id: string) => {
+  return customInstance<ExpireAdminVoucher200>({
+    url: `/vouchers/${id}/expire`,
+    method: 'POST',
+  })
+}
+
+/**
+ * @summary Upload voucher image
+ */
+export const uploadAdminVoucherImage = (
+  id: string,
+  uploadAdminVoucherImageBody: UploadAdminVoucherImageBody
+) => {
+  const formData = new FormData()
+  formData.append(`image`, uploadAdminVoucherImageBody.image)
+
+  return customInstance<UploadAdminVoucherImage200>({
+    url: `/vouchers/${id}/image`,
+    method: 'POST',
+    headers: { 'Content-Type': 'multipart/form-data' },
+    data: formData,
+  })
+}
+
+/**
+ * @summary Update voucher state with validation
+ */
+export const updateAdminVoucherState = (
+  id: string,
+  updateAdminVoucherStateBody: UpdateAdminVoucherStateBody
+) => {
+  return customInstance<UpdateAdminVoucherState200>({
+    url: `/vouchers/${id}/state`,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    data: updateAdminVoucherStateBody,
+  })
+}
+
+/**
+ * @summary Generate voucher codes
+ */
+export const generateAdminVoucherCodes = (
+  id: string,
+  generateAdminVoucherCodesBody: GenerateAdminVoucherCodesBody
+) => {
+  return customInstance<GenerateAdminVoucherCodes200>({
+    url: `/vouchers/${id}/codes`,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    data: generateAdminVoucherCodesBody,
+  })
+}
+
+/**
+ * @summary Update voucher translations
+ */
+export const updateAdminVoucherTranslations = (
+  id: string,
+  updateAdminVoucherTranslationsBody: UpdateAdminVoucherTranslationsBody
+) => {
+  return customInstance<UpdateAdminVoucherTranslations200>({
+    url: `/vouchers/${id}/translations`,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    data: updateAdminVoucherTranslationsBody,
+  })
+}
+
+/**
+ * @summary Get voucher translations
+ */
+export const getAdminVoucherTranslations = (id: string) => {
+  return customInstance<GetAdminVoucherTranslations200>({
+    url: `/vouchers/${id}/translations`,
+    method: 'GET',
+  })
+}
+
+/**
+ * @summary Get analytics for specific voucher
+ */
+export const getAdminVoucherAnalytics = (
+  id: string,
+  params?: GetAdminVoucherAnalyticsParams
+) => {
+  return customInstance<GetAdminVoucherAnalytics200>({
+    url: `/vouchers/${id}/analytics`,
+    method: 'GET',
+    params,
+  })
+}
+
+/**
+ * @summary Get voucher statistics for a specific business
+ */
+export const getAdminBusinessVoucherStats = (
+  id: string,
+  params?: GetAdminBusinessVoucherStatsParams
+) => {
+  return customInstance<GetAdminBusinessVoucherStats200>({
+    url: `/vouchers/business/${id}/stats`,
     method: 'GET',
     params,
   })
@@ -2056,86 +2406,6 @@ export const validateInternalVoucher = (
 }
 
 /**
- * @summary Service health check
- */
-export const getInternalServiceHealth = () => {
-  return customInstance<GetInternalServiceHealth200>({
-    url: `/health`,
-    method: 'GET',
-  })
-}
-
-/**
- * @summary Get service registry
- */
-export const getInternalServiceRegistry = (
-  params?: GetInternalServiceRegistryParams
-) => {
-  return customInstance<GetInternalServiceRegistry200>({
-    url: `/services/registry`,
-    method: 'GET',
-    params,
-  })
-}
-
-/**
- * @summary Register service instance
- */
-export const registerInternalService = (
-  registerInternalServiceBody: RegisterInternalServiceBody
-) => {
-  return customInstance<RegisterInternalService201>({
-    url: `/services/register`,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    data: registerInternalServiceBody,
-  })
-}
-
-/**
- * @summary Deregister service instance
- */
-export const deregisterInternalService = (
-  instanceId: string,
-  deregisterInternalServiceBody: DeregisterInternalServiceBody
-) => {
-  return customInstance<DeregisterInternalService200>({
-    url: `/services/${instanceId}/deregister`,
-    method: 'DELETE',
-    headers: { 'Content-Type': 'application/json' },
-    data: deregisterInternalServiceBody,
-  })
-}
-
-/**
- * @summary Get service endpoints
- */
-export const getInternalServiceEndpoints = (
-  serviceName: string,
-  params?: GetInternalServiceEndpointsParams
-) => {
-  return customInstance<GetInternalServiceEndpoints200>({
-    url: `/services/${serviceName}/endpoints`,
-    method: 'GET',
-    params,
-  })
-}
-
-/**
- * @summary Get service configuration
- */
-export const getInternalServiceConfig = (
-  serviceName: string,
-  params?: GetInternalServiceConfigParams
-) => {
-  return customInstance<GetInternalServiceConfig200>({
-    url: `/config/${serviceName}`,
-    method: 'GET',
-    params,
-  })
-}
-
-/**
  * @summary Validate JWT token
  */
 export const validateInternalToken = (
@@ -2221,7 +2491,7 @@ export const batchGetInternalUsers = (
 export const updateInternalUserMembership = (
   updateInternalUserMembershipBody: UpdateInternalUserMembershipBody
 ) => {
-  return customInstance<MessageResponse>({
+  return customInstance<UpdateInternalUserMembership200>({
     url: `/subscriptions/user-membership`,
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -2249,7 +2519,7 @@ export const createInternalSubscriptionFromStripe = (
 export const updateInternalSubscriptionStatus = (
   updateInternalSubscriptionStatusBody: UpdateInternalSubscriptionStatusBody
 ) => {
-  return customInstance<MessageResponse>({
+  return customInstance<UpdateInternalSubscriptionStatus200>({
     url: `/subscriptions/status`,
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
@@ -2269,14 +2539,38 @@ export type GetInternalBusinessesByCategoryResult = NonNullable<
 export type CreateMyBusinessResult = NonNullable<
   Awaited<ReturnType<typeof createMyBusiness>>
 >
-export type GetMyBusinessResult = NonNullable<
-  Awaited<ReturnType<typeof getMyBusiness>>
+export type GetMyBusinessesResult = NonNullable<
+  Awaited<ReturnType<typeof getMyBusinesses>>
 >
 export type UpdateMyBusinessResult = NonNullable<
   Awaited<ReturnType<typeof updateMyBusiness>>
 >
 export type DeleteMyBusinessResult = NonNullable<
   Awaited<ReturnType<typeof deleteMyBusiness>>
+>
+export type UploadBusinessLogoResult = NonNullable<
+  Awaited<ReturnType<typeof uploadBusinessLogo>>
+>
+export type StartBusinessRegistrationResult = NonNullable<
+  Awaited<ReturnType<typeof startBusinessRegistration>>
+>
+export type GetBusinessRegistrationStatusResult = NonNullable<
+  Awaited<ReturnType<typeof getBusinessRegistrationStatus>>
+>
+export type GetBusinessRegistrationProgressResult = NonNullable<
+  Awaited<ReturnType<typeof getBusinessRegistrationProgress>>
+>
+export type SubmitBusinessRegistrationStep1Result = NonNullable<
+  Awaited<ReturnType<typeof submitBusinessRegistrationStep1>>
+>
+export type SubmitBusinessRegistrationStep2Result = NonNullable<
+  Awaited<ReturnType<typeof submitBusinessRegistrationStep2>>
+>
+export type SubmitBusinessRegistrationStep3Result = NonNullable<
+  Awaited<ReturnType<typeof submitBusinessRegistrationStep3>>
+>
+export type CompleteBusinessRegistrationResult = NonNullable<
+  Awaited<ReturnType<typeof completeBusinessRegistration>>
 >
 export type GetInternalCategoryListResult = NonNullable<
   Awaited<ReturnType<typeof getInternalCategoryList>>
@@ -2384,6 +2678,15 @@ export type UpdateUserProfileResult = NonNullable<
 export type UploadUserAvatarResult = NonNullable<
   Awaited<ReturnType<typeof uploadUserAvatar>>
 >
+export type GetUserSettingsResult = NonNullable<
+  Awaited<ReturnType<typeof getUserSettings>>
+>
+export type UpdateUserSettingsResult = NonNullable<
+  Awaited<ReturnType<typeof updateUserSettings>>
+>
+export type PatchUserSettingsResult = NonNullable<
+  Awaited<ReturnType<typeof patchUserSettings>>
+>
 export type HandleStripeWebhookResult = NonNullable<
   Awaited<ReturnType<typeof handleStripeWebhook>>
 >
@@ -2459,11 +2762,20 @@ export type DeactivateAdminBusinessResult = NonNullable<
 export type UpdateAdminBusinessRatingResult = NonNullable<
   Awaited<ReturnType<typeof updateAdminBusinessRating>>
 >
+export type ApproveAdminBusinessResult = NonNullable<
+  Awaited<ReturnType<typeof approveAdminBusiness>>
+>
 export type BulkUpdateAdminBusinessesResult = NonNullable<
   Awaited<ReturnType<typeof bulkUpdateAdminBusinesses>>
 >
 export type BulkDeleteAdminBusinessesResult = NonNullable<
   Awaited<ReturnType<typeof bulkDeleteAdminBusinesses>>
+>
+export type ResetBusinessRegistrationResult = NonNullable<
+  Awaited<ReturnType<typeof resetBusinessRegistration>>
+>
+export type UploadAdminBusinessLogoResult = NonNullable<
+  Awaited<ReturnType<typeof uploadAdminBusinessLogo>>
 >
 export type GetAdminFileListResult = NonNullable<
   Awaited<ReturnType<typeof getAdminFileList>>
@@ -2488,6 +2800,33 @@ export type PatchVouchersBulkUpdateResult = NonNullable<
 >
 export type GetVouchersAnalyticsResult = NonNullable<
   Awaited<ReturnType<typeof getVouchersAnalytics>>
+>
+export type PublishAdminVoucherResult = NonNullable<
+  Awaited<ReturnType<typeof publishAdminVoucher>>
+>
+export type ExpireAdminVoucherResult = NonNullable<
+  Awaited<ReturnType<typeof expireAdminVoucher>>
+>
+export type UploadAdminVoucherImageResult = NonNullable<
+  Awaited<ReturnType<typeof uploadAdminVoucherImage>>
+>
+export type UpdateAdminVoucherStateResult = NonNullable<
+  Awaited<ReturnType<typeof updateAdminVoucherState>>
+>
+export type GenerateAdminVoucherCodesResult = NonNullable<
+  Awaited<ReturnType<typeof generateAdminVoucherCodes>>
+>
+export type UpdateAdminVoucherTranslationsResult = NonNullable<
+  Awaited<ReturnType<typeof updateAdminVoucherTranslations>>
+>
+export type GetAdminVoucherTranslationsResult = NonNullable<
+  Awaited<ReturnType<typeof getAdminVoucherTranslations>>
+>
+export type GetAdminVoucherAnalyticsResult = NonNullable<
+  Awaited<ReturnType<typeof getAdminVoucherAnalytics>>
+>
+export type GetAdminBusinessVoucherStatsResult = NonNullable<
+  Awaited<ReturnType<typeof getAdminBusinessVoucherStats>>
 >
 export type GetAdminUserListResult = NonNullable<
   Awaited<ReturnType<typeof getAdminUserList>>
@@ -2683,24 +3022,6 @@ export type BulkGetInternalVouchersResult = NonNullable<
 >
 export type ValidateInternalVoucherResult = NonNullable<
   Awaited<ReturnType<typeof validateInternalVoucher>>
->
-export type GetInternalServiceHealthResult = NonNullable<
-  Awaited<ReturnType<typeof getInternalServiceHealth>>
->
-export type GetInternalServiceRegistryResult = NonNullable<
-  Awaited<ReturnType<typeof getInternalServiceRegistry>>
->
-export type RegisterInternalServiceResult = NonNullable<
-  Awaited<ReturnType<typeof registerInternalService>>
->
-export type DeregisterInternalServiceResult = NonNullable<
-  Awaited<ReturnType<typeof deregisterInternalService>>
->
-export type GetInternalServiceEndpointsResult = NonNullable<
-  Awaited<ReturnType<typeof getInternalServiceEndpoints>>
->
-export type GetInternalServiceConfigResult = NonNullable<
-  Awaited<ReturnType<typeof getInternalServiceConfig>>
 >
 export type ValidateInternalTokenResult = NonNullable<
   Awaited<ReturnType<typeof validateInternalToken>>

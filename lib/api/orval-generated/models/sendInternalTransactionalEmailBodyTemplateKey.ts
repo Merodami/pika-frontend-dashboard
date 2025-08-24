@@ -11,11 +11,19 @@ export type SendInternalTransactionalEmailBodyTemplateKey =
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const SendInternalTransactionalEmailBodyTemplateKey = {
-  welcome: 'welcome',
-  passwordReset: 'passwordReset',
   emailVerification: 'emailVerification',
+  passwordReset: 'passwordReset',
+  passwordResetConfirmation: 'passwordResetConfirmation',
+  welcome: 'welcome',
+  bookingConfirmation: 'bookingConfirmation',
+  bookingReminder: 'bookingReminder',
+  bookingCancelled: 'bookingCancelled',
   paymentSuccess: 'paymentSuccess',
   paymentFailed: 'paymentFailed',
   subscriptionActivated: 'subscriptionActivated',
   subscriptionCancelled: 'subscriptionCancelled',
+  subscriptionExpiring: 'subscriptionExpiring',
+  subscriptionExpired: 'subscriptionExpired',
+  accountBanned: 'accountBanned',
+  accountUnbanned: 'accountUnbanned',
 } as const

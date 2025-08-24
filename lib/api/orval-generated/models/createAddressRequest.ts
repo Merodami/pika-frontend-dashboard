@@ -8,9 +8,6 @@
 import type { AddressType } from './addressType'
 import type { Coordinates } from './coordinates'
 
-/**
- * Create a new address
- */
 export interface CreateAddressRequest {
   /**
    * @minLength 1

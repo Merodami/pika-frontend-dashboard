@@ -7,9 +7,6 @@
  */
 import type { GetUserProfile401DetailsItem } from './getUserProfile401DetailsItem'
 
-/**
- * Standard error response
- */
 export type GetUserProfile401 = {
   /**
    * @minimum 100

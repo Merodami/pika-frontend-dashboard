@@ -10,9 +10,6 @@ import type { FileHistoryResponseDataItemStatus } from './fileHistoryResponseDat
 import type { FileHistoryResponseDataItemProvider } from './fileHistoryResponseDataItemProvider'
 import type { FileHistoryResponseDataItemMetadata } from './fileHistoryResponseDataItemMetadata'
 
-/**
- * File storage log entry
- */
 export type FileHistoryResponseDataItem = {
   /** Universally Unique Identifier */
   id: string

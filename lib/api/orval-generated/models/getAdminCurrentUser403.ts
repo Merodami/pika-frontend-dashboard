@@ -7,9 +7,6 @@
  */
 import type { GetAdminCurrentUser403DetailsItem } from './getAdminCurrentUser403DetailsItem'
 
-/**
- * Standard error response
- */
 export type GetAdminCurrentUser403 = {
   /**
    * @minimum 100

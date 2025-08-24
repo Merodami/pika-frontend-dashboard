@@ -8,9 +8,6 @@
 import type { AdminBulkFileActionRequestAction } from './adminBulkFileActionRequestAction'
 import type { AdminBulkFileActionRequestNewStatus } from './adminBulkFileActionRequestNewStatus'
 
-/**
- * Bulk action on multiple files
- */
 export interface AdminBulkFileActionRequest {
   /**
    * @minItems 1

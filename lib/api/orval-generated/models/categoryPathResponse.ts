@@ -7,9 +7,6 @@
  */
 import type { CategoryPathResponseDataItem } from './categoryPathResponseDataItem'
 
-/**
- * Category path from root to specified category
- */
 export interface CategoryPathResponse {
   data: CategoryPathResponseDataItem[]
 }

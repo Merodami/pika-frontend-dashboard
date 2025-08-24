@@ -7,9 +7,6 @@
  */
 import type { AuthTokensResponseTokenType } from './authTokensResponseTokenType'
 
-/**
- * Authentication token pair
- */
 export interface AuthTokensResponse {
   /**
    * JWT access token

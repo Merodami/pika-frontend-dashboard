@@ -5,10 +5,8 @@
  * Complete API documentation including public, admin, and internal endpoints
  * OpenAPI spec version: 1.0.0
  */
+import type { AuthRegisterBodyRegistrationSource } from './authRegisterBodyRegistrationSource'
 
-/**
- * New user registration data (avatar uploaded separately)
- */
 export type AuthRegisterBody = {
   /** @minLength 1 */
   email: string
@@ -45,4 +43,6 @@ export type AuthRegisterBody = {
   acceptTerms: boolean
   /** User consent for marketing emails */
   marketingConsent?: boolean
+  /** Source of registration to determine user role */
+  registrationSource?: AuthRegisterBodyRegistrationSource
 }

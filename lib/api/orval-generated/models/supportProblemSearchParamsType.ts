@@ -18,6 +18,6 @@ export const SupportProblemSearchParamsType = {
   technical: 'technical',
   account: 'account',
   general: 'general',
-  bug_report: 'bug_report',
-  feature_request: 'feature_request',
+  bugReport: 'bugReport',
+  featureRequest: 'featureRequest',
 } as const

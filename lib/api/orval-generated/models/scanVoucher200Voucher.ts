@@ -12,16 +12,13 @@ import type { ScanVoucher200VoucherMaxRedemptions } from './scanVoucher200Vouche
 import type { ScanVoucher200VoucherMetadata } from './scanVoucher200VoucherMetadata'
 import type { ScanVoucher200VoucherCodesItem } from './scanVoucher200VoucherCodesItem'
 
-/**
- * Public voucher information
- */
 export type ScanVoucher200Voucher = {
   /** Universally Unique Identifier */
   id: string
   /** Universally Unique Identifier */
   businessId: string
   /** Universally Unique Identifier */
-  categoryId: string
+  categoryId?: string
   state: VoucherState
   /** Multilingual voucher title */
   title?: unknown

@@ -7,9 +7,6 @@
  */
 import type { RedeemVoucher404DetailsItem } from './redeemVoucher404DetailsItem'
 
-/**
- * Standard error response
- */
 export type RedeemVoucher404 = {
   /**
    * @minimum 100

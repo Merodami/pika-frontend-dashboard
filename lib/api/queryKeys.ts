@@ -14,7 +14,8 @@ export const queryKeys = {
     detail: (id: string) => [...queryKeys.vouchers.details(), id] as const,
     infinite: (filters?: Record<string, unknown>) =>
       [...queryKeys.vouchers.all(), 'infinite', filters] as const,
-    stats: (businessId?: string) => [...queryKeys.vouchers.all(), 'stats', businessId] as const,
+    stats: (businessId?: string) =>
+      [...queryKeys.vouchers.all(), 'stats', businessId] as const,
   },
 
   // Business query keys
@@ -40,6 +41,17 @@ export const queryKeys = {
     me: () => [...queryKeys.users.all(), 'me'] as const,
     detail: (id: string) => [...queryKeys.users.all(), id] as const,
     stats: (id: string) => [...queryKeys.users.all(), 'stats', id] as const,
+  },
+
+  // Voucher Book query keys
+  voucherBooks: {
+    all: () => [...queryKeys.all, 'voucherBooks'] as const,
+    lists: () => [...queryKeys.voucherBooks.all(), 'list'] as const,
+    list: (filters?: Record<string, unknown>) =>
+      [...queryKeys.voucherBooks.lists(), filters] as const,
+    details: () => [...queryKeys.voucherBooks.all(), 'detail'] as const,
+    detail: (id: string) => [...queryKeys.voucherBooks.details(), id] as const,
+    statistics: () => [...queryKeys.voucherBooks.all(), 'statistics'] as const,
   },
 
   // UNUSED QUERY KEYS - Commented out during cleanup, can be restored if needed

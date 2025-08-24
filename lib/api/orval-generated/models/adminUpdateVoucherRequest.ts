@@ -14,10 +14,9 @@ import type { AdminUpdateVoucherRequestImageUrl } from './adminUpdateVoucherRequ
 import type { AdminUpdateVoucherRequestMaxRedemptions } from './adminUpdateVoucherRequestMaxRedemptions'
 import type { AdminUpdateVoucherRequestMetadata } from './adminUpdateVoucherRequestMetadata'
 
-/**
- * Update voucher information and translations
- */
 export interface AdminUpdateVoucherRequest {
+  /** Universally Unique Identifier */
+  categoryId?: string
   /** Title translations by language code */
   title?: AdminUpdateVoucherRequestTitle
   /** Description translations by language code */

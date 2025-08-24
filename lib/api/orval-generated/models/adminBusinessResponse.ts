@@ -5,34 +5,41 @@
  * Complete API documentation including public, admin, and internal endpoints
  * OpenAPI spec version: 1.0.0
  */
+import type { AdminBusinessResponseCategoryId } from './adminBusinessResponseCategoryId'
+import type { AdminBusinessResponseApprovedBy } from './adminBusinessResponseApprovedBy'
+import type { AdminBusinessResponseApprovedAt } from './adminBusinessResponseApprovedAt'
 import type { AdminBusinessResponseDeletedAt } from './adminBusinessResponseDeletedAt'
 import type { AdminBusinessResponseUser } from './adminBusinessResponseUser'
-import type { CategoryResponse } from './categoryResponse'
+import type { AdminBusinessResponseCategory } from './adminBusinessResponseCategory'
+import type { AdminBusinessResponseBusinessRegistration } from './adminBusinessResponseBusinessRegistration'
 
-/**
- * Business information for admin management
- */
 export interface AdminBusinessResponse {
   /** Universally Unique Identifier */
   id: string
   /** User who owns this business */
   userId: string
   /**
-   * Translation key for business name
+   * Business name (resolved translation)
    * @maxLength 255
    */
-  businessNameKey: string
+  businessName: string
   /**
-   * Translation key for business description
+   * Business description (resolved translation)
    * @maxLength 255
    */
-  businessDescriptionKey?: string
+  businessDescription?: string
   /** Category this business belongs to */
-  categoryId: string
+  categoryId: AdminBusinessResponseCategoryId
   /** Whether business is verified */
   verified?: boolean
   /** Whether business is active */
   active?: boolean
+  /** Whether business is approved by admin */
+  approved?: boolean
+  /** Admin who approved the business */
+  approvedBy?: AdminBusinessResponseApprovedBy
+  /** When the business was approved */
+  approvedAt?: AdminBusinessResponseApprovedAt
   /**
    * Average rating of the business
    * @minimum 0
@@ -43,7 +50,10 @@ export interface AdminBusinessResponse {
   deletedAt: AdminBusinessResponseDeletedAt
   /** Business owner details when ?include=user */
   user?: AdminBusinessResponseUser
-  category?: CategoryResponse
+  /** Category information when ?include=category */
+  category?: AdminBusinessResponseCategory
+  /** Business registration info when ?include=businessRegistration */
+  businessRegistration?: AdminBusinessResponseBusinessRegistration
   /** When the record was created */
   createdAt: string
   /** When the record was last updated */

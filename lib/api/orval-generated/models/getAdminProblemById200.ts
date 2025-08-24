@@ -9,9 +9,6 @@ import type { GetAdminProblemById200Type } from './getAdminProblemById200Type'
 import type { GetAdminProblemById200Status } from './getAdminProblemById200Status'
 import type { GetAdminProblemById200Priority } from './getAdminProblemById200Priority'
 
-/**
- * Support ticket for admin
- */
 export type GetAdminProblemById200 = {
   /** Universally Unique Identifier */
   id: string

@@ -8,9 +8,6 @@
 import type { UpdateAdminUserStatus200Status } from './updateAdminUserStatus200Status'
 import type { UpdateAdminUserStatus200Role } from './updateAdminUserStatus200Role'
 
-/**
- * Detailed user information for admin
- */
 export type UpdateAdminUserStatus200 = {
   id: string
   /** @minLength 1 */

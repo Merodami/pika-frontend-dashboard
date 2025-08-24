@@ -7,9 +7,6 @@
  */
 import type { AdminRefundTransactionRequestReason } from './adminRefundTransactionRequestReason'
 
-/**
- * Refund a transaction
- */
 export interface AdminRefundTransactionRequest {
   /**
    * Partial refund amount

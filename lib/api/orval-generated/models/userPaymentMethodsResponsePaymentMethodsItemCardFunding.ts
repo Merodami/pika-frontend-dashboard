@@ -11,8 +11,8 @@ export type UserPaymentMethodsResponsePaymentMethodsItemCardFunding =
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const UserPaymentMethodsResponsePaymentMethodsItemCardFunding = {
-  CREDIT: 'CREDIT',
-  DEBIT: 'DEBIT',
-  PREPAID: 'PREPAID',
-  UNKNOWN: 'UNKNOWN',
+  credit: 'credit',
+  debit: 'debit',
+  prepaid: 'prepaid',
+  unknown: 'unknown',
 } as const

@@ -9,9 +9,6 @@ import type { GetAdminVoucherBookById200BookType } from './getAdminVoucherBookBy
 import type { GetAdminVoucherBookById200Status } from './getAdminVoucherBookById200Status'
 import type { GetAdminVoucherBookById200Metadata } from './getAdminVoucherBookById200Metadata'
 
-/**
- * Admin voucher book information with full management details
- */
 export type GetAdminVoucherBookById200 = {
   /** Universally Unique Identifier */
   id: string

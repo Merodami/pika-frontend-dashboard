@@ -20,16 +20,13 @@ import type { UpdateAdminVoucher200ScansItem } from './updateAdminVoucher200Scan
 import type { UpdateAdminVoucher200CustomerVouchersItem } from './updateAdminVoucher200CustomerVouchersItem'
 import type { UpdateAdminVoucher200DaysUntilExpiry } from './updateAdminVoucher200DaysUntilExpiry'
 
-/**
- * Detailed voucher information for admin with industry-standard include relations
- */
 export type UpdateAdminVoucher200 = {
   /** Universally Unique Identifier */
   id: string
   /** Universally Unique Identifier */
   businessId: string
   /** Universally Unique Identifier */
-  categoryId: string
+  categoryId?: string
   state: VoucherState
   /** Voucher title in requested language */
   title: string

@@ -8,9 +8,6 @@
 import type { CreateAdminUserBodyRole } from './createAdminUserBodyRole'
 import type { CreateAdminUserBodyStatus } from './createAdminUserBodyStatus'
 
-/**
- * Create a new user (admin only)
- */
 export type CreateAdminUserBody = {
   /** @minLength 1 */
   email: string
@@ -24,17 +21,33 @@ export type CreateAdminUserBody = {
    * @maxLength 50
    */
   lastName: string
-  /** @minLength 1 */
-  phoneNumber: string
+  /**
+   * Phone number in E.164 format
+   * @pattern ^\+[1-9]\d{1,14}$
+   */
+  phoneNumber?: string
   /**
    * Date in YYYY-MM-DD format
    * @pattern ^\d{4}-\d{2}-\d{2}$
    */
   dateOfBirth?: string
+  /**
+   * Optional password - if not provided, user will set it on first login
+   * @minLength 8
+   * @maxLength 128
+   */
+  password?: string
   /** User role in the system */
   role?: CreateAdminUserBodyRole
   /** User account status */
   status?: CreateAdminUserBodyStatus
-  appVersion?: string
-  alias?: string
+  /** Admin can create pre-verified users */
+  emailVerified?: boolean
+  phoneVerified?: boolean
+  /**
+   * @minLength 2
+   * @maxLength 2
+   * @pattern ^[a-z]{2}$
+   */
+  preferredLanguage?: string
 }

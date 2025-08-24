@@ -11,7 +11,7 @@ export type ServiceEndpointsResponseLoadBalancingStrategy =
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ServiceEndpointsResponseLoadBalancingStrategy = {
-  ROUND_ROBIN: 'ROUND_ROBIN',
-  LEAST_CONNECTIONS: 'LEAST_CONNECTIONS',
-  WEIGHTED: 'WEIGHTED',
+  roundRobin: 'roundRobin',
+  leastConnections: 'leastConnections',
+  weighted: 'weighted',
 } as const

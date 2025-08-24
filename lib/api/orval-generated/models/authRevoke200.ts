@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Token revocation response
- */
 export type AuthRevoke200 = {
   success?: boolean
   message?: string

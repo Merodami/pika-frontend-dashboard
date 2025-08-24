@@ -7,9 +7,6 @@
  */
 import type { AdminBulkCategoryOperationResponseErrorsItem } from './adminBulkCategoryOperationResponseErrorsItem'
 
-/**
- * Bulk category operation result
- */
 export interface AdminBulkCategoryOperationResponse {
   /** @minimum 0 */
   successful: number

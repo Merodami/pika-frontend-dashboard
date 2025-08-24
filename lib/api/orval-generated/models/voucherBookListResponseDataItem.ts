@@ -13,9 +13,6 @@ import type { VoucherBookListResponseDataItemCoverImageUrl } from './voucherBook
 import type { VoucherBookListResponseDataItemBackImageUrl } from './voucherBookListResponseDataItemBackImageUrl'
 import type { VoucherBookListResponseDataItemPdfUrl } from './voucherBookListResponseDataItemPdfUrl'
 
-/**
- * Public voucher book information (read-only)
- */
 export type VoucherBookListResponseDataItem = {
   /** Universally Unique Identifier */
   id: string

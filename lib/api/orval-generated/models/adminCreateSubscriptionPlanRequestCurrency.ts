@@ -11,7 +11,13 @@ export type AdminCreateSubscriptionPlanRequestCurrency =
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const AdminCreateSubscriptionPlanRequestCurrency = {
-  usd: 'usd',
-  eur: 'eur',
-  gbp: 'gbp',
+  PYG: 'PYG',
+  USD: 'USD',
+  EUR: 'EUR',
+  GBP: 'GBP',
+  CAD: 'CAD',
+  AUD: 'AUD',
+  JPY: 'JPY',
+  CNY: 'CNY',
+  INR: 'INR',
 } as const

@@ -7,9 +7,6 @@
  */
 import type { BatchUploadFiles400DetailsItem } from './batchUploadFiles400DetailsItem'
 
-/**
- * Standard error response
- */
 export type BatchUploadFiles400 = {
   /**
    * @minimum 100

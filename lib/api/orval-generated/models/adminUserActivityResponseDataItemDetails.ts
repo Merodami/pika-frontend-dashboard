@@ -7,5 +7,5 @@
  */
 
 export type AdminUserActivityResponseDataItemDetails = {
-  [key: string]: unknown
+  [key: string]: string | number | boolean | null | null
 }

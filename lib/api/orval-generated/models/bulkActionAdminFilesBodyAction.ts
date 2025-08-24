@@ -12,7 +12,7 @@ export type BulkActionAdminFilesBodyAction =
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const BulkActionAdminFilesBodyAction = {
   delete: 'delete',
-  make_public: 'make_public',
-  make_private: 'make_private',
-  change_status: 'change_status',
+  makePublic: 'makePublic',
+  makePrivate: 'makePrivate',
+  changeStatus: 'changeStatus',
 } as const

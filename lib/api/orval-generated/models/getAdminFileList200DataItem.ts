@@ -10,9 +10,6 @@ import type { GetAdminFileList200DataItemStatus } from './getAdminFileList200Dat
 import type { GetAdminFileList200DataItemProvider } from './getAdminFileList200DataItemProvider'
 import type { GetAdminFileList200DataItemMetadata } from './getAdminFileList200DataItemMetadata'
 
-/**
- * Admin file details with user information
- */
 export type GetAdminFileList200DataItem = {
   /** Universally Unique Identifier */
   id: string

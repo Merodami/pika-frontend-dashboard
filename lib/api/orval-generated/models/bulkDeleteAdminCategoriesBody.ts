@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Delete multiple categories
- */
 export type BulkDeleteAdminCategoriesBody = {
   /**
    * @minItems 1

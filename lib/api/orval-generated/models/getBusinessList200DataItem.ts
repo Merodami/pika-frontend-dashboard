@@ -6,32 +6,32 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { GetBusinessList200DataItemUser } from './getBusinessList200DataItemUser'
-import type { CategoryResponse } from './categoryResponse'
+import type { GetBusinessList200DataItemCategory } from './getBusinessList200DataItemCategory'
+import type { GetBusinessList200DataItemBusinessDetails } from './getBusinessList200DataItemBusinessDetails'
 
-/**
- * Business information for public view
- */
 export type GetBusinessList200DataItem = {
   /** Universally Unique Identifier */
   id: string
   /** User who owns this business */
   userId: string
   /**
-   * Translation key for business name
-   * @maxLength 255
+   * Business name in requested language
+   * @maxLength 200
    */
-  businessNameKey: string
+  businessName: string
   /**
-   * Translation key for business description
-   * @maxLength 255
+   * Business description in requested language
+   * @maxLength 2000
    */
-  businessDescriptionKey?: string
+  businessDescription?: string
   /** Category this business belongs to */
   categoryId: string
   /** Whether business is verified */
   verified?: boolean
   /** Whether business is active */
   active?: boolean
+  /** Whether business is approved by admin */
+  approved?: boolean
   /**
    * Average rating of the business
    * @minimum 0
@@ -40,7 +40,10 @@ export type GetBusinessList200DataItem = {
   avgRating?: number
   /** Business owner profile when ?include=user */
   user?: GetBusinessList200DataItemUser
-  category?: CategoryResponse
+  /** Category information when ?include=category */
+  category?: GetBusinessList200DataItemCategory
+  /** Detailed contact and location information when ?include=businessDetails */
+  businessDetails?: GetBusinessList200DataItemBusinessDetails
   /** When the record was created */
   createdAt: string
   /** When the record was last updated */

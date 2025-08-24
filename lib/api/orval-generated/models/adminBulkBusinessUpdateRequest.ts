@@ -7,9 +7,6 @@
  */
 import type { AdminBulkBusinessUpdateRequestUpdates } from './adminBulkBusinessUpdateRequestUpdates'
 
-/**
- * Update multiple businesses at once
- */
 export interface AdminBulkBusinessUpdateRequest {
   /**
    * @minItems 1

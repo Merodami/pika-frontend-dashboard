@@ -9,9 +9,6 @@ import type { AssignAdminTicketToAgent200Type } from './assignAdminTicketToAgent
 import type { AssignAdminTicketToAgent200Status } from './assignAdminTicketToAgent200Status'
 import type { AssignAdminTicketToAgent200Priority } from './assignAdminTicketToAgent200Priority'
 
-/**
- * Support ticket for admin
- */
 export type AssignAdminTicketToAgent200 = {
   /** Universally Unique Identifier */
   id: string

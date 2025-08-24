@@ -81,7 +81,7 @@ export type GetAdminBusinessListParams = {
    */
   updatedTo?: string
   /**
-   * Comma-separated relations: user,category
+   * Comma-separated relations: user,category,businessDetails
    */
   include?: string
 }

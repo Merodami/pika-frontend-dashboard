@@ -7,9 +7,6 @@
  */
 import type { ToggleAdminCategoryActivation404DetailsItem } from './toggleAdminCategoryActivation404DetailsItem'
 
-/**
- * Standard error response
- */
 export type ToggleAdminCategoryActivation404 = {
   /**
    * @minimum 100

@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Resend verification response
- */
 export interface AdminResendVerificationResponse {
   success?: boolean
   message?: string

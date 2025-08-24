@@ -14,7 +14,7 @@ export type GetFileHistory200DataItemProvider =
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const GetFileHistory200DataItemProvider = {
-  aws_s3: 'aws_s3',
+  awsS3: 'awsS3',
   local: 'local',
   minio: 'minio',
 } as const

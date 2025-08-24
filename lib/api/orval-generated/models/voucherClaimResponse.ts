@@ -8,13 +8,9 @@
 import type { VoucherClaimResponseVoucher } from './voucherClaimResponseVoucher'
 import type { VoucherClaimResponseExpiresAt } from './voucherClaimResponseExpiresAt'
 
-/**
- * Voucher claim result
- */
 export interface VoucherClaimResponse {
   /** Universally Unique Identifier */
   claimId: string
-  /** Public voucher information */
   voucher: VoucherClaimResponseVoucher
   claimedAt: string
   expiresAt: VoucherClaimResponseExpiresAt

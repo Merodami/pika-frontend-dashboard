@@ -14,10 +14,9 @@ import type { UpdateAdminVoucherBodyImageUrl } from './updateAdminVoucherBodyIma
 import type { UpdateAdminVoucherBodyMaxRedemptions } from './updateAdminVoucherBodyMaxRedemptions'
 import type { UpdateAdminVoucherBodyMetadata } from './updateAdminVoucherBodyMetadata'
 
-/**
- * Update voucher information and translations
- */
 export type UpdateAdminVoucherBody = {
+  /** Universally Unique Identifier */
+  categoryId?: string
   /** Title translations by language code */
   title?: UpdateAdminVoucherBodyTitle
   /** Description translations by language code */

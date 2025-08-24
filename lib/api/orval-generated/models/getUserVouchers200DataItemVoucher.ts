@@ -12,16 +12,13 @@ import type { GetUserVouchers200DataItemVoucherMaxRedemptions } from './getUserV
 import type { GetUserVouchers200DataItemVoucherMetadata } from './getUserVouchers200DataItemVoucherMetadata'
 import type { GetUserVouchers200DataItemVoucherCodesItem } from './getUserVouchers200DataItemVoucherCodesItem'
 
-/**
- * Public voucher information
- */
 export type GetUserVouchers200DataItemVoucher = {
   /** Universally Unique Identifier */
   id: string
   /** Universally Unique Identifier */
   businessId: string
   /** Universally Unique Identifier */
-  categoryId: string
+  categoryId?: string
   state: VoucherState
   /** Multilingual voucher title */
   title?: unknown

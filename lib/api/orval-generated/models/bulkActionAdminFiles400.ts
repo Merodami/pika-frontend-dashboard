@@ -7,9 +7,6 @@
  */
 import type { BulkActionAdminFiles400DetailsItem } from './bulkActionAdminFiles400DetailsItem'
 
-/**
- * Standard error response
- */
 export type BulkActionAdminFiles400 = {
   /**
    * @minimum 100

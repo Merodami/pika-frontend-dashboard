@@ -7,9 +7,6 @@
  */
 import type { SubscriptionStatus } from './subscriptionStatus'
 
-/**
- * Subscription details
- */
 export interface Subscription {
   /** Universally Unique Identifier */
   id: string

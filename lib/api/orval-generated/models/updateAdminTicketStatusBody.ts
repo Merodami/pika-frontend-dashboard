@@ -7,9 +7,6 @@
  */
 import type { UpdateAdminTicketStatusBodyStatus } from './updateAdminTicketStatusBodyStatus'
 
-/**
- * Update ticket status
- */
 export type UpdateAdminTicketStatusBody = {
   /** Support ticket status */
   status: UpdateAdminTicketStatusBodyStatus

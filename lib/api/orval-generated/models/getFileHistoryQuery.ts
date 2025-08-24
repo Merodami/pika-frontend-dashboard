@@ -8,9 +8,6 @@
 import type { GetFileHistoryQuerySortBy } from './getFileHistoryQuerySortBy'
 import type { GetFileHistoryQuerySortOrder } from './getFileHistoryQuerySortOrder'
 
-/**
- * Query parameters for file history
- */
 export interface GetFileHistoryQuery {
   status?: string
   folder?: string

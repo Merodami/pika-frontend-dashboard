@@ -8,9 +8,6 @@
 import type { AuthToken200TokenType } from './authToken200TokenType'
 import type { AuthToken200User } from './authToken200User'
 
-/**
- * OAuth 2.0 compatible token response
- */
 export type AuthToken200 = {
   /**
    * JWT access token

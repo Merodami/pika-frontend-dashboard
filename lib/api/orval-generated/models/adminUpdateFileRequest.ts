@@ -8,9 +8,6 @@
 import type { AdminUpdateFileRequestStatus } from './adminUpdateFileRequestStatus'
 import type { AdminUpdateFileRequestMetadata } from './adminUpdateFileRequestMetadata'
 
-/**
- * Admin update file details
- */
 export interface AdminUpdateFileRequest {
   fileName?: string
   /** File processing status */

@@ -7,9 +7,6 @@
  */
 import type { DeregisterInternalService404DetailsItem } from './deregisterInternalService404DetailsItem'
 
-/**
- * Standard error response
- */
 export type DeregisterInternalService404 = {
   /**
    * @minimum 100

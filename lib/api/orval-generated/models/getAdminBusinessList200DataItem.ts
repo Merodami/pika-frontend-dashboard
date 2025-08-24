@@ -5,34 +5,41 @@
  * Complete API documentation including public, admin, and internal endpoints
  * OpenAPI spec version: 1.0.0
  */
+import type { GetAdminBusinessList200DataItemCategoryId } from './getAdminBusinessList200DataItemCategoryId'
+import type { GetAdminBusinessList200DataItemApprovedBy } from './getAdminBusinessList200DataItemApprovedBy'
+import type { GetAdminBusinessList200DataItemApprovedAt } from './getAdminBusinessList200DataItemApprovedAt'
 import type { GetAdminBusinessList200DataItemDeletedAt } from './getAdminBusinessList200DataItemDeletedAt'
 import type { GetAdminBusinessList200DataItemUser } from './getAdminBusinessList200DataItemUser'
-import type { CategoryResponse } from './categoryResponse'
+import type { GetAdminBusinessList200DataItemCategory } from './getAdminBusinessList200DataItemCategory'
+import type { GetAdminBusinessList200DataItemBusinessRegistration } from './getAdminBusinessList200DataItemBusinessRegistration'
 
-/**
- * Business information for admin management
- */
 export type GetAdminBusinessList200DataItem = {
   /** Universally Unique Identifier */
   id: string
   /** User who owns this business */
   userId: string
   /**
-   * Translation key for business name
+   * Business name (resolved translation)
    * @maxLength 255
    */
-  businessNameKey: string
+  businessName: string
   /**
-   * Translation key for business description
+   * Business description (resolved translation)
    * @maxLength 255
    */
-  businessDescriptionKey?: string
+  businessDescription?: string
   /** Category this business belongs to */
-  categoryId: string
+  categoryId: GetAdminBusinessList200DataItemCategoryId
   /** Whether business is verified */
   verified?: boolean
   /** Whether business is active */
   active?: boolean
+  /** Whether business is approved by admin */
+  approved?: boolean
+  /** Admin who approved the business */
+  approvedBy?: GetAdminBusinessList200DataItemApprovedBy
+  /** When the business was approved */
+  approvedAt?: GetAdminBusinessList200DataItemApprovedAt
   /**
    * Average rating of the business
    * @minimum 0
@@ -43,7 +50,10 @@ export type GetAdminBusinessList200DataItem = {
   deletedAt: GetAdminBusinessList200DataItemDeletedAt
   /** Business owner details when ?include=user */
   user?: GetAdminBusinessList200DataItemUser
-  category?: CategoryResponse
+  /** Category information when ?include=category */
+  category?: GetAdminBusinessList200DataItemCategory
+  /** Business registration info when ?include=businessRegistration */
+  businessRegistration?: GetAdminBusinessList200DataItemBusinessRegistration
   /** When the record was created */
   createdAt: string
   /** When the record was last updated */

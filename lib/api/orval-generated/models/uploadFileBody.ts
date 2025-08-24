@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * File upload request body (from multipart form)
- */
 export type UploadFileBody = {
   /** Target folder for upload */
   folder?: string

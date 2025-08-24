@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Update business rating data
- */
 export interface AdminUpdateBusinessRatingRequest {
   /**
    * New rating value for the business

@@ -7,9 +7,6 @@
  */
 import type { VerifyAdminUser400DetailsItem } from './verifyAdminUser400DetailsItem'
 
-/**
- * Standard error response
- */
 export type VerifyAdminUser400 = {
   /**
    * @minimum 100

@@ -37,7 +37,9 @@ export default async function SettingsPage({
         <div className="flex items-start gap-4 mb-4">
           <Globe className="w-5 h-5 text-gray-500 mt-1" />
           <div className="flex-1">
-            <h2 className="text-lg font-semibold mb-2">{t('language.title')}</h2>
+            <h2 className="text-lg font-semibold mb-2">
+              {t('language.title')}
+            </h2>
             <p className="text-gray-600 mb-4">{t('language.description')}</p>
             <LanguageSwitcher />
           </div>
@@ -49,7 +51,9 @@ export default async function SettingsPage({
         <div className="flex items-start gap-4">
           <Bell className="w-5 h-5 text-gray-500 mt-1" />
           <div className="flex-1">
-            <h2 className="text-lg font-semibold mb-2">{t('notifications.title')}</h2>
+            <h2 className="text-lg font-semibold mb-2">
+              {t('notifications.title')}
+            </h2>
             <p className="text-gray-600">{t('notifications.description')}</p>
             {/* Add notification settings here */}
           </div>
@@ -61,7 +65,9 @@ export default async function SettingsPage({
         <div className="flex items-start gap-4">
           <Shield className="w-5 h-5 text-gray-500 mt-1" />
           <div className="flex-1">
-            <h2 className="text-lg font-semibold mb-2">{t('security.title')}</h2>
+            <h2 className="text-lg font-semibold mb-2">
+              {t('security.title')}
+            </h2>
             <p className="text-gray-600">{t('security.description')}</p>
             {/* Add security settings here */}
           </div>
@@ -77,7 +83,9 @@ export default async function SettingsPage({
             <p className="text-gray-600">{t('profile.description')}</p>
             <div className="mt-4 text-sm text-gray-500">
               <p>Email: {user.email}</p>
-              <p>Name: {user.firstName} {user.lastName}</p>
+              <p>
+                Name: {user.firstName} {user.lastName}
+              </p>
               <p>Role: {user.role}</p>
             </div>
           </div>

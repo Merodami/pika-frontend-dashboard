@@ -11,9 +11,6 @@ import type { TicketStatsResponseTicketsByPriority } from './ticketStatsResponse
 import type { TicketStatsResponseTicketsByType } from './ticketStatsResponseTicketsByType'
 import type { TicketStatsResponseAgentStatsItem } from './ticketStatsResponseAgentStatsItem'
 
-/**
- * Support ticket metrics
- */
 export interface TicketStatsResponse {
   period: TicketStatsResponsePeriod
   /** @minimum 0 */

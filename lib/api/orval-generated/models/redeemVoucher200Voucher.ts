@@ -12,16 +12,13 @@ import type { RedeemVoucher200VoucherMaxRedemptions } from './redeemVoucher200Vo
 import type { RedeemVoucher200VoucherMetadata } from './redeemVoucher200VoucherMetadata'
 import type { RedeemVoucher200VoucherCodesItem } from './redeemVoucher200VoucherCodesItem'
 
-/**
- * Public voucher information
- */
 export type RedeemVoucher200Voucher = {
   /** Universally Unique Identifier */
   id: string
   /** Universally Unique Identifier */
   businessId: string
   /** Universally Unique Identifier */
-  categoryId: string
+  categoryId?: string
   state: VoucherState
   /** Multilingual voucher title */
   title?: unknown

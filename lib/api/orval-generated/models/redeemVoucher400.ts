@@ -7,9 +7,6 @@
  */
 import type { RedeemVoucher400DetailsItem } from './redeemVoucher400DetailsItem'
 
-/**
- * Standard error response
- */
 export type RedeemVoucher400 = {
   /**
    * @minimum 100

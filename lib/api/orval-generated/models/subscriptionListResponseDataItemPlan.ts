@@ -8,9 +8,6 @@
 import type { SubscriptionListResponseDataItemPlanInterval } from './subscriptionListResponseDataItemPlanInterval'
 import type { SubscriptionListResponseDataItemPlanMetadata } from './subscriptionListResponseDataItemPlanMetadata'
 
-/**
- * Subscription plan details
- */
 export type SubscriptionListResponseDataItemPlan = {
   /** Universally Unique Identifier */
   id: string

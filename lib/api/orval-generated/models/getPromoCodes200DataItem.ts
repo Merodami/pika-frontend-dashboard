@@ -7,9 +7,6 @@
  */
 import type { GetPromoCodes200DataItemType } from './getPromoCodes200DataItemType'
 
-/**
- * Detailed promo code information for admin
- */
 export type GetPromoCodes200DataItem = {
   /** Universally Unique Identifier */
   id: string

@@ -6,32 +6,31 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { GetMyBusiness200User } from './getMyBusiness200User'
-import type { CategoryResponse } from './categoryResponse'
+import type { GetMyBusiness200Category } from './getMyBusiness200Category'
 
-/**
- * Business information for public view
- */
 export type GetMyBusiness200 = {
   /** Universally Unique Identifier */
   id: string
   /** User who owns this business */
   userId: string
   /**
-   * Translation key for business name
-   * @maxLength 255
+   * Business name in requested language
+   * @maxLength 200
    */
-  businessNameKey: string
+  businessName: string
   /**
-   * Translation key for business description
-   * @maxLength 255
+   * Business description in requested language
+   * @maxLength 2000
    */
-  businessDescriptionKey?: string
+  businessDescription?: string
   /** Category this business belongs to */
   categoryId: string
   /** Whether business is verified */
   verified?: boolean
   /** Whether business is active */
   active?: boolean
+  /** Whether business is approved by admin */
+  approved?: boolean
   /**
    * Average rating of the business
    * @minimum 0
@@ -40,7 +39,8 @@ export type GetMyBusiness200 = {
   avgRating?: number
   /** Business owner profile when ?include=user */
   user?: GetMyBusiness200User
-  category?: CategoryResponse
+  /** Category information when ?include=category */
+  category?: GetMyBusiness200Category
   /** When the record was created */
   createdAt: string
   /** When the record was last updated */

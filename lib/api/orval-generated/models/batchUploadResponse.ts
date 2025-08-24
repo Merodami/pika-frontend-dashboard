@@ -8,9 +8,6 @@
 import type { BatchUploadResponseSuccessfulItem } from './batchUploadResponseSuccessfulItem'
 import type { BatchUploadResponseFailedItem } from './batchUploadResponseFailedItem'
 
-/**
- * Response after batch file upload
- */
 export interface BatchUploadResponse {
   successful: BatchUploadResponseSuccessfulItem[]
   failed: BatchUploadResponseFailedItem[]

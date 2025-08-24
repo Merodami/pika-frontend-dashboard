@@ -7,9 +7,6 @@
  */
 import type { AdminCreatePayoutRequestAction } from './adminCreatePayoutRequestAction'
 
-/**
- * Process pending payouts
- */
 export interface AdminCreatePayoutRequest {
   /**
    * @minItems 1

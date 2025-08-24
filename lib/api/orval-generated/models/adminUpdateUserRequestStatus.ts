@@ -7,7 +7,7 @@
  */
 
 /**
- * User account status
+ * Change user status (active, suspended, etc.)
  */
 export type AdminUpdateUserRequestStatus =
   (typeof AdminUpdateUserRequestStatus)[keyof typeof AdminUpdateUserRequestStatus]

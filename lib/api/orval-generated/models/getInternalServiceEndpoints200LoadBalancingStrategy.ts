@@ -11,7 +11,7 @@ export type GetInternalServiceEndpoints200LoadBalancingStrategy =
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const GetInternalServiceEndpoints200LoadBalancingStrategy = {
-  ROUND_ROBIN: 'ROUND_ROBIN',
-  LEAST_CONNECTIONS: 'LEAST_CONNECTIONS',
-  WEIGHTED: 'WEIGHTED',
+  roundRobin: 'roundRobin',
+  leastConnections: 'leastConnections',
+  weighted: 'weighted',
 } as const

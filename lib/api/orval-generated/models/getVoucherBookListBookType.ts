@@ -12,7 +12,7 @@ export type GetVoucherBookListBookType =
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const GetVoucherBookListBookType = {
   monthly: 'monthly',
-  special_edition: 'special_edition',
+  specialEdition: 'specialEdition',
   regional: 'regional',
   seasonal: 'seasonal',
   promotional: 'promotional',

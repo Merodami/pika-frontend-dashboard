@@ -9,9 +9,6 @@ import type { AdminUpdateProblemRequestPriority } from './adminUpdateProblemRequ
 import type { AdminUpdateProblemRequestType } from './adminUpdateProblemRequestType'
 import type { AdminUpdateProblemRequestStatus } from './adminUpdateProblemRequestStatus'
 
-/**
- * Admin update support problem
- */
 export interface AdminUpdateProblemRequest {
   /**
    * @minLength 1

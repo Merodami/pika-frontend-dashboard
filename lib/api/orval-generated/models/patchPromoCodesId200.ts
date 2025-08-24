@@ -7,9 +7,6 @@
  */
 import type { PatchPromoCodesId200Type } from './patchPromoCodesId200Type'
 
-/**
- * Detailed promo code information for admin
- */
 export type PatchPromoCodesId200 = {
   /** Universally Unique Identifier */
   id: string

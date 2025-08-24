@@ -6,4 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type CreateServiceSessionRequestMetadata = { [key: string]: unknown }
+export type CreateServiceSessionRequestMetadata = {
+  [key: string]: string | number | boolean | null | null
+}

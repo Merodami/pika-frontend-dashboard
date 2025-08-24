@@ -11,8 +11,8 @@ export type DeregisterServiceRequestReason =
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const DeregisterServiceRequestReason = {
-  SHUTDOWN: 'SHUTDOWN',
-  MAINTENANCE: 'MAINTENANCE',
-  ERROR: 'ERROR',
-  SCALE_DOWN: 'SCALE_DOWN',
+  shutdown: 'shutdown',
+  maintenance: 'maintenance',
+  error: 'error',
+  scaleDown: 'scaleDown',
 } as const

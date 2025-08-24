@@ -20,16 +20,13 @@ import type { GetAdminVoucherById200ScansItem } from './getAdminVoucherById200Sc
 import type { GetAdminVoucherById200CustomerVouchersItem } from './getAdminVoucherById200CustomerVouchersItem'
 import type { GetAdminVoucherById200DaysUntilExpiry } from './getAdminVoucherById200DaysUntilExpiry'
 
-/**
- * Detailed voucher information for admin with industry-standard include relations
- */
 export type GetAdminVoucherById200 = {
   /** Universally Unique Identifier */
   id: string
   /** Universally Unique Identifier */
   businessId: string
   /** Universally Unique Identifier */
-  categoryId: string
+  categoryId?: string
   state: VoucherState
   /** Voucher title in requested language */
   title: string

@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Create business data for business owners
- */
 export type CreateMyBusinessBody = {
   /**
    * Business name
@@ -21,6 +18,6 @@ export type CreateMyBusinessBody = {
    * @maxLength 500
    */
   businessDescription?: string
-  /** Category ID */
-  categoryId: string
+  /** Category ID (can be assigned later by admin) */
+  categoryId?: string
 }

@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Update business information
- */
 export interface AdminUpdateBusinessRequest {
   /**
    * Business name

@@ -5,11 +5,11 @@
  * Complete API documentation including public, admin, and internal endpoints
  * OpenAPI spec version: 1.0.0
  */
-import type { UserPaymentMethodsResponsePaymentMethodsItemCardBrand } from './userPaymentMethodsResponsePaymentMethodsItemCardBrand'
+import type { CardBrand } from './cardBrand'
 import type { UserPaymentMethodsResponsePaymentMethodsItemCardFunding } from './userPaymentMethodsResponsePaymentMethodsItemCardFunding'
 
 export type UserPaymentMethodsResponsePaymentMethodsItemCard = {
-  brand: UserPaymentMethodsResponsePaymentMethodsItemCardBrand
+  brand: CardBrand
   /**
    * @minLength 4
    * @maxLength 4

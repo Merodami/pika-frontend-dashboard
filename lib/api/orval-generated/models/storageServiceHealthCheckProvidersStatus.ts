@@ -11,7 +11,7 @@ import type { StorageServiceHealthCheckProvidersStatusMinio } from './storageSer
 
 export type StorageServiceHealthCheckProvidersStatus = {
   /** System health status */
-  aws_s3?: StorageServiceHealthCheckProvidersStatusAwsS3
+  awsS3?: StorageServiceHealthCheckProvidersStatusAwsS3
   /** System health status */
   local?: StorageServiceHealthCheckProvidersStatusLocal
   /** System health status */

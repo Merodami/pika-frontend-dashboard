@@ -8,9 +8,6 @@
 import type { UpdateAdminFileBodyStatus } from './updateAdminFileBodyStatus'
 import type { UpdateAdminFileBodyMetadata } from './updateAdminFileBodyMetadata'
 
-/**
- * Admin update file details
- */
 export type UpdateAdminFileBody = {
   fileName?: string
   /** File processing status */

@@ -7,9 +7,6 @@
  */
 import type { ResendAdminUserVerification400DetailsItem } from './resendAdminUserVerification400DetailsItem'
 
-/**
- * Standard error response
- */
 export type ResendAdminUserVerification400 = {
   /**
    * @minimum 100

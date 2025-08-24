@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Update category information
- */
 export interface AdminUpdateCategoryRequest {
   /**
    * Translation key for category name

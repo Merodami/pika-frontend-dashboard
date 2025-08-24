@@ -10,9 +10,6 @@ import type { FileStorageLogStatus } from './fileStorageLogStatus'
 import type { FileStorageLogProvider } from './fileStorageLogProvider'
 import type { FileStorageLogMetadata } from './fileStorageLogMetadata'
 
-/**
- * File storage log entry
- */
 export interface FileStorageLog {
   /** Universally Unique Identifier */
   id: string

@@ -7,9 +7,6 @@
  */
 import type { UpdateAdminCurrentUser401DetailsItem } from './updateAdminCurrentUser401DetailsItem'
 
-/**
- * Standard error response
- */
 export type UpdateAdminCurrentUser401 = {
   /**
    * @minimum 100

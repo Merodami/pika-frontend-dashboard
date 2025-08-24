@@ -5,34 +5,41 @@
  * Complete API documentation including public, admin, and internal endpoints
  * OpenAPI spec version: 1.0.0
  */
+import type { AdminBusinessListResponseDataItemCategoryId } from './adminBusinessListResponseDataItemCategoryId'
+import type { AdminBusinessListResponseDataItemApprovedBy } from './adminBusinessListResponseDataItemApprovedBy'
+import type { AdminBusinessListResponseDataItemApprovedAt } from './adminBusinessListResponseDataItemApprovedAt'
 import type { AdminBusinessListResponseDataItemDeletedAt } from './adminBusinessListResponseDataItemDeletedAt'
 import type { AdminBusinessListResponseDataItemUser } from './adminBusinessListResponseDataItemUser'
-import type { CategoryResponse } from './categoryResponse'
+import type { AdminBusinessListResponseDataItemCategory } from './adminBusinessListResponseDataItemCategory'
+import type { AdminBusinessListResponseDataItemBusinessRegistration } from './adminBusinessListResponseDataItemBusinessRegistration'
 
-/**
- * Business information for admin management
- */
 export type AdminBusinessListResponseDataItem = {
   /** Universally Unique Identifier */
   id: string
   /** User who owns this business */
   userId: string
   /**
-   * Translation key for business name
+   * Business name (resolved translation)
    * @maxLength 255
    */
-  businessNameKey: string
+  businessName: string
   /**
-   * Translation key for business description
+   * Business description (resolved translation)
    * @maxLength 255
    */
-  businessDescriptionKey?: string
+  businessDescription?: string
   /** Category this business belongs to */
-  categoryId: string
+  categoryId: AdminBusinessListResponseDataItemCategoryId
   /** Whether business is verified */
   verified?: boolean
   /** Whether business is active */
   active?: boolean
+  /** Whether business is approved by admin */
+  approved?: boolean
+  /** Admin who approved the business */
+  approvedBy?: AdminBusinessListResponseDataItemApprovedBy
+  /** When the business was approved */
+  approvedAt?: AdminBusinessListResponseDataItemApprovedAt
   /**
    * Average rating of the business
    * @minimum 0
@@ -43,7 +50,10 @@ export type AdminBusinessListResponseDataItem = {
   deletedAt: AdminBusinessListResponseDataItemDeletedAt
   /** Business owner details when ?include=user */
   user?: AdminBusinessListResponseDataItemUser
-  category?: CategoryResponse
+  /** Category information when ?include=category */
+  category?: AdminBusinessListResponseDataItemCategory
+  /** Business registration info when ?include=businessRegistration */
+  businessRegistration?: AdminBusinessListResponseDataItemBusinessRegistration
   /** When the record was created */
   createdAt: string
   /** When the record was last updated */

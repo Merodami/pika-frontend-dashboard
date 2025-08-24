@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Optional metadata for file upload
- */
 export interface FileUploadMetadata {
   category?: string
   /** @maxLength 500 */

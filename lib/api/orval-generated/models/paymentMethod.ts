@@ -12,14 +12,12 @@ import type { PaymentMethodWallet } from './paymentMethodWallet'
 import type { PaymentMethodBillingAddress } from './paymentMethodBillingAddress'
 import type { PaymentMethodMetadata } from './paymentMethodMetadata'
 
-/**
- * User payment method
- */
 export interface PaymentMethod {
   /** Universally Unique Identifier */
   id: string
   userId: string
   stripePaymentMethodId: string
+  /** Type of payment method */
   type: PaymentMethodType
   isDefault?: boolean
   card?: PaymentMethodCard

@@ -7,9 +7,6 @@
  */
 import type { AddressListResponseDataItem } from './addressListResponseDataItem'
 
-/**
- * Paginated list of addresses
- */
 export interface AddressListResponse {
   data: AddressListResponseDataItem[]
   /** @minimum 0 */

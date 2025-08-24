@@ -11,9 +11,6 @@ import type { AdminTransactionDetailResponsePaymentMethod } from './adminTransac
 import type { AdminTransactionDetailResponseDisputeStatus } from './adminTransactionDetailResponseDisputeStatus'
 import type { AdminTransactionDetailResponseMetadata } from './adminTransactionDetailResponseMetadata'
 
-/**
- * Detailed transaction information for admin
- */
 export interface AdminTransactionDetailResponse {
   /** Universally Unique Identifier */
   id: string

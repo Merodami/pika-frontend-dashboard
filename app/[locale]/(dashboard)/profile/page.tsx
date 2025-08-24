@@ -1,14 +1,22 @@
 import { Card, Tag, Button, Divider } from 'antd'
-import { 
-  User, Mail, Phone, Calendar, Shield, Clock, 
-  CheckCircle, XCircle, Edit, Camera 
+import {
+  User,
+  Mail,
+  Phone,
+  Calendar,
+  Shield,
+  Clock,
+  CheckCircle,
+  XCircle,
+  Edit,
+  Camera,
 } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import Image from 'next/image'
 import Link from 'next/link'
 
 import { requireAuth } from '@/app/services/authService'
-import { getUserProfile } from '@/lib/api/orval-client'
+import { getUserProfile } from '@/lib/api/server-client'
 
 export async function generateMetadata({
   params,
@@ -31,7 +39,7 @@ export default async function ProfilePage({
 }) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'profile' })
-  
+
   // Get current user and full profile
   await requireAuth()
   const profile = await getUserProfile()
@@ -42,7 +50,7 @@ export default async function ProfilePage({
     return new Date(dateString).toLocaleDateString(locale, {
       year: 'numeric',
       month: 'long',
-      day: 'numeric'
+      day: 'numeric',
     })
   }
 
@@ -53,26 +61,34 @@ export default async function ProfilePage({
       month: 'short',
       day: 'numeric',
       hour: '2-digit',
-      minute: '2-digit'
+      minute: '2-digit',
     })
   }
 
   // Status colors
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'ACTIVE': return 'green'
-      case 'INACTIVE': return 'orange'
-      case 'SUSPENDED': return 'red'
-      default: return 'default'
+      case 'ACTIVE':
+        return 'green'
+      case 'INACTIVE':
+        return 'orange'
+      case 'SUSPENDED':
+        return 'red'
+      default:
+        return 'default'
     }
   }
 
   const getRoleColor = (role: string) => {
     switch (role) {
-      case 'ADMIN': return 'purple'
-      case 'BUSINESS': return 'blue'
-      case 'USER': return 'default'
-      default: return 'default'
+      case 'ADMIN':
+        return 'purple'
+      case 'BUSINESS':
+        return 'blue'
+      case 'USER':
+        return 'default'
+      default:
+        return 'default'
     }
   }
 
@@ -102,7 +118,8 @@ export default async function ProfilePage({
               />
             ) : (
               <div className="w-30 h-30 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-3xl font-bold">
-                {profile.firstName[0]}{profile.lastName[0]}
+                {profile.firstName[0]}
+                {profile.lastName[0]}
               </div>
             )}
             <button className="absolute bottom-0 right-0 bg-white rounded-full p-2 shadow-lg hover:shadow-xl transition-shadow">
@@ -116,10 +133,14 @@ export default async function ProfilePage({
               <h2 className="text-2xl font-semibold">
                 {profile.firstName} {profile.lastName}
               </h2>
-              <Tag color={getRoleColor(profile.role)}>{t(`role.${profile.role.toLowerCase()}`)}</Tag>
-              <Tag color={getStatusColor(profile.status)}>{t(`status.${profile.status.toLowerCase()}`)}</Tag>
+              <Tag color={getRoleColor(profile.role)}>
+                {t(`role.${profile.role.toLowerCase()}`)}
+              </Tag>
+              <Tag color={getStatusColor(profile.status)}>
+                {t(`status.${profile.status.toLowerCase()}`)}
+              </Tag>
             </div>
-            
+
             <div className="text-gray-600 space-y-1">
               <p className="flex items-center gap-2">
                 <Mail className="w-4 h-4" />
@@ -150,24 +171,31 @@ export default async function ProfilePage({
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="text-sm text-gray-500">{t('personalInfo.firstName')}</label>
+            <label className="text-sm text-gray-500">
+              {t('personalInfo.firstName')}
+            </label>
             <p className="font-medium">{profile.firstName}</p>
           </div>
           <div>
-            <label className="text-sm text-gray-500">{t('personalInfo.lastName')}</label>
+            <label className="text-sm text-gray-500">
+              {t('personalInfo.lastName')}
+            </label>
             <p className="font-medium">{profile.lastName}</p>
           </div>
           <div>
-            <label className="text-sm text-gray-500">{t('personalInfo.dateOfBirth')}</label>
+            <label className="text-sm text-gray-500">
+              {t('personalInfo.dateOfBirth')}
+            </label>
             <p className="font-medium">{formatDate(profile.dateOfBirth)}</p>
           </div>
           <div>
-            <label className="text-sm text-gray-500">{t('personalInfo.preferredLanguage')}</label>
+            <label className="text-sm text-gray-500">
+              {t('personalInfo.preferredLanguage')}
+            </label>
             <p className="font-medium">
-              {profile.preferredLanguage ? 
-                t(`languages.${profile.preferredLanguage}`) : 
-                t('notProvided')
-              }
+              {profile.preferredLanguage
+                ? t(`languages.${profile.preferredLanguage}`)
+                : t('notProvided')}
             </p>
           </div>
         </div>
@@ -181,7 +209,9 @@ export default async function ProfilePage({
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="text-sm text-gray-500">{t('contactInfo.email')}</label>
+            <label className="text-sm text-gray-500">
+              {t('contactInfo.email')}
+            </label>
             <p className="font-medium flex items-center gap-2">
               {profile.email}
               {profile.emailVerified ? (
@@ -198,11 +228,13 @@ export default async function ProfilePage({
             </p>
           </div>
           <div>
-            <label className="text-sm text-gray-500">{t('contactInfo.phone')}</label>
+            <label className="text-sm text-gray-500">
+              {t('contactInfo.phone')}
+            </label>
             <p className="font-medium flex items-center gap-2">
               {profile.phoneNumber || t('notProvided')}
-              {profile.phoneNumber && (
-                profile.phoneVerified ? (
+              {profile.phoneNumber &&
+                (profile.phoneVerified ? (
                   <Tag color="green" className="text-xs">
                     <CheckCircle className="w-3 h-3 inline mr-1" />
                     {t('verified')}
@@ -212,8 +244,7 @@ export default async function ProfilePage({
                     <XCircle className="w-3 h-3 inline mr-1" />
                     {t('unverified')}
                   </Tag>
-                )
-              )}
+                ))}
             </p>
           </div>
         </div>
@@ -227,7 +258,9 @@ export default async function ProfilePage({
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="text-sm text-gray-500">{t('security.accountStatus')}</label>
+            <label className="text-sm text-gray-500">
+              {t('security.accountStatus')}
+            </label>
             <p className="font-medium">
               <Tag color={getStatusColor(profile.status)}>
                 {t(`status.${profile.status.toLowerCase()}`)}
@@ -235,7 +268,9 @@ export default async function ProfilePage({
             </p>
           </div>
           <div>
-            <label className="text-sm text-gray-500">{t('security.role')}</label>
+            <label className="text-sm text-gray-500">
+              {t('security.role')}
+            </label>
             <p className="font-medium">
               <Tag color={getRoleColor(profile.role)}>
                 {t(`role.${profile.role.toLowerCase()}`)}
@@ -243,14 +278,18 @@ export default async function ProfilePage({
             </p>
           </div>
           <div>
-            <label className="text-sm text-gray-500">{t('security.memberSince')}</label>
+            <label className="text-sm text-gray-500">
+              {t('security.memberSince')}
+            </label>
             <p className="font-medium flex items-center gap-2">
               <Calendar className="w-4 h-4" />
               {formatDate(profile.createdAt)}
             </p>
           </div>
           <div>
-            <label className="text-sm text-gray-500">{t('security.lastLogin')}</label>
+            <label className="text-sm text-gray-500">
+              {t('security.lastLogin')}
+            </label>
             <p className="font-medium flex items-center gap-2">
               <Clock className="w-4 h-4" />
               {formatDateTime(profile.lastLoginAt)}

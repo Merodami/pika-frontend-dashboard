@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Update business verification status via PATCH
- */
 export type UpdateAdminBusinessVerificationBody = {
   /** New verification status */
   verified: boolean

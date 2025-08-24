@@ -7,9 +7,6 @@
  */
 import type { UpdateAdminUserStatusBodyStatus } from './updateAdminUserStatusBodyStatus'
 
-/**
- * Update user account status
- */
 export type UpdateAdminUserStatusBody = {
   /** User account status */
   status: UpdateAdminUserStatusBodyStatus

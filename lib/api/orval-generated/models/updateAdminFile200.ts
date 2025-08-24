@@ -10,9 +10,6 @@ import type { UpdateAdminFile200Status } from './updateAdminFile200Status'
 import type { UpdateAdminFile200Provider } from './updateAdminFile200Provider'
 import type { UpdateAdminFile200Metadata } from './updateAdminFile200Metadata'
 
-/**
- * Admin file details with user information
- */
 export type UpdateAdminFile200 = {
   /** Universally Unique Identifier */
   id: string

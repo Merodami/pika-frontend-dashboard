@@ -8,9 +8,6 @@
 import type { CreateSubscriptionPlanRequestInterval } from './createSubscriptionPlanRequestInterval'
 import type { CreateSubscriptionPlanRequestMetadata } from './createSubscriptionPlanRequestMetadata'
 
-/**
- * Create a new subscription plan
- */
 export interface CreateSubscriptionPlanRequest {
   name: string
   description?: string

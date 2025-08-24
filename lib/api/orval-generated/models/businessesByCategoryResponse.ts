@@ -7,9 +7,6 @@
  */
 import type { BusinessesByCategoryResponseBusinessesItem } from './businessesByCategoryResponseBusinessesItem'
 
-/**
- * Businesses grouped by category
- */
 export interface BusinessesByCategoryResponse {
   /** Universally Unique Identifier */
   categoryId: string

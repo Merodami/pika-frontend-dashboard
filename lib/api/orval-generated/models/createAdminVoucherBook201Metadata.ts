@@ -9,4 +9,6 @@
 /**
  * Additional book metadata
  */
-export type CreateAdminVoucherBook201Metadata = { [key: string]: unknown }
+export type CreateAdminVoucherBook201Metadata = {
+  [key: string]: string | number | boolean | null | null
+}

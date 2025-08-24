@@ -11,6 +11,6 @@ export type PromoCodeSearchParamsType =
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PromoCodeSearchParamsType = {
-  percentage: 'percentage',
   fixedAmount: 'fixedAmount',
+  percentage: 'percentage',
 } as const

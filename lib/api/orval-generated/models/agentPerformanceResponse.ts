@@ -7,9 +7,6 @@
  */
 import type { AgentPerformanceResponsePeriod } from './agentPerformanceResponsePeriod'
 
-/**
- * Individual agent performance metrics
- */
 export interface AgentPerformanceResponse {
   agentId: string
   agentName: string

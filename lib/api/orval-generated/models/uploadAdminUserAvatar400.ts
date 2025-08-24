@@ -7,9 +7,6 @@
  */
 import type { UploadAdminUserAvatar400DetailsItem } from './uploadAdminUserAvatar400DetailsItem'
 
-/**
- * Standard error response
- */
 export type UploadAdminUserAvatar400 = {
   /**
    * @minimum 100

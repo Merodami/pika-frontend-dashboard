@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Unban a user
- */
 export type UnbanAdminUserBody = {
   /**
    * @minLength 1

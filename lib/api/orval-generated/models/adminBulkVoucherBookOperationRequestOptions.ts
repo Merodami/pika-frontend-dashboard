@@ -10,5 +10,5 @@
  * Operation-specific options
  */
 export type AdminBulkVoucherBookOperationRequestOptions = {
-  [key: string]: unknown
+  [key: string]: string | number | boolean | null | null
 }

@@ -14,14 +14,11 @@ import type { AdminCreateVoucherRequestImageUrl } from './adminCreateVoucherRequ
 import type { AdminCreateVoucherRequestMaxRedemptions } from './adminCreateVoucherRequestMaxRedemptions'
 import type { AdminCreateVoucherRequestMetadata } from './adminCreateVoucherRequestMetadata'
 
-/**
- * Create new voucher with translations
- */
 export interface AdminCreateVoucherRequest {
   /** Universally Unique Identifier */
   businessId: string
   /** Universally Unique Identifier */
-  categoryId: string
+  categoryId?: string
   /** Title translations by language code */
   title: AdminCreateVoucherRequestTitle
   /** Description translations by language code */

@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Update business data for business owners
- */
 export type UpdateMyBusinessBody = {
   /**
    * Business name

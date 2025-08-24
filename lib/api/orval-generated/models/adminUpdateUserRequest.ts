@@ -8,9 +8,6 @@
 import type { AdminUpdateUserRequestRole } from './adminUpdateUserRequestRole'
 import type { AdminUpdateUserRequestStatus } from './adminUpdateUserRequestStatus'
 
-/**
- * Update user information (admin)
- */
 export interface AdminUpdateUserRequest {
   /**
    * @minLength 1
@@ -22,19 +19,39 @@ export interface AdminUpdateUserRequest {
    * @maxLength 50
    */
   lastName?: string
+  /**
+   * Phone number in E.164 format
+   * @pattern ^\+[1-9]\d{1,14}$
+   */
   phoneNumber?: string
   /**
    * Date in YYYY-MM-DD format
    * @pattern ^\d{4}-\d{2}-\d{2}$
    */
   dateOfBirth?: string
-  /** User role in the system */
+  /**
+   * @minLength 2
+   * @maxLength 2
+   * @pattern ^[a-z]{2}$
+   */
+  preferredLanguage?: string
+  /**
+   * Admin can change user email
+   * @minLength 1
+   */
+  email?: string
+  /** Change user role */
   role?: AdminUpdateUserRequestRole
-  /** User account status */
+  /** Change user status (active, suspended, etc.) */
   status?: AdminUpdateUserRequestStatus
-  appVersion?: string
-  alias?: string
-  activeMembership?: boolean
-  description?: string
-  specialties?: string[]
+  /** Manually verify/unverify email */
+  emailVerified?: boolean
+  /** Manually verify/unverify phone */
+  phoneVerified?: boolean
+  /**
+   * Admin can reset user password
+   * @minLength 8
+   * @maxLength 128
+   */
+  password?: string
 }

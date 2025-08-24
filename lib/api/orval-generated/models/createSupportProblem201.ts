@@ -9,9 +9,6 @@ import type { CreateSupportProblem201Status } from './createSupportProblem201Sta
 import type { CreateSupportProblem201Priority } from './createSupportProblem201Priority'
 import type { CreateSupportProblem201Type } from './createSupportProblem201Type'
 
-/**
- * Support problem
- */
 export type CreateSupportProblem201 = {
   /** Universally Unique Identifier */
   id: string

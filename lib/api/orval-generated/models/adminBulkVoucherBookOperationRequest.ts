@@ -8,9 +8,6 @@
 import type { AdminBulkVoucherBookOperationRequestOperation } from './adminBulkVoucherBookOperationRequestOperation'
 import type { AdminBulkVoucherBookOperationRequestOptions } from './adminBulkVoucherBookOperationRequestOptions'
 
-/**
- * Bulk operation on multiple voucher books
- */
 export interface AdminBulkVoucherBookOperationRequest {
   /**
    * Voucher book IDs to operate on

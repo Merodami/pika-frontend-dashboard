@@ -6,4 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type PaymentMethodMetadata = { [key: string]: unknown }
+export type PaymentMethodMetadata = {
+  [key: string]: string | number | boolean | null | null
+}

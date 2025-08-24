@@ -7,7 +7,7 @@
  */
 
 /**
- * User role in the system
+ * Change user role
  */
 export type UpdateAdminUserBodyRole =
   (typeof UpdateAdminUserBodyRole)[keyof typeof UpdateAdminUserBodyRole]

@@ -8,9 +8,6 @@
 import type { AdminCreateSubscriptionPlanRequestCurrency } from './adminCreateSubscriptionPlanRequestCurrency'
 import type { AdminCreateSubscriptionPlanRequestBillingInterval } from './adminCreateSubscriptionPlanRequestBillingInterval'
 
-/**
- * Create a new subscription plan
- */
 export interface AdminCreateSubscriptionPlanRequest {
   /**
    * @minLength 1

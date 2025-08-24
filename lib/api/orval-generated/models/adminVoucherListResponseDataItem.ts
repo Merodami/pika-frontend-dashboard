@@ -20,16 +20,13 @@ import type { AdminVoucherListResponseDataItemScansItem } from './adminVoucherLi
 import type { AdminVoucherListResponseDataItemCustomerVouchersItem } from './adminVoucherListResponseDataItemCustomerVouchersItem'
 import type { AdminVoucherListResponseDataItemDaysUntilExpiry } from './adminVoucherListResponseDataItemDaysUntilExpiry'
 
-/**
- * Detailed voucher information for admin with industry-standard include relations
- */
 export type AdminVoucherListResponseDataItem = {
   /** Universally Unique Identifier */
   id: string
   /** Universally Unique Identifier */
   businessId: string
   /** Universally Unique Identifier */
-  categoryId: string
+  categoryId?: string
   state: VoucherState
   /** Voucher title in requested language */
   title: string

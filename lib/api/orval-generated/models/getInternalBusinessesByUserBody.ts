@@ -5,12 +5,29 @@
  * Complete API documentation including public, admin, and internal endpoints
  * OpenAPI spec version: 1.0.0
  */
+import type { GetInternalBusinessesByUserBodySortOrder } from './getInternalBusinessesByUserBodySortOrder'
 
 /**
- * Get all businesses owned by a user
+ * Query parameters for getting all businesses owned by a user
  */
 export type GetInternalBusinessesByUserBody = {
-  userId: string
-  includeInactive?: boolean
-  includeUnverified?: boolean
+  /**
+   * Page number
+   */
+  page?: number
+  /**
+   * Items per page
+   * @maximum 100
+   */
+  limit?: number
+  /** Field to sort by */
+  sortBy?: string
+  /** Sort order */
+  sortOrder?: GetInternalBusinessesByUserBodySortOrder
+  /** Search query */
+  search?: string
+  onlyActive?: boolean
+  onlyVerified?: boolean
+  /** Comma-separated relations: user,category,businessDetails */
+  include?: string
 }

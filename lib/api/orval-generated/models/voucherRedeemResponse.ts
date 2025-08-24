@@ -7,9 +7,6 @@
  */
 import type { VoucherRedeemResponseVoucher } from './voucherRedeemResponseVoucher'
 
-/**
- * Voucher redemption result
- */
 export interface VoucherRedeemResponse {
   message: string
   /** Universally Unique Identifier */
@@ -17,6 +14,5 @@ export interface VoucherRedeemResponse {
   redeemedAt: string
   /** @minimum 0 */
   discountApplied: number
-  /** Public voucher information */
   voucher: VoucherRedeemResponseVoucher
 }

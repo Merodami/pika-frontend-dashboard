@@ -9,9 +9,6 @@ import type { UpdateAdminProblemBodyPriority } from './updateAdminProblemBodyPri
 import type { UpdateAdminProblemBodyType } from './updateAdminProblemBodyType'
 import type { UpdateAdminProblemBodyStatus } from './updateAdminProblemBodyStatus'
 
-/**
- * Admin update support problem
- */
 export type UpdateAdminProblemBody = {
   /**
    * @minLength 1

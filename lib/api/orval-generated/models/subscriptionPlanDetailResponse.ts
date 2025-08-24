@@ -8,9 +8,6 @@
 import type { SubscriptionPlanDetailResponseInterval } from './subscriptionPlanDetailResponseInterval'
 import type { SubscriptionPlanDetailResponseMetadata } from './subscriptionPlanDetailResponseMetadata'
 
-/**
- * Single subscription plan details
- */
 export interface SubscriptionPlanDetailResponse {
   /** Universally Unique Identifier */
   id: string

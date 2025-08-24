@@ -8,9 +8,6 @@
 import type { AuthIntrospect200TokenType } from './authIntrospect200TokenType'
 import type { AuthIntrospect200UserRole } from './authIntrospect200UserRole'
 
-/**
- * Token introspection response
- */
 export type AuthIntrospect200 = {
   /** Whether token is active */
   active: boolean

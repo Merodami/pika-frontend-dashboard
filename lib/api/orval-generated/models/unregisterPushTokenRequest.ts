@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Unregister device from push notifications
- */
 export interface UnregisterPushTokenRequest {
   /** @minLength 1 */
   token: string

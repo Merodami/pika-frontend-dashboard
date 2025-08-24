@@ -11,9 +11,9 @@ export type GetInternalServiceEndpoints200InstancesItemStatus =
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const GetInternalServiceEndpoints200InstancesItemStatus = {
-  STARTING: 'STARTING',
-  HEALTHY: 'HEALTHY',
-  DEGRADED: 'DEGRADED',
-  UNHEALTHY: 'UNHEALTHY',
-  STOPPED: 'STOPPED',
+  starting: 'starting',
+  healthy: 'healthy',
+  degraded: 'degraded',
+  unhealthy: 'unhealthy',
+  stopped: 'stopped',
 } as const

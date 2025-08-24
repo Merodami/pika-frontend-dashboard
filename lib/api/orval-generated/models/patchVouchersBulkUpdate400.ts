@@ -7,9 +7,6 @@
  */
 import type { PatchVouchersBulkUpdate400DetailsItem } from './patchVouchersBulkUpdate400DetailsItem'
 
-/**
- * Standard error response
- */
 export type PatchVouchersBulkUpdate400 = {
   /**
    * @minimum 100

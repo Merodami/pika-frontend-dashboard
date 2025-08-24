@@ -7,9 +7,6 @@
  */
 import type { GetAdminVoucherBookStatistics200ResultsItem } from './getAdminVoucherBookStatistics200ResultsItem'
 
-/**
- * Bulk operation results
- */
 export type GetAdminVoucherBookStatistics200 = {
   /**
    * Number of successful operations

@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Update support comment
- */
 export interface UpdateSupportCommentRequest {
   /**
    * @minLength 1

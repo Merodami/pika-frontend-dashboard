@@ -22,7 +22,7 @@ export async function setTokens(accessToken: string, refreshToken: string) {
 
   // Production-ready secure cookie settings
   const isProduction = process.env.NODE_ENV === 'production'
-  
+
   cookieStore.set(ACCESS_TOKEN_COOKIE, accessToken, {
     httpOnly: true,
     secure: isProduction,
@@ -30,7 +30,8 @@ export async function setTokens(accessToken: string, refreshToken: string) {
     path: '/',
     maxAge: 60 * 60 * 24, // 24 hours
     // In production, consider adding domain restriction
-    ...(isProduction && process.env.COOKIE_DOMAIN && { domain: process.env.COOKIE_DOMAIN })
+    ...(isProduction &&
+      process.env.COOKIE_DOMAIN && { domain: process.env.COOKIE_DOMAIN }),
   })
 
   cookieStore.set(REFRESH_TOKEN_COOKIE, refreshToken, {
@@ -39,7 +40,8 @@ export async function setTokens(accessToken: string, refreshToken: string) {
     sameSite: 'lax',
     path: '/',
     maxAge: 60 * 60 * 24 * 30, // 30 days
-    ...(isProduction && process.env.COOKIE_DOMAIN && { domain: process.env.COOKIE_DOMAIN })
+    ...(isProduction &&
+      process.env.COOKIE_DOMAIN && { domain: process.env.COOKIE_DOMAIN }),
   })
 }
 

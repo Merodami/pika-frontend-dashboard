@@ -7,9 +7,6 @@
  */
 import type { AdminVerificationRequestType } from './adminVerificationRequestType'
 
-/**
- * Admin request to verify a user account
- */
 export interface AdminVerificationRequest {
   type: AdminVerificationRequestType
   token?: string

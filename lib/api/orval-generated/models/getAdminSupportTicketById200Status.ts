@@ -16,9 +16,9 @@ export type GetAdminSupportTicketById200Status =
 export const GetAdminSupportTicketById200Status = {
   open: 'open',
   assigned: 'assigned',
-  in_progress: 'in_progress',
-  waiting_customer: 'waiting_customer',
-  waiting_internal: 'waiting_internal',
+  inProgress: 'inProgress',
+  waitingCustomer: 'waitingCustomer',
+  waitingInternal: 'waitingInternal',
   resolved: 'resolved',
   closed: 'closed',
 } as const

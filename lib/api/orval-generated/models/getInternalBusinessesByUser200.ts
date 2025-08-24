@@ -5,13 +5,14 @@
  * Complete API documentation including public, admin, and internal endpoints
  * OpenAPI spec version: 1.0.0
  */
-import type { GetInternalBusinessesByUser200BusinessesItem } from './getInternalBusinessesByUser200BusinessesItem'
+import type { GetInternalBusinessesByUser200DataItem } from './getInternalBusinessesByUser200DataItem'
+import type { PaginationMetadata } from './paginationMetadata'
 
 /**
- * User businesses data
+ * Paginated response
  */
 export type GetInternalBusinessesByUser200 = {
-  businesses: GetInternalBusinessesByUser200BusinessesItem[]
-  /** @minimum 0 */
-  totalCount: number
+  /** Page items */
+  data: GetInternalBusinessesByUser200DataItem[]
+  pagination: PaginationMetadata
 }

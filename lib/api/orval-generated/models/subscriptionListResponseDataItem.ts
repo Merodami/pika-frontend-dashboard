@@ -8,9 +8,6 @@
 import type { SubscriptionListResponseDataItemStatus } from './subscriptionListResponseDataItemStatus'
 import type { SubscriptionListResponseDataItemPlan } from './subscriptionListResponseDataItemPlan'
 
-/**
- * Subscription details
- */
 export type SubscriptionListResponseDataItem = {
   /** Universally Unique Identifier */
   id: string
@@ -49,6 +46,5 @@ export type SubscriptionListResponseDataItem = {
   createdAt: string
   /** When the record was last updated */
   updatedAt: string
-  /** Subscription plan details */
   plan?: SubscriptionListResponseDataItemPlan
 }

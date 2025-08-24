@@ -8,9 +8,6 @@
 import type { IntrospectResponseTokenType } from './introspectResponseTokenType'
 import type { IntrospectResponseUserRole } from './introspectResponseUserRole'
 
-/**
- * Token introspection response
- */
 export interface IntrospectResponse {
   /** Whether token is active */
   active: boolean

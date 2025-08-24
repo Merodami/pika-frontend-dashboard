@@ -7,9 +7,6 @@
  */
 import type { DeleteAdminCategory404DetailsItem } from './deleteAdminCategory404DetailsItem'
 
-/**
- * Standard error response
- */
 export type DeleteAdminCategory404 = {
   /**
    * @minimum 100

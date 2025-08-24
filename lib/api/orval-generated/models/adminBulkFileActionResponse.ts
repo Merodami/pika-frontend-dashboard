@@ -7,9 +7,6 @@
  */
 import type { AdminBulkFileActionResponseFailedItem } from './adminBulkFileActionResponseFailedItem'
 
-/**
- * Bulk file action results
- */
 export interface AdminBulkFileActionResponse {
   successful: string[]
   failed: AdminBulkFileActionResponseFailedItem[]

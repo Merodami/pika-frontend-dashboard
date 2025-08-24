@@ -6,4 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type ValidateInternalToken200Metadata = { [key: string]: unknown }
+export type ValidateInternalToken200Metadata = {
+  [key: string]: string | number | boolean | null | null
+}

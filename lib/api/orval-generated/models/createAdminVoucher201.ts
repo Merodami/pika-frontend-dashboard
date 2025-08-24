@@ -20,16 +20,13 @@ import type { CreateAdminVoucher201ScansItem } from './createAdminVoucher201Scan
 import type { CreateAdminVoucher201CustomerVouchersItem } from './createAdminVoucher201CustomerVouchersItem'
 import type { CreateAdminVoucher201DaysUntilExpiry } from './createAdminVoucher201DaysUntilExpiry'
 
-/**
- * Detailed voucher information for admin with industry-standard include relations
- */
 export type CreateAdminVoucher201 = {
   /** Universally Unique Identifier */
   id: string
   /** Universally Unique Identifier */
   businessId: string
   /** Universally Unique Identifier */
-  categoryId: string
+  categoryId?: string
   state: VoucherState
   /** Voucher title in requested language */
   title: string

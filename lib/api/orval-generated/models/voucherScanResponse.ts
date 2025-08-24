@@ -8,11 +8,7 @@
 import type { VoucherScanResponseVoucher } from './voucherScanResponseVoucher'
 import type { VoucherScanResponseNearbyLocationsItem } from './voucherScanResponseNearbyLocationsItem'
 
-/**
- * Voucher scan tracking result
- */
 export interface VoucherScanResponse {
-  /** Public voucher information */
   voucher: VoucherScanResponseVoucher
   /** Universally Unique Identifier */
   scanId: string

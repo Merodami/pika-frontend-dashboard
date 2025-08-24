@@ -7,9 +7,6 @@
  */
 import type { ChangePassword400DetailsItem } from './changePassword400DetailsItem'
 
-/**
- * Standard error response
- */
 export type ChangePassword400 = {
   /**
    * @minimum 100

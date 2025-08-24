@@ -7,9 +7,6 @@
  */
 import type { GenerateAdminVoucherBookPdfBodyPriority } from './generateAdminVoucherBookPdfBodyPriority'
 
-/**
- * Generate PDF for voucher book
- */
 export type GenerateAdminVoucherBookPdfBody = {
   /** Force regeneration even if PDF already exists */
   force?: boolean

@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * PDF download information
- */
 export interface PdfDownloadResponse {
   /** Download URL for the PDF */
   url: string

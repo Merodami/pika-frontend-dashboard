@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Request to resend verification email
- */
 export interface ResendVerificationRequest {
   /** @minLength 1 */
   email: string

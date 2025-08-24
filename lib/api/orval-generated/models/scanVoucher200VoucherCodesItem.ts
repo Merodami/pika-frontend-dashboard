@@ -8,9 +8,6 @@
 import type { VoucherCodeType } from './voucherCodeType'
 import type { ScanVoucher200VoucherCodesItemMetadata } from './scanVoucher200VoucherCodesItemMetadata'
 
-/**
- * Voucher code information
- */
 export type ScanVoucher200VoucherCodesItem = {
   /** Universally Unique Identifier */
   id: string

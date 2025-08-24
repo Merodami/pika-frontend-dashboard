@@ -7,9 +7,6 @@
  */
 import type { AdminBulkCategoryUpdateRequestUpdates } from './adminBulkCategoryUpdateRequestUpdates'
 
-/**
- * Update multiple categories at once
- */
 export interface AdminBulkCategoryUpdateRequest {
   /**
    * @minItems 1

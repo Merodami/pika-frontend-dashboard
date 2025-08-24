@@ -15,7 +15,11 @@
       "filter": "Filtrar",
       "refresh": "Actualizar",
       "export": "Exportar",
-      "import": "Importar"
+      "import": "Importar",
+      "submit": "Enviar",
+      "email": "Enviar Email",
+      "reset": "Restablecer",
+      "apply": "Aplicar"
     },
     "status": {
       "loading": "Cargando...",
@@ -31,7 +35,40 @@
       "changesSaved": "Los cambios se han guardado correctamente",
       "errorOccurred": "Ha ocurrido un error",
       "noData": "No hay datos disponibles",
-      "required": "Este campo es obligatorio"
+      "noDataDescription": "Intenta ajustar tus filtros o términos de búsqueda",
+      "required": "Este campo es obligatorio",
+      "comingSoon": "Próximamente",
+      "passwordsMustMatch": "Las contraseñas deben coincidir",
+      "autoGeneratePassword": "Generar contraseña automáticamente",
+      "confirmPassword": "Confirmar Contraseña",
+      "confirmPasswordPlaceholder": "Confirmar contraseña",
+      "passwordWillBeGenerated": "La contraseña será generada automáticamente",
+      "userWillReceiveEmail": "El usuario recibirá un correo electrónico para establecer su contraseña en el primer inicio de sesión.",
+      "userCreationInfo": "El usuario se creará como Usuario Comercial con estado Activo",
+      "userCreationDescription": "El usuario será automáticamente asignado al rol Comercial y estado Activo según el flujo de registro comercial."
+    },
+    "yes": "Sí",
+    "no": "No",
+    "never": "Nunca",
+    "notApplicable": "N/A",
+    "na": "N/A",
+    "active": "Activo",
+    "page": "Página",
+    "filters": "Filtros",
+    "table": {
+      "showingResults": "Mostrando resultados",
+      "showingItems": "Mostrando elementos",
+      "showing": "Mostrando {count} de {total}",
+      "rowsPerPage": "Filas por página",
+      "itemsPerPage": "Elementos por página",
+      "page": "Página",
+      "pageOf": "Página {current} de {total}",
+      "pagination": "Página {current} de {total}",
+      "of": "de",
+      "previous": "Anterior",
+      "next": "Siguiente",
+      "noData": "No hay datos disponibles",
+      "loading": "Cargando..."
     }
   },
   "auth": {
@@ -76,6 +113,7 @@
     "settings": "Configuración",
     "profile": "Mi Perfil",
     "myBusiness": "Mi Negocio",
+    "schedule": "Horario",
     "payments": "Pagos",
     "support": "Soporte",
     "reports": "Informes",
@@ -85,7 +123,7 @@
   },
   "dashboard": {
     "title": "Panel de Control",
-    "description": "Panel de administración de Pika",
+    "description": "Panel de administración de The VoucherBook",
     "welcome": "Bienvenido, {name}",
     "admin": {
       "subtitle": "Aquí está el resumen de tu plataforma"
@@ -114,49 +152,426 @@
       "uniqueCustomers": "Clientes Únicos"
     },
     "recentActivity": "Actividad Reciente",
-    "viewAllActivity": "Ver toda la actividad"
+    "viewAllActivity": "Ver toda la actividad",
+    "topPerformingVouchers": "Cupones de Mejor Rendimiento",
+    "voucher": "Cupón",
+    "redemptions": "Canjes",
+    "views": "Vistas",
+    "conversionRate": "Tasa de Conversión"
   },
   "vouchers": {
     "title": "Cupones",
+    "subtitle": "Crear y gestionar cupones promocionales para negocios",
+    "description": "Gestionar cupones y campañas promocionales",
+    "untitled": "Sin título",
+    "unlimited": "Ilimitado",
+    "totalVouchers": "Total {count} cupones",
+    "searchPlaceholder": "Buscar cupones...",
+    "filterByState": "Filtrar por estado",
+    "filterByType": "Filtrar por tipo",
     "create": {
       "title": "Crear Cupón",
-      "button": "Nuevo Cupón"
+      "button": "Nuevo Cupón",
+      "subtitle": "Configurar un nuevo cupón promocional"
     },
     "edit": {
-      "title": "Editar Cupón"
+      "title": "Editar Cupón",
+      "subtitle": "Modificar detalles del cupón"
+    },
+    "detail": {
+      "title": "Detalles del Cupón",
+      "description": "Ver información del cupón y analíticas"
+    },
+    "business": {
+      "title": "Mis Cupones",
+      "subtitle": "Gestionar los cupones de tu negocio",
+      "description": "Crear y gestionar cupones para tu negocio",
+      "create": {
+        "title": "Crear Nuevo Cupón",
+        "subtitle": "Crear un cupón promocional para tu negocio",
+        "description": "Configurar una nueva campaña de cupones"
+      }
     },
     "fields": {
+      "id": "ID",
       "title": "Título",
       "description": "Descripción",
+      "business": "Negocio",
+      "category": "Categoría",
       "discount": "Descuento",
+      "discountType": "Tipo de Descuento",
+      "discountValue": "Valor del Descuento",
+      "state": "Estado",
       "validFrom": "Válido desde",
       "validUntil": "Válido hasta",
       "maxRedemptions": "Canjes máximos",
-      "termsAndConditions": "Términos y condiciones"
+      "maxRedemptionsPerUser": "Máximo por cliente",
+      "termsAndConditions": "Términos y condiciones",
+      "redemptions": "Canjes",
+      "actions": "Acciones",
+      "createdAt": "Creado",
+      "updatedAt": "Actualizado"
     },
     "status": {
       "active": "Activo",
       "expired": "Expirado",
       "draft": "Borrador",
+      "suspended": "Suspendido",
+      "published": "Publicado"
+    },
+    "discountType": {
+      "percentage": "Porcentaje",
+      "fixed": "Cantidad Fija"
+    },
+    "actions": {
+      "publish": "Publicar",
+      "expire": "Expirar",
+      "suspend": "Suspender",
+      "duplicate": "Duplicar"
+    },
+    "stats": {
+      "scans": "Total de Escaneos",
+      "claims": "Total de Reclamaciones",
+      "redemptions": "Canjes",
+      "conversionRate": "Tasa de Conversión"
+    },
+    "details": {
+      "title": "Información del Cupón"
+    },
+    "preview": {
+      "title": "Vista Previa"
+    },
+    "error": {
+      "notFound": "Cupón No Encontrado",
+      "voucherNotFound": "El cupón que buscas no existe o ha sido eliminado.",
+      "loadFailed": "Error al cargar cupón",
+      "createFailed": "Error al crear cupón",
+      "updateFailed": "Error al actualizar cupón",
+      "deleteFailed": "Error al eliminar cupón",
+      "cannotEdit": "No se Puede Editar el Cupón",
+      "onlyDraftEditable": "Solo los cupones en borrador pueden ser editados. Los cupones publicados, expirados o suspendidos no pueden modificarse."
+    },
+    "selectCategory": "Seleccionar una categoría",
+    "field": {
+      "title": "Título",
+      "code": "Código",
+      "status": "Estado",
+      "discountType": "Tipo de Descuento",
+      "business": "Negocio",
+      "businessId": "ID del Negocio",
+      "minDiscount": "Descuento Mínimo",
+      "maxDiscount": "Descuento Máximo",
+      "hasUsageLimit": "Tiene Límite de Uso",
+      "createdAt": "Fecha de Creación",
+      "validityPeriod": "Período de Validez",
+      "expiryDate": "Fecha de Expiración"
+    },
+    "filter": {
+      "basic": "Filtros Básicos",
+      "search": "Buscar",
+      "statusAndType": "Estado y Tipo",
+      "statusPlaceholder": "Seleccionar estado",
+      "discountTypePlaceholder": "Seleccionar tipo de descuento",
+      "business": "Negocio",
+      "hasUsageLimitPlaceholder": "¿Tiene límite de uso?",
+      "valueAndUsage": "Valor y Uso",
+      "dates": "Filtros de Fecha"
+    }
+  },
+  "voucher": {
+    "action": {
+      "create": "Crear Cupón",
+      "delete": "Eliminar Cupón",
+      "edit": "Editar Cupón",
+      "publish": "Publicar Cupón",
+      "view": "Ver Cupón"
+    },
+    "discountType": {
+      "fixedAmount": "Monto Fijo",
+      "percentage": "Porcentaje"
+    },
+    "field": {
+      "business": "Negocio",
+      "businessId": "ID del Negocio",
+      "code": "Código del Cupón",
+      "createdAt": "Creado En",
+      "discount": "Descuento",
+      "discountType": "Tipo de Descuento",
+      "expiryDate": "Fecha de Vencimiento",
+      "hasUsageLimit": "Tiene Límite de Uso",
+      "maxDiscount": "Descuento Máximo",
+      "minDiscount": "Descuento Mínimo",
+      "status": "Estado",
+      "title": "Título",
+      "usage": "Uso",
+      "validity": "Validez",
+      "validityPeriod": "Período de Validez"
+    },
+    "filter": {
+      "basic": "Filtros Básicos",
+      "business": "Negocio",
+      "businessIdPlaceholder": "Ingresa ID del negocio",
+      "businessPlaceholder": "Selecciona negocio",
+      "codePlaceholder": "Ingresa código del cupón",
+      "createdDatePlaceholder": "Selecciona rango de fecha de creación",
+      "dates": "Filtros de Fecha",
+      "discountTypePlaceholder": "Selecciona tipo de descuento",
+      "expiryDatePlaceholder": "Selecciona rango de fecha de vencimiento",
+      "hasUsageLimitPlaceholder": "¿Tiene límite de uso?",
+      "maxDiscountPlaceholder": "Ingresa descuento máximo",
+      "minDiscountPlaceholder": "Ingresa descuento mínimo",
+      "search": "Buscar",
+      "searchPlaceholder": "Buscar cupones...",
+      "statusAndType": "Estado y Tipo",
+      "statusPlaceholder": "Selecciona estado",
+      "titlePlaceholder": "Ingresa título del cupón",
+      "validityPeriodPlaceholder": "Selecciona período de validez",
+      "valueAndUsage": "Valor y Uso"
+    },
+    "message": {
+      "bulkDeleteSuccess": "Cupones eliminados exitosamente",
+      "deleteSuccess": "Cupón eliminado exitosamente",
+      "publishSuccess": "Cupón publicado exitosamente"
+    },
+    "status": {
+      "claimed": "Reclamado",
+      "draft": "Borrador",
+      "expired": "Expirado",
+      "published": "Publicado",
       "suspended": "Suspendido"
+    }
+  },
+  "business": {
+    "title": "Negocio",
+    "subtitle": "Gestionar información del negocio",
+    "description": "Ver y gestionar detalles del negocio",
+    "action": {
+      "create": "Crear Negocio",
+      "edit": "Editar Negocio",
+      "delete": "Eliminar Negocio",
+      "view": "Ver Negocio",
+      "approve": "Aprobar Negocio",
+      "reject": "Rechazar Negocio"
+    },
+    "field": {
+      "name": "Nombre del Negocio",
+      "email": "Correo Electrónico",
+      "phone": "Teléfono",
+      "address": "Dirección",
+      "category": "Categoría",
+      "city": "Ciudad",
+      "status": "Estado",
+      "type": "Tipo de Negocio",
+      "owner": "Propietario",
+      "rating": "Calificación",
+      "createdAt": "Creado En",
+      "updatedAt": "Actualizado En",
+      "phoneVerified": "Teléfono Verificado",
+      "emailVerified": "Correo Verificado",
+      "minRating": "Calificación Mínima",
+      "hasReviews": "Tiene Reseñas",
+      "registrationDate": "Fecha de Registro",
+      "verificationDate": "Fecha de Verificación",
+      "description": "Descripción",
+      "approvedAt": "Aprobado En",
+      "approvedBy": "Aprobado Por",
+      "userStatus": "Estado del Propietario",
+      "currentStep": "Paso Actual",
+      "registrationStatus": "Estado del Registro"
+    },
+    "filter": {
+      "basic": "Filtros Básicos",
+      "search": "Buscar",
+      "searchPlaceholder": "Buscar negocios...",
+      "namePlaceholder": "Ingresa el nombre del negocio",
+      "cityPlaceholder": "Ingresa el nombre de la ciudad",
+      "statusAndType": "Estado y Tipo",
+      "statusPlaceholder": "Selecciona estado",
+      "typePlaceholder": "Selecciona tipo de negocio",
+      "verification": "Verificación",
+      "phoneVerifiedPlaceholder": "¿Teléfono verificado?",
+      "emailVerifiedPlaceholder": "¿Correo verificado?",
+      "performance": "Calificación y Rendimiento",
+      "minRatingPlaceholder": "Selecciona calificación mínima",
+      "hasReviewsPlaceholder": "¿Tiene reseñas de clientes?",
+      "dates": "Filtros de Fecha",
+      "registrationDatePlaceholder": "Selecciona rango de fecha de registro",
+      "verificationDatePlaceholder": "Selecciona rango de fecha de verificación"
+    },
+    "status": {
+      "active": "Activo",
+      "inactive": "Inactivo",
+      "pending": "Pendiente",
+      "suspended": "Suspendido",
+      "verified": "Verificado",
+      "unverified": "No Verificado",
+      "approved": "Aprobado",
+      "rejected": "Rechazado",
+      "expired": "Expirado"
+    },
+    "type": {
+      "restaurant": "Restaurante",
+      "retail": "Minorista",
+      "service": "Servicio",
+      "healthcare": "Atención Médica",
+      "fitness": "Fitness",
+      "education": "Educación",
+      "entertainment": "Entretenimiento",
+      "other": "Otro"
+    },
+    "message": {
+      "deleteSuccess": "Negocio eliminado exitosamente",
+      "approveSuccess": "Negocio aprobado exitosamente",
+      "rejectSuccess": "Negocio rechazado exitosamente",
+      "bulkDeleteSuccess": "Negocios eliminados exitosamente",
+      "createSuccess": "Negocio creado exitosamente",
+      "updateSuccess": "Negocio actualizado exitosamente"
+    },
+    "create": {
+      "title": "Crear Nuevo Negocio",
+      "subtitle": "Agregar un nuevo negocio a la plataforma",
+      "description": "Complete la información del negocio"
+    },
+    "detail": {
+      "title": "Detalles del Negocio",
+      "description": "Ver información y métricas del negocio",
+      "notFound": "Negocio no encontrado",
+      "tabs": {
+        "overview": "Resumen",
+        "metrics": "Métricas",
+        "activity": "Actividad"
+      },
+      "sections": {
+        "basicInfo": "Información Básica",
+        "ownerInfo": "Información del Propietario",
+        "registrationInfo": "Detalles del Registro",
+        "performance": "Métricas de Rendimiento",
+        "topVouchers": "Cupones Más Exitosos"
+      },
+      "totalVouchers": "Total de Cupones",
+      "totalRedemptions": "Total de Canjes",
+      "redemptions": "Canjes",
+      "conversionRate": "Tasa de Conversión",
+      "confirmDelete": {
+        "title": "Eliminar Negocio",
+        "message": "¿Está seguro de que desea eliminar {name}? Esta acción no se puede deshacer."
+      }
     }
   },
   "businesses": {
     "title": "Negocios",
+    "action": {
+      "addNew": "Agregar Nuevo Negocio",
+      "verify": "Verificar",
+      "unverify": "Desverificar",
+      "approve": "Aprobar",
+      "unapprove": "Desaprobar",
+      "activate": "Activar",
+      "deactivate": "Desactivar",
+      "verifySelected": "Verificar Seleccionados",
+      "unverifySelected": "Desverificar Seleccionados",
+      "view": "Ver",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "reject": "Rechazar"
+    },
+    "info": {
+      "adminCreate": "Estás creando un negocio en nombre de un usuario. Asegúrate de tener su permiso."
+    },
     "fields": {
       "name": "Nombre del negocio",
       "email": "Correo electrónico",
       "phone": "Teléfono",
       "address": "Dirección",
       "category": "Categoría",
-      "status": "Estado"
+      "status": "Estado",
+      "createdAt": "Creado",
+      "owner": "Propietario",
+      "rating": "Calificación",
+      "verification": "Verificación",
+      "approval": "Aprobación",
+      "city": "Ciudad",
+      "type": "Tipo",
+      "phoneVerified": "Teléfono Verificado",
+      "emailVerified": "Correo Verificado",
+      "minRating": "Calificación Mínima",
+      "hasReviews": "Tiene Reseñas",
+      "registrationDate": "Fecha de Registro",
+      "verificationDate": "Fecha de Verificación"
     },
     "status": {
       "active": "Activo",
+      "inactive": "Inactivo",
       "pending": "Pendiente",
       "suspended": "Suspendido",
-      "verified": "Verificado"
-    }
+      "verified": "Verificado",
+      "notVerified": "No Verificado",
+      "approved": "Aprobado",
+      "notApproved": "No Aprobado",
+      "verifiedApproved": "Verificado y Aprobado",
+      "verifiedPending": "Verificado (Pendiente de Aprobación)",
+      "approvedNotVerified": "Aprobado (No Verificado)",
+      "rejected": "Rechazado",
+      "unverified": "No Verificado",
+      "expired": "Expirado"
+    },
+    "resetRegistration": {
+      "action": "Reiniciar Registro",
+      "title": "Reiniciar Registro de Negocio",
+      "confirmMessage": "¿Está seguro de que desea reiniciar el registro de {name}? Esto permitirá al propietario del negocio reiniciar el proceso de registro.",
+      "success": "Registro reiniciado exitosamente"
+    },
+    "message": {
+      "created": "Negocio creado exitosamente",
+      "updated": "Negocio actualizado exitosamente",
+      "deleted": "Negocio eliminado exitosamente",
+      "verified": "Estado de verificación del negocio actualizado",
+      "approved": "Negocio aprobado exitosamente",
+      "unapproved": "Aprobación del negocio revocada",
+      "activated": "Negocio activado exitosamente",
+      "deactivated": "Negocio desactivado exitosamente",
+      "registrationReset": "El registro del negocio se ha reiniciado exitosamente",
+      "bulkVerified": "{count} negocios {status}",
+      "bulkUpdated": "{updated} negocios actualizados exitosamente",
+      "featureComingSoon": "Esta función estará disponible pronto",
+      "errorOccurred": "Ocurrió un error"
+    },
+    "filters": {
+      "verification": "Verificación",
+      "approval": "Aprobación",
+      "status": "Estado",
+      "createdDate": "Fecha de Creación"
+    },
+    "filter": {
+      "basic": "Filtros Básicos",
+      "search": "Buscar",
+      "searchPlaceholder": "Buscar negocios...",
+      "namePlaceholder": "Ingresa el nombre del negocio",
+      "cityPlaceholder": "Ingresa el nombre de la ciudad",
+      "statusAndType": "Estado y Tipo",
+      "statusPlaceholder": "Selecciona estado",
+      "typePlaceholder": "Selecciona tipo de negocio",
+      "verification": "Verificación",
+      "phoneVerifiedPlaceholder": "¿Teléfono verificado?",
+      "emailVerifiedPlaceholder": "¿Correo verificado?",
+      "performance": "Calificación y Rendimiento",
+      "minRatingPlaceholder": "Selecciona calificación mínima",
+      "hasReviewsPlaceholder": "¿Tiene reseñas de clientes?",
+      "dates": "Filtros de Fecha",
+      "registrationDatePlaceholder": "Selecciona rango de fecha de registro",
+      "verificationDatePlaceholder": "Selecciona rango de fecha de verificación"
+    },
+    "type": {
+      "restaurant": "Restaurante",
+      "retail": "Minorista",
+      "service": "Servicio",
+      "healthcare": "Atención Médica",
+      "fitness": "Fitness",
+      "education": "Educación",
+      "entertainment": "Entretenimiento",
+      "other": "Otro"
+    },
+    "description": "Gestionar cuentas de negocios y verificaciones"
   },
   "language": {
     "selector": {
@@ -169,7 +584,16 @@
     "forbidden": "Acceso denegado",
     "notFound": "No encontrado",
     "serverError": "Error del servidor",
-    "networkError": "Error de conexión"
+    "networkError": "Error de conexión",
+    "accessDenied": "Acceso denegado. Por favor, contacta a tu administrador.",
+    "invalidCredentials": "Correo o contraseña incorrectos",
+    "dashboardAccessDenied": "No tienes permiso para acceder a este recurso",
+    "sessionExpired": "Tu sesión ha expirado. Por favor, inicia sesión nuevamente.",
+    "accountLocked": "Cuenta no verificada. Por favor, revisa tu correo o contacta a soporte.",
+    "accountSuspended": "Tu cuenta está inactiva. Por favor, contacta a tu administrador para activación.",
+    "somethingWentWrong": "Algo salió mal. Por favor, intenta de nuevo.",
+    "tryAgain": "Por favor, intenta de nuevo",
+    "contactAdmin": "Por favor, contacta a tu administrador para obtener ayuda"
   },
   "user": {
     "role": {
@@ -222,7 +646,15 @@
       "lastLogin": "Último Acceso",
       "changePassword": "Cambiar Contraseña",
       "twoFactor": "Autenticación de Dos Factores",
-      "verifyEmail": "Verificar Correo"
+      "verifyEmail": "Verificar Correo",
+      "emailVerified": "Correo Verificado",
+      "phoneVerified": "Teléfono Verificado"
+    },
+    "preferences": {
+      "title": "Preferencias",
+      "language": "Idioma Preferido",
+      "timezone": "Zona Horaria",
+      "notifications": "Notificaciones"
     },
     "status": {
       "active": "Activo",
@@ -262,5 +694,874 @@
       "title": "Información del Perfil",
       "description": "Los detalles e información de tu cuenta"
     }
+  },
+  "users": {
+    "title": "Usuarios",
+    "subtitle": "Administrar cuentas de usuario",
+    "addUser": "Agregar Usuario",
+    "resetRegistration": {
+      "action": "Restablecer Registro",
+      "title": "Restablecer Registro de Negocio",
+      "confirmMessage": "¿Estás seguro de que quieres restablecer el registro de negocio de este usuario? Esto le permitirá comenzar el proceso de registro nuevamente."
+    },
+    "table": {
+      "name": "Nombre",
+      "email": "Correo Electrónico",
+      "role": "Rol",
+      "status": "Estado",
+      "createdAt": "Fecha de Creación",
+      "actions": "Acciones"
+    },
+    "actions": {
+      "view": "Ver",
+      "edit": "Editar",
+      "deactivate": "Desactivar",
+      "activate": "Activar",
+      "delete": "Eliminar"
+    },
+    "filters": {
+      "search": "Buscar usuarios...",
+      "role": "Rol",
+      "status": "Estado",
+      "allRoles": "Todos los roles",
+      "allStatuses": "Todos los estados"
+    },
+    "status": {
+      "active": "Activo",
+      "inactive": "Inactivo",
+      "suspended": "Suspendido",
+      "pending": "Pendiente"
+    },
+    "role": {
+      "admin": "Administrador",
+      "business": "Negocio",
+      "businessowner": "Propietario de Negocio",
+      "customer": "Cliente",
+      "user": "Usuario"
+    },
+    "fields": {
+      "id": "ID",
+      "firstName": "Nombre",
+      "lastName": "Apellido",
+      "fullName": "Nombre Completo",
+      "email": "Correo Electrónico",
+      "emailVerified": "Correo Verificado",
+      "phoneNumber": "Número de Teléfono",
+      "phoneVerified": "Teléfono Verificado",
+      "role": "Rol",
+      "status": "Estado",
+      "avatar": "Foto de Perfil",
+      "dateOfBirth": "Fecha de Nacimiento",
+      "gender": "Género",
+      "country": "País",
+      "city": "Ciudad",
+      "address": "Dirección",
+      "postalCode": "Código Postal",
+      "timezone": "Zona Horaria",
+      "language": "Idioma",
+      "currency": "Moneda",
+      "twoFactorEnabled": "Autenticación de Dos Factores",
+      "marketingConsent": "Consentimiento de Marketing",
+      "termsAccepted": "Términos Aceptados",
+      "privacyPolicyAccepted": "Política de Privacidad Aceptada",
+      "joined": "Se Unió",
+      "createdAt": "Creado En",
+      "updatedAt": "Actualizado En",
+      "lastSeen": "Visto Por Última Vez",
+      "lastLogin": "Último Acceso",
+      "loginCount": "Número de Accesos",
+      "isOnline": "Estado En Línea",
+      "businessCount": "Número de Negocios",
+      "voucherCount": "Número de Cupones",
+      "notes": "Notas de Admin",
+      "suspended": "Suspendido",
+      "suspendedAt": "Suspendido En",
+      "suspendedUntil": "Suspendido Hasta",
+      "suspensionReason": "Razón de Suspensión",
+      "banned": "Baneado",
+      "bannedAt": "Baneado En",
+      "banReason": "Razón del Baneo"
+    },
+    "list": {
+      "title": "Todos los Usuarios",
+      "subtitle": "Navegar y gestionar cuentas de usuario",
+      "table": {
+        "columns": {
+          "avatar": "Avatar",
+          "name": "Nombre",
+          "email": "Correo",
+          "phone": "Teléfono",
+          "role": "Rol",
+          "status": "Estado",
+          "emailVerified": "Correo Verificado",
+          "phoneVerified": "Teléfono Verificado",
+          "lastSeen": "Visto Por Última Vez",
+          "joined": "Se Unió",
+          "businessCount": "Negocios",
+          "actions": "Acciones"
+        }
+      },
+      "filters": {
+        "all": "Todos los Usuarios",
+        "search": "Buscar usuarios...",
+        "clearFilters": "Limpiar Filtros",
+        "showFilters": "Mostrar Filtros",
+        "hideFilters": "Ocultar Filtros",
+        "filterByRole": {
+          "label": "Filtrar por Rol",
+          "placeholder": "Seleccionar rol",
+          "options": {
+            "all": "Todos los Roles",
+            "admin": "Administrador",
+            "business": "Negocio",
+            "businessowner": "Propietario de Negocio",
+            "customer": "Cliente",
+            "user": "Usuario"
+          }
+        },
+        "filterByStatus": {
+          "label": "Filtrar por Estado",
+          "placeholder": "Seleccionar estado",
+          "options": {
+            "all": "Todos los Estados",
+            "active": "Activo",
+            "inactive": "Inactivo",
+            "suspended": "Suspendido",
+            "pending": "Pendiente",
+            "banned": "Baneado"
+          }
+        },
+        "filterByVerification": {
+          "label": "Filtrar por Verificación",
+          "placeholder": "Seleccionar estado de verificación",
+          "options": {
+            "all": "Todos los Usuarios",
+            "emailVerified": "Correo Verificado",
+            "emailUnverified": "Correo No Verificado",
+            "phoneVerified": "Teléfono Verificado",
+            "phoneUnverified": "Teléfono No Verificado",
+            "fullyVerified": "Completamente Verificado",
+            "unverified": "No Verificado"
+          }
+        },
+        "filterByCountry": {
+          "label": "Filtrar por País",
+          "placeholder": "Seleccionar país",
+          "options": {
+            "all": "Todos los Países"
+          }
+        },
+        "filterByRegistrationDate": {
+          "label": "Filtrar por Fecha de Registro",
+          "placeholder": "Seleccionar rango de fechas",
+          "options": {
+            "all": "Todo el Tiempo",
+            "today": "Hoy",
+            "yesterday": "Ayer",
+            "thisWeek": "Esta Semana",
+            "lastWeek": "Semana Pasada",
+            "thisMonth": "Este Mes",
+            "lastMonth": "Mes Pasado",
+            "thisYear": "Este Año",
+            "lastYear": "Año Pasado",
+            "custom": "Rango Personalizado"
+          }
+        },
+        "filterByActivity": {
+          "label": "Filtrar por Actividad",
+          "placeholder": "Seleccionar estado de actividad",
+          "options": {
+            "all": "Todos los Usuarios",
+            "online": "Actualmente En Línea",
+            "recentlyActive": "Recientemente Activos",
+            "inactive": "Inactivos",
+            "neverLoggedIn": "Nunca Iniciaron Sesión"
+          }
+        },
+        "sortBy": {
+          "label": "Ordenar por",
+          "placeholder": "Seleccionar orden",
+          "options": {
+            "createdAt_desc": "Más Recientes Primero",
+            "createdAt_asc": "Más Antiguos Primero",
+            "name_asc": "Nombre A-Z",
+            "name_desc": "Nombre Z-A",
+            "email_asc": "Correo A-Z",
+            "lastSeen_desc": "Recientemente Activos",
+            "loginCount_desc": "Más Activos"
+          }
+        },
+        "quickFilters": {
+          "label": "Filtros Rápidos",
+          "admins": "Administradores",
+          "businessOwners": "Propietarios de Negocio",
+          "customers": "Clientes",
+          "verifiedUsers": "Usuarios Verificados",
+          "unverifiedUsers": "Usuarios No Verificados",
+          "onlineUsers": "Usuarios En Línea",
+          "recentUsers": "Usuarios Recientes",
+          "suspendedUsers": "Usuarios Suspendidos",
+          "bannedUsers": "Usuarios Baneados"
+        }
+      },
+      "results": {
+        "showing": "Mostrando {from}-{to} de {total}",
+        "noResults": "No hay usuarios que coincidan con tus criterios",
+        "noResultsDescription": "Intenta ajustar tus filtros o términos de búsqueda",
+        "resetFilters": "Restablecer todos los filtros"
+      }
+    }
+  },
+  "user": {
+    "title": "Usuarios",
+    "subtitle": "Gestionar cuentas de usuario y permisos",
+    "field": {
+      "name": "Nombre",
+      "email": "Correo Electrónico",
+      "phone": "Teléfono",
+      "status": "Estado",
+      "role": "Rol",
+      "emailVerified": "Correo Verificado",
+      "phoneVerified": "Teléfono Verificado",
+      "createdAt": "Creado En",
+      "lastLogin": "Último Acceso",
+      "registrationDate": "Fecha de Registro"
+    },
+    "filter": {
+      "search": "Buscar",
+      "searchPlaceholder": "Buscar usuarios...",
+      "emailPlaceholder": "Ingresar correo electrónico",
+      "statusPlaceholder": "Seleccionar estado",
+      "rolePlaceholder": "Seleccionar rol",
+      "emailVerifiedPlaceholder": "¿Correo verificado?",
+      "phoneVerifiedPlaceholder": "¿Teléfono verificado?",
+      "registrationDatePlaceholder": "Seleccionar rango de fechas",
+      "basic": "Filtros Básicos",
+      "statusAndRole": "Estado y Rol",
+      "verification": "Verificación",
+      "dates": "Filtros de Fecha"
+    },
+    "status": {
+      "active": "Activo",
+      "suspended": "Suspendido",
+      "banned": "Baneado",
+      "unconfirmed": "No Confirmado"
+    },
+    "role": {
+      "admin": "Administrador",
+      "business": "Negocio",
+      "customer": "Cliente"
+    },
+    "action": {
+      "view": "Ver Usuario",
+      "edit": "Editar Usuario",
+      "delete": "Eliminar Usuario",
+      "sendEmail": "Enviar Correo",
+      "create": "Crear Usuario"
+    },
+    "message": {
+      "deleteSuccess": "Usuario eliminado exitosamente",
+      "bulkDeleteSuccess": "Usuarios eliminados exitosamente"
+    }
+  },
+  "filter": {
+    "apply": "Aplicar",
+    "reset": "Restablecer"
+  },
+  "businessSelector": {
+    "title": {
+      "select": "Selecciona Tu Negocio",
+      "create": "Crea Tu Primer Negocio"
+    },
+    "subtitle": {
+      "select": "Elige un negocio para administrar o crea uno nuevo",
+      "create": "Comienza creando tu primer negocio"
+    },
+    "createNew": {
+      "title": "Crear Nuevo Negocio",
+      "description": "Agregar un nuevo negocio a tu cuenta"
+    },
+    "status": {
+      "active": "Activo",
+      "pending": "Pendiente",
+      "suspended": "Suspendido"
+    },
+    "lastActivity": "Última actividad",
+    "loading": "Cargando...",
+    "info": {
+      "multipleBusinesses": "Puedes administrar múltiples negocios desde una cuenta"
+    }
+  },
+  "businessRegistration": {
+    "title": "Completa el Registro de Tu Negocio",
+    "subtitle": "Por favor proporciona información sobre tu negocio para comenzar",
+    "progress": "Paso {current} de {total}",
+    "mandatory": "Este registro es obligatorio para acceder a tu panel",
+    "cannotSkip": "Debes completar todos los pasos antes de acceder al panel",
+    "steps": {
+      "businessInfo": {
+        "title": "Información del Negocio",
+        "description": "Detalles básicos sobre tu negocio",
+        "fields": {
+          "businessName": {
+            "label": "Nombre del Negocio",
+            "placeholder": "Ingresa el nombre de tu negocio",
+            "hint": "Así es como los clientes verán tu negocio"
+          },
+          "businessType": {
+            "label": "Tipo de Negocio",
+            "placeholder": "Selecciona el tipo de negocio",
+            "options": {
+              "retail": "Venta al por menor",
+              "service": "Servicio",
+              "restaurant": "Restaurante",
+              "healthcare": "Salud",
+              "fitness": "Fitness",
+              "education": "Educación",
+              "entertainment": "Entretenimiento",
+              "other": "Otro"
+            }
+          },
+          "category": {
+            "label": "Categoría del Negocio",
+            "placeholder": "Selecciona una categoría",
+            "loading": "Cargando categorías..."
+          },
+          "primaryLanguage": {
+            "label": "Idioma Principal",
+            "placeholder": "Selecciona idioma principal",
+            "hint": "El idioma principal para las operaciones de tu negocio"
+          }
+        }
+      },
+      "contactDetails": {
+        "title": "Contacto y Ubicación",
+        "description": "Cómo los clientes pueden contactarte",
+        "fields": {
+          "description": {
+            "label": "Descripción del Negocio",
+            "placeholder": "Describe tu negocio...",
+            "hint": "Cuéntales a los clientes qué ofreces (mínimo 50 caracteres)"
+          },
+          "address": {
+            "label": "Dirección del Negocio",
+            "street": {
+              "label": "Dirección",
+              "placeholder": "Calle Principal 123"
+            },
+            "city": {
+              "label": "Ciudad",
+              "placeholder": "Asunción"
+            },
+            "state": {
+              "label": "Estado/Provincia",
+              "placeholder": "Central"
+            },
+            "postalCode": {
+              "label": "Código Postal",
+              "placeholder": "1001"
+            },
+            "country": {
+              "label": "País",
+              "placeholder": "Selecciona país"
+            }
+          },
+          "phone": {
+            "label": "Teléfono del Negocio",
+            "placeholder": "+595 (21) 123-4567",
+            "hint": "Incluye código de país"
+          },
+          "email": {
+            "label": "Correo del Negocio",
+            "placeholder": "contacto@negocio.com",
+            "hint": "Opcional - para consultas de clientes"
+          },
+          "website": {
+            "label": "Sitio Web",
+            "placeholder": "https://www.tunegocio.com",
+            "hint": "Opcional - sitio web de tu negocio"
+          }
+        }
+      },
+      "additionalInfo": {
+        "title": "Información Adicional",
+        "description": "Detalles opcionales para mejorar tu perfil",
+        "fields": {
+          "operatingHours": {
+            "label": "Horarios de Operación",
+            "addHours": "Agregar Horarios de Operación",
+            "closed": "Cerrado",
+            "open24h": "Abierto 24 horas",
+            "days": {
+              "monday": "Lunes",
+              "tuesday": "Martes",
+              "wednesday": "Miércoles",
+              "thursday": "Jueves",
+              "friday": "Viernes",
+              "saturday": "Sábado",
+              "sunday": "Domingo"
+            }
+          },
+          "socialMedia": {
+            "label": "Redes Sociales",
+            "addLink": "Agregar Enlace de Redes Sociales",
+            "platforms": {
+              "facebook": "Facebook",
+              "instagram": "Instagram",
+              "twitter": "Twitter",
+              "linkedin": "LinkedIn",
+              "youtube": "YouTube",
+              "tiktok": "TikTok"
+            }
+          },
+          "additionalInfo": {
+            "label": "Información Adicional",
+            "placeholder": "Cualquier otra información que quieras agregar...",
+            "hint": "Opcional - servicios especiales, información de estacionamiento, etc."
+          }
+        }
+      },
+      "review": {
+        "title": "Revisar y Enviar",
+        "description": "Revisa tu información antes de enviar",
+        "checkInfo": "Por favor revisa toda la información cuidadosamente",
+        "editSection": "Editar {section}",
+        "sections": {
+          "businessInfo": "Información del Negocio",
+          "contactDetails": "Contacto y Ubicación",
+          "additionalInfo": "Información Adicional"
+        },
+        "confirmation": {
+          "title": "¿Listo para Enviar?",
+          "message": "Al enviar, confirmas que toda la información proporcionada es precisa y está actualizada.",
+          "checkbox": "Confirmo que toda la información es correcta"
+        }
+      }
+    },
+    "messages": {
+      "loading": "Cargando...",
+      "savingProgress": "Guardando tu progreso...",
+      "progressSaved": "Progreso guardado exitosamente",
+      "stepCompleted": "Paso {step} completado exitosamente",
+      "registrationComplete": "¡Registro enviado exitosamente!",
+      "redirecting": "Redirigiendo al panel...",
+      "errorSaving": "Error al guardar progreso. Por favor intenta de nuevo.",
+      "errorSubmitting": "Error al enviar registro. Por favor intenta de nuevo.",
+      "errorStarting": "Error al iniciar el registro. Por favor intenta de nuevo.",
+      "sessionExpired": "Tu sesión ha expirado. Por favor inicia sesión de nuevo.",
+      "networkError": "Error de red. Por favor revisa tu conexión."
+    },
+    "warnings": {
+      "unsavedChanges": "Tienes cambios sin guardar. ¿Estás seguro de que quieres salir?",
+      "incompleteStep": "Por favor completa todos los campos requeridos antes de continuar"
+    }
+  },
+  "voucherBooks": {
+    "title": "Libros de Cupones",
+    "subtitle": "Gestionar colecciones de libros de cupones y generación de PDF",
+    "description": "Crear y gestionar colecciones de libros de cupones",
+    "totalBooks": "Total {count} libros de cupones",
+    "searchPlaceholder": "Buscar libros de cupones...",
+    "filterByStatus": "Filtrar por estado",
+    "filterByType": "Filtrar por tipo",
+    "noBooks": "No se encontraron libros de cupones",
+    "list": {
+      "title": "Todos los Libros de Cupones",
+      "subtitle": "Navegar y gestionar tu colección de libros de cupones",
+      "table": {
+        "columns": {
+          "title": "Título",
+          "type": "Tipo",
+          "status": "Estado",
+          "pages": "Páginas",
+          "placements": "Ubicaciones",
+          "created": "Creado",
+          "updated": "Actualizado",
+          "actions": "Acciones"
+        }
+      },
+      "filters": {
+        "all": "Todos los Libros",
+        "search": "Buscar libros...",
+        "clearFilters": "Limpiar Filtros",
+        "showFilters": "Mostrar Filtros",
+        "hideFilters": "Ocultar Filtros",
+        "filterByStatus": {
+          "label": "Filtrar por Estado",
+          "placeholder": "Seleccionar estado",
+          "options": {
+            "all": "Todos los Estados",
+            "DRAFT": "Borrador",
+            "IN_REVIEW": "En Revisión",
+            "APPROVED": "Aprobado",
+            "PUBLISHED": "Publicado",
+            "ARCHIVED": "Archivado",
+            "REJECTED": "Rechazado"
+          }
+        },
+        "filterByType": {
+          "label": "Filtrar por Tipo",
+          "placeholder": "Seleccionar tipo",
+          "options": {
+            "all": "Todos los Tipos",
+            "MONTHLY": "Mensual",
+            "SEASONAL": "Estacional",
+            "ANNUAL": "Anual",
+            "SPECIAL": "Edición Especial"
+          }
+        },
+        "filterByYear": {
+          "label": "Filtrar por Año",
+          "placeholder": "Seleccionar año",
+          "options": {
+            "all": "Todos los Años"
+          }
+        },
+        "filterByMonth": {
+          "label": "Filtrar por Mes",
+          "placeholder": "Seleccionar mes",
+          "options": {
+            "all": "Todos los Meses",
+            "1": "Enero",
+            "2": "Febrero",
+            "3": "Marzo",
+            "4": "Abril",
+            "5": "Mayo",
+            "6": "Junio",
+            "7": "Julio",
+            "8": "Agosto",
+            "9": "Septiembre",
+            "10": "Octubre",
+            "11": "Noviembre",
+            "12": "Diciembre"
+          }
+        },
+        "sortBy": {
+          "label": "Ordenar por",
+          "placeholder": "Seleccionar orden",
+          "options": {
+            "createdAt_desc": "Más Recientes Primero",
+            "createdAt_asc": "Más Antiguos Primero",
+            "title_asc": "Título A-Z",
+            "title_desc": "Título Z-A",
+            "updatedAt_desc": "Recientemente Actualizados",
+            "status_asc": "Estado"
+          }
+        },
+        "dateRange": {
+          "label": "Rango de Fechas",
+          "placeholder": "Seleccionar rango de fechas",
+          "options": {
+            "all": "Todo el Tiempo",
+            "today": "Hoy",
+            "yesterday": "Ayer",
+            "thisWeek": "Esta Semana",
+            "lastWeek": "Semana Pasada",
+            "thisMonth": "Este Mes",
+            "lastMonth": "Mes Pasado",
+            "thisYear": "Este Año",
+            "lastYear": "Año Pasado",
+            "custom": "Rango Personalizado"
+          }
+        },
+        "quickFilters": {
+          "label": "Filtros Rápidos",
+          "myBooks": "Mis Libros",
+          "recentlyUpdated": "Recientemente Actualizados",
+          "needsReview": "Necesitan Revisión",
+          "readyToPublish": "Listos para Publicar",
+          "published": "Publicados",
+          "drafts": "Borradores",
+          "archived": "Archivados"
+        }
+      },
+      "results": {
+        "showing": "Mostrando {from}-{to} de {total}",
+        "noResults": "No hay libros de cupones que coincidan con tus criterios",
+        "noResultsDescription": "Intenta ajustar tus filtros o términos de búsqueda",
+        "resetFilters": "Restablecer todos los filtros"
+      }
+    },
+    "emptyState": {
+      "title": "Sin Libros de Cupones",
+      "description": "Comienza creando tu primer libro de cupones",
+      "createButton": "Crear Libro de Cupones"
+    },
+    "create": {
+      "title": "Crear Libro de Cupones",
+      "button": "Nuevo Libro de Cupones",
+      "subtitle": "Configurar una nueva colección de libros de cupones"
+    },
+    "edit": {
+      "title": "Editar Libro de Cupones",
+      "subtitle": "Modificar detalles del libro de cupones para {title}"
+    },
+    "detail": {
+      "title": "Detalles del Libro de Cupones",
+      "description": "Ver información del libro de cupones y gestionar generación de PDF",
+      "tabs": {
+        "overview": "Resumen",
+        "workflow": "Estado y Flujo de Trabajo",
+        "pdf": "Generación de PDF",
+        "pages": "Páginas",
+        "placements": "Ubicaciones",
+        "analytics": "Análisis"
+      }
+    },
+    "bookType": {
+      "MONTHLY": "Mensual",
+      "SEASONAL": "Estacional",
+      "ANNUAL": "Anual",
+      "SPECIAL": "Edición Especial"
+    },
+    "status": {
+      "DRAFT": "Borrador",
+      "IN_REVIEW": "En Revisión",
+      "APPROVED": "Aprobado",
+      "PUBLISHED": "Publicado",
+      "ARCHIVED": "Archivado",
+      "REJECTED": "Rechazado"
+    },
+    "fields": {
+      "id": "ID",
+      "title": "Título",
+      "edition": "Edición",
+      "bookType": "Tipo de Libro",
+      "month": "Mes",
+      "year": "Año",
+      "totalPages": "Páginas Totales",
+      "currentPages": "Páginas Actuales",
+      "pageCount": "Contador de Páginas",
+      "totalPlacements": "Ubicaciones Totales",
+      "status": "Estado",
+      "createdAt": "Creado",
+      "updatedAt": "Última Actualización",
+      "publishedAt": "Publicado",
+      "archivedAt": "Archivado",
+      "coverImage": "Imagen de Portada",
+      "backImage": "Imagen de Contraportada",
+      "description": "Descripción",
+      "targetAudience": "Audiencia Objetivo",
+      "notes": "Notas",
+      "metadata": "Información Adicional"
+    },
+    "placeholders": {
+      "title": "Ingresa el título del libro de cupones",
+      "edition": "ej., Edición Verano, Q1 2024",
+      "bookType": "Selecciona el tipo de libro",
+      "month": "Selecciona el mes",
+      "year": "Selecciona el año",
+      "totalPages": "Ingresa el número total de páginas",
+      "description": "Describe el contenido y propósito del libro de cupones",
+      "targetAudience": "ej., Familias, Jóvenes Profesionales, Turistas",
+      "notes": "Cualquier nota adicional o comentarios"
+    },
+    "sections": {
+      "basicInfo": "Información Básica",
+      "images": "Imágenes de Portada",
+      "metadata": "Detalles Adicionales",
+      "settings": "Configuraciones del Libro",
+      "preview": "Vista Previa"
+    },
+    "actions": {
+      "create": "Crear Libro",
+      "update": "Actualizar Libro",
+      "delete": "Eliminar Libro",
+      "duplicate": "Duplicar Libro",
+      "archive": "Archivar Libro",
+      "unarchive": "Desarchivar Libro",
+      "publish": "Publicar Libro",
+      "unpublish": "Despublicar Libro",
+      "approve": "Aprobar Libro",
+      "reject": "Rechazar Libro",
+      "submitForReview": "Enviar para Revisión",
+      "saveChanges": "Guardar Cambios",
+      "saveDraft": "Guardar Borrador",
+      "viewDetails": "Ver Detalles",
+      "editBook": "Editar Libro",
+      "generatePdf": "Generar PDF",
+      "downloadPdf": "Descargar PDF"
+    },
+    "workflow": {
+      "title": "Flujo de Trabajo de Estado",
+      "description": "Gestionar el flujo de trabajo de publicación del libro de cupones",
+      "currentStatus": "Estado Actual",
+      "availableActions": "Acciones Disponibles",
+      "history": "Historial de Estados",
+      "requirements": {
+        "title": "Requisitos",
+        "coverImage": "La imagen de portada es requerida",
+        "backImage": "La imagen de contraportada es recomendada",
+        "minimumPages": "Debe tener al menos {count} páginas",
+        "minimumPlacements": "Debe tener al menos {count} ubicaciones",
+        "completeMetadata": "Toda la metadata requerida debe estar completa"
+      },
+      "transitions": {
+        "toDraft": "Mover a Borrador",
+        "toInReview": "Enviar para Revisión",
+        "toApproved": "Aprobar",
+        "toPublished": "Publicar",
+        "toArchived": "Archivar",
+        "toRejected": "Rechazar"
+      },
+      "confirmations": {
+        "publish": {
+          "title": "Publicar Libro de Cupones",
+          "message": "¿Estás seguro de que quieres publicar este libro de cupones? Estará disponible al público.",
+          "requirements": "Por favor asegúrate de que todos los requisitos se cumplan antes de publicar."
+        },
+        "archive": {
+          "title": "Archivar Libro de Cupones",
+          "message": "Archivar removerá este libro de la vista pública. Puedes desarchivarlo más tarde."
+        },
+        "reject": {
+          "title": "Rechazar Libro de Cupones",
+          "message": "Por favor proporciona una razón para el rechazo:",
+          "reasonPlaceholder": "Ingresa la razón del rechazo..."
+        }
+      }
+    },
+    "pdf": {
+      "title": "Generación de PDF",
+      "description": "Generar y descargar PDF del libro de cupones",
+      "generate": "Generar PDF",
+      "regenerate": "Regenerar PDF",
+      "download": "Descargar PDF",
+      "generating": "Generando...",
+      "generationStarted": "Generación de PDF iniciada",
+      "generationComplete": "PDF generado exitosamente",
+      "generationFailed": "Falló la generación de PDF",
+      "generationFailedDescription": "Por favor intenta de nuevo o contacta soporte si el problema persiste",
+      "readyForDownload": "Tu PDF está listo para descargar",
+      "lastGenerated": "Última generación",
+      "estimatedSize": "Tamaño Estimado",
+      "bookSummary": "Resumen del Libro",
+      "generationOptions": "Opciones de Generación",
+      "optionsInfo": "Elegir prioridad de generación",
+      "optionsDescription": "Mayor prioridad genera más rápido pero puede costar más recursos",
+      "priority": "Nivel de Prioridad",
+      "priorityHigh": "Prioridad Alta",
+      "priorityNormal": "Prioridad Normal",
+      "priorityLow": "Prioridad Baja",
+      "priorityHighDesc": "Generación más rápida, procesamiento inmediato",
+      "priorityNormalDesc": "Velocidad de generación estándar, rendimiento equilibrado",
+      "priorityLowDesc": "Generación económica, procesado cuando hay recursos disponibles",
+      "minutes": "minutos",
+      "status": {
+        "idle": "Listo para Generar",
+        "generating": "Generando PDF",
+        "completed": "PDF Listo",
+        "failed": "Generación Falló"
+      }
+    },
+    "overview": {
+      "title": "Resumen",
+      "summary": "Resumen del Libro",
+      "details": "Detalles del Libro",
+      "images": "Imágenes de Portada",
+      "statistics": "Estadísticas",
+      "recentActivity": "Actividad Reciente",
+      "createdBy": "Creado por",
+      "lastModifiedBy": "Última modificación por"
+    },
+    "pages": {
+      "title": "Páginas",
+      "description": "Gestionar páginas del libro de cupones y diseño",
+      "addPage": "Agregar Página",
+      "deletePage": "Eliminar Página",
+      "reorderPages": "Reordenar Páginas",
+      "pageNumber": "Página {number}",
+      "totalPages": "{current} de {total} páginas"
+    },
+    "placements": {
+      "title": "Ubicaciones",
+      "description": "Gestionar ubicaciones de cupones dentro del libro",
+      "addPlacement": "Agregar Ubicación",
+      "editPlacement": "Editar Ubicación",
+      "deletePlacement": "Eliminar Ubicación",
+      "placementNumber": "Ubicación {number}",
+      "totalPlacements": "{current} ubicaciones"
+    },
+    "analytics": {
+      "title": "Análisis",
+      "description": "Ver métricas de rendimiento del libro de cupones",
+      "downloads": "Descargas de PDF",
+      "views": "Vistas del Libro",
+      "engagement": "Participación del Usuario",
+      "performance": "Métricas de Rendimiento"
+    },
+    "messages": {
+      "createSuccess": "Libro de cupones creado exitosamente",
+      "createError": "Falló al crear libro de cupones",
+      "updateSuccess": "Libro de cupones actualizado exitosamente",
+      "updateError": "Falló al actualizar libro de cupones",
+      "deleteSuccess": "Libro de cupones eliminado exitosamente",
+      "deleteError": "Falló al eliminar libro de cupones",
+      "publishSuccess": "Libro de cupones publicado exitosamente",
+      "publishError": "Falló al publicar libro de cupones",
+      "archiveSuccess": "Libro de cupones archivado exitosamente",
+      "archiveError": "Falló al archivar libro de cupones",
+      "loadError": "Falló al cargar libro de cupones",
+      "bookNotFound": "Libro de cupones no encontrado",
+      "validationError": "Por favor corrige los errores de validación",
+      "networkError": "Error de red. Por favor intenta de nuevo.",
+      "permissionError": "No tienes permisos para realizar esta acción"
+    },
+    "validation": {
+      "titleRequired": "El título es requerido",
+      "titleTooLong": "El título debe tener menos de 255 caracteres",
+      "bookTypeRequired": "El tipo de libro es requerido",
+      "yearRequired": "El año es requerido",
+      "yearInvalid": "El año debe estar entre 2020 y 2100",
+      "totalPagesRequired": "Las páginas totales son requeridas",
+      "totalPagesMin": "Debe tener al menos 1 página",
+      "totalPagesMax": "No puede exceder 100 páginas",
+      "monthRequired": "El mes es requerido para libros mensuales",
+      "monthInvalid": "El mes debe estar entre 1 y 12",
+      "coverImageRequired": "La imagen de portada es requerida",
+      "descriptionTooLong": "La descripción debe tener menos de 500 caracteres"
+    },
+    "confirmations": {
+      "delete": {
+        "title": "Eliminar Libro de Cupones",
+        "message": "¿Estás seguro de que quieres eliminar este libro de cupones? Esta acción no se puede deshacer.",
+        "input": "Escribe ELIMINAR para confirmar"
+      },
+      "unsavedChanges": {
+        "title": "Cambios Sin Guardar",
+        "message": "Tienes cambios sin guardar. ¿Estás seguro de que quieres salir?"
+      }
+    },
+    "tooltips": {
+      "bookType": "Selecciona el tipo de colección de libro de cupones",
+      "month": "Requerido para libros mensuales para especificar el mes objetivo",
+      "totalPages": "Número máximo de páginas que este libro puede contener",
+      "coverImage": "Imagen principal de portada mostrada a los usuarios",
+      "backImage": "Imagen de contraportada para generación de PDF",
+      "targetAudience": "Especifica la audiencia objetivo para propósitos de marketing"
+    },
+    "help": {
+      "title": "Ayuda de Libro de Cupones",
+      "bookTypes": {
+        "title": "Tipos de Libro",
+        "monthly": "Los libros mensuales se publican cada mes con ofertas sensibles al tiempo",
+        "seasonal": "Los libros estacionales se alinean con las estaciones (Primavera, Verano, Otoño, Invierno)",
+        "annual": "Los libros anuales se publican una vez por año con ofertas a largo plazo",
+        "special": "Libros de edición especial para vacaciones, eventos o campañas únicas"
+      },
+      "workflow": {
+        "title": "Flujo de Trabajo de Publicación",
+        "draft": "Estado inicial - el libro está siendo creado y editado",
+        "inReview": "El libro está enviado para revisión y aprobación",
+        "approved": "El libro está aprobado y listo para publicación",
+        "published": "El libro está activo y disponible al público",
+        "archived": "El libro ya no está activo pero se preserva para registros"
+      }
+    }
+  },
+  "table": {
+    "showingItems": "Mostrando {start}-{end} de {total}",
+    "itemsPerPage": "Elementos por página",
+    "pageOf": "Página {current} de {total}"
   }
 }

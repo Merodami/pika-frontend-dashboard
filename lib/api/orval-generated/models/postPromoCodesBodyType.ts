@@ -11,6 +11,6 @@ export type PostPromoCodesBodyType =
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PostPromoCodesBodyType = {
-  percentage: 'percentage',
   fixedAmount: 'fixedAmount',
+  percentage: 'percentage',
 } as const

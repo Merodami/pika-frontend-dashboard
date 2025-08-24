@@ -11,11 +11,11 @@ export type ServiceRegistryResponseServicesItemServiceType =
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ServiceRegistryResponseServicesItemServiceType = {
-  API_GATEWAY: 'API_GATEWAY',
-  MICROSERVICE: 'MICROSERVICE',
-  DATABASE: 'DATABASE',
-  CACHE: 'CACHE',
-  QUEUE: 'QUEUE',
-  STORAGE: 'STORAGE',
-  MONITORING: 'MONITORING',
+  apiGateway: 'apiGateway',
+  microservice: 'microservice',
+  database: 'database',
+  cache: 'cache',
+  queue: 'queue',
+  storage: 'storage',
+  monitoring: 'monitoring',
 } as const

@@ -8,9 +8,6 @@
 import type { StorageConfigurationResponseProvidersItem } from './storageConfigurationResponseProvidersItem'
 import type { StorageConfigurationResponseGlobalSettings } from './storageConfigurationResponseGlobalSettings'
 
-/**
- * Storage service configuration
- */
 export interface StorageConfigurationResponse {
   providers: StorageConfigurationResponseProvidersItem[]
   globalSettings: StorageConfigurationResponseGlobalSettings

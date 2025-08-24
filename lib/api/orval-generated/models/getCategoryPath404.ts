@@ -7,9 +7,6 @@
  */
 import type { GetCategoryPath404DetailsItem } from './getCategoryPath404DetailsItem'
 
-/**
- * Standard error response
- */
 export type GetCategoryPath404 = {
   /**
    * @minimum 100

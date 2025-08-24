@@ -8,9 +8,6 @@
 import type { UpdateAdminStorageConfiguration200ProvidersItem } from './updateAdminStorageConfiguration200ProvidersItem'
 import type { UpdateAdminStorageConfiguration200GlobalSettings } from './updateAdminStorageConfiguration200GlobalSettings'
 
-/**
- * Storage service configuration
- */
 export type UpdateAdminStorageConfiguration200 = {
   providers: UpdateAdminStorageConfiguration200ProvidersItem[]
   globalSettings: UpdateAdminStorageConfiguration200GlobalSettings

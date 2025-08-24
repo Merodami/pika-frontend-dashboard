@@ -167,6 +167,14 @@ npm run pre-commit  # Run before committing
 npm run validate    # Quick validation
 ```
 
+### Vercel Deployment Testing
+
+```bash
+npm run vercel:test  # Test production build locally
+npm run vercel:dev   # Run Vercel dev server
+npm run vercel:build # Run Vercel build command
+```
+
 ## 🏗️ Architecture
 
 ### Authentication Flow
@@ -244,6 +252,66 @@ npm run test:coverage
 # E2E tests with Playwright
 npm run test:e2e
 ```
+
+## 🚢 Deployment
+
+### Vercel Deployment
+
+This project is optimized for deployment on Vercel with zero-configuration support for Next.js applications.
+
+#### Environment Variables
+
+Set these environment variables in your Vercel dashboard:
+
+```env
+# Required
+NEXT_PUBLIC_API_URL=https://api.your-domain.com/api/v1
+API_URL=https://api.your-domain.com/api/v1  # For server-side calls
+
+# Optional (if using private npm packages)
+NODE_AUTH_TOKEN=your_github_packages_token
+
+# Optional features
+NEXT_PUBLIC_ENABLE_OFFLINE=false
+NEXT_PUBLIC_ENABLE_PWA=false
+```
+
+#### Testing Vercel Builds Locally
+
+Before deploying, test your build locally to catch any issues:
+
+```bash
+# Quick test - simulates Vercel's production build
+npm run vercel:test
+
+# Full simulation - cleans and rebuilds everything
+./scripts/test-vercel-build.sh
+
+# Using Vercel CLI (requires project linking)
+npm run vercel:build
+```
+
+#### Build Configuration
+
+The project includes:
+
+- `.vercelignore` - Excludes unnecessary files from deployment
+- `vercel.json` - Configures build settings, regions, and security headers
+- Production-optimized dependencies in `package.json`
+
+#### Common Deployment Issues
+
+1. **Type errors**: Ensure all `@types/*` packages needed for build are in `dependencies`
+2. **Missing environment variables**: Check all required vars are set in Vercel dashboard
+3. **Build failures**: Run `npm run vercel:test` locally first
+
+#### Deployment Checklist
+
+- [ ] Run `npm run vercel:test` locally
+- [ ] Set all required environment variables in Vercel
+- [ ] Verify API endpoints are accessible
+- [ ] Test authentication flow after deployment
+- [ ] Check all locales are working
 
 ## 🤝 Contributing
 

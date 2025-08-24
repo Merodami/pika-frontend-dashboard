@@ -9,4 +9,6 @@
 /**
  * Operation-specific options
  */
-export type BulkArchiveAdminVoucherBooksBodyOptions = { [key: string]: unknown }
+export type BulkArchiveAdminVoucherBooksBodyOptions = {
+  [key: string]: string | number | boolean | null | null
+}

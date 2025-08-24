@@ -9,9 +9,6 @@ import type { GetAdminSupportTicketList200DataItemType } from './getAdminSupport
 import type { GetAdminSupportTicketList200DataItemStatus } from './getAdminSupportTicketList200DataItemStatus'
 import type { GetAdminSupportTicketList200DataItemPriority } from './getAdminSupportTicketList200DataItemPriority'
 
-/**
- * Support ticket for admin
- */
 export type GetAdminSupportTicketList200DataItem = {
   /** Universally Unique Identifier */
   id: string

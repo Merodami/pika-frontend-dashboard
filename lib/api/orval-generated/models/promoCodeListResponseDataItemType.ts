@@ -11,6 +11,6 @@ export type PromoCodeListResponseDataItemType =
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PromoCodeListResponseDataItemType = {
-  percentage: 'percentage',
   fixedAmount: 'fixedAmount',
+  percentage: 'percentage',
 } as const

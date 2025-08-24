@@ -10,9 +10,6 @@ import type { AdminFileDetailResponseStatus } from './adminFileDetailResponseSta
 import type { AdminFileDetailResponseProvider } from './adminFileDetailResponseProvider'
 import type { AdminFileDetailResponseMetadata } from './adminFileDetailResponseMetadata'
 
-/**
- * Admin file details with user information
- */
 export interface AdminFileDetailResponse {
   /** Universally Unique Identifier */
   id: string

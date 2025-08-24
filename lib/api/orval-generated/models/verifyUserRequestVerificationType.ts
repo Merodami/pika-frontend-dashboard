@@ -11,7 +11,7 @@ export type VerifyUserRequestVerificationType =
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const VerifyUserRequestVerificationType = {
-  EMAIL: 'EMAIL',
-  PHONE: 'PHONE',
-  IDENTITY: 'IDENTITY',
+  email: 'email',
+  phone: 'phone',
+  accountConfirmation: 'accountConfirmation',
 } as const

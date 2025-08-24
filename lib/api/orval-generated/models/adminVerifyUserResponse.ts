@@ -7,12 +7,8 @@
  */
 import type { AdminVerifyUserResponseUser } from './adminVerifyUserResponseUser'
 
-/**
- * User verification response
- */
 export interface AdminVerifyUserResponse {
   success?: boolean
   message?: string
-  /** Detailed user information for admin */
   user?: AdminVerifyUserResponseUser
 }

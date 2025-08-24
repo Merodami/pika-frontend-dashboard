@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Email verification token
- */
 export interface VerifyEmailRequest {
   /**
    * Email verification token from email link

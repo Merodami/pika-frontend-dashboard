@@ -7,9 +7,6 @@
  */
 import type { GenerateAdminVoucherBookPdf404DetailsItem } from './generateAdminVoucherBookPdf404DetailsItem'
 
-/**
- * Standard error response
- */
 export type GenerateAdminVoucherBookPdf404 = {
   /**
    * @minimum 100

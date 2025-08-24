@@ -10,5 +10,5 @@
  * Additional book metadata
  */
 export type AdminVoucherBookListResponseDataItemMetadata = {
-  [key: string]: unknown
+  [key: string]: string | number | boolean | null | null
 }

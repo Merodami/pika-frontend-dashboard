@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Update promo code
- */
 export interface AdminUpdatePromoCodeRequest {
   /** @maxLength 500 */
   description?: string

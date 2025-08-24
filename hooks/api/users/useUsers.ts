@@ -7,11 +7,16 @@ import {
   createAdminUser,
   updateAdminUser,
   deleteAdminUser,
+  resetBusinessRegistration,
+  updateAdminUserStatus,
+  banAdminUser,
+  unbanAdminUser,
   type GetAdminUserListParams,
   type GetAdminUserList200,
   type GetAdminUserById200,
   type CreateAdminUserBody,
   type UpdateAdminUserBody,
+  type UpdateAdminUserStatusBody,
 } from '@/lib/api/orval-client'
 import { queryKeys } from '@/lib/api/queryKeys'
 
@@ -117,6 +122,76 @@ export function useDeleteUser() {
       queryClient.invalidateQueries({
         queryKey: queryKeys.users.lists(),
       })
+    },
+  })
+}
+
+/**
+ * Hook to reset user's business registration
+ */
+export function useResetBusinessRegistration() {
+  const queryClient = useQueryClient()
+
+  return useApiMutation<
+    any, // ResetBusinessRegistration200 type
+    Error,
+    string
+  >({
+    mutationFn: (userId) =>
+      resetBusinessRegistration(userId, { reason: 'Reset requested by admin' }),
+    successMessage: 'Business registration reset successfully',
+    onSuccess: (_, userId) => {
+      invalidateUserQueries(queryClient, userId)
+    },
+  })
+}
+
+/**
+ * Hook to update user status
+ */
+export function useUpdateUserStatus() {
+  const queryClient = useQueryClient()
+
+  return useApiMutation<
+    any,
+    Error,
+    { userId: string; status: UpdateAdminUserStatusBody['status'] }
+  >({
+    mutationFn: ({ userId, status }) =>
+      updateAdminUserStatus(userId, { status }),
+    successMessage: 'User status updated successfully',
+    onSuccess: (_, { userId }) => {
+      invalidateUserQueries(queryClient, userId)
+    },
+  })
+}
+
+/**
+ * Hook to ban a user
+ */
+export function useBanUser() {
+  const queryClient = useQueryClient()
+
+  return useApiMutation<any, Error, { userId: string; reason?: string }>({
+    mutationFn: ({ userId, reason }) => banAdminUser(userId, { reason }),
+    successMessage: 'User banned successfully',
+    onSuccess: (_, { userId }) => {
+      invalidateUserQueries(queryClient, userId)
+    },
+  })
+}
+
+/**
+ * Hook to unban a user
+ */
+export function useUnbanUser() {
+  const queryClient = useQueryClient()
+
+  return useApiMutation<any, Error, { userId: string; reason?: string }>({
+    mutationFn: ({ userId, reason }) => unbanAdminUser(userId, { reason }),
+    successMessage: 'User unbanned successfully',
+    onSuccess: (_, { userId }) => {
+      invalidateUserQueries(queryClient, userId)
     },
   })
 }

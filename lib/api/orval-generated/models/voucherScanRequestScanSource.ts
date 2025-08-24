@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Source of the voucher scan
- */
 export type VoucherScanRequestScanSource =
   (typeof VoucherScanRequestScanSource)[keyof typeof VoucherScanRequestScanSource]
 

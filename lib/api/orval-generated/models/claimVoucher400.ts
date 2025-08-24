@@ -7,9 +7,6 @@
  */
 import type { ClaimVoucher400DetailsItem } from './claimVoucher400DetailsItem'
 
-/**
- * Standard error response
- */
 export type ClaimVoucher400 = {
   /**
    * @minimum 100

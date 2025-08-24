@@ -8,9 +8,6 @@
 import type { UpdateSubscriptionRequestStatus } from './updateSubscriptionRequestStatus'
 import type { UpdateSubscriptionRequestMetadata } from './updateSubscriptionRequestMetadata'
 
-/**
- * Update a subscription
- */
 export interface UpdateSubscriptionRequest {
   /** Universally Unique Identifier */
   planId?: string

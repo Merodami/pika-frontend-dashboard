@@ -31,7 +31,7 @@ export function useApiError() {
         return
       }
     }
-    
+
     // Handle error objects with status and message
     if (error && typeof error === 'object' && 'status' in error) {
       const err = error as any

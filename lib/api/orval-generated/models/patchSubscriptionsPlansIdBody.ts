@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Update subscription plan
- */
 export type PatchSubscriptionsPlansIdBody = {
   /**
    * @minLength 1

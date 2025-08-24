@@ -11,8 +11,8 @@ export type DeregisterInternalServiceBodyReason =
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const DeregisterInternalServiceBodyReason = {
-  SHUTDOWN: 'SHUTDOWN',
-  MAINTENANCE: 'MAINTENANCE',
-  ERROR: 'ERROR',
-  SCALE_DOWN: 'SCALE_DOWN',
+  shutdown: 'shutdown',
+  maintenance: 'maintenance',
+  error: 'error',
+  scaleDown: 'scaleDown',
 } as const

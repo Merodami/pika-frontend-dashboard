@@ -9,9 +9,6 @@ import type { AdminTicketListResponseDataItemType } from './adminTicketListRespo
 import type { AdminTicketListResponseDataItemStatus } from './adminTicketListResponseDataItemStatus'
 import type { AdminTicketListResponseDataItemPriority } from './adminTicketListResponseDataItemPriority'
 
-/**
- * Support ticket for admin
- */
 export type AdminTicketListResponseDataItem = {
   /** Universally Unique Identifier */
   id: string

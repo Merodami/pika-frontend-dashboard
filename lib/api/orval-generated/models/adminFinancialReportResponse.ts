@@ -10,15 +10,11 @@ import type { AdminFinancialReportResponsePeriod } from './adminFinancialReportR
 import type { AdminFinancialReportResponseSummary } from './adminFinancialReportResponseSummary'
 import type { AdminFinancialReportResponseTimeSeriesItem } from './adminFinancialReportResponseTimeSeriesItem'
 
-/**
- * Financial report data
- */
 export interface AdminFinancialReportResponse {
   reportType: AdminFinancialReportResponseReportType
   period: AdminFinancialReportResponsePeriod
   /** ISO 8601 datetime with timezone */
   generatedAt: string
-  /** Financial summary for a period */
   summary: AdminFinancialReportResponseSummary
   timeSeries?: AdminFinancialReportResponseTimeSeriesItem[]
   downloadUrl?: string

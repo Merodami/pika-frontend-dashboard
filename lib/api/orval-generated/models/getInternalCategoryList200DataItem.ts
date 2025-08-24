@@ -12,8 +12,8 @@
 export type GetInternalCategoryList200DataItem = {
   /** Universally Unique Identifier */
   id: string
-  nameKey: string
-  descriptionKey?: string
+  name: string
+  description?: string
   icon?: string
   /** Universally Unique Identifier */
   parentId?: string

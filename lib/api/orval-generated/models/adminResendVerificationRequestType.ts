@@ -11,6 +11,7 @@ export type AdminResendVerificationRequestType =
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const AdminResendVerificationRequestType = {
-  EMAIL: 'EMAIL',
-  PHONE: 'PHONE',
+  email: 'email',
+  phone: 'phone',
+  accountConfirmation: 'accountConfirmation',
 } as const

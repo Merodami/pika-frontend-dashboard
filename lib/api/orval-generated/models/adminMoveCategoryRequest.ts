@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Move category to different parent or change sort order
- */
 export interface AdminMoveCategoryRequest {
   /** New parent category ID (null for root level) */
   parentId?: string

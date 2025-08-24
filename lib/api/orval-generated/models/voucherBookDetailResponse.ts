@@ -7,10 +7,6 @@
  */
 import type { VoucherBookDetailResponseData } from './voucherBookDetailResponseData'
 
-/**
- * Single voucher book details
- */
 export interface VoucherBookDetailResponse {
-  /** Public voucher book information (read-only) */
   data: VoucherBookDetailResponseData
 }

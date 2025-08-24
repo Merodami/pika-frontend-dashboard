@@ -9,9 +9,6 @@ import type { UpdateAdminTicketStatus200Type } from './updateAdminTicketStatus20
 import type { UpdateAdminTicketStatus200Status } from './updateAdminTicketStatus200Status'
 import type { UpdateAdminTicketStatus200Priority } from './updateAdminTicketStatus200Priority'
 
-/**
- * Support ticket for admin
- */
 export type UpdateAdminTicketStatus200 = {
   /** Universally Unique Identifier */
   id: string

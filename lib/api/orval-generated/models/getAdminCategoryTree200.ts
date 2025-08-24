@@ -7,9 +7,6 @@
  */
 import type { AdminCategoryResponse } from './adminCategoryResponse'
 
-/**
- * Hierarchical category tree structure for admin
- */
 export type GetAdminCategoryTree200 = {
   categories: AdminCategoryResponse[]
   /** @minimum 0 */

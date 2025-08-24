@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Request password reset email
- */
 export type ForgotPasswordBody = {
   /** @minLength 1 */
   email: string

@@ -11,9 +11,6 @@ import type { RefundAdminTransaction200PaymentMethod } from './refundAdminTransa
 import type { RefundAdminTransaction200DisputeStatus } from './refundAdminTransaction200DisputeStatus'
 import type { RefundAdminTransaction200Metadata } from './refundAdminTransaction200Metadata'
 
-/**
- * Detailed transaction information for admin
- */
 export type RefundAdminTransaction200 = {
   /** Universally Unique Identifier */
   id: string

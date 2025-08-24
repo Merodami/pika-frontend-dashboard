@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Presigned URL for file access
- */
 export type GetFileUrl200 = {
   url: string
   /** ISO 8601 datetime with timezone */

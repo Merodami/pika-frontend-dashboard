@@ -15,7 +15,7 @@ export type GetVoucherBookList200DataItemBookType =
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const GetVoucherBookList200DataItemBookType = {
   monthly: 'monthly',
-  special_edition: 'special_edition',
+  specialEdition: 'specialEdition',
   regional: 'regional',
   seasonal: 'seasonal',
   promotional: 'promotional',

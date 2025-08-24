@@ -11,6 +11,6 @@ export type AdminPromoCodeDetailType =
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const AdminPromoCodeDetailType = {
-  percentage: 'percentage',
   fixedAmount: 'fixedAmount',
+  percentage: 'percentage',
 } as const

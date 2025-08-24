@@ -7,9 +7,6 @@
  */
 import type { BulkDeleteAdminCategories200ErrorsItem } from './bulkDeleteAdminCategories200ErrorsItem'
 
-/**
- * Bulk category operation result
- */
 export type BulkDeleteAdminCategories200 = {
   /** @minimum 0 */
   successful: number

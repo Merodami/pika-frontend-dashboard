@@ -8,11 +8,7 @@
 import type { ScanVoucher200Voucher } from './scanVoucher200Voucher'
 import type { ScanVoucher200NearbyLocationsItem } from './scanVoucher200NearbyLocationsItem'
 
-/**
- * Voucher scan tracking result
- */
 export type ScanVoucher200 = {
-  /** Public voucher information */
   voucher: ScanVoucher200Voucher
   /** Universally Unique Identifier */
   scanId: string

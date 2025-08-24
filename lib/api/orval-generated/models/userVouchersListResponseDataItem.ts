@@ -9,11 +9,7 @@ import type { UserVouchersListResponseDataItemVoucher } from './userVouchersList
 import type { CustomerVoucherStatus } from './customerVoucherStatus'
 import type { UserVouchersListResponseDataItemRedeemedAt } from './userVouchersListResponseDataItemRedeemedAt'
 
-/**
- * User voucher with status information
- */
 export type UserVouchersListResponseDataItem = {
-  /** Public voucher information */
   voucher: UserVouchersListResponseDataItemVoucher
   claimedAt: string
   status: CustomerVoucherStatus

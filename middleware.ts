@@ -1,138 +1,58 @@
 import type { NextRequest } from 'next/server'
-import { NextResponse } from 'next/server'
-import createMiddleware from 'next-intl/middleware'
+import { compose } from './middleware/utils/compose'
+import { withI18n } from './middleware/handlers/i18n'
+import { withAuth } from './middleware/handlers/auth'
+import { withBusinessRegistration } from './middleware/handlers/business-registration'
+import { withSecurityHeaders } from './middleware/handlers/security-headers'
+import { withRateLimit } from './middleware/handlers/rate-limit'
 
-import { defaultLocale, locales } from './i18n/config'
-
-// Create the i18n middleware
-const intlMiddleware = createMiddleware({
-  locales,
-  defaultLocale,
-  localePrefix: 'always',
-  localeDetection: true,
-})
-
-// Public routes that don't require authentication
-const publicRoutes = [
-  '/login',
-  '/register',
-  '/forgot-password',
-  '/reset-password',
-]
-
+/**
+ * Main middleware entry point
+ *
+ * This middleware handles:
+ * 1. Internationalization (i18n) - Ensures locale is in URL
+ * 2. Authentication - Validates user sessions and redirects
+ * 3. Business Registration - Enforces mandatory registration flow
+ * 4. Security Headers - Adds security headers to responses
+ * 5. Rate Limiting - Handled by backend (pass-through)
+ *
+ * @see /middleware/handlers/* for individual handler implementations
+ * @see /RATE_LIMITING_STRATEGY.md for rate limiting architecture decisions
+ */
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
-  
-  // First, apply intl middleware to ensure locale is present
-  const response = intlMiddleware(request)
-  
-  // Extract locale from pathname after intl middleware has normalized it
-  const pathnameHasLocale = locales.some(
-    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
-  )
 
-  // Get the pathname without locale (keep leading slash)
-  const pathnameWithoutLocale = pathnameHasLocale
-    ? pathname.substring(3) // Remove "/es" but keep the rest including leading slash
-    : pathname
-
-  // Check if it's a public route - exact match or with query params
-  const isPublicRoute = publicRoutes.some((route) => {
-    // Exact match or route with query params (e.g., /login?from=...)
-    return pathnameWithoutLocale === route || 
-           pathnameWithoutLocale.startsWith(route + '?') ||
-           pathnameWithoutLocale.startsWith(route + '/')
-  })
-
-  // Modern auth check: Look for token in multiple places
-  const accessToken =
-    request.cookies.get('pika-access-token')?.value ||
-    request.headers.get('Authorization')?.replace('Bearer ', '')
-
-  // If not a public route and no token, redirect to login
-  if (!isPublicRoute && !accessToken) {
-    // Get locale for redirect - use the one from the normalized path
-    const locale = pathnameHasLocale ? pathname.split('/')[1] : defaultLocale
-
-    // Redirect to login if no token
-    const url = new URL(`/${locale}/login`, request.url)
-    
-    // Only add 'from' parameter if not already on login page and not root
-    if (!pathnameWithoutLocale.startsWith('/login') && pathname !== '/' && pathname !== `/${locale}`) {
-      url.searchParams.set('from', pathname)
-    }
-
-    // Use 307 temporary redirect to avoid browser caching
-    return NextResponse.redirect(url, { status: 307 })
+  // CRITICAL: Skip middleware for Next.js internal routes
+  // These can have locale prefixes, so we check if _next appears anywhere in the path
+  if (pathname.includes('/_next/') || pathname.includes('/_next')) {
+    return
   }
 
-  // Add comprehensive security headers
-  const headers = new Headers(response.headers)
-
-  // Prevent clickjacking attacks
-  headers.set('X-Frame-Options', 'DENY')
-  
-  // Prevent MIME type sniffing
-  headers.set('X-Content-Type-Options', 'nosniff')
-  
-  // Enable XSS protection (legacy browsers)
-  headers.set('X-XSS-Protection', '1; mode=block')
-  
-  // Control referrer information
-  headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
-  
-  // Restrict browser features
-  headers.set(
-    'Permissions-Policy',
-    'camera=(), microphone=(), geolocation=(), interest-cohort=(), payment=(), usb=()'
-  )
-  
-  // Strict Transport Security (HSTS) for production
-  if (process.env.NODE_ENV === 'production') {
-    headers.set(
-      'Strict-Transport-Security',
-      'max-age=63072000; includeSubDomains; preload'
-    )
-  }
-
-  // Content Security Policy for production
-  if (process.env.NODE_ENV === 'production') {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5500'
-    headers.set(
-      'Content-Security-Policy',
-      [
-        "default-src 'self'",
-        "script-src 'self' 'unsafe-eval' 'unsafe-inline'",
-        "style-src 'self' 'unsafe-inline'",
-        "img-src 'self' data: https: blob:",
-        "font-src 'self' data:",
-        `connect-src 'self' ${apiUrl} ws: wss:`,
-        "frame-ancestors 'none'",
-        "base-uri 'self'",
-        "form-action 'self'",
-        "upgrade-insecure-requests"
-      ].join('; ')
-    )
-  }
-
-  return NextResponse.next({
-    headers,
-    request: {
-      headers: request.headers,
-    },
-  })
+  // Compose middleware handlers in order of execution
+  // Each handler can modify the request/response or short-circuit the chain
+  return compose(
+    withI18n,
+    withAuth,
+    withBusinessRegistration,
+    withSecurityHeaders,
+    withRateLimit
+  )(request)
 }
 
 export const config = {
   matcher: [
     /*
      * Match all request paths except:
+     * - api routes
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico, sitemap.xml, robots.txt (metadata files)
      * - public folder
-     * - api routes
+     *
+     * Note: The matcher runs BEFORE the middleware function,
+     * but with locales, paths like /es/_next/static still match
+     * the pattern, so we need the additional check in the middleware
      */
-    '/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|public|api).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|public).*)',
   ],
 }

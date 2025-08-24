@@ -11,7 +11,13 @@ export type PatchSubscriptionsPlansId200Currency =
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PatchSubscriptionsPlansId200Currency = {
-  usd: 'usd',
-  eur: 'eur',
-  gbp: 'gbp',
+  PYG: 'PYG',
+  USD: 'USD',
+  EUR: 'EUR',
+  GBP: 'GBP',
+  CAD: 'CAD',
+  AUD: 'AUD',
+  JPY: 'JPY',
+  CNY: 'CNY',
+  INR: 'INR',
 } as const

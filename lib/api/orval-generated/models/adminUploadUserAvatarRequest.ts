@@ -6,9 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Upload avatar for a user (admin only)
- */
 export interface AdminUploadUserAvatarRequest {
   /** Avatar image file (JPEG, PNG, or WebP) */
   avatar?: Blob

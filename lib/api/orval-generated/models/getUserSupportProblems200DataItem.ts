@@ -9,9 +9,6 @@ import type { GetUserSupportProblems200DataItemStatus } from './getUserSupportPr
 import type { GetUserSupportProblems200DataItemPriority } from './getUserSupportProblems200DataItemPriority'
 import type { GetUserSupportProblems200DataItemType } from './getUserSupportProblems200DataItemType'
 
-/**
- * Support problem
- */
 export type GetUserSupportProblems200DataItem = {
   /** Universally Unique Identifier */
   id: string

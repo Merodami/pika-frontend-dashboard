@@ -7,9 +7,6 @@
  */
 import type { VerifyAdminUserBodyType } from './verifyAdminUserBodyType'
 
-/**
- * Admin request to verify a user account
- */
 export type VerifyAdminUserBody = {
   type: VerifyAdminUserBodyType
   token?: string

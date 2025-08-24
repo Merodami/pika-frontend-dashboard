@@ -7,9 +7,6 @@
  */
 import type { VerifyEmail400DetailsItem } from './verifyEmail400DetailsItem'
 
-/**
- * Standard error response
- */
 export type VerifyEmail400 = {
   /**
    * @minimum 100

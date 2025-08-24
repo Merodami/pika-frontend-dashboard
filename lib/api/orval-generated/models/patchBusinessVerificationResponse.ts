@@ -5,34 +5,41 @@
  * Complete API documentation including public, admin, and internal endpoints
  * OpenAPI spec version: 1.0.0
  */
+import type { PatchBusinessVerificationResponseCategoryId } from './patchBusinessVerificationResponseCategoryId'
+import type { PatchBusinessVerificationResponseApprovedBy } from './patchBusinessVerificationResponseApprovedBy'
+import type { PatchBusinessVerificationResponseApprovedAt } from './patchBusinessVerificationResponseApprovedAt'
 import type { PatchBusinessVerificationResponseDeletedAt } from './patchBusinessVerificationResponseDeletedAt'
 import type { PatchBusinessVerificationResponseUser } from './patchBusinessVerificationResponseUser'
-import type { CategoryResponse } from './categoryResponse'
+import type { PatchBusinessVerificationResponseCategory } from './patchBusinessVerificationResponseCategory'
+import type { PatchBusinessVerificationResponseBusinessRegistration } from './patchBusinessVerificationResponseBusinessRegistration'
 
-/**
- * Business information for admin management
- */
 export interface PatchBusinessVerificationResponse {
   /** Universally Unique Identifier */
   id: string
   /** User who owns this business */
   userId: string
   /**
-   * Translation key for business name
+   * Business name (resolved translation)
    * @maxLength 255
    */
-  businessNameKey: string
+  businessName: string
   /**
-   * Translation key for business description
+   * Business description (resolved translation)
    * @maxLength 255
    */
-  businessDescriptionKey?: string
+  businessDescription?: string
   /** Category this business belongs to */
-  categoryId: string
+  categoryId: PatchBusinessVerificationResponseCategoryId
   /** Whether business is verified */
   verified?: boolean
   /** Whether business is active */
   active?: boolean
+  /** Whether business is approved by admin */
+  approved?: boolean
+  /** Admin who approved the business */
+  approvedBy?: PatchBusinessVerificationResponseApprovedBy
+  /** When the business was approved */
+  approvedAt?: PatchBusinessVerificationResponseApprovedAt
   /**
    * Average rating of the business
    * @minimum 0
@@ -43,7 +50,10 @@ export interface PatchBusinessVerificationResponse {
   deletedAt: PatchBusinessVerificationResponseDeletedAt
   /** Business owner details when ?include=user */
   user?: PatchBusinessVerificationResponseUser
-  category?: CategoryResponse
+  /** Category information when ?include=category */
+  category?: PatchBusinessVerificationResponseCategory
+  /** Business registration info when ?include=businessRegistration */
+  businessRegistration?: PatchBusinessVerificationResponseBusinessRegistration
   /** When the record was created */
   createdAt: string
   /** When the record was last updated */

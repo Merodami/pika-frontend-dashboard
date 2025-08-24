@@ -20,16 +20,13 @@ import type { BulkGetInternalVouchers200DataItemScansItem } from './bulkGetInter
 import type { BulkGetInternalVouchers200DataItemCustomerVouchersItem } from './bulkGetInternalVouchers200DataItemCustomerVouchersItem'
 import type { BulkGetInternalVouchers200DataItemDaysUntilExpiry } from './bulkGetInternalVouchers200DataItemDaysUntilExpiry'
 
-/**
- * Detailed voucher information for admin with industry-standard include relations
- */
 export type BulkGetInternalVouchers200DataItem = {
   /** Universally Unique Identifier */
   id: string
   /** Universally Unique Identifier */
   businessId: string
   /** Universally Unique Identifier */
-  categoryId: string
+  categoryId?: string
   state: VoucherState
   /** Voucher title in requested language */
   title: string

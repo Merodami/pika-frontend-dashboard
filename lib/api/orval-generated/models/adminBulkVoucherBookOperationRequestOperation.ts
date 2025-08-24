@@ -16,6 +16,6 @@ export type AdminBulkVoucherBookOperationRequestOperation =
 export const AdminBulkVoucherBookOperationRequestOperation = {
   publish: 'publish',
   archive: 'archive',
-  generate_pdf: 'generate_pdf',
+  generatePdf: 'generatePdf',
   delete: 'delete',
 } as const

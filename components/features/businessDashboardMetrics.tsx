@@ -1,7 +1,7 @@
 import { Ticket, Users, TrendingUp, QrCode } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 
-import { MetricCard } from '@/components/ui/metricCard'
+import { MetricCard } from '@/components/ui/MetricCard'
 import type { LocaleProps } from '@/types/common'
 
 interface BusinessDashboardMetricsProps extends LocaleProps {
@@ -25,28 +25,32 @@ export async function BusinessDashboardMetrics({
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       <MetricCard
-        title={t('activeVouchers')}
+        label={t('activeVouchers')}
         value={metrics.activeVouchers.toString()}
-        icon={Ticket}
-        trend={{ value: 5.2, isPositive: true }}
+        icon={<Ticket className="w-4 h-4" />}
+        trend={{ value: 5.2, direction: 'up' }}
+        color="blue"
       />
       <MetricCard
-        title={t('totalRedemptions')}
+        label={t('totalRedemptions')}
         value={metrics.totalRedemptions.toLocaleString()}
-        icon={TrendingUp}
-        trend={{ value: 12.8, isPositive: true }}
+        icon={<TrendingUp className="w-4 h-4" />}
+        trend={{ value: 12.8, direction: 'up' }}
+        color="green"
       />
       <MetricCard
-        title={t('totalScans')}
+        label={t('totalScans')}
         value={metrics.totalScans.toLocaleString()}
-        icon={QrCode}
-        trend={{ value: 18.3, isPositive: true }}
+        icon={<QrCode className="w-4 h-4" />}
+        trend={{ value: 18.3, direction: 'up' }}
+        color="purple"
       />
       <MetricCard
-        title={t('uniqueCustomers')}
+        label={t('uniqueCustomers')}
         value={metrics.uniqueCustomers.toString()}
-        icon={Users}
-        trend={{ value: 22.5, isPositive: true }}
+        icon={<Users className="w-4 h-4" />}
+        trend={{ value: 22.5, direction: 'up' }}
+        color="yellow"
       />
     </div>
   )
