@@ -3,7 +3,19 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
-import { Drawer, Tabs, Tag, Button, Descriptions, Card, Avatar, message, Modal, Spin, Empty } from 'antd'
+import {
+  Drawer,
+  Tabs,
+  Tag,
+  Button,
+  Descriptions,
+  Card,
+  Avatar,
+  message,
+  Modal,
+  Spin,
+  Empty,
+} from 'antd'
 import {
   Building,
   Mail,
@@ -23,8 +35,8 @@ import {
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query'
 import { format } from 'date-fns'
 
-import { 
-  deleteAdminBusiness, 
+import {
+  deleteAdminBusiness,
   approveAdminBusiness,
   getAdminBusinessById,
   getAdminBusinessVoucherStats,
@@ -41,7 +53,11 @@ interface BusinessDetailViewProps {
   mode?: 'drawer' | 'page'
 }
 
-export function BusinessDetailView({ businessId, locale, mode = 'drawer' }: BusinessDetailViewProps) {
+export function BusinessDetailView({
+  businessId,
+  locale,
+  mode = 'drawer',
+}: BusinessDetailViewProps) {
   const router = useRouter()
   const t = useTranslations()
   const queryClient = useQueryClient()
@@ -49,7 +65,11 @@ export function BusinessDetailView({ businessId, locale, mode = 'drawer' }: Busi
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
 
   // Fetch business data
-  const { data: business, isLoading, error } = useQuery({
+  const {
+    data: business,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ['admin-business', businessId],
     queryFn: () => getAdminBusinessById(businessId),
   })
@@ -80,11 +100,13 @@ export function BusinessDetailView({ businessId, locale, mode = 'drawer' }: Busi
       approveAdminBusiness(id, { approved }),
     onSuccess: (_, { approved }) => {
       message.success(
-        approved 
+        approved
           ? t('business.message.approveSuccess')
           : t('business.message.rejectSuccess')
       )
-      queryClient.invalidateQueries({ queryKey: ['admin-business', businessId] })
+      queryClient.invalidateQueries({
+        queryKey: ['admin-business', businessId],
+      })
       queryClient.invalidateQueries({ queryKey: ['admin-businesses'] })
     },
     onError: () => {
@@ -135,7 +157,7 @@ export function BusinessDetailView({ businessId, locale, mode = 'drawer' }: Busi
   if (error || !business) {
     return (
       <div className="flex items-center justify-center h-96">
-        <Empty 
+        <Empty
           description={t('business.detail.notFound')}
           image={<AlertCircle className="w-16 h-16 text-gray-400" />}
         />
@@ -193,16 +215,21 @@ export function BusinessDetailView({ businessId, locale, mode = 'drawer' }: Busi
                 {business.businessName}
               </Descriptions.Item>
               <Descriptions.Item label={t('business.field.category')}>
-                <Tag color="blue">{business.category?.name || t('common.na')}</Tag>
+                <Tag color="blue">
+                  {business.category?.name || t('common.na')}
+                </Tag>
               </Descriptions.Item>
               <Descriptions.Item label={t('business.field.status')} span={2}>
-                <StatusBadge 
+                <StatusBadge
                   entityType="business"
-                  verified={business.verified} 
-                  approved={business.approved} 
+                  verified={business.verified}
+                  approved={business.approved}
                 />
               </Descriptions.Item>
-              <Descriptions.Item label={t('business.field.description')} span={2}>
+              <Descriptions.Item
+                label={t('business.field.description')}
+                span={2}
+              >
                 {business.businessDescription || t('common.na')}
               </Descriptions.Item>
               <Descriptions.Item label={t('business.field.createdAt')}>
@@ -253,7 +280,11 @@ export function BusinessDetailView({ businessId, locale, mode = 'drawer' }: Busi
                   </div>
                 </Descriptions.Item>
                 <Descriptions.Item label={t('business.field.userStatus')}>
-                  <Tag color={business.user.status === 'active' ? 'green' : 'default'}>
+                  <Tag
+                    color={
+                      business.user.status === 'active' ? 'green' : 'default'
+                    }
+                  >
                     {business.user.status?.toUpperCase() || 'UNKNOWN'}
                   </Tag>
                 </Descriptions.Item>
@@ -268,8 +299,14 @@ export function BusinessDetailView({ businessId, locale, mode = 'drawer' }: Busi
                 <Descriptions.Item label={t('business.field.currentStep')}>
                   {business.businessRegistration.currentStep || t('common.na')}
                 </Descriptions.Item>
-                <Descriptions.Item label={t('business.field.registrationStatus')} span={2}>
-                  <Tag>{business.businessRegistration.registrationStatus || t('common.na')}</Tag>
+                <Descriptions.Item
+                  label={t('business.field.registrationStatus')}
+                  span={2}
+                >
+                  <Tag>
+                    {business.businessRegistration.registrationStatus ||
+                      t('common.na')}
+                  </Tag>
                 </Descriptions.Item>
               </Descriptions>
             </Card>
@@ -306,30 +343,35 @@ export function BusinessDetailView({ businessId, locale, mode = 'drawer' }: Busi
           </Card>
 
           {/* Vouchers Stats */}
-          {stats?.topPerformingVouchers && stats.topPerformingVouchers.length > 0 && (
-            <Card title={t('business.detail.sections.topVouchers')}>
-              <div className="space-y-2">
-                {stats.topPerformingVouchers.map((voucher) => (
-                  <div key={voucher.voucherId} className="flex items-center justify-between p-3 border rounded-lg">
-                    <div>
-                      <div className="font-medium">{voucher.title}</div>
-                      <div className="text-sm text-gray-500">
-                        {t('business.detail.redemptions')}: {voucher.redemptions}
+          {stats?.topPerformingVouchers &&
+            stats.topPerformingVouchers.length > 0 && (
+              <Card title={t('business.detail.sections.topVouchers')}>
+                <div className="space-y-2">
+                  {stats.topPerformingVouchers.map((voucher) => (
+                    <div
+                      key={voucher.voucherId}
+                      className="flex items-center justify-between p-3 border rounded-lg"
+                    >
+                      <div>
+                        <div className="font-medium">{voucher.title}</div>
+                        <div className="text-sm text-gray-500">
+                          {t('business.detail.redemptions')}:{' '}
+                          {voucher.redemptions}
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="font-semibold">
+                          {(voucher.redemptionRate * 100).toFixed(1)}%
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          {t('business.detail.conversionRate')}
+                        </div>
                       </div>
                     </div>
-                    <div className="text-right">
-                      <div className="font-semibold">
-                        {(voucher.redemptionRate * 100).toFixed(1)}%
-                      </div>
-                      <div className="text-xs text-gray-500">
-                        {t('business.detail.conversionRate')}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </Card>
-          )}
+                  ))}
+                </div>
+              </Card>
+            )}
         </div>
       ),
     },
@@ -380,7 +422,12 @@ export function BusinessDetailView({ businessId, locale, mode = 'drawer' }: Busi
         cancelText={t('common.button.cancel')}
         okButtonProps={{ danger: true, loading: deleteMutation.isPending }}
       >
-        <p>{t('business.detail.confirmDelete.message').replace('{name}', business.businessName)}</p>
+        <p>
+          {t('business.detail.confirmDelete.message').replace(
+            '{name}',
+            business.businessName
+          )}
+        </p>
       </Modal>
     </>
   )
@@ -396,7 +443,9 @@ export function BusinessDetailView({ businessId, locale, mode = 'drawer' }: Busi
               className="bg-blue-100"
             />
             <div>
-              <div className="font-semibold text-lg">{business.businessName}</div>
+              <div className="font-semibold text-lg">
+                {business.businessName}
+              </div>
               <div className="text-sm text-gray-500">
                 {business.category?.name || t('common.na')}
               </div>

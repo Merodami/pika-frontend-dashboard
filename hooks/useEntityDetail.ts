@@ -15,11 +15,14 @@ export interface EntityDetailConfig<T> {
     fn: (id: string) => Promise<any>
     enabled?: (entity: T | undefined) => boolean
   }>
-  mutations?: Record<string, {
-    fn: (...args: any[]) => Promise<any>
-    onSuccess?: (data: any, variables: any) => void
-    invalidateKeys?: string[]
-  }>
+  mutations?: Record<
+    string,
+    {
+      fn: (...args: any[]) => Promise<any>
+      onSuccess?: (data: any, variables: any) => void
+      invalidateKeys?: string[]
+    }
+  >
 }
 
 export interface UseEntityDetailOptions {
@@ -37,7 +40,9 @@ export function useEntityDetail<T extends { id: string }>(
   const router = useRouter()
   const t = useTranslations()
   const queryClient = useQueryClient()
-  const [isOpen, setIsOpen] = useState(options.mode === 'drawer' || options.mode === 'modal')
+  const [isOpen, setIsOpen] = useState(
+    options.mode === 'drawer' || options.mode === 'modal'
+  )
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
 
   // Main entity query
@@ -47,14 +52,20 @@ export function useEntityDetail<T extends { id: string }>(
   })
 
   // Additional queries (e.g., stats, related data)
-  const additionalQueries = config.additionalQueries?.reduce((acc, query) => {
-    acc[query.key] = useQuery({
-      queryKey: [query.key, entityId],
-      queryFn: () => query.fn(entityId),
-      enabled: query.enabled ? query.enabled(entityQuery.data) : !!entityQuery.data,
-    })
-    return acc
-  }, {} as Record<string, any>) || {}
+  const additionalQueries =
+    config.additionalQueries?.reduce(
+      (acc, query) => {
+        acc[query.key] = useQuery({
+          queryKey: [query.key, entityId],
+          queryFn: () => query.fn(entityId),
+          enabled: query.enabled
+            ? query.enabled(entityQuery.data)
+            : !!entityQuery.data,
+        })
+        return acc
+      },
+      {} as Record<string, any>
+    ) || {}
 
   // Delete mutation
   const deleteMutation = useMutation({
@@ -74,25 +85,28 @@ export function useEntityDetail<T extends { id: string }>(
   })
 
   // Custom mutations
-  const mutations = Object.entries(config.mutations || {}).reduce((acc, [key, mutation]) => {
-    acc[key] = useMutation({
-      mutationFn: mutation.fn,
-      onSuccess: (data, variables) => {
-        if (mutation.onSuccess) {
-          mutation.onSuccess(data, variables)
-        }
-        // Invalidate queries
-        const keysToInvalidate = mutation.invalidateKeys || [config.entityKey]
-        keysToInvalidate.forEach(key => {
-          queryClient.invalidateQueries({ queryKey: [key] })
-        })
-      },
-      onError: () => {
-        message.error(t('common.message.errorOccurred'))
-      },
-    })
-    return acc
-  }, {} as Record<string, any>)
+  const mutations = Object.entries(config.mutations || {}).reduce(
+    (acc, [key, mutation]) => {
+      acc[key] = useMutation({
+        mutationFn: mutation.fn,
+        onSuccess: (data, variables) => {
+          if (mutation.onSuccess) {
+            mutation.onSuccess(data, variables)
+          }
+          // Invalidate queries
+          const keysToInvalidate = mutation.invalidateKeys || [config.entityKey]
+          keysToInvalidate.forEach((key) => {
+            queryClient.invalidateQueries({ queryKey: [key] })
+          })
+        },
+        onError: () => {
+          message.error(t('common.message.errorOccurred'))
+        },
+      })
+      return acc
+    },
+    {} as Record<string, any>
+  )
 
   // Handlers
   const handleClose = useCallback(() => {
@@ -111,7 +125,9 @@ export function useEntityDetail<T extends { id: string }>(
   }, [options, router, config.entityName])
 
   const handleEdit = useCallback(() => {
-    router.push(`/${options.locale}/admin/${config.entityName}s/${entityId}/edit`)
+    router.push(
+      `/${options.locale}/admin/${config.entityName}s/${entityId}/edit`
+    )
   }, [router, options.locale, config.entityName, entityId])
 
   const handleDelete = useCallback(() => {
@@ -132,23 +148,24 @@ export function useEntityDetail<T extends { id: string }>(
     error: entityQuery.error,
     isOpen,
     deleteModalOpen,
-    
+
     // Queries
     additionalData: additionalQueries,
-    
+
     // Mutations
     deleteMutation,
     mutations,
-    
+
     // Handlers
     handleClose,
     handleEdit,
     handleDelete,
     confirmDelete,
     setDeleteModalOpen,
-    
+
     // Utils
     refetch: entityQuery.refetch,
-    invalidate: () => queryClient.invalidateQueries({ queryKey: [config.entityKey, entityId] }),
+    invalidate: () =>
+      queryClient.invalidateQueries({ queryKey: [config.entityKey, entityId] }),
   }
 }

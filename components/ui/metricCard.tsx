@@ -16,13 +16,13 @@ interface MetricCardProps {
 /**
  * Reusable metric card component for displaying KPIs and statistics
  */
-export function MetricCard({ 
-  value, 
-  label, 
-  icon, 
+export function MetricCard({
+  value,
+  label,
+  icon,
   color = 'blue',
   trend,
-  className
+  className,
 }: MetricCardProps) {
   const colorClasses = {
     blue: 'text-blue-600',
@@ -32,20 +32,24 @@ export function MetricCard({
     yellow: 'text-yellow-600',
     gray: 'text-gray-600',
   }
-  
+
   return (
-    <div className={clsx(
-      "text-center p-4 border rounded-lg hover:shadow-md transition-shadow",
-      className
-    )}>
-      <div className={clsx("text-3xl font-bold", colorClasses[color])}>
+    <div
+      className={clsx(
+        'text-center p-4 border rounded-lg hover:shadow-md transition-shadow',
+        className
+      )}
+    >
+      <div className={clsx('text-3xl font-bold', colorClasses[color])}>
         {value}
       </div>
       {trend && (
-        <div className={clsx(
-          "text-sm mt-1",
-          trend.direction === 'up' ? 'text-green-500' : 'text-red-500'
-        )}>
+        <div
+          className={clsx(
+            'text-sm mt-1',
+            trend.direction === 'up' ? 'text-green-500' : 'text-red-500'
+          )}
+        >
           {trend.direction === 'up' ? '↑' : '↓'} {trend.value}%
         </div>
       )}

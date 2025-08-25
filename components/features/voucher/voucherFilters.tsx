@@ -90,11 +90,17 @@ export function VoucherFilters({
           onChange={(value) => handleChange('state', value)}
           placeholder={t('voucher.filter.statusPlaceholder')}
           options={[
-            { label: t('voucher.status.published'), value: VoucherState.published },
+            {
+              label: t('voucher.status.published'),
+              value: VoucherState.published,
+            },
             { label: t('voucher.status.draft'), value: VoucherState.draft },
             { label: t('voucher.status.claimed'), value: VoucherState.claimed },
             { label: t('voucher.status.expired'), value: VoucherState.expired },
-            { label: t('voucher.status.suspended'), value: VoucherState.suspended },
+            {
+              label: t('voucher.status.suspended'),
+              value: VoucherState.suspended,
+            },
           ]}
         />
 

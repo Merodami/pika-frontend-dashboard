@@ -15,7 +15,7 @@ export const dynamic = 'force-dynamic'
 
 interface DashboardLayoutProps {
   children: React.ReactNode
-  params: Promise<{ locale: Locale }>
+  params: Promise<{ locale: string }>
 }
 
 export default async function DashboardLayout({
@@ -24,7 +24,8 @@ export default async function DashboardLayout({
 }: DashboardLayoutProps) {
   // Ensure user has dashboard access (admin or business only)
   const user = await requireDashboardAccess()
-  const { locale } = await params
+  const { locale: localeParam } = await params
+  const locale = localeParam as Locale
   const t = await getTranslations({ locale, namespace: 'navigation' })
 
   // Prepare nav items based on user role
@@ -148,7 +149,8 @@ export default async function DashboardLayout({
 
 // Parallel route for role-specific dashboards
 export async function generateMetadata({ params }: DashboardLayoutProps) {
-  const { locale } = await params
+  const { locale: localeParam } = await params
+  const locale = localeParam as Locale
   const t = await getTranslations({ locale })
 
   return {

@@ -100,7 +100,6 @@ export function VoucherListContainer({
     },
   })
 
-
   // Event handlers
   const handleViewVoucher = (id: string) => {
     const path =
@@ -125,7 +124,6 @@ export function VoucherListContainer({
   const handlePublishVoucher = (id: string) => {
     publishMutation.mutate(id)
   }
-
 
   const handleCreateVoucher = () => {
     const path =

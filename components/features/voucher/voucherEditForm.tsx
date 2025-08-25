@@ -21,7 +21,11 @@ import { Controller, useForm } from 'react-hook-form'
 import { useTranslations } from 'next-intl'
 import dayjs from 'dayjs'
 import { Currency } from '@merodami/pika-types'
-import { VoucherDiscountType, VoucherState, UserRole } from '@/lib/api/orval-client'
+import {
+  VoucherDiscountType,
+  VoucherState,
+  UserRole,
+} from '@/lib/api/orval-client'
 
 import { VoucherPreview } from './voucherPreview'
 import { useVoucherMutations } from '@/hooks/api/vouchers/useVoucherMutations'

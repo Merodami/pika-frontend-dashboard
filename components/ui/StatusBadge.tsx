@@ -11,28 +11,40 @@ interface StatusBadgeProps {
 /**
  * Reusable status badge component for consistent status display across entities
  */
-export function StatusBadge({ 
+export function StatusBadge({
   entityType = 'business',
   status,
   verified,
-  approved
+  approved,
 }: StatusBadgeProps) {
   const t = useTranslations()
-  
+
   // Business status logic
   if (entityType === 'business') {
     if (approved && verified) {
-      return <Badge status="success" text={t('businesses.status.verifiedApproved')} />
+      return (
+        <Badge
+          status="success"
+          text={t('businesses.status.verifiedApproved')}
+        />
+      )
     }
     if (verified && !approved) {
-      return <Badge status="warning" text={t('businesses.status.verifiedPending')} />
+      return (
+        <Badge status="warning" text={t('businesses.status.verifiedPending')} />
+      )
     }
     if (approved && !verified) {
-      return <Badge status="warning" text={t('businesses.status.approvedNotVerified')} />
+      return (
+        <Badge
+          status="warning"
+          text={t('businesses.status.approvedNotVerified')}
+        />
+      )
     }
     return <Badge status="default" text={t('businesses.status.pending')} />
   }
-  
+
   // User status logic
   if (entityType === 'user') {
     if (status === 'active') {
@@ -46,7 +58,7 @@ export function StatusBadge({
     }
     return <Badge status="default" text={t('user.status.unconfirmed')} />
   }
-  
+
   // Voucher status logic
   if (entityType === 'voucher') {
     if (status === 'published') {
@@ -60,7 +72,7 @@ export function StatusBadge({
     }
     return <Badge status="warning" text={t('voucher.status.suspended')} />
   }
-  
+
   // Default fallback
   return <Badge status="default" text={status || t('common.na')} />
 }
