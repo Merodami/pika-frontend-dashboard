@@ -43,7 +43,7 @@ export const config = {
   matcher: [
     /*
      * Match all request paths except:
-     * - api routes
+     * - /api routes (API routes should not have locale prefix)
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico, sitemap.xml, robots.txt (metadata files)
@@ -53,6 +53,6 @@ export const config = {
      * but with locales, paths like /es/_next/static still match
      * the pattern, so we need the additional check in the middleware
      */
-    '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|public).*)',
+    '/((?!api/|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|public).*)',
   ],
 }
