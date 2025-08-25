@@ -13,7 +13,7 @@ import type { Locale } from '@/i18n/config'
 export const dynamic = 'force-dynamic'
 
 interface AdminDashboardPageProps {
-  params: Promise<{ locale: Locale }>
+  params: Promise<{ locale: string }>
 }
 
 export default async function AdminDashboardPage({
@@ -21,26 +21,27 @@ export default async function AdminDashboardPage({
 }: AdminDashboardPageProps) {
   const user = await requireAdmin()
   const { locale } = await params
-  const t = await getTranslations({ locale })
+  const typedLocale = locale as Locale
+  const t = await getTranslations({ locale: typedLocale })
 
   return (
     <DashboardPageLayout
       title={t('dashboard.welcome', { name: user.firstName })}
       subtitle={t('dashboard.admin.subtitle')}
-      metricsSection={<AdminDashboardMetrics locale={locale} />}
+      metricsSection={<AdminDashboardMetrics locale={typedLocale} />}
     >
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Recent Activity */}
         <div className="lg:col-span-2">
           <Suspense fallback={<LoadingSkeleton />}>
-            <RecentActivityFeed locale={locale} />
+            <RecentActivityFeed locale={typedLocale} />
           </Suspense>
         </div>
 
         {/* System Health */}
         <div>
           <Suspense fallback={<LoadingSkeleton />}>
-            <SystemHealthStatus locale={locale} />
+            <SystemHealthStatus locale={typedLocale} />
           </Suspense>
         </div>
       </div>

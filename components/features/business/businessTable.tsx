@@ -45,7 +45,6 @@ export function BusinessTable({
 }: BusinessTableProps) {
   const t = useTranslations()
 
-
   const getActions = (
     business: GetAdminBusinessList200DataItem
   ): MenuProps['items'] => [

@@ -968,11 +968,25 @@
       "edit": "Edit User",
       "delete": "Delete User",
       "sendEmail": "Send Email",
-      "create": "Create User"
+      "create": "Create User",
+      "activate": "Activate User",
+      "suspend": "Suspend User",
+      "ban": "Ban User",
+      "unban": "Unban User",
+      "verifyEmail": "Verify Email",
+      "verifyPhone": "Verify Phone",
+      "verifyAccount": "Verify Account",
+      "resendEmailVerification": "Resend Email Verification",
+      "resendPhoneVerification": "Resend Phone Verification"
     },
     "message": {
       "deleteSuccess": "User deleted successfully",
-      "bulkDeleteSuccess": "Users deleted successfully"
+      "bulkDeleteSuccess": "Users deleted successfully",
+      "statusUpdateSuccess": "User status updated successfully",
+      "banSuccess": "User banned successfully",
+      "unbanSuccess": "User unbanned successfully",
+      "verifySuccess": "User verification completed successfully",
+      "resendVerificationSuccess": "Verification resent successfully"
     }
   },
   "filter": {

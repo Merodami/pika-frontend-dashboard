@@ -14,7 +14,17 @@ import {
 } from '@/components/ui/DataGrid/actions/BulkActions'
 import { ContextActionBar } from '@/components/ui/ContextActionBar'
 import type { ActionItem } from '@/components/ui/ContextActionBar'
-import { getAdminUserList, deleteAdminUser } from '@/lib/api/orval-client'
+import {
+  getAdminUserList,
+  deleteAdminUser,
+  updateAdminUserStatus,
+  banAdminUser,
+  unbanAdminUser,
+  verifyAdminUser,
+  resendAdminUserVerification,
+  UpdateAdminUserStatusBodyStatus,
+  VerifyAdminUserBodyType,
+} from '@/lib/api/orval-client'
 import type { Locale } from '@/i18n/config'
 import { useServerDataTable } from '@/hooks/useDataTable'
 
@@ -79,6 +89,115 @@ export function UserListContainer({ locale }: UserListContainerProps) {
     },
   })
 
+  // Update user status mutation
+  const updateStatusMutation = useMutation({
+    mutationFn: ({
+      id,
+      status,
+      reason,
+      duration,
+      notifyUser,
+    }: {
+      id: string
+      status: UpdateAdminUserStatusBodyStatus
+      reason?: string
+      duration?: number
+      notifyUser?: boolean
+    }) => updateAdminUserStatus(id, { status, reason, duration, notifyUser }),
+    onSuccess: () => {
+      message.success(t('user.message.statusUpdateSuccess'))
+      queryClient.invalidateQueries({ queryKey: ['admin-users'] })
+    },
+    onError: () => {
+      message.error(t('common.message.errorOccurred'))
+    },
+  })
+
+  // Ban user mutation
+  const banUserMutation = useMutation({
+    mutationFn: ({
+      id,
+      reason,
+      duration,
+      notifyUser,
+    }: {
+      id: string
+      reason?: string
+      duration?: number
+      notifyUser?: boolean
+    }) => banAdminUser(id, { reason, duration, notifyUser }),
+    onSuccess: () => {
+      message.success(t('user.message.banSuccess'))
+      queryClient.invalidateQueries({ queryKey: ['admin-users'] })
+    },
+    onError: () => {
+      message.error(t('common.message.errorOccurred'))
+    },
+  })
+
+  // Unban user mutation
+  const unbanUserMutation = useMutation({
+    mutationFn: ({
+      id,
+      reason,
+      notifyUser,
+    }: {
+      id: string
+      reason?: string
+      notifyUser?: boolean
+    }) => unbanAdminUser(id, { reason, notifyUser }),
+    onSuccess: () => {
+      message.success(t('user.message.unbanSuccess'))
+      queryClient.invalidateQueries({ queryKey: ['admin-users'] })
+    },
+    onError: () => {
+      message.error(t('common.message.errorOccurred'))
+    },
+  })
+
+  // Verify user mutation
+  const verifyUserMutation = useMutation({
+    mutationFn: ({
+      type,
+      userId,
+      email,
+      phoneNumber,
+    }: {
+      type: VerifyAdminUserBodyType
+      userId?: string
+      email?: string
+      phoneNumber?: string
+    }) => verifyAdminUser({ type, userId, email, phoneNumber }),
+    onSuccess: () => {
+      message.success(t('user.message.verifySuccess'))
+      queryClient.invalidateQueries({ queryKey: ['admin-users'] })
+    },
+    onError: () => {
+      message.error(t('common.message.errorOccurred'))
+    },
+  })
+
+  // Resend verification mutation
+  const resendVerificationMutation = useMutation({
+    mutationFn: ({
+      type,
+      userId,
+      email,
+      phoneNumber,
+    }: {
+      type: VerifyAdminUserBodyType
+      userId?: string
+      email?: string
+      phoneNumber?: string
+    }) => resendAdminUserVerification({ type, userId, email, phoneNumber }),
+    onSuccess: () => {
+      message.success(t('user.message.resendVerificationSuccess'))
+    },
+    onError: () => {
+      message.error(t('common.message.errorOccurred'))
+    },
+  })
+
   // Event handlers
   const handleViewUser = (id: string) => {
     router.push(`/${locale}/admin/users/${id}`)
@@ -95,6 +214,83 @@ export function UserListContainer({ locale }: UserListContainerProps) {
   const handleSendEmail = () => {
     // TODO: Implement email functionality
     message.info(t('common.message.comingSoon'))
+  }
+
+  const handleActivateUser = (id: string) => {
+    updateStatusMutation.mutate({
+      id,
+      status: UpdateAdminUserStatusBodyStatus.active,
+      reason: 'Activated by admin',
+      notifyUser: true,
+    })
+  }
+
+  const handleSuspendUser = (id: string) => {
+    updateStatusMutation.mutate({
+      id,
+      status: UpdateAdminUserStatusBodyStatus.suspended,
+      reason: 'Suspended by admin',
+      duration: 30,
+      notifyUser: true,
+    })
+  }
+
+  const handleBanUser = (id: string) => {
+    banUserMutation.mutate({
+      id,
+      reason: 'Banned by admin',
+      notifyUser: true,
+    })
+  }
+
+  const handleUnbanUser = (id: string) => {
+    unbanUserMutation.mutate({
+      id,
+      reason: 'Unbanned by admin',
+      notifyUser: true,
+    })
+  }
+
+  const handleVerifyUserEmail = (userId: string, email: string) => {
+    verifyUserMutation.mutate({
+      type: VerifyAdminUserBodyType.email,
+      userId,
+      email,
+    })
+  }
+
+  const handleVerifyUserPhone = (userId: string, phoneNumber: string) => {
+    verifyUserMutation.mutate({
+      type: VerifyAdminUserBodyType.phone,
+      userId,
+      phoneNumber,
+    })
+  }
+
+  const handleVerifyUserAccount = (userId: string) => {
+    verifyUserMutation.mutate({
+      type: VerifyAdminUserBodyType.accountConfirmation,
+      userId,
+    })
+  }
+
+  const handleResendVerificationEmail = (userId: string, email: string) => {
+    resendVerificationMutation.mutate({
+      type: VerifyAdminUserBodyType.email,
+      userId,
+      email,
+    })
+  }
+
+  const handleResendVerificationPhone = (
+    userId: string,
+    phoneNumber: string
+  ) => {
+    resendVerificationMutation.mutate({
+      type: VerifyAdminUserBodyType.phone,
+      userId,
+      phoneNumber,
+    })
   }
 
   const handleAddUser = () => {
@@ -160,6 +356,15 @@ export function UserListContainer({ locale }: UserListContainerProps) {
           onEdit={handleEditUser}
           onDelete={handleDeleteUser}
           onSendEmail={handleSendEmail}
+          onActivate={handleActivateUser}
+          onSuspend={handleSuspendUser}
+          onBan={handleBanUser}
+          onUnban={handleUnbanUser}
+          onVerifyEmail={handleVerifyUserEmail}
+          onVerifyPhone={handleVerifyUserPhone}
+          onVerifyAccount={handleVerifyUserAccount}
+          onResendEmailVerification={handleResendVerificationEmail}
+          onResendPhoneVerification={handleResendVerificationPhone}
           onQueryChange={setGridQueryParams}
         />
       </div>

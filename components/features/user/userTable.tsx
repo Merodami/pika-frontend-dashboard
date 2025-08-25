@@ -10,6 +10,11 @@ import {
   Shield,
   Mail,
   Phone,
+  CheckCircle,
+  Ban,
+  UserCheck,
+  RefreshCw,
+  AlertTriangle,
 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import type { ColumnDef } from '@tanstack/react-table'
@@ -28,6 +33,15 @@ interface UserTableProps {
   onEdit: (id: string) => void
   onDelete: (id: string) => void
   onSendEmail: () => void
+  onActivate: (id: string) => void
+  onSuspend: (id: string) => void
+  onBan: (id: string) => void
+  onUnban: (id: string) => void
+  onVerifyEmail: (userId: string, email: string) => void
+  onVerifyPhone: (userId: string, phoneNumber: string) => void
+  onVerifyAccount: (userId: string) => void
+  onResendEmailVerification: (userId: string, email: string) => void
+  onResendPhoneVerification: (userId: string, phoneNumber: string) => void
   onQueryChange?: (params: any) => void
 }
 
@@ -39,6 +53,15 @@ export function UserTable({
   onEdit,
   onDelete,
   onSendEmail,
+  onActivate,
+  onSuspend,
+  onBan,
+  onUnban,
+  onVerifyEmail,
+  onVerifyPhone,
+  onVerifyAccount,
+  onResendEmailVerification,
+  onResendPhoneVerification,
   onQueryChange,
 }: UserTableProps) {
   const t = useTranslations()
@@ -89,36 +112,144 @@ export function UserTable({
 
   const getActions = (
     user: GetAdminUserList200DataItem
-  ): MenuProps['items'] => [
-    {
-      key: 'view',
-      label: t('user.action.view'),
-      icon: <Eye className="w-4 h-4" />,
-      onClick: () => onView(user.id),
-    },
-    {
-      key: 'edit',
-      label: t('user.action.edit'),
-      icon: <Edit className="w-4 h-4" />,
-      onClick: () => onEdit(user.id),
-    },
-    {
-      key: 'email',
-      label: t('user.action.sendEmail'),
-      icon: <Mail className="w-4 h-4" />,
-      onClick: () => onSendEmail(),
-    },
-    {
-      type: 'divider',
-    },
-    {
-      key: 'delete',
-      label: t('user.action.delete'),
-      icon: <Trash2 className="w-4 h-4" />,
-      danger: true,
-      onClick: () => onDelete(user.id),
-    },
-  ]
+  ): MenuProps['items'] => {
+    const actions: MenuProps['items'] = [
+      {
+        key: 'view',
+        label: t('user.action.view'),
+        icon: <Eye className="w-4 h-4" />,
+        onClick: () => onView(user.id),
+      },
+      {
+        key: 'edit',
+        label: t('user.action.edit'),
+        icon: <Edit className="w-4 h-4" />,
+        onClick: () => onEdit(user.id),
+      },
+      {
+        key: 'email',
+        label: t('user.action.sendEmail'),
+        icon: <Mail className="w-4 h-4" />,
+        onClick: () => onSendEmail(),
+      },
+      {
+        type: 'divider',
+      },
+    ]
+
+    // Status management actions
+    const statusActions: MenuProps['items'] = []
+
+    if (
+      user.status === UserStatus.suspended ||
+      user.status === UserStatus.unconfirmed
+    ) {
+      statusActions.push({
+        key: 'activate',
+        label: t('user.action.activate'),
+        icon: <CheckCircle className="w-4 h-4" />,
+        onClick: () => onActivate(user.id),
+      })
+    }
+
+    if (user.status === UserStatus.active) {
+      statusActions.push({
+        key: 'suspend',
+        label: t('user.action.suspend'),
+        icon: <AlertTriangle className="w-4 h-4" />,
+        onClick: () => onSuspend(user.id),
+      })
+    }
+
+    if (user.status !== UserStatus.banned) {
+      statusActions.push({
+        key: 'ban',
+        label: t('user.action.ban'),
+        icon: <Ban className="w-4 h-4" />,
+        danger: true,
+        onClick: () => onBan(user.id),
+      })
+    }
+
+    if (user.status === UserStatus.banned) {
+      statusActions.push({
+        key: 'unban',
+        label: t('user.action.unban'),
+        icon: <UserCheck className="w-4 h-4" />,
+        onClick: () => onUnban(user.id),
+      })
+    }
+
+    // Verification actions
+    const verificationActions: MenuProps['items'] = []
+
+    if (!user.emailVerified && user.email) {
+      verificationActions.push({
+        key: 'verifyEmail',
+        label: t('user.action.verifyEmail'),
+        icon: <Mail className="w-4 h-4" />,
+        onClick: () => onVerifyEmail(user.id, user.email),
+      })
+      verificationActions.push({
+        key: 'resendEmailVerification',
+        label: t('user.action.resendEmailVerification'),
+        icon: <RefreshCw className="w-4 h-4" />,
+        onClick: () => onResendEmailVerification(user.id, user.email),
+      })
+    }
+
+    if (!user.phoneVerified && user.phoneNumber) {
+      verificationActions.push({
+        key: 'verifyPhone',
+        label: t('user.action.verifyPhone'),
+        icon: <Phone className="w-4 h-4" />,
+        onClick: () => onVerifyPhone(user.id, user.phoneNumber || ''),
+      })
+      verificationActions.push({
+        key: 'resendPhoneVerification',
+        label: t('user.action.resendPhoneVerification'),
+        icon: <RefreshCw className="w-4 h-4" />,
+        onClick: () =>
+          onResendPhoneVerification(user.id, user.phoneNumber || ''),
+      })
+    }
+
+    if (user.status === UserStatus.unconfirmed) {
+      verificationActions.push({
+        key: 'verifyAccount',
+        label: t('user.action.verifyAccount'),
+        icon: <UserCheck className="w-4 h-4" />,
+        onClick: () => onVerifyAccount(user.id),
+      })
+    }
+
+    // Add status actions if any
+    if (statusActions.length > 0) {
+      actions.push(...statusActions)
+    }
+
+    // Add verification actions if any
+    if (verificationActions.length > 0) {
+      if (statusActions.length > 0) {
+        actions.push({ type: 'divider' })
+      }
+      actions.push(...verificationActions)
+    }
+
+    // Add delete action
+    actions.push(
+      { type: 'divider' },
+      {
+        key: 'delete',
+        label: t('user.action.delete'),
+        icon: <Trash2 className="w-4 h-4" />,
+        danger: true,
+        onClick: () => onDelete(user.id),
+      }
+    )
+
+    return actions
+  }
 
   const columns: ColumnDef<GetAdminUserList200DataItem>[] = [
     {

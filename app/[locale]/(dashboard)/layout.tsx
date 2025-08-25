@@ -15,7 +15,9 @@ export const dynamic = 'force-dynamic'
 
 interface DashboardLayoutProps {
   children: React.ReactNode
-  params: Promise<{ locale: Locale }>
+  // Next.js 15 requires string type for dynamic route params
+  // We validate and cast to Locale type inside the component
+  params: Promise<{ locale: string }>
 }
 
 export default async function DashboardLayout({
@@ -25,7 +27,12 @@ export default async function DashboardLayout({
   // Ensure user has dashboard access (admin or business only)
   const user = await requireDashboardAccess()
   const { locale } = await params
-  const t = await getTranslations({ locale, namespace: 'navigation' })
+  // Type assertion after validation - locale is validated in parent layout
+  const typedLocale = locale as Locale
+  const t = await getTranslations({
+    locale: typedLocale,
+    namespace: 'navigation',
+  })
 
   // Prepare nav items based on user role
   const navItems =
@@ -34,26 +41,30 @@ export default async function DashboardLayout({
           // Main Section
           {
             label: t('dashboard'),
-            href: `/${locale}/admin`,
+            href: `/${typedLocale}/admin`,
             icon: 'LayoutDashboard',
           },
-          { label: t('users'), href: `/${locale}/admin/users`, icon: 'Users' },
+          {
+            label: t('users'),
+            href: `/${typedLocale}/admin/users`,
+            icon: 'Users',
+          },
           {
             label: t('businesses'),
-            href: `/${locale}/admin/businesses`,
+            href: `/${typedLocale}/admin/businesses`,
             icon: 'Building2',
           },
 
           // Management Section
           {
             label: t('vouchers'),
-            href: `/${locale}/admin/vouchers`,
+            href: `/${typedLocale}/admin/vouchers`,
             icon: 'Ticket',
             section: 'Management',
           },
           {
             label: t('voucherBooks'),
-            href: `/${locale}/admin/voucher-books`,
+            href: `/${typedLocale}/admin/voucher-books`,
             icon: 'BookOpen',
             section: 'Management',
           },
@@ -61,13 +72,13 @@ export default async function DashboardLayout({
           // Analytics Section
           {
             label: t('analytics'),
-            href: `/${locale}/admin/analytics`,
+            href: `/${typedLocale}/admin/analytics`,
             icon: 'BarChart3',
             section: 'Analytics',
           },
           {
             label: t('reports'),
-            href: `/${locale}/admin/reports`,
+            href: `/${typedLocale}/admin/reports`,
             icon: 'FileText',
             section: 'Analytics',
           },
@@ -75,19 +86,19 @@ export default async function DashboardLayout({
           // System Section
           {
             label: t('payments'),
-            href: `/${locale}/admin/payments`,
+            href: `/${typedLocale}/admin/payments`,
             icon: 'CreditCard',
             section: 'System',
           },
           {
             label: t('support'),
-            href: `/${locale}/admin/support`,
+            href: `/${typedLocale}/admin/support`,
             icon: 'MessageSquare',
             section: 'System',
           },
           {
             label: t('settings'),
-            href: `/${locale}/admin/settings`,
+            href: `/${typedLocale}/admin/settings`,
             icon: 'Settings',
             section: 'System',
           },
@@ -96,32 +107,32 @@ export default async function DashboardLayout({
           // Business Owner Items
           {
             label: t('dashboard'),
-            href: `/${locale}/business`,
+            href: `/${typedLocale}/business`,
             icon: 'LayoutDashboard',
           },
           {
             label: t('myBusiness'),
-            href: `/${locale}/business/profile`,
+            href: `/${typedLocale}/business/profile`,
             icon: 'Store',
           },
           {
             label: t('vouchers'),
-            href: `/${locale}/business/vouchers`,
+            href: `/${typedLocale}/business/vouchers`,
             icon: 'Ticket',
           },
           {
             label: t('schedule'),
-            href: `/${locale}/business/schedule`,
+            href: `/${typedLocale}/business/schedule`,
             icon: 'Calendar',
           },
           {
             label: t('analytics'),
-            href: `/${locale}/business/analytics`,
+            href: `/${typedLocale}/business/analytics`,
             icon: 'ChartColumn',
           },
           {
             label: t('settings'),
-            href: `/${locale}/business/settings`,
+            href: `/${typedLocale}/business/settings`,
             icon: 'Settings',
           },
         ]
@@ -137,7 +148,7 @@ export default async function DashboardLayout({
     />
   )
 
-  const headerContent = <DashboardHeader user={user} locale={locale} />
+  const headerContent = <DashboardHeader user={user} locale={typedLocale} />
 
   return (
     <ResponsiveDashboardWrapper sidebar={sidebarContent} header={headerContent}>

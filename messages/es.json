@@ -957,11 +957,25 @@
       "edit": "Editar Usuario",
       "delete": "Eliminar Usuario",
       "sendEmail": "Enviar Correo",
-      "create": "Crear Usuario"
+      "create": "Crear Usuario",
+      "activate": "Activar Usuario",
+      "suspend": "Suspender Usuario",
+      "ban": "Banear Usuario",
+      "unban": "Desbanear Usuario",
+      "verifyEmail": "Verificar Email",
+      "verifyPhone": "Verificar Teléfono",
+      "verifyAccount": "Verificar Cuenta",
+      "resendEmailVerification": "Reenviar Verificación de Email",
+      "resendPhoneVerification": "Reenviar Verificación de Teléfono"
     },
     "message": {
       "deleteSuccess": "Usuario eliminado exitosamente",
-      "bulkDeleteSuccess": "Usuarios eliminados exitosamente"
+      "bulkDeleteSuccess": "Usuarios eliminados exitosamente",
+      "statusUpdateSuccess": "Estado del usuario actualizado exitosamente",
+      "banSuccess": "Usuario baneado exitosamente",
+      "unbanSuccess": "Usuario desbaneado exitosamente",
+      "verifySuccess": "Verificación del usuario completada exitosamente",
+      "resendVerificationSuccess": "Verificación reenviada exitosamente"
     }
   },
   "filter": {

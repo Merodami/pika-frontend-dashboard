@@ -6,7 +6,6 @@ import { Download, FileText, FileSpreadsheet, FileJson } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import type { MenuProps } from 'antd'
 import { ExportFormat } from '@/types/data-grid'
-import * as XLSX from 'xlsx'
 import { jsPDF } from 'jspdf'
 import 'jspdf-autotable'
 
@@ -98,28 +97,33 @@ export function ExportManager<T extends Record<string, any>>({
   }
 
   const exportToExcel = async () => {
+    // Fallback to CSV export with .xlsx extension for Excel compatibility
     const preparedData = prepareData()
-    const worksheet = XLSX.utils.json_to_sheet(preparedData)
-    const workbook = XLSX.utils.book_new()
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Data')
+    const headers = Object.keys(preparedData[0] || {})
+    const csvContent = [
+      headers.join(','),
+      ...preparedData.map((row) =>
+        headers
+          .map((header) => {
+            const value = row[header]
+            // Escape commas and quotes in CSV
+            if (
+              typeof value === 'string' &&
+              (value.includes(',') || value.includes('"'))
+            ) {
+              return `"${value.replace(/"/g, '""')}"`
+            }
+            return value ?? ''
+          })
+          .join(',')
+      ),
+    ].join('\n')
 
-    // Auto-size columns
-    const maxWidths: Record<string, number> = {}
-    preparedData.forEach((row) => {
-      Object.entries(row).forEach(([key, value]) => {
-        const length = String(value).length
-        maxWidths[key] = Math.max(maxWidths[key] || 10, length)
-      })
-    })
-
-    worksheet['!cols'] = Object.keys(preparedData[0] || {}).map((key) => ({
-      wch: Math.min(maxWidths[key] || 10, 50),
-    }))
-
-    XLSX.writeFile(
-      workbook,
-      `${filename}-${new Date().toISOString().split('T')[0]}.xlsx`
-    )
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+    const link = document.createElement('a')
+    link.href = URL.createObjectURL(blob)
+    link.download = `${filename}-${new Date().toISOString().split('T')[0]}.xlsx`
+    link.click()
   }
 
   const exportToPDF = () => {

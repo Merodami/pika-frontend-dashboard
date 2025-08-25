@@ -337,11 +337,25 @@
       "edit": "Moambue Puruhára",
       "delete": "Mbogue Puruhára",
       "sendEmail": "Mondo Ñanduti Veve",
-      "create": "Japo Puruhára"
+      "create": "Japo Puruhára",
+      "activate": "Myandy Puruhára",
+      "suspend": "Joko Puruhára",
+      "ban": "Ñani Puruhára",
+      "unban": "Mboguevi Ñani Puruhára",
+      "verifyEmail": "Jehechajey Ñanduti Veve",
+      "verifyPhone": "Jehechajey Pumbyry",
+      "verifyAccount": "Jehechajey Cuenta",
+      "resendEmailVerification": "Mondo Jey Ñanduti Veve Jehechajeý",
+      "resendPhoneVerification": "Mondo Jey Pumbyry Jehechajeý"
     },
     "message": {
       "deleteSuccess": "Puruhára oñembogue porã",
-      "bulkDeleteSuccess": "Puruhára oñembogue porã"
+      "bulkDeleteSuccess": "Puruhára oñembogue porã",
+      "statusUpdateSuccess": "Puruhára rekove oñembopyahu porã",
+      "banSuccess": "Puruhára oñañani porã",
+      "unbanSuccess": "Puruhára oñemboguevi ñani porã",
+      "verifySuccess": "Puruhára jehechajeý oñemba'apo porã",
+      "resendVerificationSuccess": "Jehechajeý oñemondo jey porã"
     }
   },
   "filter": {

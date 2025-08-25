@@ -13,7 +13,7 @@ import type { Locale } from '@/i18n/config'
 export const dynamic = 'force-dynamic'
 
 interface BusinessDashboardPageProps {
-  params: Promise<{ locale: Locale }>
+  params: Promise<{ locale: string }>
 }
 
 export default async function BusinessDashboardPage({
@@ -23,20 +23,24 @@ export default async function BusinessDashboardPage({
   // TODO: Fetch businessId from business service
   const businessId = 'placeholder-business-id'
   const { locale } = await params
-  const t = await getTranslations({ locale })
+  const typedLocale = locale as Locale
+  const t = await getTranslations({ locale: typedLocale })
 
   return (
     <DashboardPageLayout
       title={t('dashboard.welcome', { name: user.firstName })}
       subtitle={t('dashboard.business.subtitle')}
       metricsSection={
-        <BusinessDashboardMetrics businessId={businessId} locale={locale} />
+        <BusinessDashboardMetrics
+          businessId={businessId}
+          locale={typedLocale}
+        />
       }
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Voucher Performance */}
         <Suspense fallback={<LoadingSkeleton />}>
-          <VoucherPerformance businessId={businessId} locale={locale} />
+          <VoucherPerformance businessId={businessId} locale={typedLocale} />
         </Suspense>
 
         {/* Recent Customers */}

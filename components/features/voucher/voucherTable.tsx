@@ -188,17 +188,16 @@ export function VoucherTable({
       accessorKey: 'usage',
       header: t('voucher.field.usage'),
       cell: ({ row }) => {
-        const redemptionCount = Array.isArray(row.original.redemptions) 
-          ? row.original.redemptions.length 
-          : (row.original.redemptions || 0)
+        const redemptionCount = Array.isArray(row.original.redemptions)
+          ? row.original.redemptions.length
+          : row.original.redemptions || 0
         const usagePercent = row.original.maxRedemptions
           ? (redemptionCount / row.original.maxRedemptions) * 100
           : 0
         return (
           <div className="space-y-1">
             <div className="text-sm">
-              {redemptionCount} /{' '}
-              {row.original.maxRedemptions || '∞'}
+              {redemptionCount} / {row.original.maxRedemptions || '∞'}
             </div>
             {row.original.maxRedemptions && (
               <Progress

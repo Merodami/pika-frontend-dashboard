@@ -6,6 +6,8 @@ import { locales, isValidLocale, type Locale } from '@/i18n/config'
 
 interface LocaleLayoutProps {
   children: React.ReactNode
+  // Next.js 15 requires string type for dynamic route params
+  // We validate with isValidLocale and narrow to Locale type
   params: Promise<{ locale: string }>
 }
 
