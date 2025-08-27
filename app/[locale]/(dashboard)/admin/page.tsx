@@ -27,28 +27,24 @@ export default async function AdminDashboardPage({
     <DashboardPageLayout
       title={t('dashboard.welcome', { name: user.firstName })}
       subtitle={t('dashboard.admin.subtitle')}
+      metricsSection={<AdminDashboardMetricsModern />}
     >
       <div className="space-y-6">
-        {/* Modern Metrics Cards */}
-        <Suspense fallback={<LoadingSkeleton />}>
-          <AdminDashboardMetricsModern />
-        </Suspense>
-
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Recent Activity */}
-        <div className="lg:col-span-2">
-          <Suspense fallback={<LoadingSkeleton />}>
-            <RecentActivityFeed locale={locale} />
-          </Suspense>
-        </div>
+          {/* Recent Activity */}
+          <div className="lg:col-span-2">
+            <Suspense fallback={<LoadingSkeleton />}>
+              <RecentActivityFeed locale={locale} />
+            </Suspense>
+          </div>
 
-        {/* System Health */}
-        <div>
-          <Suspense fallback={<LoadingSkeleton />}>
-            <SystemHealthStatus locale={locale} />
-          </Suspense>
+          {/* System Health */}
+          <div>
+            <Suspense fallback={<LoadingSkeleton />}>
+              <SystemHealthStatus locale={locale} />
+            </Suspense>
+          </div>
         </div>
-      </div>
       </div>
     </DashboardPageLayout>
   )

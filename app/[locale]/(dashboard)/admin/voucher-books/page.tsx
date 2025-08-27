@@ -27,7 +27,6 @@ export async function generateMetadata({
 export default async function AdminVoucherBooksPage({ params }: PageProps) {
   const { locale } = await params
   const user = await getCurrentUser()
-  const t = await getTranslations({ locale, namespace: 'voucherBooks' })
 
   if (!user || user.role !== UserRole.ADMIN) {
     return null // Auth middleware should handle this

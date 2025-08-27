@@ -37,7 +37,10 @@ export default async function BusinessesPage({
     <>
       {/* Full-width section below header */}
       <div className="-my-6 -mx-4 sm:-mx-6 lg:-mx-8">
-        <BusinessListContainer userRole={UserRole.ADMIN} locale={locale as any} />
+        <BusinessListContainer
+          userRole={UserRole.ADMIN}
+          locale={locale as any}
+        />
       </div>
     </>
   )

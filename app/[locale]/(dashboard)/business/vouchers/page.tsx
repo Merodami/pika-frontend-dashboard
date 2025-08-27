@@ -28,7 +28,6 @@ export async function generateMetadata({
 export default async function BusinessVouchersPage({ params }: PageProps) {
   const { locale } = await params
   const user = await getCurrentUser()
-  const t = await getTranslations({ locale, namespace: 'vouchers' })
 
   if (!user || user.role !== UserRole.BUSINESS) {
     redirect(`/${locale}/login`)

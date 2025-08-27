@@ -154,7 +154,7 @@
     "analytics": {
       "subtitle": "View comprehensive analytics and insights",
       "realtimeStats": "Real-time Statistics",
-      "voucherPerformance": "Voucher Performance", 
+      "voucherPerformance": "Voucher Performance",
       "periodComparison": "Period Comparison",
       "topCategories": "Top Categories",
       "thisWeek": "This Week",
@@ -1059,6 +1059,11 @@
       "admin": "Admin",
       "business": "Business",
       "customer": "Customer"
+    },
+    "menu": {
+      "profile": "Profile",
+      "settings": "Settings",
+      "logout": "Log out"
     },
     "action": {
       "view": "View User",

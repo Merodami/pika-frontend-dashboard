@@ -20,9 +20,9 @@ export function BusinessDashboardMetricsModern({
   const t = useTranslations('dashboard.metrics')
 
   // Fetch business-specific metrics
-  // In production, these would come from the API
+  // In production, these would come from the API using businessId
   const metrics = {
-    activeVouchers: 8,
+    activeVouchers: businessId ? 8 : 0,
     totalRedemptions: 234,
     totalScans: 567,
     uniqueCustomers: 89,

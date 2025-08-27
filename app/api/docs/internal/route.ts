@@ -11,7 +11,7 @@ const config = {
 
 const scalarHandler = ApiReference(config)
 
-export const GET = isProduction 
+export const GET = isProduction
   ? () => {
       return new Response(null, {
         status: 302,

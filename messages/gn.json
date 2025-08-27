@@ -1008,6 +1008,11 @@
       "user": "Puruhára",
       "customer": "Joguarã"
     },
+    "menu": {
+      "profile": "Marandu Personal",
+      "settings": "Ñemboheko",
+      "logout": "Ñesẽ"
+    },
     "languages": {
       "en": "Inglés",
       "es": "Español",

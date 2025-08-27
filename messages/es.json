@@ -1049,6 +1049,11 @@
       "business": "Negocio",
       "customer": "Cliente"
     },
+    "menu": {
+      "profile": "Perfil",
+      "settings": "Configuración",
+      "logout": "Cerrar sesión"
+    },
     "action": {
       "view": "Ver Usuario",
       "edit": "Editar Usuario",
