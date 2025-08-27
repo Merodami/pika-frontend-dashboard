@@ -71,6 +71,24 @@
       "loading": "Henyhẽ..."
     }
   },
+  "actions": {
+    "view": "Hecha",
+    "edit": "Moambue",
+    "delete": "Mboguete",
+    "create": "Moheñói",
+    "update": "Mbopyahu",
+    "cancel": "Jeheja",
+    "save": "Ñongatu",
+    "download": "Mboguejy",
+    "downloadPdf": "Mboguejy PDF",
+    "export": "Gueraha",
+    "import": "Gueru",
+    "duplicate": "Mokõi",
+    "archive": "Ñongatu",
+    "restore": "Mbojevy",
+    "publish": "Moherakuã",
+    "unpublish": "Mbogue Moherakuã"
+  },
   "users": {
     "title": "Puruhára",
     "subtitle": "Ñangareko puruhára mba'e'aty",
@@ -405,6 +423,30 @@
     "admin": {
       "subtitle": "Ko'ápe oĩ ne plataforma resumen"
     },
+    "business": {
+      "subtitle": "Ko'ápe ojehechauka mba'éicha oiko ne negósio"
+    },
+    "analytics": {
+      "subtitle": "Ehecha jehechaukaha ha marandu opavave",
+      "realtimeStats": "Jehechaukaha Ko'ág̃agua",
+      "voucherPerformance": "Kupón Rembiapo",
+      "periodComparison": "Ára Mbojojaha",
+      "topCategories": "Categoría Iporãvéva",
+      "thisWeek": "Ko Semana",
+      "lastWeek": "Semana Ohasáva",
+      "change": "Ñemoambue",
+      "redemptions": "jepuru",
+      "foodAndDining": "Tembi'u ha Restaurante",
+      "shopping": "Jogua",
+      "entertainment": "Ñembosarái",
+      "activeSessions": "Sesión Hendýva",
+      "activeScans": "Escaneo Hendýva",
+      "uniqueCustomers": "Joguaha Ojuehegua'ỹva",
+      "activeVouchers": "Kupón Hendýva",
+      "inLast24h": "24 aravo ohasa ramópe",
+      "totalRegistered": "opavave oñemboguatapýva",
+      "totalCreated": "opavave ojejapo'akue"
+    },
     "metrics": {
       "totalVouchers": "Kupón Opavave",
       "activeVouchers": "Kupón Hendýva",
@@ -416,6 +458,64 @@
       "redemptions": "Jepuru",
       "views": "Jehecha",
       "conversionRate": "Tasa Conversión"
+    }
+  },
+  "reports": {
+    "subtitle": "Emoheñói ha ehecha marandu tuichavéva negósio rehegua",
+    "quickActions": "Ñemboguata Pya'e",
+    "recentReports": "Marandu Ramovéva",
+    "keyMetricsThisMonth": "Jehechaukaha Iñe'ẽmbyrýva Ko Jasy",
+    "scheduledReports": "Marandu Ojeguatamáva",
+    "metrics": {
+      "generated": "Marandu Ojejapo'akue",
+      "scheduled": "Marandu Ojeguatamáva",
+      "downloads": "Ñemboguejy Opavave",
+      "insights": "Jehechaukaha Iñe'ẽmbyrýva",
+      "totalRevenue": "Jehupytyrã Opavave",
+      "activeVouchers": "Kupón Hendýva",
+      "redemptionRate": "Jepuru Tasa",
+      "newBusinesses": "Negósio Pyahu",
+      "customerSatisfaction": "Joguaha Vy'a"
+    },
+    "types": {
+      "voucherAnalytics": "Kupón Jehechaukaha Marandu",
+      "financialSummary": "Pirapire Ñembyaty",
+      "userActivity": "Puruhára Rembiapo Marandu",
+      "analytics": "Jehechaukaha",
+      "financial": "Pirapire",
+      "activity": "Rembiapo",
+      "business": "Negósio"
+    },
+    "descriptions": {
+      "monthlyPerformance": "Jasy pukukue rembiapo jehecha",
+      "revenueTransactions": "Jehupytyrã ha jepururã marandu",
+      "userEngagement": "Puruhára jeike marandu tuichavéva"
+    },
+    "table": {
+      "name": "Marandu Téra",
+      "type": "Tipo",
+      "generated": "Ojejapo'akue",
+      "status": "Tekove",
+      "actions": "Ñemboguata"
+    },
+    "status": {
+      "completed": "Opámava",
+      "processing": "Oñemboguatahína",
+      "failed": "Ndoikói"
+    },
+    "samples": {
+      "monthlyVoucherPerformance": "Kupón Rembiapo Jasy Pukukue",
+      "quarterlyFinancial": "Pirapire Ñembyaty Q4",
+      "userEngagementAnalysis": "Puruhára Jeike Jehechaukaha",
+      "businessGrowth": "Negósio Ñembotuichave Marandu"
+    },
+    "scheduled": {
+      "weeklyAnalytics": "Jehechaukaha Semana Pukukue",
+      "weeklyAnalyticsTime": "Opaite Lunes 9:00 AM-pe",
+      "monthlyFinancial": "Pirapire Marandu Jasy Pukukue",
+      "monthlyFinancialTime": "Peteĩha ára jasy pukukue 8:00 AM-pe",
+      "quarterlyBusiness": "Negósio Jehechajey Mbohapy Jasy",
+      "quarterlyBusinessTime": "Mbohapy jasy pukukue 5 ára"
     }
   },
   "vouchers": {
@@ -1126,6 +1226,17 @@
     "title": "Kupon Ararendápe",
     "subtitle": "Ñangareko kupon ararendápe rykuéra ha PDF jejapo",
     "description": "Japo ha ñangareko kupon ararendápe aty",
+    "navigation": {
+      "dashboard": "Panel",
+      "voucherBooks": "Kupon Ararendápe"
+    },
+    "common": {
+      "button": {
+        "reset": "Mbojevy",
+        "create": "Moheñói",
+        "createButton": "Moheñói Kupon Ararendápe"
+      }
+    },
     "totalBooks": "Opaite {count} kupon ararendápe",
     "searchPlaceholder": "Jeheka kupon ararendápe...",
     "filterByStatus": "Mbogua teko rupi",
@@ -1134,6 +1245,11 @@
     "list": {
       "title": "Opaite Kupon Ararendápe",
       "subtitle": "Ekundaha ha eñangareko ne kupon ararendápe aty",
+      "searchPlaceholder": "Jeheka kupon ararendápe...",
+      "filterByStatus": "Mbogua teko rupi",
+      "filterByType": "Mbogua tipo rupi",
+      "filterByYear": "Mbogua ary rupi",
+      "createButton": "Moheñói Kupon Ararendápe",
       "table": {
         "columns": {
           "title": "Teratee",
@@ -1256,7 +1372,19 @@
     "create": {
       "title": "Moheñói Kupon Ararendápe",
       "button": "Kupon Ararendápe Pyahu",
-      "subtitle": "Emboheko peteĩ kupon ararendápe aty pyahu"
+      "subtitle": "Emboheko peteĩ kupon ararendápe aty pyahu",
+      "sections": {
+        "basicInfo": "Marandu Añetegua",
+        "configuration": "Ñemboheko",
+        "images": "Ta'anga",
+        "additional": "Mboyve"
+      },
+      "placeholders": {
+        "selectMonth": "Aiporavo jasy",
+        "uploadCover": "Ambohusu ta'anga ñepyrũha",
+        "uploadBack": "Ambohusu ta'anga tapykue"
+      },
+      "submitButton": "Ajapo Ararendápe"
     },
     "edit": {
       "title": "Moambue Kupon Ararendápe",
@@ -1278,7 +1406,16 @@
       "MONTHLY": "Jasýpe",
       "SEASONAL": "Arapeve",
       "ANNUAL": "Aryve",
-      "SPECIAL": "Edición Especial"
+      "SPECIAL": "Edición Especial",
+      "SPECIAL_EDITION": "Edición Especial",
+      "REGIONAL": "Regional",
+      "PROMOTIONAL": "Promocional",
+      "monthly": "Jasýpe",
+      "seasonal": "Arapeve",
+      "annual": "Aryve",
+      "specialEdition": "Edición Especial",
+      "regional": "Regional",
+      "promotional": "Promocional"
     },
     "status": {
       "DRAFT": "Borrador",
@@ -1286,7 +1423,12 @@
       "APPROVED": "Oĩmava",
       "PUBLISHED": "Hesakãmbyre",
       "ARCHIVED": "Oñeñongatúva",
-      "REJECTED": "Ojehejaréiva"
+      "REJECTED": "Ojehejaréiva",
+      "READY_FOR_PRINT": "Mbosako'ípe G̃uarã",
+      "draft": "Borrador",
+      "readyForPrint": "Mbosako'ípe G̃uarã",
+      "published": "Hesakãmbyre",
+      "archived": "Oñeñongatúva"
     },
     "fields": {
       "id": "ID",
@@ -1309,7 +1451,14 @@
       "description": "Ñemombeukuaa",
       "targetAudience": "Henduha Apopyre",
       "notes": "Jehaipy",
-      "metadata": "Marandu Ambue"
+      "metadata": "Marandu Ambue",
+      "cover": "Hovaju",
+      "type": "Tipo",
+      "period": "Ára",
+      "pages": "Kuatiarogue",
+      "distribution": "Ñemosarambi",
+      "actions": "Ñemboguata",
+      "of": "pe"
     },
     "placeholders": {
       "title": "Ehai kupon ararendápe teratee",

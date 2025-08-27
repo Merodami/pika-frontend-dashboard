@@ -38,19 +38,17 @@ export default async function BusinessVouchersPage({ params }: PageProps) {
   const businessId = user.businessId || ''
 
   return (
-    <div className="business-vouchers-page">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold">{t('business.title')}</h1>
-        <p className="text-gray-600">{t('business.subtitle')}</p>
+    <>
+      {/* Full-width section below header */}
+      <div className="-my-6 -mx-4 sm:-mx-6 lg:-mx-8">
+        <Suspense fallback={<LoadingSkeleton />}>
+          <VoucherListContainer
+            userRole={UserRole.BUSINESS}
+            businessId={businessId}
+            locale={locale}
+          />
+        </Suspense>
       </div>
-
-      <Suspense fallback={<LoadingSkeleton />}>
-        <VoucherListContainer
-          userRole={UserRole.BUSINESS}
-          businessId={businessId}
-          locale={locale}
-        />
-      </Suspense>
-    </div>
+    </>
   )
 }

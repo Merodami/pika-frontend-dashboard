@@ -71,6 +71,24 @@
       "loading": "Cargando..."
     }
   },
+  "actions": {
+    "view": "Ver",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "create": "Crear",
+    "update": "Actualizar",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "download": "Descargar",
+    "downloadPdf": "Descargar PDF",
+    "export": "Exportar",
+    "import": "Importar",
+    "duplicate": "Duplicar",
+    "archive": "Archivar",
+    "restore": "Restaurar",
+    "publish": "Publicar",
+    "unpublish": "Despublicar"
+  },
   "auth": {
     "login": {
       "title": "Iniciar sesión",
@@ -131,6 +149,27 @@
     "business": {
       "subtitle": "Aquí está el rendimiento de tu negocio"
     },
+    "analytics": {
+      "subtitle": "Ver análisis completos e información detallada",
+      "realtimeStats": "Estadísticas en Tiempo Real",
+      "voucherPerformance": "Rendimiento de Cupones",
+      "periodComparison": "Comparación de Períodos",
+      "topCategories": "Categorías Principales",
+      "thisWeek": "Esta Semana",
+      "lastWeek": "Semana Pasada",
+      "change": "Cambio",
+      "redemptions": "canjes",
+      "foodAndDining": "Comida y Restaurantes",
+      "shopping": "Compras",
+      "entertainment": "Entretenimiento",
+      "activeSessions": "Sesiones Activas",
+      "activeScans": "Escaneos Activos",
+      "uniqueCustomers": "Clientes Únicos",
+      "activeVouchers": "Cupones Activos",
+      "inLast24h": "en las últimas 24h",
+      "totalRegistered": "total registrados",
+      "totalCreated": "total creados"
+    },
     "system": {
       "systemHealth": "Estado del Sistema",
       "uptime": "tiempo activo"
@@ -158,6 +197,64 @@
     "redemptions": "Canjes",
     "views": "Vistas",
     "conversionRate": "Tasa de Conversión"
+  },
+  "reports": {
+    "subtitle": "Generar y ver informes completos del negocio",
+    "quickActions": "Acciones Rápidas",
+    "recentReports": "Informes Recientes",
+    "keyMetricsThisMonth": "Métricas Clave Este Mes",
+    "scheduledReports": "Informes Programados",
+    "metrics": {
+      "generated": "Informes Generados",
+      "scheduled": "Informes Programados",
+      "downloads": "Descargas Totales",
+      "insights": "Perspectivas Clave",
+      "totalRevenue": "Ingresos Totales",
+      "activeVouchers": "Cupones Activos",
+      "redemptionRate": "Tasa de Canje",
+      "newBusinesses": "Nuevos Negocios",
+      "customerSatisfaction": "Satisfacción del Cliente"
+    },
+    "types": {
+      "voucherAnalytics": "Informe de Análisis de Cupones",
+      "financialSummary": "Resumen Financiero",
+      "userActivity": "Informe de Actividad de Usuario",
+      "analytics": "Análisis",
+      "financial": "Financiero",
+      "activity": "Actividad",
+      "business": "Negocio"
+    },
+    "descriptions": {
+      "monthlyPerformance": "Resumen mensual del rendimiento",
+      "revenueTransactions": "Detalles de ingresos y transacciones",
+      "userEngagement": "Datos detallados de participación del usuario"
+    },
+    "table": {
+      "name": "Nombre del Informe",
+      "type": "Tipo",
+      "generated": "Generado",
+      "status": "Estado",
+      "actions": "Acciones"
+    },
+    "status": {
+      "completed": "Completado",
+      "processing": "Procesando",
+      "failed": "Fallido"
+    },
+    "samples": {
+      "monthlyVoucherPerformance": "Rendimiento Mensual de Cupones",
+      "quarterlyFinancial": "Resumen Financiero Q4",
+      "userEngagementAnalysis": "Análisis de Participación de Usuario",
+      "businessGrowth": "Informe de Crecimiento del Negocio"
+    },
+    "scheduled": {
+      "weeklyAnalytics": "Resumen Semanal de Análisis",
+      "weeklyAnalyticsTime": "Todos los lunes a las 9:00 AM",
+      "monthlyFinancial": "Informe Financiero Mensual",
+      "monthlyFinancialTime": "1° de cada mes a las 8:00 AM",
+      "quarterlyBusiness": "Revisión Trimestral del Negocio",
+      "quarterlyBusinessTime": "Cada 3 meses el día 5"
+    }
   },
   "vouchers": {
     "title": "Cupones",
@@ -1160,6 +1257,17 @@
     "title": "Libros de Cupones",
     "subtitle": "Gestionar colecciones de libros de cupones y generación de PDF",
     "description": "Crear y gestionar colecciones de libros de cupones",
+    "navigation": {
+      "dashboard": "Panel",
+      "voucherBooks": "Libros de Cupones"
+    },
+    "common": {
+      "button": {
+        "reset": "Restablecer",
+        "create": "Crear",
+        "createButton": "Crear Libro de Cupones"
+      }
+    },
     "totalBooks": "Total {count} libros de cupones",
     "searchPlaceholder": "Buscar libros de cupones...",
     "filterByStatus": "Filtrar por estado",
@@ -1168,6 +1276,11 @@
     "list": {
       "title": "Todos los Libros de Cupones",
       "subtitle": "Navegar y gestionar tu colección de libros de cupones",
+      "searchPlaceholder": "Buscar libros de cupones...",
+      "filterByStatus": "Filtrar por estado",
+      "filterByType": "Filtrar por tipo",
+      "filterByYear": "Filtrar por año",
+      "createButton": "Crear Libro de Cupones",
       "table": {
         "columns": {
           "title": "Título",
@@ -1290,7 +1403,14 @@
     "create": {
       "title": "Crear Libro de Cupones",
       "button": "Nuevo Libro de Cupones",
-      "subtitle": "Configurar una nueva colección de libros de cupones"
+      "subtitle": "Configurar una nueva colección de libros de cupones",
+      "submitButton": "Crear Libro de Cupones",
+      "sections": {
+        "basicInfo": "Información Básica",
+        "configuration": "Configuración",
+        "images": "Imágenes",
+        "additional": "Información Adicional"
+      }
     },
     "edit": {
       "title": "Editar Libro de Cupones",
@@ -1312,7 +1432,16 @@
       "MONTHLY": "Mensual",
       "SEASONAL": "Estacional",
       "ANNUAL": "Anual",
-      "SPECIAL": "Edición Especial"
+      "SPECIAL": "Edición Especial",
+      "SPECIAL_EDITION": "Edición Especial",
+      "REGIONAL": "Regional",
+      "PROMOTIONAL": "Promocional",
+      "monthly": "Mensual",
+      "seasonal": "Estacional",
+      "annual": "Anual",
+      "specialEdition": "Edición Especial",
+      "regional": "Regional",
+      "promotional": "Promocional"
     },
     "status": {
       "DRAFT": "Borrador",
@@ -1320,7 +1449,12 @@
       "APPROVED": "Aprobado",
       "PUBLISHED": "Publicado",
       "ARCHIVED": "Archivado",
-      "REJECTED": "Rechazado"
+      "REJECTED": "Rechazado",
+      "READY_FOR_PRINT": "Listo para Imprimir",
+      "draft": "Borrador",
+      "readyForPrint": "Listo para Imprimir",
+      "published": "Publicado",
+      "archived": "Archivado"
     },
     "fields": {
       "id": "ID",
@@ -1343,7 +1477,14 @@
       "description": "Descripción",
       "targetAudience": "Audiencia Objetivo",
       "notes": "Notas",
-      "metadata": "Información Adicional"
+      "metadata": "Información Adicional",
+      "cover": "Portada",
+      "type": "Tipo",
+      "period": "Período",
+      "pages": "Páginas",
+      "distribution": "Distribución",
+      "actions": "Acciones",
+      "of": "de"
     },
     "placeholders": {
       "title": "Ingresa el título del libro de cupones",
@@ -1351,10 +1492,13 @@
       "bookType": "Selecciona el tipo de libro",
       "month": "Selecciona el mes",
       "year": "Selecciona el año",
+      "selectMonth": "Seleccionar mes",
       "totalPages": "Ingresa el número total de páginas",
       "description": "Describe el contenido y propósito del libro de cupones",
       "targetAudience": "ej., Familias, Jóvenes Profesionales, Turistas",
-      "notes": "Cualquier nota adicional o comentarios"
+      "notes": "Cualquier nota adicional o comentarios",
+      "uploadCover": "Subir imagen de portada",
+      "uploadBack": "Subir imagen de contraportada"
     },
     "sections": {
       "basicInfo": "Información Básica",

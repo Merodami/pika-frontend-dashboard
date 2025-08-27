@@ -34,15 +34,13 @@ export default async function AdminVoucherBooksPage({ params }: PageProps) {
   }
 
   return (
-    <div className="admin-voucher-books-page">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold">{t('title')}</h1>
-        <p className="text-gray-600">{t('subtitle')}</p>
+    <>
+      {/* Full-width section below header */}
+      <div className="-my-6 -mx-4 sm:-mx-6 lg:-mx-8">
+        <Suspense fallback={<LoadingSkeleton />}>
+          <VoucherBookListContainer userRole={UserRole.ADMIN} locale={locale} />
+        </Suspense>
       </div>
-
-      <Suspense fallback={<LoadingSkeleton />}>
-        <VoucherBookListContainer userRole={UserRole.ADMIN} locale={locale} />
-      </Suspense>
-    </div>
+    </>
   )
 }

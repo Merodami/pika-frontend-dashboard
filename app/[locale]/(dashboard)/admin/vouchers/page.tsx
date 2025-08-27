@@ -33,8 +33,13 @@ export default async function AdminVouchersPage({ params }: PageProps) {
   }
 
   return (
-    <Suspense fallback={<LoadingSkeleton />}>
-      <VoucherListContainer userRole={UserRole.ADMIN} locale={locale} />
-    </Suspense>
+    <>
+      {/* Full-width section below header */}
+      <div className="-my-6 -mx-4 sm:-mx-6 lg:-mx-8">
+        <Suspense fallback={<LoadingSkeleton />}>
+          <VoucherListContainer userRole={UserRole.ADMIN} locale={locale} />
+        </Suspense>
+      </div>
+    </>
   )
 }

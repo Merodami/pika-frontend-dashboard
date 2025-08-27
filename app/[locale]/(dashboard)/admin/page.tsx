@@ -2,7 +2,7 @@ import { getTranslations } from 'next-intl/server'
 import { Suspense } from 'react'
 
 import { requireAdmin } from '@/app/services/authService'
-import { AdminDashboardMetrics } from '@/components/features/adminDashboardMetrics'
+import { AdminDashboardMetricsModern } from '@/components/features/adminDashboardMetricsModern'
 import { RecentActivityFeed } from '@/components/features/recentActivityFeed'
 import { SystemHealthStatus } from '@/components/features/systemHealthStatus'
 import { DashboardPageLayout } from '@/components/layouts/dashboardPageLayout'
@@ -27,9 +27,14 @@ export default async function AdminDashboardPage({
     <DashboardPageLayout
       title={t('dashboard.welcome', { name: user.firstName })}
       subtitle={t('dashboard.admin.subtitle')}
-      metricsSection={<AdminDashboardMetrics locale={locale} />}
     >
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="space-y-6">
+        {/* Modern Metrics Cards */}
+        <Suspense fallback={<LoadingSkeleton />}>
+          <AdminDashboardMetricsModern />
+        </Suspense>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Recent Activity */}
         <div className="lg:col-span-2">
           <Suspense fallback={<LoadingSkeleton />}>
@@ -43,6 +48,7 @@ export default async function AdminDashboardPage({
             <SystemHealthStatus locale={locale} />
           </Suspense>
         </div>
+      </div>
       </div>
     </DashboardPageLayout>
   )

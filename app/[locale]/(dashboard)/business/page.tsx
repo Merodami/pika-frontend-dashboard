@@ -2,7 +2,7 @@ import { getTranslations } from 'next-intl/server'
 import { Suspense } from 'react'
 
 import { requireBusiness } from '@/app/services/authService'
-import { BusinessDashboardMetrics } from '@/components/features/businessDashboardMetrics'
+import { BusinessDashboardMetricsModern } from '@/components/features/businessDashboardMetricsModern'
 import { RecentCustomers } from '@/components/features/recentCustomers'
 import { VoucherPerformance } from '@/components/features/voucherPerformance'
 import { DashboardPageLayout } from '@/components/layouts/dashboardPageLayout'
@@ -29,11 +29,14 @@ export default async function BusinessDashboardPage({
     <DashboardPageLayout
       title={t('dashboard.welcome', { name: user.firstName })}
       subtitle={t('dashboard.business.subtitle')}
-      metricsSection={
-        <BusinessDashboardMetrics businessId={businessId} locale={locale} />
-      }
     >
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="space-y-6">
+        {/* Modern Metrics Cards */}
+        <Suspense fallback={<LoadingSkeleton />}>
+          <BusinessDashboardMetricsModern businessId={businessId} />
+        </Suspense>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Voucher Performance */}
         <Suspense fallback={<LoadingSkeleton />}>
           <VoucherPerformance businessId={businessId} locale={locale} />
@@ -43,6 +46,7 @@ export default async function BusinessDashboardPage({
         <Suspense fallback={<LoadingSkeleton />}>
           <RecentCustomers />
         </Suspense>
+      </div>
       </div>
     </DashboardPageLayout>
   )

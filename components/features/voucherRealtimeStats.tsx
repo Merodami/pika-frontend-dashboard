@@ -9,6 +9,7 @@ import {
   TeamOutlined,
 } from '@ant-design/icons'
 import { Card, Col, Row, Statistic } from 'antd'
+import { useTranslations } from 'next-intl'
 
 // Temporary placeholder data
 const mockStats = {
@@ -23,6 +24,7 @@ const mockStats = {
 }
 
 export function VoucherRealtimeStats() {
+  const t = useTranslations('dashboard.analytics')
   // TODO: Replace with real API data when available
 
   return (
@@ -30,7 +32,7 @@ export function VoucherRealtimeStats() {
       <Col xs={24} sm={12} lg={6}>
         <Card>
           <Statistic
-            title="Active Sessions"
+            title={t('activeSessions')}
             value={mockStats.activeSessions}
             prefix={<EyeOutlined />}
             valueStyle={{ color: '#3f8600' }}
@@ -42,7 +44,7 @@ export function VoucherRealtimeStats() {
             }
           />
           <div className="text-xs text-gray-500 mt-2">
-            {mockStats.activeSessions24h} in last 24h
+            {mockStats.activeSessions24h} {t('inLast24h')}
           </div>
         </Card>
       </Col>
@@ -50,7 +52,7 @@ export function VoucherRealtimeStats() {
       <Col xs={24} sm={12} lg={6}>
         <Card>
           <Statistic
-            title="Active Scans"
+            title={t('activeScans')}
             value={mockStats.activeScans}
             prefix={<ScanOutlined />}
             valueStyle={{ color: '#1890ff' }}
@@ -62,7 +64,7 @@ export function VoucherRealtimeStats() {
             }
           />
           <div className="text-xs text-gray-500 mt-2">
-            {mockStats.activeScans24h} in last 24h
+            {mockStats.activeScans24h} {t('inLast24h')}
           </div>
         </Card>
       </Col>
@@ -70,7 +72,7 @@ export function VoucherRealtimeStats() {
       <Col xs={24} sm={12} lg={6}>
         <Card>
           <Statistic
-            title="Unique Customers"
+            title={t('uniqueCustomers')}
             value={mockStats.uniqueCustomers}
             prefix={<TeamOutlined />}
             valueStyle={{ color: '#722ed1' }}
@@ -82,7 +84,7 @@ export function VoucherRealtimeStats() {
             }
           />
           <div className="text-xs text-gray-500 mt-2">
-            {mockStats.uniqueCustomers24h} total registered
+            {mockStats.uniqueCustomers24h} {t('totalRegistered')}
           </div>
         </Card>
       </Col>
@@ -90,13 +92,13 @@ export function VoucherRealtimeStats() {
       <Col xs={24} sm={12} lg={6}>
         <Card>
           <Statistic
-            title="Active Vouchers"
+            title={t('activeVouchers')}
             value={mockStats.activeVouchers}
             prefix={<TagOutlined />}
             valueStyle={{ color: '#fa8c16' }}
           />
           <div className="text-xs text-gray-500 mt-2">
-            {mockStats.activeVouchers24h} total created
+            {mockStats.activeVouchers24h} {t('totalCreated')}
           </div>
         </Card>
       </Col>

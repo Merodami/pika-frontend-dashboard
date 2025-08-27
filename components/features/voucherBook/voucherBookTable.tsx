@@ -161,7 +161,7 @@ export function VoucherBookTable({
         <div className="text-center">
           <div className="font-medium">{row.original.pageCount}</div>
           <div className="text-xs text-gray-500">
-            of {row.original.totalPages}
+            {t('fields.of')} {row.original.totalPages}
           </div>
         </div>
       ),

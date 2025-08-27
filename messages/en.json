@@ -73,6 +73,24 @@
       "loading": "Loading..."
     }
   },
+  "actions": {
+    "view": "View",
+    "edit": "Edit",
+    "delete": "Delete",
+    "create": "Create",
+    "update": "Update",
+    "cancel": "Cancel",
+    "save": "Save",
+    "download": "Download",
+    "downloadPdf": "Download PDF",
+    "export": "Export",
+    "import": "Import",
+    "duplicate": "Duplicate",
+    "archive": "Archive",
+    "restore": "Restore",
+    "publish": "Publish",
+    "unpublish": "Unpublish"
+  },
   "auth": {
     "login": {
       "title": "Sign In",
@@ -133,6 +151,27 @@
     "business": {
       "subtitle": "Here's how your business is performing"
     },
+    "analytics": {
+      "subtitle": "View comprehensive analytics and insights",
+      "realtimeStats": "Real-time Statistics",
+      "voucherPerformance": "Voucher Performance", 
+      "periodComparison": "Period Comparison",
+      "topCategories": "Top Categories",
+      "thisWeek": "This Week",
+      "lastWeek": "Last Week",
+      "change": "Change",
+      "redemptions": "redemptions",
+      "foodAndDining": "Food & Dining",
+      "shopping": "Shopping",
+      "entertainment": "Entertainment",
+      "activeSessions": "Active Sessions",
+      "activeScans": "Active Scans",
+      "uniqueCustomers": "Unique Customers",
+      "activeVouchers": "Active Vouchers",
+      "inLast24h": "in last 24h",
+      "totalRegistered": "total registered",
+      "totalCreated": "total created"
+    },
     "system": {
       "systemHealth": "System Health",
       "uptime": "uptime"
@@ -160,6 +199,64 @@
     "redemptions": "Redemptions",
     "views": "Views",
     "conversionRate": "Conversion Rate"
+  },
+  "reports": {
+    "subtitle": "Generate and view comprehensive business reports",
+    "quickActions": "Quick Actions",
+    "recentReports": "Recent Reports",
+    "keyMetricsThisMonth": "Key Metrics This Month",
+    "scheduledReports": "Scheduled Reports",
+    "metrics": {
+      "generated": "Reports Generated",
+      "scheduled": "Scheduled Reports",
+      "downloads": "Total Downloads",
+      "insights": "Key Insights",
+      "totalRevenue": "Total Revenue",
+      "activeVouchers": "Active Vouchers",
+      "redemptionRate": "Redemption Rate",
+      "newBusinesses": "New Businesses",
+      "customerSatisfaction": "Customer Satisfaction"
+    },
+    "types": {
+      "voucherAnalytics": "Voucher Analytics Report",
+      "financialSummary": "Financial Summary",
+      "userActivity": "User Activity Report",
+      "analytics": "Analytics",
+      "financial": "Financial",
+      "activity": "Activity",
+      "business": "Business"
+    },
+    "descriptions": {
+      "monthlyPerformance": "Monthly performance overview",
+      "revenueTransactions": "Revenue and transaction details",
+      "userEngagement": "Detailed user engagement data"
+    },
+    "table": {
+      "name": "Report Name",
+      "type": "Type",
+      "generated": "Generated",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "status": {
+      "completed": "Completed",
+      "processing": "Processing",
+      "failed": "Failed"
+    },
+    "samples": {
+      "monthlyVoucherPerformance": "Monthly Voucher Performance",
+      "quarterlyFinancial": "Q4 Financial Summary",
+      "userEngagementAnalysis": "User Engagement Analysis",
+      "businessGrowth": "Business Growth Report"
+    },
+    "scheduled": {
+      "weeklyAnalytics": "Weekly Analytics Digest",
+      "weeklyAnalyticsTime": "Every Monday at 9:00 AM",
+      "monthlyFinancial": "Monthly Financial Report",
+      "monthlyFinancialTime": "1st of each month at 8:00 AM",
+      "quarterlyBusiness": "Quarterly Business Review",
+      "quarterlyBusinessTime": "Every 3 months on the 5th"
+    }
   },
   "vouchers": {
     "title": "Vouchers",
@@ -1171,6 +1268,17 @@
     "title": "Voucher Books",
     "subtitle": "Manage voucher book collections and PDF generation",
     "description": "Create and manage voucher book collections",
+    "navigation": {
+      "dashboard": "Dashboard",
+      "voucherBooks": "Voucher Books"
+    },
+    "common": {
+      "button": {
+        "reset": "Reset",
+        "create": "Create",
+        "createButton": "Create Voucher Book"
+      }
+    },
     "totalBooks": "Total {count} voucher books",
     "searchPlaceholder": "Search voucher books...",
     "filterByStatus": "Filter by status",
@@ -1179,6 +1287,11 @@
     "list": {
       "title": "All Voucher Books",
       "subtitle": "Browse and manage your voucher book collection",
+      "searchPlaceholder": "Search voucher books...",
+      "filterByStatus": "Filter by status",
+      "filterByType": "Filter by type",
+      "filterByYear": "Filter by year",
+      "createButton": "Create Voucher Book",
       "table": {
         "columns": {
           "title": "Title",
@@ -1301,7 +1414,14 @@
     "create": {
       "title": "Create Voucher Book",
       "button": "New Voucher Book",
-      "subtitle": "Set up a new voucher book collection"
+      "subtitle": "Set up a new voucher book collection",
+      "submitButton": "Create Voucher Book",
+      "sections": {
+        "basicInfo": "Basic Information",
+        "configuration": "Configuration",
+        "images": "Images",
+        "additional": "Additional Information"
+      }
     },
     "edit": {
       "title": "Edit Voucher Book",
@@ -1323,7 +1443,16 @@
       "MONTHLY": "Monthly",
       "SEASONAL": "Seasonal",
       "ANNUAL": "Annual",
-      "SPECIAL": "Special Edition"
+      "SPECIAL": "Special Edition",
+      "SPECIAL_EDITION": "Special Edition",
+      "REGIONAL": "Regional",
+      "PROMOTIONAL": "Promotional",
+      "monthly": "Monthly",
+      "seasonal": "Seasonal",
+      "annual": "Annual",
+      "specialEdition": "Special Edition",
+      "regional": "Regional",
+      "promotional": "Promotional"
     },
     "status": {
       "DRAFT": "Draft",
@@ -1331,7 +1460,12 @@
       "APPROVED": "Approved",
       "PUBLISHED": "Published",
       "ARCHIVED": "Archived",
-      "REJECTED": "Rejected"
+      "REJECTED": "Rejected",
+      "READY_FOR_PRINT": "Ready for Print",
+      "draft": "Draft",
+      "readyForPrint": "Ready for Print",
+      "published": "Published",
+      "archived": "Archived"
     },
     "fields": {
       "id": "ID",
@@ -1354,7 +1488,14 @@
       "description": "Description",
       "targetAudience": "Target Audience",
       "notes": "Notes",
-      "metadata": "Additional Information"
+      "metadata": "Additional Information",
+      "cover": "Cover",
+      "type": "Type",
+      "period": "Period",
+      "pages": "Pages",
+      "distribution": "Distribution",
+      "actions": "Actions",
+      "of": "of"
     },
     "placeholders": {
       "title": "Enter voucher book title",
@@ -1362,10 +1503,13 @@
       "bookType": "Select book type",
       "month": "Select month",
       "year": "Select year",
+      "selectMonth": "Select month",
       "totalPages": "Enter total number of pages",
       "description": "Describe the voucher book content and purpose",
       "targetAudience": "e.g., Families, Young Professionals, Tourists",
-      "notes": "Any additional notes or comments"
+      "notes": "Any additional notes or comments",
+      "uploadCover": "Upload cover image",
+      "uploadBack": "Upload back cover image"
     },
     "sections": {
       "basicInfo": "Basic Information",
