@@ -495,7 +495,7 @@ async function testExistingAdminLogin(): Promise<void> {
   logStep(0, 'Test Pre-created Admin User Login')
 
   const adminCredentials = {
-    email: 'admin@example.com',
+    email: 'admin@thevoucherbook.com',
     password: 'AdminPassword123!',
   }
 

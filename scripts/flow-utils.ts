@@ -235,19 +235,19 @@ export function delay(ms: number): Promise<void> {
 // Test data
 export const TEST_USERS = {
   admin: {
-    email: 'admin@example.com',
+    email: 'admin@thevoucherbook.com',
     password: 'AdminPassword123!',
   },
   customer: {
-    email: 'customer@example.com',
+    email: 'customer@thevoucherbook.com',
     password: 'CustomerPassword123!',
   },
   business: {
-    email: 'business@example.com',
+    email: 'business@thevoucherbook.com',
     password: 'BusinessPassword123!',
   },
   unverified: {
-    email: 'unverified@example.com',
+    email: 'unverified@thevoucherbook.com',
     password: 'UnverifiedPassword123!',
   },
 }

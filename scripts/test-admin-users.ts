@@ -10,7 +10,7 @@ const API_BASE_URL = 'http://localhost:5500/api/v1'
 
 // Admin credentials
 const adminCredentials = {
-  email: 'admin@example.com',
+  email: 'admin@thevoucherbook.com',
   password: 'AdminPassword123!',
 }
 

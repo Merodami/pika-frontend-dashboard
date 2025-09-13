@@ -8,7 +8,7 @@ import {
   getSortedRowModel,
   getFilteredRowModel,
 } from '@tanstack/react-table'
-import { useMemo } from 'react'
+import { useMemo, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
 import { Search, RefreshCw } from 'lucide-react'
 
@@ -62,7 +62,7 @@ export function DataGridServer<T>({
   })
 
   // Notify parent of query parameter changes
-  useMemo(() => {
+  useEffect(() => {
     if (onQueryChange) {
       onQueryChange(dataGrid.debouncedQueryParams)
     }
@@ -315,10 +315,10 @@ export function DataGridServer<T>({
 
       {/* Mobile-Responsive Pagination */}
       <MobilePagination
-        current={dataGrid.pagination.pageIndex + 1}
-        total={serverPagination?.totalPages ?? 1}
-        pageSize={dataGrid.pagination.pageSize}
-        totalItems={serverPagination?.total ?? data.length}
+        current={serverPagination ? serverPagination.page : (dataGrid.pagination.pageIndex + 1)}
+        total={serverPagination ? serverPagination.totalPages : Math.ceil(data.length / dataGrid.pagination.pageSize)}
+        pageSize={serverPagination ? serverPagination.limit : dataGrid.pagination.pageSize}
+        totalItems={serverPagination ? serverPagination.total : data.length}
         onPageChange={(page) => {
           console.log('📊 DataGridServer: Page change requested:', {
             from: dataGrid.pagination.pageIndex + 1,

@@ -6,6 +6,7 @@ import { Button, Form, Input, Checkbox } from 'antd'
 import { useTranslations } from 'next-intl'
 import { useState, useEffect } from 'react'
 import { useForm, Controller } from 'react-hook-form'
+import { useSearchParams } from 'next/navigation'
 import { z } from 'zod'
 
 import { login } from '@/app/actions/auth'
@@ -27,8 +28,11 @@ type LoginFormOutput = z.output<typeof LoginFormSchema>
 export function LoginForm() {
   const t = useTranslations('auth.login')
   const tErrors = useTranslations('errors')
+  const tMessages = useTranslations('messages')
   const localizedRouter = useLocalizedRouter()
+  const searchParams = useSearchParams()
   const [error, setError] = useState<string | null>(null)
+  const [successMessage, setSuccessMessage] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const { formDrafts, saveFormDraft, clearFormDraft } = useAppStore()
 
@@ -46,6 +50,32 @@ export function LoginForm() {
     }
   }, [])
 
+  // Handle verification parameters from URL
+  useEffect(() => {
+    // Check for successful email verification
+    if (searchParams.get('verified') === 'true') {
+      setSuccessMessage(tMessages('emailVerified'))
+      // Clean URL after showing message
+      const url = new URL(window.location.href)
+      url.searchParams.delete('verified')
+      window.history.replaceState({}, '', url.pathname + url.search)
+    }
+
+    // Check for verification errors
+    const errorParam = searchParams.get('error')
+    if (errorParam) {
+      if (errorParam === 'invalid_verification_token') {
+        setError(tErrors('invalidVerificationToken'))
+      } else if (errorParam === 'verification_failed') {
+        setError(tErrors('verificationFailed'))
+      }
+      // Clean URL after showing error
+      const url = new URL(window.location.href)
+      url.searchParams.delete('error')
+      window.history.replaceState({}, '', url.pathname + url.search)
+    }
+  }, [searchParams, tErrors, tMessages])
+
   const {
     control,
     handleSubmit,
@@ -53,7 +83,7 @@ export function LoginForm() {
   } = useForm<LoginFormInput, unknown, LoginFormOutput>({
     resolver: zodResolver(LoginFormSchema),
     defaultValues: formDrafts['login'] || {
-      email: isDevelopment ? 'admin@example.com' : '',
+      email: isDevelopment ? 'admin@thevoucherbook.com' : '',
       password: isDevelopment ? 'AdminPassword123!' : '',
       rememberMe: false,
     },
@@ -194,7 +224,9 @@ export function LoginForm() {
   return (
     <AuthFormWrapper
       error={error}
+      success={successMessage}
       onError={setError}
+      onSuccess={setSuccessMessage}
       onSubmit={handleSubmit(onSubmit)}
     >
       <Form.Item

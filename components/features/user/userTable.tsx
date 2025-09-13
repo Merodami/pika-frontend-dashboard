@@ -10,6 +10,11 @@ import {
   Shield,
   Mail,
   Phone,
+  Ban,
+  CheckCircle,
+  RefreshCw,
+  UserCheck,
+  AlertCircle,
 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import type { ColumnDef } from '@tanstack/react-table'
@@ -18,7 +23,10 @@ import type { MenuProps } from 'antd'
 import { DataGridServer } from '@/components/ui/DataGrid/DataGridServer'
 import { formatDate } from '@/lib/utils/date'
 import type { GetAdminUserList200DataItem } from '@/lib/api/orval-client'
-import { UserStatus, UserRole } from '@/lib/api/orval-client'
+import {
+  GetAdminUserList200DataItemStatus,
+  GetAdminUserList200DataItemRole,
+} from '@/lib/api/orval-client'
 
 interface UserTableProps {
   data: GetAdminUserList200DataItem[]
@@ -28,6 +36,12 @@ interface UserTableProps {
   onEdit: (id: string) => void
   onDelete: (id: string) => void
   onSendEmail: () => void
+  onBan: (user: GetAdminUserList200DataItem) => void
+  onUnban: (user: GetAdminUserList200DataItem) => void
+  onChangeStatus: (user: GetAdminUserList200DataItem) => void
+  onVerify: (user: GetAdminUserList200DataItem) => void
+  onResendVerification: (user: GetAdminUserList200DataItem) => void
+  onActivateBusinessAccount?: (user: GetAdminUserList200DataItem) => void
   onQueryChange?: (params: any) => void
 }
 
@@ -39,6 +53,12 @@ export function UserTable({
   onEdit,
   onDelete,
   onSendEmail,
+  onBan,
+  onUnban,
+  onChangeStatus,
+  onVerify,
+  onResendVerification,
+  onActivateBusinessAccount,
   onQueryChange,
 }: UserTableProps) {
   const t = useTranslations()
@@ -46,13 +66,13 @@ export function UserTable({
   // Status color mapping
   const getStatusColor = (status: string) => {
     switch (status) {
-      case UserStatus.active:
+      case GetAdminUserList200DataItemStatus.active:
         return 'green'
-      case UserStatus.suspended:
+      case GetAdminUserList200DataItemStatus.suspended:
         return 'red'
-      case UserStatus.banned:
+      case GetAdminUserList200DataItemStatus.banned:
         return 'volcano'
-      case UserStatus.unconfirmed:
+      case GetAdminUserList200DataItemStatus.unconfirmed:
         return 'orange'
       default:
         return 'default'
@@ -62,11 +82,11 @@ export function UserTable({
   // Role color mapping
   const getRoleColor = (role: string) => {
     switch (role) {
-      case UserRole.admin:
+      case GetAdminUserList200DataItemRole.admin:
         return 'purple'
-      case UserRole.business:
+      case GetAdminUserList200DataItemRole.business:
         return 'blue'
-      case UserRole.customer:
+      case GetAdminUserList200DataItemRole.customer:
         return 'cyan'
       default:
         return 'default'
@@ -76,11 +96,11 @@ export function UserTable({
   // Role icon mapping
   const getRoleIcon = (role: string) => {
     switch (role) {
-      case UserRole.admin:
+      case GetAdminUserList200DataItemRole.admin:
         return <Shield className="w-4 h-4" />
-      case UserRole.business:
+      case GetAdminUserList200DataItemRole.business:
         return <User className="w-4 h-4" />
-      case UserRole.customer:
+      case GetAdminUserList200DataItemRole.customer:
         return <User className="w-4 h-4" />
       default:
         return <User className="w-4 h-4" />
@@ -89,36 +109,105 @@ export function UserTable({
 
   const getActions = (
     user: GetAdminUserList200DataItem
-  ): MenuProps['items'] => [
-    {
-      key: 'view',
-      label: t('user.action.view'),
-      icon: <Eye className="w-4 h-4" />,
-      onClick: () => onView(user.id),
-    },
-    {
-      key: 'edit',
-      label: t('user.action.edit'),
-      icon: <Edit className="w-4 h-4" />,
-      onClick: () => onEdit(user.id),
-    },
-    {
-      key: 'email',
-      label: t('user.action.sendEmail'),
-      icon: <Mail className="w-4 h-4" />,
-      onClick: () => onSendEmail(),
-    },
-    {
-      type: 'divider',
-    },
-    {
-      key: 'delete',
-      label: t('user.action.delete'),
-      icon: <Trash2 className="w-4 h-4" />,
-      danger: true,
-      onClick: () => onDelete(user.id),
-    },
-  ]
+  ): MenuProps['items'] => {
+    const items: MenuProps['items'] = [
+      {
+        key: 'view',
+        label: t('user.action.view'),
+        icon: <Eye className="w-4 h-4" />,
+        onClick: () => onView(user.id),
+      },
+      {
+        key: 'edit',
+        label: t('user.action.edit'),
+        icon: <Edit className="w-4 h-4" />,
+        onClick: () => onEdit(user.id),
+      },
+      {
+        key: 'email',
+        label: t('user.action.sendEmail'),
+        icon: <Mail className="w-4 h-4" />,
+        onClick: () => onSendEmail(),
+      },
+      {
+        type: 'divider',
+      },
+      {
+        key: 'status',
+        label: t('user.action.changeStatus'),
+        icon: <AlertCircle className="w-4 h-4" />,
+        onClick: () => onChangeStatus(user),
+      },
+    ]
+
+    // Add activate action for business users who are unconfirmed
+    if (
+      user.role === GetAdminUserList200DataItemRole.business &&
+      user.status === GetAdminUserList200DataItemStatus.unconfirmed
+    ) {
+      items.push({
+        key: 'activate',
+        label: t('user.action.activateBusinessAccount'),
+        icon: <Shield className="w-4 h-4" />,
+        onClick: () => onActivateBusinessAccount?.(user),
+        className: 'text-green-600',
+      })
+    }
+
+    // Add ban/unban based on current status
+    if (user.status === GetAdminUserList200DataItemStatus.banned) {
+      items.push({
+        key: 'unban',
+        label: t('user.action.unban'),
+        icon: <CheckCircle className="w-4 h-4" />,
+        onClick: () => onUnban(user),
+      })
+    } else {
+      items.push({
+        key: 'ban',
+        label: t('user.action.ban'),
+        icon: <Ban className="w-4 h-4" />,
+        danger: true,
+        onClick: () => onBan(user),
+      })
+    }
+
+    // Add verification actions if not verified
+    if (!user.emailVerified || !user.phoneVerified) {
+      items.push(
+        {
+          type: 'divider',
+        },
+        {
+          key: 'verify',
+          label: t('user.action.verify'),
+          icon: <UserCheck className="w-4 h-4" />,
+          onClick: () => onVerify(user),
+        },
+        {
+          key: 'resendVerification',
+          label: t('user.action.resendVerification'),
+          icon: <RefreshCw className="w-4 h-4" />,
+          onClick: () => onResendVerification(user),
+        }
+      )
+    }
+
+    items.push(
+      {
+        type: 'divider',
+      },
+      {
+        key: 'delete',
+        label: t('user.action.delete'),
+        icon: <Trash2 className="w-4 h-4" />,
+        danger: true,
+        onClick: () => onDelete(user.id),
+      }
+    )
+
+    return items
+  }
 
   const columns: ColumnDef<GetAdminUserList200DataItem>[] = [
     {

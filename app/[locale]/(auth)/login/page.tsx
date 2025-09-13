@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
+import { Suspense } from 'react'
 
 import { AuthPageLayout } from '@/components/layouts/authPageLayout'
 import { LoginForm } from './loginForm'
@@ -28,7 +29,9 @@ export default async function LoginPage({ params }: LoginPageProps) {
 
   return (
     <AuthPageLayout title={t('title')} subtitle={t('subtitle')}>
-      <LoginForm />
+      <Suspense fallback={null}>
+        <LoginForm />
+      </Suspense>
     </AuthPageLayout>
   )
 }

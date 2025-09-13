@@ -2,7 +2,11 @@
 
 import { useTranslations } from 'next-intl'
 import { VoucherState, VoucherDiscountType } from '@/lib/api/orval-client'
-import { ResponsiveFilters } from '@/components/ui/filters'
+import {
+  UnifiedFilters,
+  FilterPresets,
+} from '@/components/ui/filters/UnifiedFilters'
+import { FilterField, FilterGroup } from '@/components/ui/filters'
 
 interface VoucherFiltersProps {
   values: Record<string, any>
@@ -20,11 +24,6 @@ export function VoucherFilters({
   const handleChange = (field: string, value: any) => {
     onChange({ ...values, [field]: value })
   }
-
-  // Count active filters
-  const activeFiltersCount = Object.values(values).filter(
-    (value) => value !== undefined && value !== null && value !== ''
-  ).length
 
   // Quick filter options for common use cases
   const quickFilters = [
@@ -49,14 +48,15 @@ export function VoucherFilters({
   ]
 
   return (
-    <ResponsiveFilters
-      activeFiltersCount={activeFiltersCount}
+    <UnifiedFilters
+      {...FilterPresets.collapsible}
+      values={values}
       onReset={onReset}
       quickFilters={quickFilters}
     >
       {/* Basic Filters */}
-      <ResponsiveFilters.Group title={t('voucher.filter.basic')}>
-        <ResponsiveFilters.Field
+      <FilterGroup title={t('voucher.filter.basic')}>
+        <FilterField
           label={t('voucher.filter.search')}
           type="search"
           value={values.search}
@@ -64,7 +64,7 @@ export function VoucherFilters({
           placeholder={t('voucher.filter.searchPlaceholder')}
         />
 
-        <ResponsiveFilters.Field
+        <FilterField
           label={t('voucher.field.title')}
           type="input"
           value={values.title}
@@ -72,18 +72,18 @@ export function VoucherFilters({
           placeholder={t('voucher.filter.titlePlaceholder')}
         />
 
-        <ResponsiveFilters.Field
+        <FilterField
           label={t('voucher.field.code')}
           type="input"
           value={values.code}
           onChange={(value) => handleChange('code', value)}
           placeholder={t('voucher.filter.codePlaceholder')}
         />
-      </ResponsiveFilters.Group>
+      </FilterGroup>
 
       {/* Status & Type Filters */}
-      <ResponsiveFilters.Group title={t('voucher.filter.statusAndType')}>
-        <ResponsiveFilters.Field
+      <FilterGroup title={t('voucher.filter.statusAndType')}>
+        <FilterField
           label={t('voucher.field.status')}
           type="select"
           value={values.state}
@@ -104,7 +104,7 @@ export function VoucherFilters({
           ]}
         />
 
-        <ResponsiveFilters.Field
+        <FilterField
           label={t('voucher.field.discountType')}
           type="select"
           value={values.discountType}
@@ -121,11 +121,11 @@ export function VoucherFilters({
             },
           ]}
         />
-      </ResponsiveFilters.Group>
+      </FilterGroup>
 
       {/* Business Filter */}
-      <ResponsiveFilters.Group title={t('voucher.filter.business')}>
-        <ResponsiveFilters.Field
+      <FilterGroup title={t('voucher.filter.business')}>
+        <FilterField
           label={t('voucher.field.business')}
           type="input"
           value={values.businessName}
@@ -133,18 +133,18 @@ export function VoucherFilters({
           placeholder={t('voucher.filter.businessPlaceholder')}
         />
 
-        <ResponsiveFilters.Field
+        <FilterField
           label={t('voucher.field.businessId')}
           type="input"
           value={values.businessId}
           onChange={(value) => handleChange('businessId', value)}
           placeholder={t('voucher.filter.businessIdPlaceholder')}
         />
-      </ResponsiveFilters.Group>
+      </FilterGroup>
 
       {/* Value & Usage Filters */}
-      <ResponsiveFilters.Group title={t('voucher.filter.valueAndUsage')}>
-        <ResponsiveFilters.Field
+      <FilterGroup title={t('voucher.filter.valueAndUsage')}>
+        <FilterField
           label={t('voucher.field.minDiscount')}
           type="input"
           value={values.minDiscountValue}
@@ -152,7 +152,7 @@ export function VoucherFilters({
           placeholder={t('voucher.filter.minDiscountPlaceholder')}
         />
 
-        <ResponsiveFilters.Field
+        <FilterField
           label={t('voucher.field.maxDiscount')}
           type="input"
           value={values.maxDiscountValue}
@@ -160,7 +160,7 @@ export function VoucherFilters({
           placeholder={t('voucher.filter.maxDiscountPlaceholder')}
         />
 
-        <ResponsiveFilters.Field
+        <FilterField
           label={t('voucher.field.hasUsageLimit')}
           type="select"
           value={values.hasUsageLimit}
@@ -171,11 +171,11 @@ export function VoucherFilters({
             { label: t('common.no'), value: false },
           ]}
         />
-      </ResponsiveFilters.Group>
+      </FilterGroup>
 
       {/* Date Filters */}
-      <ResponsiveFilters.Group title={t('voucher.filter.dates')}>
-        <ResponsiveFilters.Field
+      <FilterGroup title={t('voucher.filter.dates')}>
+        <FilterField
           label={t('voucher.field.createdAt')}
           type="date-range"
           value={values.createdRange}
@@ -183,7 +183,7 @@ export function VoucherFilters({
           placeholder={t('voucher.filter.createdDatePlaceholder')}
         />
 
-        <ResponsiveFilters.Field
+        <FilterField
           label={t('voucher.field.validityPeriod')}
           type="date-range"
           value={values.validityRange}
@@ -191,14 +191,14 @@ export function VoucherFilters({
           placeholder={t('voucher.filter.validityPeriodPlaceholder')}
         />
 
-        <ResponsiveFilters.Field
+        <FilterField
           label={t('voucher.field.expiryDate')}
           type="date-range"
           value={values.expiryRange}
           onChange={(value) => handleChange('expiryRange', value)}
           placeholder={t('voucher.filter.expiryDatePlaceholder')}
         />
-      </ResponsiveFilters.Group>
-    </ResponsiveFilters>
+      </FilterGroup>
+    </UnifiedFilters>
   )
 }

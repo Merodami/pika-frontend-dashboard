@@ -41,6 +41,8 @@ export const queryKeys = {
     me: () => [...queryKeys.users.all(), 'me'] as const,
     detail: (id: string) => [...queryKeys.users.all(), id] as const,
     stats: (id: string) => [...queryKeys.users.all(), 'stats', id] as const,
+    verificationStatus: (id: string) =>
+      [...queryKeys.users.all(), 'verification', id] as const,
   },
 
   // Voucher Book query keys

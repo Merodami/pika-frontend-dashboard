@@ -11,12 +11,19 @@ import {
   updateAdminUserStatus,
   banAdminUser,
   unbanAdminUser,
+  verifyAdminUser,
+  resendAdminUserVerification,
+  getAdminUserVerificationStatus,
   type GetAdminUserListParams,
   type GetAdminUserList200,
   type GetAdminUserById200,
   type CreateAdminUserBody,
   type UpdateAdminUserBody,
   type UpdateAdminUserStatusBody,
+  type BanAdminUserBody,
+  type UnbanAdminUserBody,
+  type VerifyAdminUserBody,
+  type ResendAdminUserVerificationBody,
 } from '@/lib/api/orval-client'
 import { queryKeys } from '@/lib/api/queryKeys'
 
@@ -155,10 +162,9 @@ export function useUpdateUserStatus() {
   return useApiMutation<
     any,
     Error,
-    { userId: string; status: UpdateAdminUserStatusBody['status'] }
+    { userId: string; data: UpdateAdminUserStatusBody }
   >({
-    mutationFn: ({ userId, status }) =>
-      updateAdminUserStatus(userId, { status }),
+    mutationFn: ({ userId, data }) => updateAdminUserStatus(userId, data),
     successMessage: 'User status updated successfully',
     onSuccess: (_, { userId }) => {
       invalidateUserQueries(queryClient, userId)
@@ -172,13 +178,15 @@ export function useUpdateUserStatus() {
 export function useBanUser() {
   const queryClient = useQueryClient()
 
-  return useApiMutation<any, Error, { userId: string; reason?: string }>({
-    mutationFn: ({ userId, reason }) => banAdminUser(userId, { reason }),
-    successMessage: 'User banned successfully',
-    onSuccess: (_, { userId }) => {
-      invalidateUserQueries(queryClient, userId)
-    },
-  })
+  return useApiMutation<any, Error, { userId: string; data: BanAdminUserBody }>(
+    {
+      mutationFn: ({ userId, data }) => banAdminUser(userId, data),
+      successMessage: 'User banned successfully',
+      onSuccess: (_, { userId }) => {
+        invalidateUserQueries(queryClient, userId)
+      },
+    }
+  )
 }
 
 /**
@@ -187,12 +195,65 @@ export function useBanUser() {
 export function useUnbanUser() {
   const queryClient = useQueryClient()
 
-  return useApiMutation<any, Error, { userId: string; reason?: string }>({
-    mutationFn: ({ userId, reason }) => unbanAdminUser(userId, { reason }),
+  return useApiMutation<
+    any,
+    Error,
+    { userId: string; data: UnbanAdminUserBody }
+  >({
+    mutationFn: ({ userId, data }) => unbanAdminUser(userId, data),
     successMessage: 'User unbanned successfully',
     onSuccess: (_, { userId }) => {
       invalidateUserQueries(queryClient, userId)
     },
+  })
+}
+
+/**
+ * Hook to verify a user
+ */
+export function useVerifyUser() {
+  const queryClient = useQueryClient()
+
+  return useApiMutation<any, Error, VerifyAdminUserBody>({
+    mutationFn: (data) => verifyAdminUser(data),
+    successMessage: 'User verified successfully',
+    onSuccess: (_, data) => {
+      if (data.userId) {
+        invalidateUserQueries(queryClient, data.userId)
+      }
+    },
+  })
+}
+
+/**
+ * Hook to resend user verification
+ */
+export function useResendUserVerification() {
+  const queryClient = useQueryClient()
+
+  return useApiMutation<any, Error, ResendAdminUserVerificationBody>({
+    mutationFn: (data) => resendAdminUserVerification(data),
+    successMessage: 'Verification email resent successfully',
+    onSuccess: (_, data) => {
+      if (data.userId) {
+        invalidateUserQueries(queryClient, data.userId)
+      }
+    },
+  })
+}
+
+/**
+ * Hook to get user verification status
+ */
+export function useUserVerificationStatus(
+  id: string,
+  options?: { enabled?: boolean }
+) {
+  return useApiQuery({
+    queryKey: queryKeys.users.verificationStatus(id),
+    queryFn: () => getAdminUserVerificationStatus(id),
+    enabled: options?.enabled ?? !!id,
+    staleTime: 30 * 1000, // 30 seconds
   })
 }
 

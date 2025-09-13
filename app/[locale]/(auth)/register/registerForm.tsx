@@ -30,6 +30,7 @@ type RegisterFormOutput = z.output<typeof RegisterFormSchema>
 
 export function RegisterForm() {
   const t = useTranslations('auth.register')
+  const tErrors = useTranslations('errors')
   const router = useLocalizedRouter()
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -63,13 +64,17 @@ export function RegisterForm() {
       const result = await registerAction(apiData)
 
       if (result?.error) {
-        setError(result.error)
+        // Use error code for translation if available, otherwise use the error message
+        const errorMessage = result.errorCode
+          ? tErrors(result.errorCode as any)
+          : result.error
+        setError(errorMessage)
       } else if (result?.success) {
         // Redirect to login page with the correct locale
         router.push('/login')
       }
     } catch {
-      setError('An unexpected error occurred')
+      setError(tErrors('somethingWentWrong'))
     } finally {
       setIsLoading(false)
     }

@@ -57,7 +57,7 @@ export function BusinessListContainer({ locale }: BusinessListContainerProps) {
     return {
       ...dataTable.queryParams,
       ...gridQueryParams,
-      include: 'user,category,businessRegistration', // Always include related data
+      include: 'user,category,businessRegistration,businessDetails', // Always include related data
     }
   }, [dataTable.queryParams, gridQueryParams])
 

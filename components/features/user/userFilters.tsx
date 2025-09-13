@@ -2,7 +2,11 @@
 
 import { useTranslations } from 'next-intl'
 import { UserStatus, UserRole } from '@/lib/api/orval-client'
-import { ResponsiveFilters } from '@/components/ui/filters'
+import {
+  UnifiedFilters,
+  FilterPresets,
+} from '@/components/ui/filters/UnifiedFilters'
+import { FilterField, FilterGroup } from '@/components/ui/filters'
 
 interface UserFiltersProps {
   values: Record<string, any>
@@ -16,11 +20,6 @@ export function UserFilters({ values, onChange, onReset }: UserFiltersProps) {
   const handleChange = (field: string, value: any) => {
     onChange({ ...values, [field]: value })
   }
-
-  // Count active filters
-  const activeFiltersCount = Object.values(values).filter(
-    (value) => value !== undefined && value !== null && value !== ''
-  ).length
 
   // Quick filter options for common use cases
   const quickFilters = [
@@ -45,14 +44,15 @@ export function UserFilters({ values, onChange, onReset }: UserFiltersProps) {
   ]
 
   return (
-    <ResponsiveFilters
-      activeFiltersCount={activeFiltersCount}
+    <UnifiedFilters
+      {...FilterPresets.collapsible}
+      values={values}
       onReset={onReset}
       quickFilters={quickFilters}
     >
       {/* Basic Filters */}
-      <ResponsiveFilters.Group title={t('user.filter.basic')}>
-        <ResponsiveFilters.Field
+      <FilterGroup title={t('user.filter.basic')}>
+        <FilterField
           label={t('user.filter.search')}
           type="search"
           value={values.search}
@@ -60,18 +60,18 @@ export function UserFilters({ values, onChange, onReset }: UserFiltersProps) {
           placeholder={t('user.filter.searchPlaceholder')}
         />
 
-        <ResponsiveFilters.Field
+        <FilterField
           label={t('user.field.email')}
           type="input"
           value={values.email}
           onChange={(value) => handleChange('email', value)}
           placeholder={t('user.filter.emailPlaceholder')}
         />
-      </ResponsiveFilters.Group>
+      </FilterGroup>
 
       {/* Status & Role Filters */}
-      <ResponsiveFilters.Group title={t('user.filter.statusAndRole')}>
-        <ResponsiveFilters.Field
+      <FilterGroup title={t('user.filter.statusAndRole')}>
+        <FilterField
           label={t('user.field.status')}
           type="select"
           value={values.status}
@@ -88,7 +88,7 @@ export function UserFilters({ values, onChange, onReset }: UserFiltersProps) {
           ]}
         />
 
-        <ResponsiveFilters.Field
+        <FilterField
           label={t('user.field.role')}
           type="select"
           value={values.role}
@@ -100,11 +100,11 @@ export function UserFilters({ values, onChange, onReset }: UserFiltersProps) {
             { label: t('user.role.business'), value: UserRole.business },
           ]}
         />
-      </ResponsiveFilters.Group>
+      </FilterGroup>
 
       {/* Verification Filters */}
-      <ResponsiveFilters.Group title={t('user.filter.verification')}>
-        <ResponsiveFilters.Field
+      <FilterGroup title={t('user.filter.verification')}>
+        <FilterField
           label={t('user.field.emailVerified')}
           type="select"
           value={values.emailVerified}
@@ -116,7 +116,7 @@ export function UserFilters({ values, onChange, onReset }: UserFiltersProps) {
           ]}
         />
 
-        <ResponsiveFilters.Field
+        <FilterField
           label={t('user.field.phoneVerified')}
           type="select"
           value={values.phoneVerified}
@@ -127,18 +127,18 @@ export function UserFilters({ values, onChange, onReset }: UserFiltersProps) {
             { label: t('common.no'), value: false },
           ]}
         />
-      </ResponsiveFilters.Group>
+      </FilterGroup>
 
       {/* Date Filters */}
-      <ResponsiveFilters.Group title={t('user.filter.dates')}>
-        <ResponsiveFilters.Field
+      <FilterGroup title={t('user.filter.dates')}>
+        <FilterField
           label={t('user.field.registrationDate')}
           type="date-range"
           value={values.registeredRange}
           onChange={(value) => handleChange('registeredRange', value)}
           placeholder={t('user.filter.registrationDatePlaceholder')}
         />
-      </ResponsiveFilters.Group>
-    </ResponsiveFilters>
+      </FilterGroup>
+    </UnifiedFilters>
   )
 }

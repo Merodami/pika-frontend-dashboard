@@ -2,7 +2,11 @@
 
 import { useTranslations } from 'next-intl'
 import { BusinessVerificationStatus, BusinessType } from '@merodami/pika-types'
-import { ResponsiveFilters } from '@/components/ui/filters'
+import {
+  UnifiedFilters,
+  FilterPresets,
+} from '@/components/ui/filters/UnifiedFilters'
+import { FilterField, FilterGroup } from '@/components/ui/filters'
 
 interface BusinessFiltersProps {
   values: Record<string, any>
@@ -20,11 +24,6 @@ export function BusinessFilters({
   const handleChange = (field: string, value: any) => {
     onChange({ ...values, [field]: value })
   }
-
-  // Count active filters
-  const activeFiltersCount = Object.values(values).filter(
-    (value) => value !== undefined && value !== null && value !== ''
-  ).length
 
   // Quick filter options for common use cases
   const quickFilters = [
@@ -49,14 +48,15 @@ export function BusinessFilters({
   ]
 
   return (
-    <ResponsiveFilters
-      activeFiltersCount={activeFiltersCount}
+    <UnifiedFilters
+      {...FilterPresets.collapsible}
+      values={values}
       onReset={onReset}
       quickFilters={quickFilters}
     >
       {/* Basic Filters */}
-      <ResponsiveFilters.Group title={t('business.filter.basic')}>
-        <ResponsiveFilters.Field
+      <FilterGroup title={t('business.filter.basic')}>
+        <FilterField
           label={t('business.filter.search')}
           type="search"
           value={values.search}
@@ -64,7 +64,7 @@ export function BusinessFilters({
           placeholder={t('business.filter.searchPlaceholder')}
         />
 
-        <ResponsiveFilters.Field
+        <FilterField
           label={t('business.field.name')}
           type="input"
           value={values.name}
@@ -72,18 +72,18 @@ export function BusinessFilters({
           placeholder={t('business.filter.namePlaceholder')}
         />
 
-        <ResponsiveFilters.Field
+        <FilterField
           label={t('business.field.city')}
           type="input"
           value={values.city}
           onChange={(value) => handleChange('city', value)}
           placeholder={t('business.filter.cityPlaceholder')}
         />
-      </ResponsiveFilters.Group>
+      </FilterGroup>
 
       {/* Status & Type Filters */}
-      <ResponsiveFilters.Group title={t('business.filter.statusAndType')}>
-        <ResponsiveFilters.Field
+      <FilterGroup title={t('business.filter.statusAndType')}>
+        <FilterField
           label={t('business.field.status')}
           type="select"
           value={values.status}
@@ -113,7 +113,7 @@ export function BusinessFilters({
           ]}
         />
 
-        <ResponsiveFilters.Field
+        <FilterField
           label={t('business.field.type')}
           type="select"
           value={values.type}
@@ -142,11 +142,11 @@ export function BusinessFilters({
             { label: t('business.type.other'), value: BusinessType.OTHER },
           ]}
         />
-      </ResponsiveFilters.Group>
+      </FilterGroup>
 
       {/* Verification Filters */}
-      <ResponsiveFilters.Group title={t('business.filter.verification')}>
-        <ResponsiveFilters.Field
+      <FilterGroup title={t('business.filter.verification')}>
+        <FilterField
           label={t('business.field.phoneVerified')}
           type="select"
           value={values.phoneVerified}
@@ -158,7 +158,7 @@ export function BusinessFilters({
           ]}
         />
 
-        <ResponsiveFilters.Field
+        <FilterField
           label={t('business.field.emailVerified')}
           type="select"
           value={values.emailVerified}
@@ -169,11 +169,11 @@ export function BusinessFilters({
             { label: t('common.no'), value: false },
           ]}
         />
-      </ResponsiveFilters.Group>
+      </FilterGroup>
 
       {/* Rating & Performance */}
-      <ResponsiveFilters.Group title={t('business.filter.performance')}>
-        <ResponsiveFilters.Field
+      <FilterGroup title={t('business.filter.performance')}>
+        <FilterField
           label={t('business.field.minRating')}
           type="select"
           value={values.minRating}
@@ -188,7 +188,7 @@ export function BusinessFilters({
           ]}
         />
 
-        <ResponsiveFilters.Field
+        <FilterField
           label={t('business.field.hasReviews')}
           type="select"
           value={values.hasReviews}
@@ -199,11 +199,11 @@ export function BusinessFilters({
             { label: t('common.no'), value: false },
           ]}
         />
-      </ResponsiveFilters.Group>
+      </FilterGroup>
 
       {/* Date Filters */}
-      <ResponsiveFilters.Group title={t('business.filter.dates')}>
-        <ResponsiveFilters.Field
+      <FilterGroup title={t('business.filter.dates')}>
+        <FilterField
           label={t('business.field.registrationDate')}
           type="date-range"
           value={values.registeredRange}
@@ -211,14 +211,14 @@ export function BusinessFilters({
           placeholder={t('business.filter.registrationDatePlaceholder')}
         />
 
-        <ResponsiveFilters.Field
+        <FilterField
           label={t('business.field.verificationDate')}
           type="date-range"
           value={values.verifiedRange}
           onChange={(value) => handleChange('verifiedRange', value)}
           placeholder={t('business.filter.verificationDatePlaceholder')}
         />
-      </ResponsiveFilters.Group>
-    </ResponsiveFilters>
+      </FilterGroup>
+    </UnifiedFilters>
   )
 }

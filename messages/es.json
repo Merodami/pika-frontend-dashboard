@@ -676,14 +676,23 @@
       "change": "Cambiar idioma"
     }
   },
+  "messages": {
+    "emailVerified": "Tu correo electrónico ha sido verificado exitosamente. Ya puedes iniciar sesión.",
+    "verificationSent": "Correo de verificación enviado. Por favor revisa tu bandeja de entrada.",
+    "passwordResetSent": "Enlace de restablecimiento de contraseña enviado. Por favor revisa tu correo."
+  },
   "errors": {
     "unauthorized": "No autorizado",
+    "invalidVerificationToken": "Enlace de verificación inválido o expirado. Por favor solicita uno nuevo.",
+    "verificationFailed": "La verificación del correo falló. Por favor intenta nuevamente o contacta soporte.",
     "forbidden": "Acceso denegado",
     "notFound": "No encontrado",
     "serverError": "Error del servidor",
     "networkError": "Error de conexión",
     "accessDenied": "Acceso denegado. Por favor, contacta a tu administrador.",
     "invalidCredentials": "Correo o contraseña incorrectos",
+    "emailExists": "Ya existe una cuenta con este correo electrónico",
+    "validation": "Por favor revisa el formulario para errores",
     "dashboardAccessDenied": "No tienes permiso para acceder a este recurso",
     "sessionExpired": "Tu sesión ha expirado. Por favor, inicia sesión nuevamente.",
     "accountLocked": "Cuenta no verificada. Por favor, revisa tu correo o contacta a soporte.",
@@ -1022,7 +1031,16 @@
       "phoneVerified": "Teléfono Verificado",
       "createdAt": "Creado En",
       "lastLogin": "Último Acceso",
-      "registrationDate": "Fecha de Registro"
+      "registrationDate": "Fecha de Registro",
+      "banReason": "Razón del Baneo",
+      "banDuration": "Duración del Baneo (días)",
+      "banDurationHint": "Dejar vacío para baneo permanente",
+      "reason": "Razón",
+      "suspensionDuration": "Duración de la Suspensión (días)",
+      "suspensionDurationHint": "Solo aplica cuando el estado es suspendido",
+      "notifyUser": "Notificar al Usuario",
+      "daysPlaceholder": "Días",
+      "verificationType": "Tipo de Verificación"
     },
     "filter": {
       "search": "Buscar",
@@ -1059,11 +1077,49 @@
       "edit": "Editar Usuario",
       "delete": "Eliminar Usuario",
       "sendEmail": "Enviar Correo",
-      "create": "Crear Usuario"
+      "create": "Crear Usuario",
+      "ban": "Banear Usuario",
+      "unban": "Desbanear Usuario",
+      "changeStatus": "Cambiar Estado",
+      "verify": "Verificar",
+      "resendVerification": "Reenviar Verificación",
+      "activate": "Activar",
+      "activateBusinessAccount": "Activar Cuenta de Negocio",
+      "resend": "Reenviar"
     },
     "message": {
       "deleteSuccess": "Usuario eliminado exitosamente",
-      "bulkDeleteSuccess": "Usuarios eliminados exitosamente"
+      "bulkDeleteSuccess": "Usuarios eliminados exitosamente",
+      "confirmDelete": "¿Estás seguro de que quieres eliminar este usuario?",
+      "confirmBulkDelete": "¿Estás seguro de que quieres eliminar {{count}} usuarios?",
+      "banSuccess": "Usuario baneado exitosamente",
+      "unbanSuccess": "Usuario desbaneado exitosamente",
+      "confirmUnban": "¿Estás seguro de que quieres desbanear a {{name}}?",
+      "statusChangeSuccess": "Estado del usuario cambiado exitosamente",
+      "verifySuccess": "Usuario verificado exitosamente",
+      "resendVerificationSuccess": "Correo de verificación enviado exitosamente",
+      "confirmResendVerification": "¿Reenviar correo de verificación a {{email}}?",
+      "confirmActivateBusinessAccount": "¿Está seguro que desea activar la cuenta de negocio para {{name}} ({{email}})? Esto le permitirá acceder al panel de negocios.",
+      "businessAccountActivated": "La cuenta de negocio ha sido activada exitosamente"
+    },
+    "modal": {
+      "deleteUser": "Eliminar Usuario",
+      "bulkDelete": "Eliminar Usuarios",
+      "banUser": "Banear Usuario",
+      "unbanUser": "Desbanear Usuario",
+      "changeStatus": "Cambiar Estado del Usuario",
+      "verifyUser": "Verificar Usuario",
+      "resendVerification": "Reenviar Verificación",
+      "activateBusinessAccount": "Activar Cuenta de Negocio"
+    },
+    "validation": {
+      "reasonRequired": "La razón es requerida",
+      "statusRequired": "El estado es requerido"
+    },
+    "verification": {
+      "email": "Correo Electrónico",
+      "phone": "Teléfono",
+      "both": "Correo Electrónico y Teléfono"
     }
   },
   "filter": {

@@ -21,7 +21,7 @@ const AXIOS_INSTANCE = axios.create({
   timeout: 30000, // 30 second timeout
 })
 
-// Add correlation ID to all requests
+// Add correlation ID and locale to all requests
 AXIOS_INSTANCE.interceptors.request.use(
   (config) => {
     // Generate simple correlation ID
@@ -37,6 +37,13 @@ AXIOS_INSTANCE.interceptors.request.use(
 
       if (userId) config.headers['x-user-id'] = userId
       if (sessionId) config.headers['x-session-id'] = sessionId
+      
+      // Add locale from URL path for translation resolution
+      const pathSegments = window.location.pathname.split('/')
+      const locale = pathSegments[1] // e.g., 'en', 'es', 'gn'
+      if (locale && ['en', 'es', 'gn'].includes(locale)) {
+        config.headers['Accept-Language'] = locale
+      }
     }
 
     return config

@@ -3,7 +3,7 @@ import { defineConfig } from 'orval'
 export default defineConfig({
   voucherbookApi: {
     input: {
-      target: 'http://localhost:5500/api/v1/docs/openapi/all-apis.json',
+      target: '../pika-backend/packages/api/generated/openapi/all-apis.json',
     },
     output: {
       mode: 'split',

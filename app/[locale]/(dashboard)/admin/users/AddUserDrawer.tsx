@@ -237,7 +237,7 @@ export default function AddUserDrawer({
               <Input
                 {...field}
                 prefix={<Mail className="w-4 h-4 text-gray-400" />}
-                placeholder="user@example.com"
+                placeholder="user@thevoucherbook.com"
               />
             )}
           />

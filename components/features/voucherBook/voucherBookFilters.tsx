@@ -1,9 +1,11 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-
-import { Form, Input, Select, Button, Space } from 'antd'
-import { Search } from 'lucide-react'
+import {
+  UnifiedFilters,
+  FilterPresets,
+} from '@/components/ui/filters/UnifiedFilters'
+import { FilterField, FilterGroup } from '@/components/ui/filters'
 import {
   VoucherBookStatus,
   VoucherBookType,
@@ -26,93 +28,116 @@ export function VoucherBookFilters({
     onChange({ ...values, [field]: value })
   }
 
+  // Quick filter options for common use cases
+  const quickFilters = [
+    {
+      label: t('status.published'),
+      value: VoucherBookStatus.PUBLISHED,
+      isActive: values.status === VoucherBookStatus.PUBLISHED,
+      onClick: (value: any) => handleChange('status', value),
+    },
+    {
+      label: t('status.draft'),
+      value: VoucherBookStatus.DRAFT,
+      isActive: values.status === VoucherBookStatus.DRAFT,
+      onClick: (value: any) => handleChange('status', value),
+    },
+    {
+      label: t('bookType.monthly'),
+      value: VoucherBookType.MONTHLY,
+      isActive: values.bookType === VoucherBookType.MONTHLY,
+      onClick: (value: any) => handleChange('bookType', value),
+    },
+  ]
+
   return (
-    <div className="bg-white p-4 rounded-lg shadow-sm mb-4">
-      <Form layout="inline" className="gap-2">
-        <Form.Item label={t('list.searchPlaceholder')}>
-          <Input
-            prefix={<Search className="w-4 h-4" />}
-            placeholder={t('list.searchPlaceholder')}
-            value={values.search}
-            onChange={(e) => handleChange('search', e.target.value)}
-            style={{ width: 200 }}
-          />
-        </Form.Item>
+    <UnifiedFilters
+      {...FilterPresets.collapsible}
+      values={values}
+      onReset={onReset}
+      quickFilters={quickFilters}
+    >
+      {/* Basic Filters */}
+      <FilterGroup title={t('list.filters')}>
+        <FilterField
+          label={t('list.searchPlaceholder')}
+          type="search"
+          value={values.search}
+          onChange={(value) => handleChange('search', value)}
+          placeholder={t('list.searchPlaceholder')}
+        />
 
-        <Form.Item label={t('list.filterByStatus')}>
-          <Select
-            value={values.status}
-            onChange={(value) => handleChange('status', value)}
-            style={{ width: 150 }}
-            allowClear
-            placeholder={t('list.filterByStatus')}
-          >
-            <Select.Option value={VoucherBookStatus.DRAFT}>
-              {t('status.draft')}
-            </Select.Option>
-            <Select.Option value={VoucherBookStatus.READY_FOR_PRINT}>
-              {t('status.readyForPrint')}
-            </Select.Option>
-            <Select.Option value={VoucherBookStatus.PUBLISHED}>
-              {t('status.published')}
-            </Select.Option>
-            <Select.Option value={VoucherBookStatus.ARCHIVED}>
-              {t('status.archived')}
-            </Select.Option>
-          </Select>
-        </Form.Item>
+        <FilterField
+          label={t('list.filterByStatus')}
+          type="select"
+          value={values.status}
+          onChange={(value) => handleChange('status', value)}
+          placeholder={t('list.filterByStatus')}
+          options={[
+            {
+              label: t('status.draft'),
+              value: VoucherBookStatus.DRAFT,
+            },
+            {
+              label: t('status.readyForPrint'),
+              value: VoucherBookStatus.READY_FOR_PRINT,
+            },
+            {
+              label: t('status.published'),
+              value: VoucherBookStatus.PUBLISHED,
+            },
+            {
+              label: t('status.archived'),
+              value: VoucherBookStatus.ARCHIVED,
+            },
+          ]}
+        />
 
-        <Form.Item label={t('list.filterByType')}>
-          <Select
-            value={values.bookType}
-            onChange={(value) => handleChange('bookType', value)}
-            style={{ width: 180 }}
-            allowClear
-            placeholder={t('list.filterByType')}
-          >
-            <Select.Option value={VoucherBookType.MONTHLY}>
-              {t('bookType.monthly')}
-            </Select.Option>
-            <Select.Option value={VoucherBookType.SPECIAL_EDITION}>
-              {t('bookType.specialEdition')}
-            </Select.Option>
-            <Select.Option value={VoucherBookType.REGIONAL}>
-              {t('bookType.regional')}
-            </Select.Option>
-            <Select.Option value={VoucherBookType.SEASONAL}>
-              {t('bookType.seasonal')}
-            </Select.Option>
-            <Select.Option value={VoucherBookType.PROMOTIONAL}>
-              {t('bookType.promotional')}
-            </Select.Option>
-          </Select>
-        </Form.Item>
+        <FilterField
+          label={t('list.filterByType')}
+          type="select"
+          value={values.bookType}
+          onChange={(value) => handleChange('bookType', value)}
+          placeholder={t('list.filterByType')}
+          options={[
+            {
+              label: t('bookType.monthly'),
+              value: VoucherBookType.MONTHLY,
+            },
+            {
+              label: t('bookType.specialEdition'),
+              value: VoucherBookType.SPECIAL_EDITION,
+            },
+            {
+              label: t('bookType.regional'),
+              value: VoucherBookType.REGIONAL,
+            },
+            {
+              label: t('bookType.seasonal'),
+              value: VoucherBookType.SEASONAL,
+            },
+            {
+              label: t('bookType.promotional'),
+              value: VoucherBookType.PROMOTIONAL,
+            },
+          ]}
+        />
 
-        <Form.Item label={t('list.filterByYear')}>
-          <Select
-            value={values.year}
-            onChange={(value) => handleChange('year', value)}
-            style={{ width: 100 }}
-            allowClear
-            placeholder={t('list.filterByYear')}
-          >
-            {Array.from({ length: 10 }, (_, i) => {
-              const year = new Date().getFullYear() - i
-              return (
-                <Select.Option key={year} value={year}>
-                  {year}
-                </Select.Option>
-              )
-            })}
-          </Select>
-        </Form.Item>
-
-        <Form.Item>
-          <Space>
-            <Button onClick={onReset}>{t('common.button.reset')}</Button>
-          </Space>
-        </Form.Item>
-      </Form>
-    </div>
+        <FilterField
+          label={t('list.filterByYear')}
+          type="select"
+          value={values.year}
+          onChange={(value) => handleChange('year', value)}
+          placeholder={t('list.filterByYear')}
+          options={Array.from({ length: 10 }, (_, i) => {
+            const year = new Date().getFullYear() - i
+            return {
+              label: year.toString(),
+              value: year,
+            }
+          })}
+        />
+      </FilterGroup>
+    </UnifiedFilters>
   )
 }

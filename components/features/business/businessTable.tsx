@@ -97,9 +97,9 @@ export function BusinessTable({
       accessorKey: 'logo',
       header: '',
       size: 60,
-      cell: () => (
+      cell: ({ row }) => (
         <Avatar
-          src={undefined} // logoUrl not available in current API response
+          src={row.original.logoUrl}
           icon={<Building className="w-4 h-4" />}
           size="small"
         />

@@ -678,14 +678,23 @@
       "change": "Change language"
     }
   },
+  "messages": {
+    "emailVerified": "Your email has been successfully verified. You can now log in.",
+    "verificationSent": "Verification email sent. Please check your inbox.",
+    "passwordResetSent": "Password reset link sent. Please check your email."
+  },
   "errors": {
     "unauthorized": "Unauthorized",
+    "invalidVerificationToken": "Invalid or expired verification link. Please request a new one.",
+    "verificationFailed": "Email verification failed. Please try again or contact support.",
     "forbidden": "Access denied",
     "notFound": "Not found",
     "serverError": "Server error",
     "networkError": "Connection error",
     "accessDenied": "Access denied. Please contact your administrator.",
     "invalidCredentials": "Invalid email or password",
+    "emailExists": "An account with this email already exists",
+    "validation": "Please check the form for errors",
     "dashboardAccessDenied": "You don't have permission to access this resource",
     "sessionExpired": "Your session has expired. Please log in again.",
     "accountLocked": "Account not verified. Please check your email or contact support.",
@@ -1033,7 +1042,16 @@
       "phoneVerified": "Phone Verified",
       "createdAt": "Created At",
       "lastLogin": "Last Login",
-      "registrationDate": "Registration Date"
+      "registrationDate": "Registration Date",
+      "banReason": "Ban Reason",
+      "banDuration": "Ban Duration (days)",
+      "banDurationHint": "Leave empty for permanent ban",
+      "reason": "Reason",
+      "suspensionDuration": "Suspension Duration (days)",
+      "suspensionDurationHint": "Only applies when status is suspended",
+      "notifyUser": "Notify User",
+      "daysPlaceholder": "Days",
+      "verificationType": "Verification Type"
     },
     "filter": {
       "search": "Search",
@@ -1070,11 +1088,49 @@
       "edit": "Edit User",
       "delete": "Delete User",
       "sendEmail": "Send Email",
-      "create": "Create User"
+      "create": "Create User",
+      "ban": "Ban User",
+      "unban": "Unban User",
+      "changeStatus": "Change Status",
+      "verify": "Verify",
+      "resendVerification": "Resend Verification",
+      "activate": "Activate",
+      "activateBusinessAccount": "Activate Business Account",
+      "resend": "Resend"
     },
     "message": {
       "deleteSuccess": "User deleted successfully",
-      "bulkDeleteSuccess": "Users deleted successfully"
+      "bulkDeleteSuccess": "Users deleted successfully",
+      "confirmDelete": "Are you sure you want to delete this user?",
+      "confirmBulkDelete": "Are you sure you want to delete {{count}} users?",
+      "banSuccess": "User banned successfully",
+      "unbanSuccess": "User unbanned successfully",
+      "confirmUnban": "Are you sure you want to unban {{name}}?",
+      "statusChangeSuccess": "User status changed successfully",
+      "verifySuccess": "User verified successfully",
+      "resendVerificationSuccess": "Verification email sent successfully",
+      "confirmResendVerification": "Resend verification email to {{email}}?",
+      "confirmActivateBusinessAccount": "Are you sure you want to activate the business account for {{name}} ({{email}})? This will allow them to access the business dashboard.",
+      "businessAccountActivated": "Business account has been activated successfully"
+    },
+    "modal": {
+      "deleteUser": "Delete User",
+      "bulkDelete": "Delete Users",
+      "banUser": "Ban User",
+      "unbanUser": "Unban User",
+      "changeStatus": "Change User Status",
+      "verifyUser": "Verify User",
+      "resendVerification": "Resend Verification",
+      "activateBusinessAccount": "Activate Business Account"
+    },
+    "validation": {
+      "reasonRequired": "Reason is required",
+      "statusRequired": "Status is required"
+    },
+    "verification": {
+      "email": "Email",
+      "phone": "Phone",
+      "both": "Both Email and Phone"
     }
   },
   "filter": {

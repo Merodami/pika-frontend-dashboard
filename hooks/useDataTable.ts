@@ -295,23 +295,35 @@ export function useDataTable<T = any>(
   }
 }
 
+// Server pagination metadata type matching DataGridServer expectations
+export interface ServerPaginationMeta {
+  total: number
+  page: number
+  limit: number
+  totalPages: number
+}
+
 // Helper hook for server-side pagination
 export function useServerDataTable<T = any>(
   options: UseDataTableOptions = {}
 ): UseDataTableReturn<T> & {
   serverPagination: (
     metadata: PaginationMetadata | undefined
-  ) => TablePaginationConfig
+  ) => ServerPaginationMeta
 } {
   const dataTable = useDataTable<T>(options)
 
   const serverPagination = useCallback(
-    (metadata: PaginationMetadata | undefined) => ({
-      ...dataTable.pagination,
-      total: metadata?.total || 0,
-      showTotal: (total: number, range: [number, number]) =>
-        `${range[0]}-${range[1]} of ${total}`,
-    }),
+    (metadata: PaginationMetadata | undefined): ServerPaginationMeta => {
+      const limit = metadata?.limit || dataTable.pagination.pageSize || 10
+      const total = metadata?.total || 0
+      return {
+        total,
+        page: metadata?.page || 1,
+        limit,
+        totalPages: metadata?.totalPages || Math.ceil(total / limit),
+      }
+    },
     [dataTable.pagination]
   )
 
