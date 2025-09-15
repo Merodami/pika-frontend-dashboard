@@ -76,7 +76,10 @@ export function useVoucherBookStatistics() {
 /**
  * Hook to create a new voucher book
  */
-export function useCreateVoucherBook() {
+export function useCreateVoucherBook(options?: {
+  successMessage?: string
+  errorMessage?: string
+}) {
   const queryClient = useQueryClient()
 
   return useApiMutation<
@@ -85,7 +88,8 @@ export function useCreateVoucherBook() {
     CreateAdminVoucherBookBody
   >({
     mutationFn: (data) => createAdminVoucherBook(data),
-    successMessage: 'Voucher book created successfully',
+    successMessage: options?.successMessage,
+    errorMessage: options?.errorMessage,
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.voucherBooks.lists(),
@@ -109,7 +113,6 @@ export function useUpdateVoucherBook() {
     { id: string; data: UpdateAdminVoucherBookBody }
   >({
     mutationFn: ({ id, data }) => updateAdminVoucherBook(id, data),
-    successMessage: 'Voucher book updated successfully',
     onSuccess: (_, { id }) => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.voucherBooks.detail(id),
@@ -124,12 +127,16 @@ export function useUpdateVoucherBook() {
 /**
  * Hook to delete a voucher book
  */
-export function useDeleteVoucherBook() {
+export function useDeleteVoucherBook(options?: {
+  successMessage?: string
+  errorMessage?: string
+}) {
   const queryClient = useQueryClient()
 
   return useApiMutation<null, Error, string>({
     mutationFn: (id) => deleteAdminVoucherBook(id),
-    successMessage: 'Voucher book deleted successfully',
+    successMessage: options?.successMessage,
+    errorMessage: options?.errorMessage,
     onSuccess: (_, id) => {
       queryClient.removeQueries({
         queryKey: queryKeys.voucherBooks.detail(id),
@@ -156,7 +163,6 @@ export function useUpdateVoucherBookStatus() {
     { id: string; data: UpdateAdminVoucherBookStatusBody }
   >({
     mutationFn: ({ id, data }) => updateAdminVoucherBookStatus(id, data),
-    successMessage: 'Voucher book status updated successfully',
     onSuccess: (_, { id }) => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.voucherBooks.detail(id),
@@ -183,7 +189,6 @@ export function useGenerateVoucherBookPdf() {
     { id: string; data: GenerateAdminVoucherBookPdfBody }
   >({
     mutationFn: ({ id, data }) => generateAdminVoucherBookPdf(id, data),
-    successMessage: 'PDF generation started successfully',
     onSuccess: (_, { id }) => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.voucherBooks.detail(id),
@@ -203,8 +208,6 @@ export function useBulkArchiveVoucherBooks() {
 
   return useApiMutation<any, Error, BulkArchiveAdminVoucherBooksBody>({
     mutationFn: (data) => bulkArchiveAdminVoucherBooks(data),
-    successMessage: (result: any) =>
-      `Successfully archived ${result.successful || 0} voucher books`,
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.voucherBooks.all(),

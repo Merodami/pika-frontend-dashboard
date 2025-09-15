@@ -5,7 +5,6 @@ import { message } from 'antd'
 import { Building } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { UserRole } from '@/lib/api/orval-client'
 
 import {
@@ -14,13 +13,13 @@ import {
 } from '@/components/ui/DataGrid/actions/BulkActions'
 import { ContextActionBar } from '@/components/ui/ContextActionBar'
 import type { ActionItem } from '@/components/ui/ContextActionBar'
-import {
-  getAdminBusinessList,
-  deleteAdminBusiness,
-  approveAdminBusiness,
-} from '@/lib/api/orval-client'
 import type { Locale } from '@/i18n/config'
 import { useServerDataTable } from '@/hooks/useDataTable'
+import {
+  useBusinesses,
+  useDeleteBusiness,
+  useApproveBusiness,
+} from '@/hooks/api/businesses/useBusinesses'
 
 import { BusinessTable } from './businessTable'
 import { BusinessFilters } from './businessFilters'
@@ -34,7 +33,6 @@ interface BusinessListContainerProps {
 export function BusinessListContainer({ locale }: BusinessListContainerProps) {
   const router = useRouter()
   const t = useTranslations()
-  const queryClient = useQueryClient()
   const [isAddBusinessDrawerOpen, setIsAddBusinessDrawerOpen] = useState(false)
 
   // Initialize data table with server-side support
@@ -61,40 +59,20 @@ export function BusinessListContainer({ locale }: BusinessListContainerProps) {
     }
   }, [dataTable.queryParams, gridQueryParams])
 
-  // Fetch businesses data - driven by DataGrid's query params
-  const { data, isLoading } = useQuery({
-    queryKey: ['admin-businesses', finalQueryParams],
-    queryFn: async () => {
-      console.log('🔄 Fetching businesses with params:', finalQueryParams)
-      return await getAdminBusinessList(finalQueryParams)
-    },
-    placeholderData: (previousData) => previousData,
-  })
+  // Use custom hook for fetching businesses
+  const { data, isLoading } = useBusinesses(finalQueryParams)
 
-  // Delete mutation
-  const deleteMutation = useMutation({
-    mutationFn: deleteAdminBusiness,
-    onSuccess: () => {
-      message.success(t('business.message.deleteSuccess'))
-      queryClient.invalidateQueries({ queryKey: ['admin-businesses'] })
-      dataTable.clearSelection()
-    },
-    onError: () => {
-      message.error(t('common.message.errorOccurred'))
-    },
+  // Use custom hooks for mutations with translated messages
+  const deleteMutation = useDeleteBusiness({
+    successMessage: t('business.message.deleteSuccess'),
+    errorMessage: t('common.message.errorOccurred'),
   })
-
-  // Approve mutation
-  const approveMutation = useMutation({
-    mutationFn: ({ id, approved }: { id: string; approved: boolean }) =>
-      approveAdminBusiness(id, { approved }),
-    onSuccess: () => {
-      message.success(t('business.message.approveSuccess'))
-      queryClient.invalidateQueries({ queryKey: ['admin-businesses'] })
-    },
-    onError: () => {
-      message.error(t('common.message.errorOccurred'))
-    },
+  const approveMutation = useApproveBusiness({
+    successMessage: (data) =>
+      data.approved
+        ? t('business.message.approveSuccess')
+        : t('business.message.rejectSuccess'),
+    errorMessage: t('common.message.errorOccurred'),
   })
 
   // Event handlers
@@ -107,7 +85,11 @@ export function BusinessListContainer({ locale }: BusinessListContainerProps) {
   }
 
   const handleDeleteBusiness = (id: string) => {
-    deleteMutation.mutate(id)
+    deleteMutation.mutate(id, {
+      onSuccess: () => {
+        dataTable.clearSelection()
+      },
+    })
   }
 
   const handleApproveBusiness = (id: string) => {
@@ -124,11 +106,11 @@ export function BusinessListContainer({ locale }: BusinessListContainerProps) {
 
   const handleBulkDelete = async (selectedKeys: React.Key[]) => {
     try {
+      // Use the delete mutation for each selected item
       await Promise.all(
-        selectedKeys.map((key) => deleteAdminBusiness(String(key)))
+        selectedKeys.map((key) => deleteMutation.mutateAsync(String(key)))
       )
       message.success(t('business.message.bulkDeleteSuccess'))
-      queryClient.invalidateQueries({ queryKey: ['admin-businesses'] })
       dataTable.clearSelection()
     } catch (error) {
       message.error(t('common.message.errorOccurred'))

@@ -5,7 +5,6 @@ import { message } from 'antd'
 import { Ticket } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { UserRole } from '@/lib/api/orval-client'
 
 import {
@@ -14,13 +13,13 @@ import {
 } from '@/components/ui/DataGrid/actions/BulkActions'
 import { ContextActionBar } from '@/components/ui/ContextActionBar'
 import type { ActionItem } from '@/components/ui/ContextActionBar'
-import {
-  getAdminVoucherList,
-  deleteAdminVoucher,
-  publishAdminVoucher,
-} from '@/lib/api/orval-client'
 import type { Locale } from '@/i18n/config'
 import { useServerDataTable } from '@/hooks/useDataTable'
+import {
+  useVouchers,
+  useDeleteVoucher,
+  usePublishVoucher,
+} from '@/hooks/api/vouchers/useVouchers'
 
 import { VoucherTable } from './voucherTable'
 import { VoucherFilters } from './voucherFilters'
@@ -38,7 +37,6 @@ export function VoucherListContainer({
 }: VoucherListContainerProps) {
   const router = useRouter()
   const t = useTranslations()
-  const queryClient = useQueryClient()
 
   // Initialize data table with server-side support
   const dataTable = useServerDataTable({
@@ -65,39 +63,15 @@ export function VoucherListContainer({
     }
   }, [dataTable.queryParams, gridQueryParams, businessId])
 
-  // Fetch vouchers data - driven by DataGrid's query params
-  const { data, isLoading } = useQuery({
-    queryKey: ['admin-vouchers', finalQueryParams],
-    queryFn: async () => {
-      console.log('🔄 Fetching vouchers with params:', finalQueryParams)
-      return await getAdminVoucherList(finalQueryParams)
-    },
-    placeholderData: (previousData) => previousData,
+  // Use custom hooks for API calls with translated messages
+  const { data, isLoading } = useVouchers(finalQueryParams)
+  const deleteMutation = useDeleteVoucher({
+    successMessage: t('voucher.message.deleteSuccess'),
+    errorMessage: t('common.message.errorOccurred'),
   })
-
-  // Delete mutation
-  const deleteMutation = useMutation({
-    mutationFn: deleteAdminVoucher,
-    onSuccess: () => {
-      message.success(t('voucher.message.deleteSuccess'))
-      queryClient.invalidateQueries({ queryKey: ['admin-vouchers'] })
-      dataTable.clearSelection()
-    },
-    onError: () => {
-      message.error(t('common.message.errorOccurred'))
-    },
-  })
-
-  // Publish mutation
-  const publishMutation = useMutation({
-    mutationFn: publishAdminVoucher,
-    onSuccess: () => {
-      message.success(t('voucher.message.publishSuccess'))
-      queryClient.invalidateQueries({ queryKey: ['admin-vouchers'] })
-    },
-    onError: () => {
-      message.error(t('common.message.errorOccurred'))
-    },
+  const publishMutation = usePublishVoucher({
+    successMessage: t('voucher.message.publishSuccess'),
+    errorMessage: t('common.message.errorOccurred'),
   })
 
   // Event handlers
@@ -118,7 +92,11 @@ export function VoucherListContainer({
   }
 
   const handleDeleteVoucher = (id: string) => {
-    deleteMutation.mutate(id)
+    deleteMutation.mutate(id, {
+      onSuccess: () => {
+        dataTable.clearSelection()
+      },
+    })
   }
 
   const handlePublishVoucher = (id: string) => {
@@ -135,11 +113,11 @@ export function VoucherListContainer({
 
   const handleBulkDelete = async (selectedKeys: React.Key[]) => {
     try {
+      // Use the delete mutation for each selected item
       await Promise.all(
-        selectedKeys.map((key) => deleteAdminVoucher(String(key)))
+        selectedKeys.map((key) => deleteMutation.mutateAsync(String(key)))
       )
       message.success(t('voucher.message.bulkDeleteSuccess'))
-      queryClient.invalidateQueries({ queryKey: ['admin-vouchers'] })
       dataTable.clearSelection()
     } catch (error) {
       message.error(t('common.message.errorOccurred'))

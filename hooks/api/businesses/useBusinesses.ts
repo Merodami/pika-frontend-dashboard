@@ -11,6 +11,7 @@ import {
   deactivateAdminBusiness,
   updateAdminBusinessVerification,
   approveAdminBusiness,
+  getAdminBusinessVoucherStats,
   type GetAdminBusinessListParams,
   type GetAdminBusinessList200,
   type GetAdminBusinessById200,
@@ -18,6 +19,7 @@ import {
   type UpdateAdminBusinessBody,
   type UpdateAdminBusinessVerificationBody,
   type ApproveAdminBusiness200,
+  type GetAdminBusinessVoucherStats200,
 } from '@/lib/api/orval-client'
 import { queryKeys } from '@/lib/api/queryKeys'
 
@@ -61,7 +63,10 @@ export function useBusiness(id: string, options?: { enabled?: boolean }) {
 /**
  * Hook to create a new business
  */
-export function useCreateBusiness() {
+export function useCreateBusiness(options?: {
+  successMessage?: string
+  errorMessage?: string
+}) {
   const queryClient = useQueryClient()
 
   return useApiMutation<
@@ -70,7 +75,8 @@ export function useCreateBusiness() {
     CreateAdminBusinessBody
   >({
     mutationFn: (data) => createAdminBusiness(data),
-    successMessage: 'Business created successfully',
+    successMessage: options?.successMessage,
+    errorMessage: options?.errorMessage,
     onSuccess: () => {
       // Invalidate lists
       queryClient.invalidateQueries({
@@ -83,7 +89,10 @@ export function useCreateBusiness() {
 /**
  * Hook to update a business
  */
-export function useUpdateBusiness() {
+export function useUpdateBusiness(options?: {
+  successMessage?: string
+  errorMessage?: string
+}) {
   const queryClient = useQueryClient()
 
   return useApiMutation<
@@ -92,7 +101,8 @@ export function useUpdateBusiness() {
     { id: string; data: UpdateAdminBusinessBody }
   >({
     mutationFn: ({ id, data }) => updateAdminBusiness(id, data),
-    successMessage: 'Business updated successfully',
+    successMessage: options?.successMessage,
+    errorMessage: options?.errorMessage,
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.businesses.lists(),
@@ -114,7 +124,6 @@ export function useVerifyBusiness() {
   >({
     mutationFn: ({ id, verified }) =>
       updateAdminBusinessVerification(id, { verified }),
-    successMessage: 'Business verification status updated',
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.businesses.lists(),
@@ -132,7 +141,6 @@ export function useToggleBusinessActive() {
   return useApiMutation<null, Error, { id: string; active: boolean }>({
     mutationFn: ({ id, active }) =>
       active ? activateAdminBusiness(id) : deactivateAdminBusiness(id),
-    successMessage: 'Business status updated successfully',
     onSuccess: (_, { id }) => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.businesses.detail(id),
@@ -148,7 +156,10 @@ export function useToggleBusinessActive() {
  * Hook to approve/unapprove a business
  * Uses the dedicated approval endpoint
  */
-export function useApproveBusiness() {
+export function useApproveBusiness(options?: {
+  successMessage?: string | ((data: ApproveAdminBusiness200) => string)
+  errorMessage?: string
+}) {
   const queryClient = useQueryClient()
 
   return useApiMutation<
@@ -158,8 +169,8 @@ export function useApproveBusiness() {
   >({
     mutationFn: ({ id, approved, reason }) =>
       approveAdminBusiness(id, { approved, reason }),
-    successMessage: (data) =>
-      data.approved ? 'Business approved successfully' : 'Business rejected',
+    successMessage: options?.successMessage,
+    errorMessage: options?.errorMessage,
     onSuccess: (_, { id }) => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.businesses.detail(id),
@@ -174,12 +185,16 @@ export function useApproveBusiness() {
 /**
  * Hook to delete a business
  */
-export function useDeleteBusiness() {
+export function useDeleteBusiness(options?: {
+  successMessage?: string
+  errorMessage?: string
+}) {
   const queryClient = useQueryClient()
 
   return useApiMutation<null, Error, string>({
     mutationFn: (id) => deleteAdminBusiness(id),
-    successMessage: 'Business deleted successfully',
+    successMessage: options?.successMessage,
+    errorMessage: options?.errorMessage,
     onSuccess: (_, id) => {
       // Remove from cache
       queryClient.removeQueries({
@@ -201,6 +216,21 @@ export function useBusinessStats(id: string, options?: { enabled?: boolean }) {
   return useApiQuery({
     queryKey: queryKeys.businesses.stats(id),
     queryFn: () => getAdminBusinessById(id),
+    enabled: options?.enabled ?? !!id,
+    staleTime: 1 * 60 * 1000, // 1 minute
+  })
+}
+
+/**
+ * Hook to get business voucher statistics
+ */
+export function useBusinessVoucherStats(
+  id: string,
+  options?: { enabled?: boolean }
+) {
+  return useApiQuery<GetAdminBusinessVoucherStats200>({
+    queryKey: ['admin-business-stats', id],
+    queryFn: () => getAdminBusinessVoucherStats(id, {}),
     enabled: options?.enabled ?? !!id,
     staleTime: 1 * 60 * 1000, // 1 minute
   })

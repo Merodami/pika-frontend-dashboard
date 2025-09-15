@@ -1,10 +1,8 @@
 'use client'
 
-import { message } from 'antd'
 import { Plus } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { UserRole } from '@/lib/api/orval-client'
 
 import {
@@ -15,9 +13,9 @@ import { ContextActionBar } from '@/components/ui/ContextActionBar'
 import type { ActionItem } from '@/components/ui/ContextActionBar'
 import { useServerDataTable } from '@/hooks/useDataTable'
 import {
-  getAdminVoucherBookList,
-  deleteAdminVoucherBook,
-} from '@/lib/api/orval-client'
+  useVoucherBooks,
+  useDeleteVoucherBook,
+} from '@/hooks/api/voucherBooks/useVoucherBooks'
 import {
   mapApiVoucherBookListToDomain,
   VoucherBookDomain,
@@ -38,42 +36,33 @@ export function VoucherBookListContainer({
 }: VoucherBookListContainerProps) {
   const router = useRouter()
   const t = useTranslations('voucherBooks')
-  const queryClient = useQueryClient()
 
   // Data table state management
   const dataTable = useServerDataTable<VoucherBookDomain>({
     initialPageSize: 20,
   })
 
-  // Fetch voucher books data
-  const { data, isLoading } = useQuery({
-    queryKey: ['admin-voucher-books', dataTable.queryParams],
-    queryFn: async () => {
-      const response = await getAdminVoucherBookList({
-        page: dataTable.state.page,
-        limit: dataTable.state.pageSize,
-        search: dataTable.state.search || undefined,
-        status: dataTable.state.filters.status,
-        bookType: dataTable.state.filters.bookType,
-        year: dataTable.state.filters.year,
-        sortBy: dataTable.state.sortField as any,
-        sortOrder: dataTable.state.sortOrder as any,
-      })
-      return mapApiVoucherBookListToDomain(response)
-    },
+  // Prepare query params for the hook
+  const queryParams = {
+    page: dataTable.state.page,
+    limit: dataTable.state.pageSize,
+    search: dataTable.state.search || undefined,
+    status: dataTable.state.filters.status,
+    bookType: dataTable.state.filters.bookType,
+    year: dataTable.state.filters.year,
+    sortBy: dataTable.state.sortField as any,
+    sortOrder: dataTable.state.sortOrder as any,
+  }
+
+  // Use custom hooks for API calls with translated messages
+  const { data: apiData, isLoading } = useVoucherBooks(queryParams)
+  const deleteBookMutation = useDeleteVoucherBook({
+    successMessage: t('messages.deleteSuccess'),
+    errorMessage: t('messages.deleteError'),
   })
 
-  // Delete mutation
-  const deleteBookMutation = useMutation({
-    mutationFn: (bookId: string) => deleteAdminVoucherBook(bookId),
-    onSuccess: () => {
-      message.success(t('messages.deleteSuccess'))
-      queryClient.invalidateQueries({ queryKey: ['admin-voucher-books'] })
-    },
-    onError: () => {
-      message.error(t('messages.deleteError'))
-    },
-  })
+  // Map the API response to domain model
+  const data = apiData ? mapApiVoucherBookListToDomain(apiData) : undefined
 
   // Handlers
   const handleViewBook = (id: string) => {

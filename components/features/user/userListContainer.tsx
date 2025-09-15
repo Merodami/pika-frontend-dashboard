@@ -30,6 +30,7 @@ import {
   useUnbanUser,
   useUpdateUserStatus,
   useVerifyUser,
+  useVerifyUserBoth,
   useResendUserVerification,
 } from '@/hooks/api/users/useUsers'
 
@@ -74,6 +75,7 @@ export function UserListContainer({ locale }: UserListContainerProps) {
   const unbanUserMutation = useUnbanUser()
   const updateStatusMutation = useUpdateUserStatus()
   const verifyUserMutation = useVerifyUser()
+  const verifyUserBothMutation = useVerifyUserBoth()
   const resendVerificationMutation = useResendUserVerification()
 
   // Event handlers
@@ -287,13 +289,24 @@ export function UserListContainer({ locale }: UserListContainerProps) {
       onOk: async () => {
         try {
           const values = await verifyForm.validateFields()
-          const data: VerifyAdminUserBody = {
-            type: values.type,
-            userId: user.id,
-            email: user.email,
-            phoneNumber: user.phoneNumber,
+
+          if (values.type === 'both') {
+            // Use the dedicated hook for verifying both
+            await verifyUserBothMutation.mutateAsync({
+              userId: user.id,
+              email: user.email,
+              phoneNumber: user.phoneNumber,
+            })
+          } else {
+            // Single verification (email or phone)
+            const data: VerifyAdminUserBody = {
+              type: values.type,
+              userId: user.id,
+              email: user.email,
+              phoneNumber: user.phoneNumber,
+            }
+            await verifyUserMutation.mutateAsync(data)
           }
-          await verifyUserMutation.mutateAsync(data)
         } catch (error) {
           throw error
         }

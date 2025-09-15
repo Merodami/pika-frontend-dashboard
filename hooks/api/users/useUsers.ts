@@ -85,7 +85,6 @@ export function useCreateUser() {
 
   return useApiMutation<GetAdminUserById200, Error, CreateAdminUserBody>({
     mutationFn: (data) => createAdminUser(data),
-    successMessage: 'User created successfully',
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.users.lists(),
@@ -106,7 +105,6 @@ export function useUpdateUser() {
     { id: string; data: UpdateAdminUserBody }
   >({
     mutationFn: ({ id, data }) => updateAdminUser(id, data),
-    successMessage: 'User updated successfully',
     onSuccess: (_, { id }) => {
       invalidateUserQueries(queryClient, id)
     },
@@ -121,7 +119,6 @@ export function useDeleteUser() {
 
   return useApiMutation<null, Error, string>({
     mutationFn: (id) => deleteAdminUser(id),
-    successMessage: 'User deleted successfully',
     onSuccess: (_, id) => {
       queryClient.removeQueries({
         queryKey: queryKeys.users.detail(id),
@@ -146,7 +143,6 @@ export function useResetBusinessRegistration() {
   >({
     mutationFn: (userId) =>
       resetBusinessRegistration(userId, { reason: 'Reset requested by admin' }),
-    successMessage: 'Business registration reset successfully',
     onSuccess: (_, userId) => {
       invalidateUserQueries(queryClient, userId)
     },
@@ -165,7 +161,6 @@ export function useUpdateUserStatus() {
     { userId: string; data: UpdateAdminUserStatusBody }
   >({
     mutationFn: ({ userId, data }) => updateAdminUserStatus(userId, data),
-    successMessage: 'User status updated successfully',
     onSuccess: (_, { userId }) => {
       invalidateUserQueries(queryClient, userId)
     },
@@ -181,7 +176,6 @@ export function useBanUser() {
   return useApiMutation<any, Error, { userId: string; data: BanAdminUserBody }>(
     {
       mutationFn: ({ userId, data }) => banAdminUser(userId, data),
-      successMessage: 'User banned successfully',
       onSuccess: (_, { userId }) => {
         invalidateUserQueries(queryClient, userId)
       },
@@ -201,7 +195,6 @@ export function useUnbanUser() {
     { userId: string; data: UnbanAdminUserBody }
   >({
     mutationFn: ({ userId, data }) => unbanAdminUser(userId, data),
-    successMessage: 'User unbanned successfully',
     onSuccess: (_, { userId }) => {
       invalidateUserQueries(queryClient, userId)
     },
@@ -216,11 +209,61 @@ export function useVerifyUser() {
 
   return useApiMutation<any, Error, VerifyAdminUserBody>({
     mutationFn: (data) => verifyAdminUser(data),
-    successMessage: 'User verified successfully',
     onSuccess: (_, data) => {
       if (data.userId) {
         invalidateUserQueries(queryClient, data.userId)
       }
+    },
+  })
+}
+
+/**
+ * Hook to verify both email and phone for a user
+ */
+export function useVerifyUserBoth() {
+  const queryClient = useQueryClient()
+
+  return useApiMutation<
+    any,
+    Error,
+    { userId: string; email: string; phoneNumber?: string | null }
+  >({
+    mutationFn: async (data) => {
+      // Make two separate API calls for email and phone
+      const results = []
+
+      // Verify email
+      try {
+        const emailResult = await verifyAdminUser({
+          type: 'email',
+          userId: data.userId,
+          email: data.email,
+          phoneNumber: data.phoneNumber,
+        })
+        results.push(emailResult)
+      } catch (error) {
+        console.error('Email verification failed:', error)
+        throw error
+      }
+
+      // Verify phone
+      try {
+        const phoneResult = await verifyAdminUser({
+          type: 'phone',
+          userId: data.userId,
+          email: data.email,
+          phoneNumber: data.phoneNumber,
+        })
+        results.push(phoneResult)
+      } catch (error) {
+        console.error('Phone verification failed:', error)
+        throw error
+      }
+
+      return results
+    },
+    onSuccess: (_, data) => {
+      invalidateUserQueries(queryClient, data.userId)
     },
   })
 }
@@ -233,7 +276,6 @@ export function useResendUserVerification() {
 
   return useApiMutation<any, Error, ResendAdminUserVerificationBody>({
     mutationFn: (data) => resendAdminUserVerification(data),
-    successMessage: 'Verification email resent successfully',
     onSuccess: (_, data) => {
       if (data.userId) {
         invalidateUserQueries(queryClient, data.userId)

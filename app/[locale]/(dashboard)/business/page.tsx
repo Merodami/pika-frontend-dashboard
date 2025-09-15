@@ -29,7 +29,9 @@ export default async function BusinessDashboardPage({
     <DashboardPageLayout
       title={t('dashboard.welcome', { name: user.firstName })}
       subtitle={t('dashboard.business.subtitle')}
-      metricsSection={<BusinessDashboardMetricsModern businessId={businessId} />}
+      metricsSection={
+        <BusinessDashboardMetricsModern businessId={businessId} />
+      }
     >
       <div className="space-y-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

@@ -315,9 +315,21 @@ export function DataGridServer<T>({
 
       {/* Mobile-Responsive Pagination */}
       <MobilePagination
-        current={serverPagination ? serverPagination.page : (dataGrid.pagination.pageIndex + 1)}
-        total={serverPagination ? serverPagination.totalPages : Math.ceil(data.length / dataGrid.pagination.pageSize)}
-        pageSize={serverPagination ? serverPagination.limit : dataGrid.pagination.pageSize}
+        current={
+          serverPagination
+            ? serverPagination.page
+            : dataGrid.pagination.pageIndex + 1
+        }
+        total={
+          serverPagination
+            ? serverPagination.totalPages
+            : Math.ceil(data.length / dataGrid.pagination.pageSize)
+        }
+        pageSize={
+          serverPagination
+            ? serverPagination.limit
+            : dataGrid.pagination.pageSize
+        }
         totalItems={serverPagination ? serverPagination.total : data.length}
         onPageChange={(page) => {
           console.log('📊 DataGridServer: Page change requested:', {

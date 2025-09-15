@@ -127,7 +127,26 @@ async function handleRequest(
       // For now, just pass through
     }
 
-    // Get response data
+    // Handle 204 No Content specially (NextResponse doesn't support 204)
+    if (response.status === 204) {
+      // Log the backend response
+      logger.logResponse({
+        statusCode: response.status,
+        duration,
+        headers: Object.fromEntries(response.headers.entries()),
+        body: null,
+      })
+
+      return new Response(null, {
+        status: 204,
+        headers: {
+          'x-correlation-id': correlationId,
+          'x-response-time': `${duration}ms`,
+        },
+      })
+    }
+
+    // Get response data for non-204 responses
     const data = await response.text()
     let responseBody: any = undefined
     try {

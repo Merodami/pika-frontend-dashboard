@@ -11,7 +11,6 @@ import {
   Descriptions,
   Card,
   Avatar,
-  message,
   Modal,
   Spin,
   Empty,
@@ -32,15 +31,14 @@ import {
   TrendingUp,
   AlertCircle,
 } from 'lucide-react'
-import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query'
 import { format } from 'date-fns'
 
 import {
-  deleteAdminBusiness,
-  approveAdminBusiness,
-  getAdminBusinessById,
-  getAdminBusinessVoucherStats,
-} from '@/lib/api/orval-client'
+  useBusiness,
+  useDeleteBusiness,
+  useApproveBusiness,
+  useBusinessVoucherStats,
+} from '@/hooks/api/businesses/useBusinesses'
 import { ContextActionBar } from '@/components/ui/ContextActionBar'
 import type { ActionItem } from '@/components/ui/ContextActionBar'
 import { StatusBadge } from '@/components/ui/StatusBadge'
@@ -60,58 +58,28 @@ export function BusinessDetailView({
 }: BusinessDetailViewProps) {
   const router = useRouter()
   const t = useTranslations()
-  const queryClient = useQueryClient()
   const [drawerOpen, setDrawerOpen] = useState(mode === 'drawer')
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
 
-  // Fetch business data
-  const {
-    data: business,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ['admin-business', businessId],
-    queryFn: () => getAdminBusinessById(businessId),
-  })
+  // Use custom hooks for business data
+  const { data: business, isLoading, error } = useBusiness(businessId)
 
-  // Fetch business statistics
-  const { data: stats } = useQuery({
-    queryKey: ['admin-business-stats', businessId],
-    queryFn: () => getAdminBusinessVoucherStats(businessId, {}),
+  // Use custom hook for business voucher statistics
+  const { data: stats } = useBusinessVoucherStats(businessId, {
     enabled: !!business,
   })
 
-  // Delete mutation
-  const deleteMutation = useMutation({
-    mutationFn: deleteAdminBusiness,
-    onSuccess: () => {
-      message.success(t('business.message.deleteSuccess'))
-      queryClient.invalidateQueries({ queryKey: ['admin-businesses'] })
-      router.push(`/${locale}/admin/businesses`)
-    },
-    onError: () => {
-      message.error(t('common.message.errorOccurred'))
-    },
+  // Use custom hooks for mutations with translated messages
+  const deleteMutation = useDeleteBusiness({
+    successMessage: t('business.message.deleteSuccess'),
+    errorMessage: t('common.message.errorOccurred'),
   })
-
-  // Approve mutation
-  const approveMutation = useMutation({
-    mutationFn: ({ id, approved }: { id: string; approved: boolean }) =>
-      approveAdminBusiness(id, { approved }),
-    onSuccess: (_, { approved }) => {
-      message.success(
-        approved
-          ? t('business.message.approveSuccess')
-          : t('business.message.rejectSuccess')
-      )
-      queryClient.invalidateQueries({
-        queryKey: ['admin-business', businessId],
-      })
-      queryClient.invalidateQueries({ queryKey: ['admin-businesses'] })
-    },
-    onError: () => {
-      message.error(t('common.message.errorOccurred'))
-    },
+  const approveMutation = useApproveBusiness({
+    successMessage: (data) =>
+      data.approved
+        ? t('business.message.approveSuccess')
+        : t('business.message.rejectSuccess'),
+    errorMessage: t('common.message.errorOccurred'),
   })
 
   const handleClose = () => {
@@ -134,8 +102,12 @@ export function BusinessDetailView({
   }
 
   const confirmDelete = () => {
-    deleteMutation.mutate(businessId)
-    setDeleteModalOpen(false)
+    deleteMutation.mutate(businessId, {
+      onSuccess: () => {
+        setDeleteModalOpen(false)
+        router.push(`/${locale}/admin/businesses`)
+      },
+    })
   }
 
   const handleApprove = () => {

@@ -16,6 +16,8 @@ import {
   createAdminVoucher,
   updateAdminVoucher,
   deleteAdminVoucher,
+  publishAdminVoucher,
+  expireAdminVoucher,
   claimVoucher,
   redeemVoucher,
   scanVoucher,
@@ -71,12 +73,16 @@ export function useVoucher(id: string, options?: { enabled?: boolean }) {
 /**
  * Hook to create a new voucher
  */
-export function useCreateVoucher() {
+export function useCreateVoucher(options?: {
+  successMessage?: string
+  errorMessage?: string
+}) {
   const queryClient = useQueryClient()
 
   return useApiMutation<GetAdminVoucherById200, Error, CreateAdminVoucherBody>({
     mutationFn: (data) => createAdminVoucher(data),
-    successMessage: 'Voucher created successfully',
+    successMessage: options?.successMessage,
+    errorMessage: options?.errorMessage,
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.vouchers.lists(),
@@ -97,7 +103,6 @@ export function useUpdateVoucher() {
     { id: string; data: UpdateAdminVoucherBody }
   >({
     mutationFn: ({ id, data }) => updateAdminVoucher(id, data),
-    successMessage: 'Voucher updated successfully',
     onSuccess: (_, { id }) => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.vouchers.detail(id),
@@ -112,14 +117,61 @@ export function useUpdateVoucher() {
 /**
  * Hook to delete a voucher
  */
-export function useDeleteVoucher() {
+export function useDeleteVoucher(options?: {
+  successMessage?: string
+  errorMessage?: string
+}) {
   const queryClient = useQueryClient()
 
   return useApiMutation<null, Error, string>({
     mutationFn: (id) => deleteAdminVoucher(id),
-    successMessage: 'Voucher deleted successfully',
+    successMessage: options?.successMessage,
+    errorMessage: options?.errorMessage,
     onSuccess: (_, id) => {
       queryClient.removeQueries({
+        queryKey: queryKeys.vouchers.detail(id),
+      })
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.vouchers.lists(),
+      })
+    },
+  })
+}
+
+/**
+ * Hook to publish a voucher
+ */
+export function usePublishVoucher(options?: {
+  successMessage?: string
+  errorMessage?: string
+}) {
+  const queryClient = useQueryClient()
+
+  return useApiMutation<GetAdminVoucherById200, Error, string>({
+    mutationFn: (id) => publishAdminVoucher(id),
+    successMessage: options?.successMessage,
+    errorMessage: options?.errorMessage,
+    onSuccess: (_, id) => {
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.vouchers.detail(id),
+      })
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.vouchers.lists(),
+      })
+    },
+  })
+}
+
+/**
+ * Hook to expire a voucher
+ */
+export function useExpireVoucher() {
+  const queryClient = useQueryClient()
+
+  return useApiMutation<GetAdminVoucherById200, Error, string>({
+    mutationFn: (id) => expireAdminVoucher(id),
+    onSuccess: (_, id) => {
+      queryClient.invalidateQueries({
         queryKey: queryKeys.vouchers.detail(id),
       })
       queryClient.invalidateQueries({
@@ -141,7 +193,6 @@ export function useClaimVoucher() {
     { id: string; options?: VoucherClaimOptions }
   >({
     mutationFn: ({ id, options }) => claimVoucher(id, options || {}),
-    successMessage: 'Voucher claimed successfully',
     onSuccess: (_, { id }) => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.vouchers.detail(id),
@@ -165,7 +216,6 @@ export function useRedeemVoucher() {
     { id: string; options: VoucherRedeemOptions }
   >({
     mutationFn: ({ id, options }) => redeemVoucher(id, options), // Now types match directly!
-    successMessage: 'Voucher redeemed successfully',
     onSuccess: (_, { id }) => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.vouchers.detail(id),
@@ -197,7 +247,6 @@ export function useScanVoucher() {
       }
       return scanVoucher(id, body)
     },
-    successMessage: 'Voucher scanned successfully',
     onSuccess: (_, { id }) => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.vouchers.detail(id),
@@ -334,8 +383,7 @@ export function useBulkVoucherOperations() {
       console.warn('Bulk operations not yet implemented')
       return Promise.resolve({ updated: data.ids.length })
     },
-    successMessage: (data: any) =>
-      `${data.updated || 0} vouchers updated successfully`,
+    // successMessage will be provided by the component using translations
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.vouchers.all(),
